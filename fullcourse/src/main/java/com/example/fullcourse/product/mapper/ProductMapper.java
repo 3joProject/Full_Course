@@ -1,5 +1,5 @@
 package com.example.fullcourse.product.mapper;
 
-public class ProductMapper {
+public interface ProductMapper {
 
 }
