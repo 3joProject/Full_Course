@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+</head>
+<body th:fragment="layout">
+	<header>
+<!-- 		헤더 내용 -->
+		<div th:replace="~{top_menu :: test_top_menu}"></div>
+	</header>
+
+	<nav>
+		<!-- 네비게이션 메뉴 등 -->
+	</nav>
+
+	<main>
+		<div th:replace="~{::content}"></div>
+	</main>
+
+	<footer>
+		<!-- 페이지 하단에 들어갈 내용 -->
+		<div th:replace="~{footer :: test_copy}"></div>
+	</footer>
+</body>
+</html>
