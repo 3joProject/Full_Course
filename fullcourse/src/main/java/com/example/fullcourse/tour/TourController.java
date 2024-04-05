@@ -11,24 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 public class TourController {
 	
 	@GetMapping("/tour")
-	public String m_insert(Model model) {
+	public String m_insert() {
 		log.info("/m_insert...");
 
 		return "thymeleaf/blog";
 	}
 	
-	@GetMapping("/tour2")
-	public String m_insert2(Model model) {
-		log.info("/m_insert...");
+	@GetMapping("/tour/details")
+	public String tour_details() {
+		log.info("insert...");
 
-		return "thymeleaf/service";
+		return "thymeleaf/single";
 	}
 
-	@GetMapping("/")
-	public String index(Model model) {
-		log.info("/m_insert...");
-
-		return "thymeleaf/index";
-	}
+	
 
 }
