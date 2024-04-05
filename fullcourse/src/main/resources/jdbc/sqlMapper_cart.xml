@@ -21,8 +21,7 @@
 	</delete>
 	
 	<select id="selectAll" resultType="com.example.fullcourse.cart.CartVO">
-		select * from member order by
-		num desc
+		select * from cart order by num desc
 	</select>
 	
 	<select id="selectOne" resultType="com.example.fullcourse.cart.CartVO">
