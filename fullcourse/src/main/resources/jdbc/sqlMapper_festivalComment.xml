@@ -5,56 +5,56 @@
 
 <mapper namespace="com.example.fullcourse.festival.festivalComment.mapper.FestivalCommentMapper">
 	
-	<insert id="insertOK" parameterType="com.example.fullcourse.festival.FestivalCommentVO">
+	<insert id="insertOK" parameterType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		insert into
 		member(id,pw,name,tel)
 		values(#{id},#{pw},#{name},#{tel})
 	</insert>
 	
-	<update id="updateOK" parameterType="com.example.fullcourse.festival.FestivalCommentVO">
+	<update id="updateOK" parameterType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
 		where num=#{num}
 	</update>
 	
-	<delete id="deleteOK" parameterType="com.example.fullcourse.festival.FestivalCommentVO">
+	<delete id="deleteOK" parameterType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.example.fullcourse.festival.FestivalCommentVO">
+	<select id="selectAll" resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member order by
 		num desc
 	</select>
 	
-	<select id="selectOne" resultType="com.example.fullcourse.festival.FestivalCommentVO">
+	<select id="selectOne" resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member where
 		num=#{num}
 	</select>
 	
 	<select id="searchListID"
-		resultType="com.example.fullcourse.festival.FestivalCommentVO">
+		resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member where id like #{searchWord}
 	</select>
 
 	<select id="searchListNAME"
-		resultType="com.example.fullcourse.festival.FestivalCommentVO">
+		resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member where name like #{searchWord}
 	</select>
 	
 	<select id="selectAllPageBlock"
-		resultType="com.example.fullcourse.festival.FestivalCommentVO">
+		resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListID_PAGE"
-		resultType="com.example.fullcourse.festival.FestivalCommentVO">
+		resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member
 		where id like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListNAME_PAGE"
-		resultType="com.example.fullcourse.festival.FestivalCommentVO">
+		resultType="com.example.fullcourse.festival.festivalComment.FestivalCommentVO">
 		select * from member
 		where name like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}
