@@ -14,10 +14,21 @@ public class TourController {
 	public String m_insert(Model model) {
 		log.info("/m_insert...");
 
-		model.addAttribute("content", "thymeleaf/member/th_insert");
-		model.addAttribute("title", "회원가입");
-		return "thymeleaf/member/th_layout_main";
+		return "thymeleaf/blog";
+	}
+	
+	@GetMapping("/tour2")
+	public String m_insert2(Model model) {
+		log.info("/m_insert...");
+
+		return "thymeleaf/service";
 	}
 
+	@GetMapping("/")
+	public String index(Model model) {
+		log.info("/m_insert...");
+
+		return "thymeleaf/index";
+	}
 
 }
