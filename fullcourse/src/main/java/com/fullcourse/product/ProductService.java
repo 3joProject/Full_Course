@@ -15,26 +15,26 @@ public class ProductService {
 	}
 	
 	public void update(ProductVO productVO) {
-		// TODO Auto-generated method stub
+		productMapper.update(productVO);
 		
 	}
 	public void delete(int productNum) {
-		// TODO Auto-generated method stub
+		productMapper.delete(productNum);
 		
 	}
 	
 	public List<ProductVO> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return productMapper.selectAll();
 	}
 	public ProductVO selectOne(int productNum) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return productMapper.selectOne(productNum);
 	}
 	
 	public List<ProductVO> searchList(String searchType, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return productMapper.searchList(searchType, keyword);
 	}
 	
 	public int getTotalRows() {

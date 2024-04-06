@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -53,7 +56,9 @@ public class ProductController {
 	public String selectAll(Model model) {
 		List<ProductVO> productList = productService.selectAll();
 		model.addAttribute("productList", productList);
-		return "product/list";
+		
+		log.info("{}",productList);
+		return "thymeleaf/selectAll";
 	}
 	
 	@GetMapping("/selectOne")
