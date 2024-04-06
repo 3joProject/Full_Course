@@ -40,7 +40,7 @@ public class ProductController {
 	@PostMapping("/updateOK")
 	public String updateOK(@ModelAttribute ProductVO productVO) {
 		productService.update(productVO);
-		return "redirect:/product/selectAll";
+		return "redirect:/product/selectAll"; 
 	}
 	
 	@GetMapping("/delete")

@@ -6,7 +6,7 @@ public class ProductVO {
 	private String productTitle;
 	private int productPrice;
 	private String productImage;
-	private int productInventory;
+	private int productInventory;  
 	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
