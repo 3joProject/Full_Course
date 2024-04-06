@@ -5,23 +5,23 @@
 
 <mapper namespace="com.fullcourse.product.mapper.ProductMapper">
 	
-	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
+	<insert id="insertOK" parameterType="com.fullcourse.product.ProductVO">
 		insert into
 		member(id,pw,name,tel)
 		values(#{id},#{pw},#{name},#{tel})
 	</insert>
 	
-	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
+	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
 		where num=#{num}
 	</update>
 	
-	<delete id="deleteOK" parameterType="com.fullcourse.cart.CartVO">
+	<delete id="deleteOK" parameterType="com.fullcourse.product.ProductVO">
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.fullcourse.cart.CartVO">
-		select * from cart order by num desc
+	<select id="selectAll" resultType="com.fullcourse.product.ProductVO">
+		select * from product order by productNum desc
 	</select>
 	
 	<select id="selectOne" resultType="com.fullcourse.cart.CartVO">
