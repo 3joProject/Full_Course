@@ -22,7 +22,7 @@ public class ProductService {
 		
 	}
 
-	public void delete(int product_num) {
+	public void delete(int productNum) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -32,7 +32,7 @@ public class ProductService {
 		return null;
 	}
 
-	public ProductVO selectOne(int product_num) {
+	public ProductVO selectOne(int productNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
