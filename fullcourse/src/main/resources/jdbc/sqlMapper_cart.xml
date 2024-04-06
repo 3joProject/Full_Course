@@ -21,7 +21,8 @@
 	</delete>
 	
 	<select id="selectAll" resultType="com.fullcourse.cart.CartVO">
-		select * from cart order by num desc
+		SELECT product_title, product_price, product_image, product_content, product_inventory
+		from cart inner join product on cart.cart_product = product.product_num;
 	</select>
 	
 	<select id="selectOne" resultType="com.fullcourse.cart.CartVO">
