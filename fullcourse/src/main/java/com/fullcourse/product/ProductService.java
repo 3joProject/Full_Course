@@ -10,11 +10,10 @@ import com.fullcourse.product.mapper.ProductMapper;
 @Service
 public class ProductService {
 	
-	@Autowired
-	private ProductMapper productMapper;
+	
 	
 	public void insert(ProductVO productVO) {
-		productMapper.insert(productVO);
+		
 	}
 	
 	public void update(ProductVO productVO) {

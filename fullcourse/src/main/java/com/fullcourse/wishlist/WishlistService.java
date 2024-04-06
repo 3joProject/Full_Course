@@ -1,4 +1,4 @@
-package com.wishlist;
+package com.fullcourse.wishlist;
 
 public class WishlistService {
 
