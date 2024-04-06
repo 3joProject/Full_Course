@@ -20,9 +20,10 @@
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.fullcourse.cart.CartVO">
-		SELECT product_title, product_price, product_image, product_content, product_inventory
-		from cart inner join product on cart.cart_product = product.product_num;
+	<select id="selectAll" resultType="com.fullcourse.cart.ProductVO">
+		SELECT productTitle, productPrice, productImage, productContent, productInventory,
+productNum, productMnum
+from product inner join cart on cart.cartProduct = product.productNum;
 	</select>
 	
 	<select id="selectOne" resultType="com.fullcourse.cart.CartVO">
