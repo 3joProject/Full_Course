@@ -43,5 +43,9 @@ public class ProductService {
 		return null;
 	}
 	
+	public int getTotalRows() {
+        return productMapper.getTotalRows();
+    }
+	
 	
 }

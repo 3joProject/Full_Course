@@ -21,7 +21,7 @@ public class ProductController {
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		model.addAttribute("productVO", new ProductVO());
-		return "product/insert";
+		return "thymeleaf/product/insert";
 	}
 	
 	@PostMapping("/insertOK")
@@ -31,8 +31,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/update")
-	public String update(@RequestParam("product_num") int product_num, Model model) {
-		ProductVO productVO = productService.selectOne(product_num);
+	public String update(@RequestParam("productNum") int productNum, Model model) {
+		ProductVO productVO = productService.selectOne(productNum);
 		model.addAttribute("productVO", productVO);
 		return "product/update";
 	}
@@ -44,8 +44,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(@RequestParam("product_num") int product_num) {
-		productService.delete(product_num);
+	public String delete(@RequestParam("productNum") int productNum) {
+		productService.delete(productNum);
 		return "redirect:/product/selectAll";
 	}
 	
@@ -57,8 +57,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/selectOne")
-	public String selectOne(@RequestParam("product_num") int product_num, Model model) {
-	    ProductVO productVO = productService.selectOne(product_num);
+	public String selectOne(@RequestParam("productNum") int productNum, Model model) {
+	    ProductVO productVO = productService.selectOne(productNum);
 	    model.addAttribute("productVO", productVO);
 	    return "product/view";
 	}

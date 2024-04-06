@@ -1,12 +1,12 @@
 package com.example.fullcourse.product;
 
 public class ProductVO {
-	private int product_num;
-	private int product_mnum;
-	private String product_title;
-	private int product_price;
-	private String product_image;
-	private int product_inventory;
+	private int productNum;
+	private int productMnum;
+	private String productTitle;
+	private int productPrice;
+	private String productImage;
+	private int productInventory;
 	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
@@ -14,71 +14,69 @@ public class ProductVO {
 
 	@Override
 	public String toString() {
-		return "ProductVO [product_num=" + product_num + ", product_mnum=" + product_mnum + ", product_title="
-				+ product_title + ", product_price=" + product_price + ", product_image=" + product_image
-				+ ", product_inventory=" + product_inventory + "]";
+		return "ProductVO [productNum=" + productNum + ", productMnum=" + productMnum + ", productTitle=" + productTitle
+				+ ", productPrice=" + productPrice + ", productImage=" + productImage + ", productInventory="
+				+ productInventory + "]";
 	}
 
-	public ProductVO(int product_num, int product_mnum, String product_title, int product_price, String product_image,
-			int product_inventory) {
+	public ProductVO(int productNum, int productMnum, String productTitle, int productPrice, String productImage,
+			int productInventory) {
 		super();
-		this.product_num = product_num;
-		this.product_mnum = product_mnum;
-		this.product_title = product_title;
-		this.product_price = product_price;
-		this.product_image = product_image;
-		this.product_inventory = product_inventory;
+		this.productNum = productNum;
+		this.productMnum = productMnum;
+		this.productTitle = productTitle;
+		this.productPrice = productPrice;
+		this.productImage = productImage;
+		this.productInventory = productInventory;
 	}
 
-	public int getProduct_num() {
-		return product_num;
+	public int getProductNum() {
+		return productNum;
 	}
 
-	public void setProduct_num(int product_num) {
-		this.product_num = product_num;
+	public void setProductNum(int productNum) {
+		this.productNum = productNum;
 	}
 
-	public int getProduct_mnum() {
-		return product_mnum;
+	public int getProductMnum() {
+		return productMnum;
 	}
 
-	public void setProduct_mnum(int product_mnum) {
-		this.product_mnum = product_mnum;
+	public void setProductMnum(int productMnum) {
+		this.productMnum = productMnum;
 	}
 
-	public String getProduct_title() {
-		return product_title;
+	public String getProductTitle() {
+		return productTitle;
 	}
 
-	public void setProduct_title(String product_title) {
-		this.product_title = product_title;
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
 	}
 
-	public int getProduct_price() {
-		return product_price;
+	public int getProductPrice() {
+		return productPrice;
 	}
 
-	public void setProduct_price(int product_price) {
-		this.product_price = product_price;
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 
-	public String getProduct_image() {
-		return product_image;
+	public String getProductImage() {
+		return productImage;
 	}
 
-	public void setProduct_image(String product_image) {
-		this.product_image = product_image;
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 
-	public int getProduct_inventory() {
-		return product_inventory;
+	public int getProductInventory() {
+		return productInventory;
 	}
 
-	public void setProduct_inventory(int product_inventory) {
-		this.product_inventory = product_inventory;
+	public void setProductInventory(int productInventory) {
+		this.productInventory = productInventory;
 	}
-	
-	
 	
 	
 }
