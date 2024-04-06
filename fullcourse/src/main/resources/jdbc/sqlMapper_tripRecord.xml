@@ -3,58 +3,58 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.fullcourse.triprecord.mapper.TripRecordMapper">
+<mapper namespace="com.fullcourse.triprecord.mapper.TripRecordMapper">
 	
-	<insert id="insertOK" parameterType="com.example.fullcourse.triprecord.TripRecordVO">
+	<insert id="insertOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		insert into
 		member(id,pw,name,tel)
 		values(#{id},#{pw},#{name},#{tel})
 	</insert>
 	
-	<update id="updateOK" parameterType="com.example.fullcourse.triprecord.TripRecordVO">
+	<update id="updateOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
 		where num=#{num}
 	</update>
 	
-	<delete id="deleteOK" parameterType="com.example.fullcourse.triprecord.TripRecordVO">
+	<delete id="deleteOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.example.fullcourse.triprecord.TripRecordVO">
+	<select id="selectAll" resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member order by
 		num desc
 	</select>
 	
-	<select id="selectOne" resultType="com.example.fullcourse.triprecord.TripRecordVO">
+	<select id="selectOne" resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where
 		num=#{num}
 	</select>
 	
 	<select id="searchListID"
-		resultType="com.example.fullcourse.triprecord.TripRecordVO">
+		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where id like #{searchWord}
 	</select>
 
 	<select id="searchListNAME"
-		resultType="com.example.fullcourse.triprecord.TripRecordVO">
+		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where name like #{searchWord}
 	</select>
 	
 	<select id="selectAllPageBlock"
-		resultType="com.example.fullcourse.triprecord.TripRecordVO">
+		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListID_PAGE"
-		resultType="com.example.fullcourse.triprecord.TripRecordVO">
+		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member
 		where id like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListNAME_PAGE"
-		resultType="com.example.fullcourse.triprecord.TripRecordVO">
+		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member
 		where name like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}

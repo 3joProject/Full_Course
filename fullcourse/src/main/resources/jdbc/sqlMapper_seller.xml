@@ -3,58 +3,58 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.fullcourse.seller.mapper.SellerMapper">
+<mapper namespace="com.fullcourse.seller.mapper.SellerMapper">
 	
-	<insert id="insertOK" parameterType="com.example.fullcourse.seller.SellerVO">
+	<insert id="insertOK" parameterType="com.fullcourse.seller.SellerVO">
 		insert into
 		member(id,pw,name,tel)
 		values(#{id},#{pw},#{name},#{tel})
 	</insert>
 	
-	<update id="updateOK" parameterType="com.example.fullcourse.seller.SellerVO">
+	<update id="updateOK" parameterType="com.fullcourse.seller.SellerVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
 		where num=#{num}
 	</update>
 	
-	<delete id="deleteOK" parameterType="com.example.fullcourse.seller.SellerVO">
+	<delete id="deleteOK" parameterType="com.fullcourse.seller.SellerVO">
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.example.fullcourse.seller.SellerVO">
+	<select id="selectAll" resultType="com.fullcourse.seller.SellerVO">
 		select * from member order by
 		num desc
 	</select>
 	
-	<select id="selectOne" resultType="com.example.fullcourse.seller.SellerVO">
+	<select id="selectOne" resultType="com.fullcourse.seller.SellerVO">
 		select * from member where
 		num=#{num}
 	</select>
 	
 	<select id="searchListID"
-		resultType="com.example.fullcourse.seller.SellerVO">
+		resultType="com.fullcourse.seller.SellerVO">
 		select * from member where id like #{searchWord}
 	</select>
 
 	<select id="searchListNAME"
-		resultType="com.example.fullcourse.seller.SellerVO">
+		resultType="com.fullcourse.seller.SellerVO">
 		select * from member where name like #{searchWord}
 	</select>
 	
 	<select id="selectAllPageBlock"
-		resultType="com.example.fullcourse.seller.SellerVO">
+		resultType="com.fullcourse.seller.SellerVO">
 		select * from member 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListID_PAGE"
-		resultType="com.example.fullcourse.seller.SellerVO">
+		resultType="com.fullcourse.seller.SellerVO">
 		select * from member
 		where id like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="searchListNAME_PAGE"
-		resultType="com.example.fullcourse.seller.SellerVO">
+		resultType="com.fullcourse.seller.SellerVO">
 		select * from member
 		where name like #{searchWord} 
 		order by num desc limit #{startRow},#{pageBlock}
