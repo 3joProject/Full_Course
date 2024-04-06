@@ -10,13 +10,6 @@ import com.fullcourse.cart.mapper.CartMapper;
 @Service
 public class CartService {
 
-	@Autowired
-	private CartMapper mapper;
-	
-	public List<CartVO> selectAll() {
-		return mapper.selectAll();
-	}
-
 
 
 }
