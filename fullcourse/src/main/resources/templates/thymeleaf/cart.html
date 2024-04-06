@@ -132,43 +132,36 @@
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">마이페이지 - 장바구니</h6>
                 <h1>장바구니</h1>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <h5 class="mb-2">장바구니 상품명</h5>
-                        <p class="m-0">장바구니 상품 내용</p>
-                    </div>
-                </div>
+ 
+                        
+                        <table class = "table">
+                        <thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+								<th scope="col">#</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vo : ${vos}">
+								<tr>
+									<td><span scope="row" th:text="${vo.productNum}"></span></td> 
+									<td><span scope="row" th:text="${vo.productMnum}"></span></td> 
+									<td><span scope="row" th:text="${vo.productTitle}"></span></td> 
+									<td><span scope="row" th:text="${vo.productPrice}"></span></td> 
+									<td><span scope="row" th:text="${vo.productImage}"></span></td> 
+									<td><span scope="row" th:text="${vo.productContent}"></span></td> 
+									<td><span scope="row" th:text="${vo.productInventory}"></span></td> 
+								</tr>
+							</th:block>
+						</tbody>
+						</table>
+                        
+             
             </div>
         </div>
     </div>
