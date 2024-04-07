@@ -13,5 +13,9 @@ public interface CartMapper {
 	public List<CartVO> selectAll();
 
 	public int deleteOK(CartVO vo);
+
+	public int insertOK(ProductVO vo);
+
+	public int updateOK(CartVO vo);
 	
 }
