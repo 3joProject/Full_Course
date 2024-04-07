@@ -10,8 +10,14 @@ import lombok.NoArgsConstructor;
 public class CartVO {
 
 	private int cartNum;
-	private int cartId;
+	private String cartMid;
 	private int cartProduct;
-	private int productCount;
+	private int cartCount;
+	private String cartSellerId;
+	private String cartTitle;
+	private int cartPrice;
+	private String cartImage;
+	private String cartContent;
+	private int cartInventory;
 	
 }
