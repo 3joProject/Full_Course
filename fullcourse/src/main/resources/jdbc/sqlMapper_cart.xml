@@ -7,13 +7,14 @@
 	
 	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
 		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
+		cart( cartProduct, cartSellerId, cartTitle,
+		cartPrice, cartImage, cartContent, cartInventory)
+		values( #{productNum}, #{productMid}, #{productTitle},
+		#{productPrice}, #{productImage}, #{productContent}, #{productInventory})
 	</insert>
 	
 	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
-		update member set pw=#{pw},name=#{name},tel=#{tel}
-		where num=#{num}
+		update cart set cartCount=#{cartCount} where cartNum=#{cartNum}
 	</update>
 	
 	<delete id="deleteOK" parameterType="com.fullcourse.cart.CartVO">

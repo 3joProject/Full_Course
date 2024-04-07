@@ -134,7 +134,8 @@
 				<h1>장바구니</h1>
 			</div>
 
-
+			<!-- 장바구니 테이블 -->
+			<form method="post" action="#">
 			<table class="table">
 				<thead>
 					<tr>
@@ -147,6 +148,7 @@
 						<th scope="col">구매수량</th>
 						<th scope="col">상품재고</th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -158,16 +160,31 @@
 							<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
 							<td><span scope="row" th:text="${vo.cartContent}"></span></td>
 							<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
-							<td><span scope="row" th:text="${vo.cartCount}"></span></td>
+							<td><input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"></td>
 							<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
 							<td><a th:href="|cart_deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
+							<td><a th:href="|cart_updateOK?cartNum=${vo.cartNum}&cartCount=9|">수정</a></td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
-			
+
 			<!--버튼-->
-			 <p><input type="submit" value="Submit"> <input type="reset" value="Reset"></p>
+			<p><input type="submit" value="결제"> </p>
+			</form>
+
+			<!--장바구니 추가용 임시 product 폼-->
+			<form method="post" action="cart_insertOK">
+				<p><label>상품번호 : <input type="number" name="productNum"></label></p>
+				<p><label>판매자아이디 : <input type="text" name="productMid"></label></p>
+				<p><label>상품명 : <input type="text" name="productTitle"></label></p>
+				<p><label>금액(단가) : <input type="number" name="productPrice"></label></p>
+				<p><label>상품이미지 : <input type="text" name="productImage"></label></p>
+				<p><label>상품내용 : <input type="text" name="productContent"></label></p>
+				<p><label>상품수량(재고) : <input type="number" name="productInventory"></label></p>
+				
+				<p><input type="submit" value="장바구니 추가 버튼"></p>
+			</form>
 
 
 		</div>

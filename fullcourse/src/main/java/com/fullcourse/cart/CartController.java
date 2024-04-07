@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fullcourse.product.ProductVO;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -40,6 +43,29 @@ public class CartController {
 		log.info(vo.toString());
 		
 		int result = service.deleteOK(vo);
+		log.info("result:{}",result);
+		
+		
+		return "redirect:cart_selectAll";
+	}
+	
+	@PostMapping("/cart_insertOK")
+	public String cart_insertOK(ProductVO vo) {
+		log.info("/cart_insertOK");
+		log.info(vo.toString());
+
+		int result = service.insertOK(vo);
+		log.info("result:{}",result);
+		
+		return "redirect:cart_selectAll";
+	}
+	
+	@GetMapping("/cart_updateOK")
+	public String cart_updateOK(CartVO vo) {
+		log.info("/cart_updateOK");
+		log.info(vo.toString());
+
+		int result = service.updateOK(vo);
 		log.info("result:{}",result);
 		
 		
