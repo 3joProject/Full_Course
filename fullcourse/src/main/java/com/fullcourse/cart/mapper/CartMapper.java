@@ -10,6 +10,8 @@ import com.fullcourse.product.ProductVO;
 @Mapper
 public interface CartMapper {
 	
-	public List<ProductVO> selectAll();
+	public List<CartVO> selectAll();
+
+	public int deleteOK(CartVO vo);
 	
 }
