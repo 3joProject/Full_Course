@@ -16,5 +16,5 @@ public class ProductVO {
 	private String productContent;
 	private int productInventory;
 	
-
+ 
 }

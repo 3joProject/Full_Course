@@ -8,7 +8,7 @@ public interface ProductMapper {
 	void insert(ProductVO productVO);
 	void update(ProductVO productVO);
 	void delete(int productNum);
-	List<ProductVO> seletctAll();
+	List<ProductVO> selectAll();
 	ProductVO selectOne(int productNum);
 	List<ProductVO> searchList(String searchType, String keyword);
 	int getTotalRows();
