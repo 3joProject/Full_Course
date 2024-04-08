@@ -7,68 +7,63 @@
 	
 	<insert id="insertOK" parameterType="com.fullcourse.product.ProductVO">
 		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
+		product(productMid,productTitle,productPrice,productContent,productInventory)
+		values(#{productMid},#{productTitle},#{productPrice},#{productContent},#{productInventory})
 	</insert>
 	
 	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
-		update member set pw=#{pw},name=#{name},tel=#{tel}
-		where num=#{num}
+		update product set productTitle=#{productTitle},productPrice=#{productPrice},productContent=#{productContent},productInventory=#{productInventory}
+		where productNum=#{productNum}
 	</update>
 	
 	<delete id="deleteOK" parameterType="com.fullcourse.product.ProductVO">
-		delete from member where num=#{num}
+		delete from product where productNum=#{productNum}
 	</delete>
 	
 	<select id="selectAll" resultType="com.fullcourse.product.ProductVO">
 		select * from product order by productNum desc
 	</select>
 	
-	<select id="selectOne" resultType="com.fullcourse.cart.CartVO">
-		select * from member where
-		num=#{num}
+	<select id="selectOne" resultType="com.fullcourse.product.ProductVO">
+		select * from product where
+		productNum=#{productNum}
 	</select>
 	
-	<select id="searchListID"
-		resultType="com.fullcourse.cart.CartVO">
-		select * from member where id like #{searchWord}
+	<select id="searchListMid" resultType="com.fullcourse.product.ProductVO">
+		select * from product where productMid like #{searchWord}
 	</select>
 
-	<select id="searchListNAME"
-		resultType="com.fullcourse.cart.CartVO">
-		select * from member where name like #{searchWord}
+	<select id="searchListTitle" resultType="com.fullcourse.product.ProductVO">
+		select * from product where prouductTitle like #{searchWord}
 	</select>
 	
-	<select id="selectAllPageBlock"
-		resultType="com.fullcourse.cart.CartVO">
-		select * from member 
-		order by num desc limit #{startRow},#{pageBlock}
+	<select id="selectAllPageBlock" resultType="com.fullcourse.product.ProductVO">
+		select * from product 
+		order by productNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
-	<select id="searchListID_PAGE"
-		resultType="com.fullcourse.cart.CartVO">
-		select * from member
-		where id like #{searchWord} 
-		order by num desc limit #{startRow},#{pageBlock}
+	<select id="searchListMid_PAGE" resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		where productMid like #{searchWord} 
+		order by productNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
-	<select id="searchListNAME_PAGE"
-		resultType="com.fullcourse.cart.CartVO">
-		select * from member
-		where name like #{searchWord} 
-		order by num desc limit #{startRow},#{pageBlock}
+	<select id="searchListTitle_PAGE" resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		where productTitle like #{searchWord} 
+		order by productNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="getTotalRows"	resultType="int">
-		select count(*) total_rows from member
+		select count(*) total_rows from product
 	</select>
 	
-	<select id="search_total_rows_id"	resultType="int">
-		select count(*) total_rows from member  where id like #{searchWord}
+	<select id="search_total_rows_Mid"	resultType="int">
+		select count(*) total_rows from product where productMid like #{searchWord}
 	</select>
 
-	<select id="search_total_rows_name"	resultType="int">
-		select count(*) total_rows from member  where name like #{searchWord}
+	<select id="search_total_rows_Title"	resultType="int">
+		select count(*) total_rows from product where productTitle like #{searchWord}
 	</select>
 
 </mapper>
