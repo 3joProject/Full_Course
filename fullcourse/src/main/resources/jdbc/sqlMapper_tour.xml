@@ -20,14 +20,14 @@
 		delete from member where num=#{num}
 	</delete>
 	
-	<select id="selectAll" resultType="com.fullcourse.tour.TourVO">
-		select * from member order by
-		num desc
+	<select id="TourSelectAll" resultType="com.fullcourse.tour.TourVO">
+		select * from Tour order by
+		tourNum desc
 	</select>
 	
-	<select id="selectOne" resultType="com.fullcourse.tour.TourVO">
-		select * from member where
-		num=#{num}
+	<select id="TourSelectOne" resultType="com.fullcourse.tour.TourVO">
+		select * from Tour where
+		tourNum=2
 	</select>
 	
 	<select id="searchListID"
