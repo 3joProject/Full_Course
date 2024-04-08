@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductVO {
 	private int productNum;
-	private int productMnum;
+	private int productMid;
 	private String productTitle;
 	private int productPrice;
 	private String productImage;
