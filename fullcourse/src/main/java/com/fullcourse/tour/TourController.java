@@ -15,7 +15,7 @@ public class TourController {
 	public String tourMain() {
 		log.info("/tourMain...");
 
-		return "thymeleaf/blog";
+		return "thymeleaf/tour/tourMain";
 	}
 
 	// 상세정보로 이동
