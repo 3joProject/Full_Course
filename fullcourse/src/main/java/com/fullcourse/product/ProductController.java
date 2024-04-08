@@ -23,8 +23,13 @@ public class ProductController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model) {
-		model.addAttribute("productVO", new ProductVO());
-		return "thymeleaf/product/insert";
+		
+		log.info("/insert");
+		
+		model.addAttribute("content", "thymeleaf/product/th_insert");
+		model.addAttribute("title", "상품등록");
+		
+		return "thymeleaf/product/th_layout_main";
 	}
 	
 	@PostMapping("/insertOK")

@@ -7,8 +7,8 @@
 	
 	<insert id="insertOK" parameterType="com.fullcourse.product.ProductVO">
 		insert into
-		product(productMid,productTitle,productPrice,productContent,productInventory)
-		values(#{productMid},#{productTitle},#{productPrice},#{productContent},#{productInventory})
+		product(productTitle,productPrice,productContent,productInventory)
+		values(#{productTitle},#{productPrice},#{productContent},#{productInventory})
 	</insert>
 	
 	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
