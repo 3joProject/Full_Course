@@ -5,11 +5,11 @@
 
 <mapper namespace="com.fullcourse.tour.mapper.TourMapper">
 	
-	<insert id="insertOK" parameterType="com.fullcourse.tour.TourVO">
-		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
-	</insert>
+	<insert id="TourInsertOK" parameterType="com.fullcourse.tour.TourVO">
+    INSERT INTO tour (tourName, tourAddress, tourContent, tourUsetime, tourTel, tourViews, tourThumbUp, tourImg)
+    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourUsetime}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{tourImg})
+</insert>
+
 	
 	<update id="updateOK" parameterType="com.fullcourse.tour.TourVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
