@@ -3,10 +3,9 @@
 
 <mapper namespace="com.fullcourse.cart.mapper.CartMapper">
 
-	<select id="selectAllPageBlock"
+	<select id="selectAll"
 		resultType="com.fullcourse.cart.CartVO">
-		select * from member
-		order by num desc limit #{startRow},#{pageBlock}
+		SELECT * FROM cart;
 	</select>
 
 	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
@@ -26,6 +25,4 @@
 		delete from cart where cartNum=#{cartNum}
 	</delete>
 
-
-	<
 </mapper>
