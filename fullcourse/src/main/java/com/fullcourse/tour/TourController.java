@@ -114,10 +114,18 @@ public class TourController {
 
 	// 여행지 정보 검색 ?details랑 겹치나 확인
 	@GetMapping("/tour/tourSelectOne")
-	public String tourSelectOne() {
+	public String tourSelectOne(TourVO vo, Model model) {
 		log.info("tourSelectOne ...");
+		log.info("vo:{}", vo);
 
-		return "thymeleaf/single";
+		TourVO vo2 = service.TourSelectOne(vo);
+
+		model.addAttribute("vo2", vo2);
+
+		model.addAttribute("content", "thymeleaf/tour/th_selectOne");
+		model.addAttribute("title", "회원정보");
+
+		return "thymeleaf/tour/th_tourLayout_main";
 	}
 
 	// 여행지 목록

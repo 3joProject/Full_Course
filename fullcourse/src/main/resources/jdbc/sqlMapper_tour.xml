@@ -27,7 +27,7 @@
 	
 	<select id="TourSelectOne" resultType="com.fullcourse.tour.TourVO">
 		select * from Tour where
-		tourNum=2
+		tourNum=#{tourNum}
 	</select>
 	
 	<select id="searchListID"
