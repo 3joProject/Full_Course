@@ -34,7 +34,7 @@ public class CartController {
 		
 		model.addAttribute("vos",vos);
 		
-		return "thymeleaf/cart";
+		return "thymeleaf/cart/cartPage";
 	}
 	
 	@GetMapping("/cart_deleteOK")
