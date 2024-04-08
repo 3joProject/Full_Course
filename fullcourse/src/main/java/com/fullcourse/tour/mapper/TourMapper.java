@@ -12,12 +12,26 @@ import com.fullcourse.tour.TourVO;
 public interface TourMapper {
 
 
-	public int TourInsertOK(TourVO vo);
+	public int tourInsertOK(TourVO vo);
 
-	public TourVO TourSelectOne(TourVO vo);
+	public TourVO tourSelectOne(TourVO vo);
 
 	public int getTotalRows();
 
-	public List<MemberVO> TourSelectAll(Map<String, Integer> map);
+	public List<TourVO> tourSelectAll(Map<String, Integer> map);
+
+	public int tourDeleteOK(TourVO vo);
+
+	public int tourUpdateOK(TourVO vo);
+
+	public List<TourVO> searchListADDRESS_PAGE(Map<String, Object> map);
+
+	public List<TourVO> searchListNAME_PAGE(Map<String, Object> map);
+
+	public int search_total_rows_address(Map<String, String> map);
+
+	public int search_total_rows_tourName(Map<String, String> map);
+
+	
 
 }

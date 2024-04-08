@@ -3,61 +3,82 @@
 	<div class="container">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
+
 				<h4 class="mb-3">[[${title}]]</h4>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">tourNum</th>
-							<th scope="col">tourName</th>
-							<th scope="col">tourAddress</th>
-							<th scope="col">tourContent</th>
-							<th scope="col">tourUsetime</th>
-							<th scope="col">tourViews</th>
-							<th scope="col">tourThumbUp</th>
-							<th scope="col">tourImg</th>
-							<th scope="col"></th>
 
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="vo : ${vos}">
+				<!-- Search Form start-->
+				<div class="mb-5">
+					<div class="bg-white" style="padding: 30px;">
+						<div class="input-group">
+							<form class="form-inline my-2 my-lg-0 justify-content-end" action="tourSearchList">
+								<select class="selectpicker" name="searchKey">
+									<option value="address">주소</option>
+									<option value="tourName">여행지이름</option>
+								</select>
+
+								<input class="form-control mr-sm-2" type="search" placeholder="Search"
+									aria-label="Search" name="searchWord" value="ad">
+								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+					<!-- Search Form end-->
+					
+					
+					<table class="table">
+						<thead>
 							<tr>
-								<th scope="row"><a th:href="@{|tourSelectOne?tourNum=${vo.tourNum}|}"><span
-											th:text="${vo.tourNum}"></span></a></th>
-								<td><a th:href="@{|tourSelectOne?tourNum=${vo.tourNum}|}"><span
-											th:text="${vo.tourName}"></span></a></td>
-								<td><span th:text="${vo.tourAddress}"></span></td>
-								<td><span th:text="${vo.tourContent}"></span></td>
-								<td><span th:text="${vo.tourUsetime}"></span></td>
-								<td><span th:text="${vo.tourViews}"></span></td>
-								<td><span th:text="${vo.tourThumbUp}"></span></td>
-								<td><span th:text="${vo.tourImg}"></span></td>
-								<td><a th:href="@{|m_delete?num=${vo.tourNum}|}"><span>delete</span></a></td>
+								<th scope="col">tourNum</th>
+								<th scope="col">tourName</th>
+								<th scope="col">tourAddress</th>
+								<th scope="col">tourContent</th>
+								<th scope="col">tourUsetime</th>
+								<th scope="col">tourViews</th>
+								<th scope="col">tourThumbUp</th>
+								<th scope="col">tourImg</th>
+								<th scope="col"></th>
+
 							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vo : ${vos}">
+								<tr>
+									<th scope="row"><a th:href="@{|tourSelectOne?tourNum=${vo.tourNum}|}">
+										<span th:text="${vo.tourNum}"></span></a></th>
+									<td><a th:href="@{|tourSelectOne?tourNum=${vo.tourNum}|}"><span
+												th:text="${vo.tourName}"></span></a></td>
+									<td><span th:text="${vo.tourAddress}"></span></td>
+									<td><span th:text="${vo.tourContent}"></span></td>
+									<td><span th:text="${vo.tourUsetime}"></span></td>
+									<td><span th:text="${vo.tourViews}"></span></td>
+									<td><span th:text="${vo.tourThumbUp}"></span></td>
+									<td><span th:text="${vo.tourImg}"></span></td>
+									<td><a th:href="@{|tourDelete?tourNum=${vo.tourNum}|}"><span>delete</span></a></td>
+								</tr>
 
-						</th:block>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="6">
-								<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-									<th:block th:if="${param.searchKey}== null">
-										<a th:href="|m_selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+							</th:block>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6">
+									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+										<th:block th:if="${param.searchKey}== null">
+											<a th:href="|m_selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+										</th:block>
+										<th:block th:if="${param.searchKey}!= null">
+											<a
+												th:href="@{tourSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+												&nbsp;</a>
+										</th:block>
 									</th:block>
-									<th:block th:if="${param.searchKey}!= null">
-										<a
-											th:href="@{m_searchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
-											&nbsp;</a>
-									</th:block>
-								</th:block>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
 
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 </html>
