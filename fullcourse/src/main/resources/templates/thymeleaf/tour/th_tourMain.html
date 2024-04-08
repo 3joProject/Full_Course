@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+				
+					
+    <!-- 여행지목록 start-->
+    	
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+                <h1>Best 여행지</h1>
+            </div>
+            <div class="row">
+				<th:block th:each="vo : ${vos}">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="img/destination-1.jpg" alt="">
+                        <a class="destination-overlay text-white text-decoration-none" th:href="@{|tour/tourSelectOne?tourNum=${vo.tourNum}|}">
+                            <h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
+                            <span th:text="${vo.tourName}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </th:block>
+    <!-- 여행지목록 end -->
+
+					  <!-- 여행지목록 start-->
+    	
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+                <h1>여행지 목록</h1>
+            </div>
+            <div class="row">
+				<th:block th:each="vo : ${vos}">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="img/destination-1.jpg" alt="">
+                        <a class="destination-overlay text-white text-decoration-none" th:href="@{|tour/tourSelectOne?tourNum=${vo.tourNum}|}">
+                            <h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
+                            <span th:text="${vo.tourName}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </th:block>
+    <!-- 여행지목록 end -->
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</html>
