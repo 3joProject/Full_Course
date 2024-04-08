@@ -1,5 +1,6 @@
 package com.fullcourse.tour;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,21 +10,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class TourController {
+	
+	@Autowired
+	private TourService service;
+
 
 	// 여행 페이지 메인
 	@GetMapping("/tour")
-	public String tourMain() {
+	public String tourMain(TourVO vo, Model model) {
 		log.info("/tourMain...");
+		log.info("vo:{}", vo);
 
-		return "thymeleaf/tour/tourMain";
+//		TourVO vo2 = service.TourSelectOne(vo);
+//		TourVO vo3 = service.TourSelectOne(vo);
+//		TourVO vo4 = service.TourSelectOne(vo);
+//		
+//		model.addAttribute("vo2", vo2);
+//		model.addAttribute("vo3", vo3);
+//		model.addAttribute("vo4", vo4);
+		return "thymeleaf/tour/th_tourLayout_main";
 	}
 
 	// 상세정보로 이동
 	@GetMapping("/tour/tourDetails")
-	public String tourDetails() {
+	public String tourDetails(TourVO vo, Model model) {
 		log.info("tourDetails...");
+		log.info("vo:{}", vo);
+		
+		TourVO vo2 = service.TourSelectOne(vo);
 
-		return "thymeleaf/single";
+		model.addAttribute("vo2", vo2);
+
+		model.addAttribute("content", "thymeleaf/tour/th_selectOne");
+		model.addAttribute("title", "실험");
+		
+
+		return "thymeleaf/tour/th_tourLayout_main";
 	}
 
 	// 여행지 입력페이지로 이동

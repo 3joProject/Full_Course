@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TourVO {
 
-	private int tour_num;
-	private String tour_name;
-	private String tour_address;
-	private String tour_content;
-	private String tour_usetime;
-	private String tour_tel;
-	private int tour_view;
-	private int tour_thumbUp;
-	private String tour_img;
+	private int tourNum;
+	private String tourName;
+	private String tourAddress;
+	private String tourContent;
+	private String tourUsetime;
+	private String tourTel;
+	private int tourViews;
+	private int tourThumbUp;
+	private String tourImg;
 	private MultipartFile file;
 
 }
