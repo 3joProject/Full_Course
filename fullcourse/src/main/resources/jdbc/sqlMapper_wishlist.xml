@@ -48,43 +48,4 @@
 	</delete>
 
 
-	<select id="selectOne" resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where
-		num=#{num}
-	</select>
-
-	<select id="searchListID"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where id like #{searchWord}
-	</select>
-
-	<select id="searchListNAME"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where name like #{searchWord}
-	</select>
-
-
-	<select id="searchListID_PAGE"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member
-		where id like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-	<select id="searchListNAME_PAGE"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member
-		where name like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-
-	<select id="search_total_rows_id" resultType="int">
-		select count(*) total_rows from member where id like #{searchWord}
-	</select>
-
-	<select id="search_total_rows_name" resultType="int">
-		select count(*) total_rows from member where name like #{searchWord}
-	</select>
-
 </mapper>
