@@ -162,8 +162,8 @@
 							<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
 							<td><input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"></td>
 							<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
-							<td><a th:href="|cart_deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
-							<td><a th:href="|cart_updateOK?cartNum=${vo.cartNum}&cartCount=9|">수정</a></td>
+							<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
+							<td><a th:href="|cart/updateOK?cartNum=${vo.cartNum}&cartCount=9|">수정</a></td>
 						</tr>
 					</th:block>
 				</tbody>
@@ -174,7 +174,7 @@
 			</form>
 
 			<!--장바구니 추가용 임시 product 폼-->
-			<form method="post" action="cart_insertOK">
+			<form method="post" action="cart/insertOK">
 				<p><label>상품번호 : <input type="number" name="productNum"></label></p>
 				<p><label>판매자아이디 : <input type="text" name="productMid"></label></p>
 				<p><label>상품명 : <input type="text" name="productTitle"></label></p>

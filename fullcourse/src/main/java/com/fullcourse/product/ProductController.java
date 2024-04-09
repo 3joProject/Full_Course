@@ -47,13 +47,14 @@ public class ProductController {
 		}
 	}
 	
+		
 	@PostMapping("/updateOK")
 	public String updateOK(ProductVO productVO) {
 		
 		int result = productService.updateOK(productVO);
 		log.info("result:{}",result);
 		
-		return "redirect:selectOne?num" + productVO.getProductNum();
+		return "redirect:selectOne?num=" + productVO.getProductNum();
 	}
 	
 	@GetMapping("/delete")
@@ -101,8 +102,10 @@ public class ProductController {
 		//페이지 링크 개수
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("content", "thymeleaf/product/th_selectAll");
+		model.addAttribute("title", "상품목록");
 		
-		return "thymeleaf/product/selectAll";
+		return "thymeleaf/product/th_layout_main";
 	}
 	
 	@GetMapping("/selectOne")
@@ -112,11 +115,12 @@ public class ProductController {
 	    
 		model.addAttribute("vo2", vo2);
 		
-		model.addAttribute("content", "thymeleaf/product/selectOne");
+		model.addAttribute("content", "thymeleaf/product/th_selectOne");
 		model.addAttribute("title", "상품정보 및 변경");
 	
-		return "thymeleaf/product/selectAll";
+		return "thymeleaf/product/th_layout_main";
 	}
+	
 	@GetMapping("/searchList")
 	public String searchList(@RequestParam(defaultValue = "1") int cpage,
 			@RequestParam(defaultValue = "5") int pageBlock, String searchKey, String searchWord, Model model) {

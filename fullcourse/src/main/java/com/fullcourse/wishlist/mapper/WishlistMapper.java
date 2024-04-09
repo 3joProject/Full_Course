@@ -5,18 +5,28 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.tour.TourVO;
 import com.fullcourse.wishlist.WishlistVO;
 import com.fullcourse.wishlist.WishlistViewVO;
 
 @Mapper
 public interface WishlistMapper {
 
-	List<WishlistVO> selectAll();
+	List<WishlistViewVO> selectAllTour(Map<String, Integer> map);
 
-	List<WishlistViewVO> selectAllTour();
+	List<WishlistViewVO> selectAllFestival(Map<String, Integer> map);
 
-	List<WishlistViewVO> selectAllFestival();
+	int insertOKtour(TourVO vo);
+	
+	int getTotalRowsTour();
 
-	int getTotalRows();
+	int insertOKfestival(FestivalVO vo);
+
+	int getTotalRowsFestival();
+
+	int deleteOK(WishlistVO vo);
+	
+	
 
 }

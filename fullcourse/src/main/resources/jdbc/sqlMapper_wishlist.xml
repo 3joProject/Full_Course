@@ -3,16 +3,12 @@
 
 <mapper namespace="com.fullcourse.wishlist.mapper.WishlistMapper">
 
-	<select id="selectAll" resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from wishList where wishListId=1 order by wishListNum desc
-	</select>
-
 	<select id="selectAllTour"
 		resultType="com.fullcourse.wishlist.WishlistViewVO">
-		select wishlist.wishListNum, wishlist.wishListId, tour.tourNum,
+		select wishlist.wishListNum, wishlist.wishListId, tour.tourNum, tour.tourname,
 		tour.tourAddress, tour.tourContent, tour.tourUsetime
 		from tour, wishlist where tour.tourNum = wishlist.wishListTourId and
-		wishListId=1
+		wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>
 
 	<select id="selectAllFestival"
@@ -22,27 +18,33 @@
 		festival.festivalContent,
 		festival.festivalStart, festival.festivalFinal, festival.festivalUsetime
 		from wishlist, festival where festival.festivalNum =
-		wishlist.wishListFestivalId and wishListId=1
+		wishlist.wishListFestivalId and wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>
 
-	<select id="getTotalRows" resultType="int">
-		select count(*) total_rows from wishList where wishListId=1;
+	<select id="getTotalRowsTour" resultType="int">
+		select count(*) totalRowsTour from wishList, tour where tour.tourNum = wishlist.wishListTourId and wishListId=1
+	</select>
+	
+	<select id="getTotalRowsFestival" resultType="int">
+		select count(*) totalRowsFestival from wishList, festival 
+		where festival.festivalNum = wishlist.wishListFestivalId and wishListId=1
 	</select>
 
-
-	<insert id="insertOK" parameterType="com.fullcourse.wishlist.WishlistVO">
+	<insert id="insertOKtour" parameterType="com.fullcourse.tour.TourVO">
 		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
+		wishList(wishlistId, wishListTourId)
+		values(1,#{tourNum})
 	</insert>
 
-	<update id="updateOK" parameterType="com.fullcourse.wishlist.WishlistVO">
-		update member set pw=#{pw},name=#{name},tel=#{tel}
-		where num=#{num}
-	</update>
+	<insert id="insertOKfestival" parameterType="com.fullcourse.festival.FestivalVO">
+		insert into
+		wishList(wishlistId, wishListFestivalId)
+		values(1,#{festivalNum})
+	</insert>
+
 
 	<delete id="deleteOK" parameterType="com.fullcourse.wishlist.WishlistVO">
-		delete from member where num=#{num}
+		delete from wishList where wishListNum=#{wishListNum}
 	</delete>
 
 

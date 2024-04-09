@@ -11,6 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
+
+import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.tour.TourVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,59 +27,112 @@ public class WishlistController {
 	private WishlistService service;
 	
 	@GetMapping("/wishList")
-	public String wishList(@RequestParam(name="cpage",defaultValue = "1") int cpage,
-			@RequestParam(name="pageBlock",defaultValue = "6") int pageBlock, Model model) {
+	public String wishList(@RequestParam(name="tpage",defaultValue = "1") int tpage, @RequestParam(name="fpage",defaultValue = "1") int fpage,
+			@RequestParam(name="pageBlock",defaultValue = "3") int pageBlock, Model model) {
 		log.info("wishList");
-		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
-		
-		List<WishlistVO> vos = service.selectAll();
-		
-		log.info("vos:{}",vos);
-		
-		List<WishlistViewVO> vosTour = service.selectAllTour();
+		log.info("tpage : {}, fpage : {}, pageBlock : {}", tpage, fpage, pageBlock);
+
+		List<WishlistViewVO> vosTour = service.selectAllTour(tpage, pageBlock);
 		
 		log.info("vosTour:{}",vosTour);
 		
-		List<WishlistViewVO> vosFestival = service.selectAllFestival();
+		model.addAttribute("vosTour",vosTour);
+		
+		int totalRowsTour = service.getTotalRowsTour();
+		log.info("totalRowsTour:{}", totalRowsTour);
+		
+		int totalPageCountTour = 1;
+		if (totalRowsTour / pageBlock == 0) {
+			totalPageCountTour = 1;
+		} else if (totalRowsTour % pageBlock == 0) {
+			totalPageCountTour = totalRowsTour / pageBlock;
+		} else {
+			totalPageCountTour = totalRowsTour / pageBlock + 1;
+		}
+		
+		log.info("totalPageCountTour:{} ", totalPageCountTour);
+		
+		model.addAttribute("totalPageCountTour", totalPageCountTour);
+		
+		
+		List<WishlistViewVO> vosFestival = service.selectAllFestival(fpage, pageBlock);
 		
 		log.info("vosFestival:{}",vosFestival);
 		
-		List<WishlistViewVO> vosAll = new ArrayList<>();
-		vosAll.addAll(vosTour);
-		vosAll.addAll(vosFestival);
+		model.addAttribute("vosFestival",vosFestival);
 		
-		log.info("vosAll:{}",vosAll);
+		int totalRowsFestival = service.getTotalRowsFestival();
+		log.info("totalRowsFestival:{}", totalRowsFestival);
 		
-		try {
-			vosAll = vosAll.stream().sorted(Comparator.comparing(WishlistViewVO::getWishListNum).reversed()).
-					collect(Collectors.toList()).subList((cpage-1)*pageBlock, pageBlock);
-		} catch (IndexOutOfBoundsException e) {
-			
-		}
-		
-		log.info("vosAll2:{}",vosAll);
-		
-		model.addAttribute("vosAll",vosAll);
-		
-		int total_rows = service.getTotalRows();
-		log.info("total_rows:{}", total_rows);
-		
-		int totalPageCount = 1;
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
+		int totalPageCountFestival = 1;
+		if (totalRowsFestival / pageBlock == 0) {
+			totalPageCountFestival = 1;
+		} else if (totalRowsFestival % pageBlock == 0) {
+			totalPageCountFestival = totalRowsFestival / pageBlock;
 		} else {
-			totalPageCount = total_rows / pageBlock + 1;
+			totalPageCountFestival = totalRowsFestival / pageBlock + 1;
 		}
 		
-		log.info("totalPageCount:{} ", totalPageCount);
+		log.info("totalPageCountFestival:{} ", totalPageCountFestival);
 		
-		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("totalPageCountFestival", totalPageCountFestival);
+		
+		
+		model.addAttribute("vosFestival",vosFestival);
+		
+//		log.info("vosFestival:{}",vosFestival);
+//		
+//		List<WishlistViewVO> vosAll = new ArrayList<>();
+//		vosAll.addAll(vosTour);
+//		vosAll.addAll(vosFestival);
+//		
+//		log.info("vosAll:{}",vosAll);
+//		
+//		try {
+//			vosAll = vosAll.stream().sorted(Comparator.comparing(WishlistViewVO::getWishListNum).reversed()).
+//					collect(Collectors.toList()).subList((cpage-1)*pageBlock, pageBlock);
+//		} catch (IndexOutOfBoundsException e) {
+//			
+//		}
+//		
+//		log.info("vosAll2:{}",vosAll);
+//		
+//		model.addAttribute("vosAll",vosAll);
+		
 
-		
-	
 		return "thymeleaf/wishList/wishListPage";
+	}
+	
+	@GetMapping("/wishList/insertOK/tour")
+	public RedirectView insertOKtour(TourVO vo) {
+		log.info("insertOKtour");
+		log.info("vo:{}",vo);
+		
+		int result = service.insertOKtour(vo);
+		log.info("result:{}",result);
+		
+		return new RedirectView("/wishList");
+	}
+	
+	@GetMapping("/wishList/insertOK/festival")
+	public RedirectView insertOKfestival(FestivalVO vo) {
+		log.info("insertOKfestival");
+		log.info("vo:{}",vo);
+		
+		int result = service.insertOKfestival(vo);
+		log.info("result:{}",result);
+		
+		return new RedirectView("/wishList");
+	}
+	
+	@GetMapping("/wishList/deleteOK")
+	public RedirectView deleteOkwishList(WishlistVO vo) {
+		log.info("deleteOkwishList");
+		log.info("vo:{}",vo);
+		
+		int result = service.deleteOK(vo);
+		
+		return new RedirectView("/wishList");
 	}
 	
 	

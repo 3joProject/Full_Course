@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class FestivalVO {
 	
 	private int festivalNum;
+
     private String festivalName;
     private String festivalAddress;
     private String festivalContent;
@@ -25,5 +26,6 @@ public class FestivalVO {
     private int festivalViews;
     private int festivalThumbUp;
     private String festivalImg;
-    private MultipartFile file;
+
+    
 }
