@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullcourse.cart.mapper.CartMapper;
+import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.tour.TourVO;
 import com.fullcourse.wishlist.mapper.WishlistMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,20 +21,46 @@ public class WishlistService {
 	@Autowired
 	private WishlistMapper mapper;
 	
-	public List<WishlistVO> selectAll() {
-		return mapper.selectAll();
+
+	public List<WishlistViewVO> selectAllTour(int tpage, int pageBlock) {
+		int startRow = (tpage - 1) * pageBlock + 1;
+
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startRow", startRow-1);
+		map.put("pageBlock", pageBlock);
+		
+		return mapper.selectAllTour(map);
 	}
 
-	public List<WishlistViewVO> selectAllTour() {
-		return mapper.selectAllTour();
+	public List<WishlistViewVO> selectAllFestival(int fpage, int pageBlock) {
+		int startRow = (fpage - 1) * pageBlock + 1;
+
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startRow", startRow-1);
+		map.put("pageBlock", pageBlock);
+		
+		return mapper.selectAllFestival(map);
 	}
 
-	public List<WishlistViewVO> selectAllFestival() {
-		return mapper.selectAllFestival();
+	public int insertOKtour(TourVO vo) {
+		return mapper.insertOKtour(vo);
 	}
 
-	public int getTotalRows() {
-		return mapper.getTotalRows();
+	public int getTotalRowsTour() {
+		return mapper.getTotalRowsTour();
+	}
+	
+	public int insertOKfestival(FestivalVO vo) {
+		return mapper.insertOKfestival(vo);
 	}
 
+	public int getTotalRowsFestival() {
+		return mapper.getTotalRowsFestival();
+	}
+
+	public int deleteOK(WishlistVO vo) {
+		return mapper.deleteOK(vo);
+	}
+	
+	
 }

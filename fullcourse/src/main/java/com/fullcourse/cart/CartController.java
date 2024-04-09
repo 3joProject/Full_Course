@@ -21,7 +21,7 @@ public class CartController {
 	@Autowired
 	private CartService service;
 	
-	@GetMapping("/cart_selectAll")
+	@GetMapping("/cart")
 	public String cart_selectAll(Model model) {
 		log.info("/cart_selectAll");
 		
@@ -43,7 +43,7 @@ public class CartController {
 		log.info("result:{}",result);
 		
 		
-		return "redirect:cart_selectAll";
+		return "redirect:cart";
 	}
 	
 	@PostMapping("/cart_insertOK")
@@ -54,7 +54,7 @@ public class CartController {
 		int result = service.insertOK(vo);
 		log.info("result:{}",result);
 		
-		return "redirect:cart_selectAll";
+		return "redirect:cart";
 	}
 	
 	@GetMapping("/cart_updateOK")
@@ -66,7 +66,7 @@ public class CartController {
 		log.info("result:{}",result);
 		
 		
-		return "redirect:cart_selectAll";
+		return "redirect:cart";
 	}
 	
 	
