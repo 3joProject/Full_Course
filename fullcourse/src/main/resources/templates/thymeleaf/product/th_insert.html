@@ -1,6 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="common_content(title)">
 	<div class="container">
+		
+		<div class="text-center mb-3 pb-3">
+        	<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행 상품</h6>
+            <h1>상품 등록 하기</h1>
+        </div>
+            
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3">[[${title}]]</h4>
@@ -20,8 +26,8 @@
 					</div>
 										
 					<div class="mb-3">
-						<label for="file">상품 이미지</label> <input type="file"
-							class="form-control" name="file" id="file"  required>
+						<label for="imageUpload">상품 이미지</label> <input type="file"
+							class="form-control" name="imageUpload" id="imageUpload" accept="image/*"  required>
 						<div class="invalid-feedback">파일을 선택하세요.</div>
 					</div>
 					
