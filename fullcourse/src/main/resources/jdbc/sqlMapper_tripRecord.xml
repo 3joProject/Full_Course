@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fullcourse.triprecord.mapper.TripRecordMapper">
-	
+
+	<select id="selectAll" resultType="com.fullcourse.triprecord.TripRecordVO">
+		select * from tripRecord where triprecMnum=1 order by triprecNum desc
+		limit #{startRow}, #{pageBlock}
+	</select>
+
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from tripRecord where triprecMnum=1
+	</select>
+
 	<insert id="insertOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
-		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
+		insert into tripRecord(triprecMnum, triprecTripdate, triprecContent,triprecImage, triprecDate, triprecAddress) 
+		values(1,#{triprecTripdate}, #{triprecContent}, #{triprecImage}, #{triprecDate}, #{triprecAddress})
 	</insert>
-	
+
+
+
+
 	<update id="updateOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		update member set pw=#{pw},name=#{name},tel=#{tel}
 		where num=#{num}
 	</update>
-	
+
 	<delete id="deleteOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		delete from member where num=#{num}
 	</delete>
-	
-	<select id="selectAll" resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member order by
-		num desc
-	</select>
-	
+
+
 	<select id="selectOne" resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where
 		num=#{num}
 	</select>
-	
+
 	<select id="searchListID"
 		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where id like #{searchWord}
@@ -39,37 +44,34 @@
 		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member where name like #{searchWord}
 	</select>
-	
+
 	<select id="selectAllPageBlock"
 		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member 
+		select * from member
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
-	
+
 	<select id="searchListID_PAGE"
 		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member
-		where id like #{searchWord} 
+		where id like #{searchWord}
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
-	
+
 	<select id="searchListNAME_PAGE"
 		resultType="com.fullcourse.triprecord.TripRecordVO">
 		select * from member
-		where name like #{searchWord} 
+		where name like #{searchWord}
 		order by num desc limit #{startRow},#{pageBlock}
 	</select>
-	
-	<select id="getTotalRows"	resultType="int">
-		select count(*) total_rows from member
-	</select>
-	
-	<select id="search_total_rows_id"	resultType="int">
-		select count(*) total_rows from member  where id like #{searchWord}
+
+
+	<select id="search_total_rows_id" resultType="int">
+		select count(*) total_rows from member where id like #{searchWord}
 	</select>
 
-	<select id="search_total_rows_name"	resultType="int">
-		select count(*) total_rows from member  where name like #{searchWord}
+	<select id="search_total_rows_name" resultType="int">
+		select count(*) total_rows from member where name like #{searchWord}
 	</select>
 
 </mapper>
