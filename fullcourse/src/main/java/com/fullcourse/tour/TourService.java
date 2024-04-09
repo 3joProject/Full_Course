@@ -75,5 +75,9 @@ public class TourService {
 		}
 	}
 
+	public List<TourVO> tourSelectAllTop() {
+		return mapper.tourSelectAllTop();
+	}
+
 	
 }

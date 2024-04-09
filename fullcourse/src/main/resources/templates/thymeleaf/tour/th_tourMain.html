@@ -6,61 +6,78 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
-				
-					
-    <!-- 여행지목록 start-->
-    	
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
-                <h1>Best 여행지</h1>
-            </div>
-            <div class="row">
-				<th:block th:each="vo : ${vos}">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="img/destination-1.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" th:href="@{|tour/tourSelectOne?tourNum=${vo.tourNum}|}">
-                            <h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
-                            <span th:text="${vo.tourName}"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </th:block>
-    <!-- 여행지목록 end -->
 
-					  <!-- 여행지목록 start-->
-    	
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
-                <h1>여행지 목록</h1>
-            </div>
-            <div class="row">
-				<th:block th:each="vo : ${vos}">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="img/destination-1.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" th:href="@{|tour/tourSelectOne?tourNum=${vo.tourNum}|}">
-                            <h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
-                            <span th:text="${vo.tourName}"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </th:block>
-    <!-- 여행지목록 end -->
-				
+
+				<!-- Header Start -->
+				<div class="container-fluid page-header">
+					<div class="container">
+						<div class="d-flex flex-column align-items-center justify-content-center"
+							style="min-height: 400px">
+							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
+						</div>
+					</div>
 				</div>
+				<!-- Header End -->
+				<!-- 여행지목록 start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+							<h1>Best 여행지</h1>
+						</div>
+						<div class="row">
+							<th:block th:each="vo : ${vos2}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+										<img class="img-fluid" src="img/destination-1.jpg" alt="">
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
+											<h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
+											<span th:text="${vo.tourName}"></span>
+										</a>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				</th:block>
+				<!-- 여행지목록 end -->
+
+				<!-- 여행지목록 start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+							<h1>여행지 목록</h1>
+						</div>
+						<div class="row">
+							<th:block th:each="vo : ${vos}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+										<img class="img-fluid" src="img/destination-1.jpg" alt="">
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
+											<h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
+											<span th:text="${vo.tourName}"></span>
+										</a>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				</th:block>
+				<!-- 여행지목록 end -->
+
 			</div>
 		</div>
 	</div>
+</div>
 
 </html>

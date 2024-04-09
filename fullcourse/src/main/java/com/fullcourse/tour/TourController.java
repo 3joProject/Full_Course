@@ -28,6 +28,11 @@ public class TourController {
 
 //		List<TourVO> vos = service.tourSelectAllTop();
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
+		
+		//best 여행지
+		List<TourVO> vos2 = service.tourSelectAllTop();
+		model.addAttribute("vos2", vos2);
+
 		model.addAttribute("vos", vos);
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
 		model.addAttribute("title", "여행지목록");
@@ -39,13 +44,12 @@ public class TourController {
 	public String tourDetails(TourVO vo, Model model) {
 		log.info("tourDetails...");
 		log.info("vo:{}", vo);
-
+	
 		TourVO vo2 = service.tourSelectOne(vo);
-
 		model.addAttribute("vo2", vo2);
 
-		model.addAttribute("content", "thymeleaf/tour/th_selectOne");
-		model.addAttribute("title", "실험");
+		model.addAttribute("content", "thymeleaf/tour/th_tourDetails");
+		model.addAttribute("title", "여행상세페이지");
 
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
@@ -77,12 +81,34 @@ public class TourController {
 	}
 
 	// 여행지 정보 수정 페이지 이동
-	@GetMapping("/tour/tourUpdate ")
-	public String tourUpdate() {
+	@GetMapping("/tour/tourUpdate")
+	public String tourUpdate(TourVO vo, Model model) {
 		log.info("tourUpdate ...");
+		log.info("vo:{}", vo);
 
-		return "thymeleaf/single";
+		TourVO vo2 = service.tourSelectOne(vo);
+
+		model.addAttribute("vo2", vo2);
+
+		model.addAttribute("content", "thymeleaf/tour/th_update");
+		model.addAttribute("title", "여행지 정보수정");
+		return "thymeleaf/th_tourLayout_main";
 	}
+	
+//	// 여행지 정보 검색 ?details랑 겹치나 확인
+//		@GetMapping("/tour/tourSelectOne")
+//		public String tourSelectOne(TourVO vo, Model model) {
+//			log.info("tourSelectOne ...");
+//			log.info("vo:{}", vo);
+//
+//			TourVO vo2 = service.tourSelectOne(vo);
+//
+//			model.addAttribute("vo2", vo2);
+//
+//			model.addAttribute("content", "thymeleaf/tour/th_update");
+//			model.addAttribute("title", "여행지 상세정보");
+//			return "thymeleaf/tour/th_tourLayout_main";
+//		}
 
 	// 여행지 정보 수정 완료처리 -> tourDeails페이지로 이동?
 	@PostMapping("/tour/tourUpdateOK")
@@ -120,21 +146,7 @@ public class TourController {
 		return "redirect:tourSelectAll";
 	}
 
-	// 여행지 정보 검색 ?details랑 겹치나 확인
-	@GetMapping("/tour/tourSelectOne")
-	public String tourSelectOne(TourVO vo, Model model) {
-		log.info("tourSelectOne ...");
-		log.info("vo:{}", vo);
-
-		TourVO vo2 = service.tourSelectOne(vo);
-
-		model.addAttribute("vo2", vo2);
-
-		model.addAttribute("content", "thymeleaf/tour/th_selectOne");
-		model.addAttribute("title", "여행지 상세정보");
-
-		return "thymeleaf/tour/th_tourLayout_main";
-	}
+	
 
 	// 여행지 목록
 	@GetMapping("/tour/tourSelectAll")

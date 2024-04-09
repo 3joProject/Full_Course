@@ -32,6 +32,8 @@ public interface TourMapper {
 
 	public int search_total_rows_tourName(Map<String, String> map);
 
+	public List<TourVO> tourSelectAllTop();
+
 	
 
 }
