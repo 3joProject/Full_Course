@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FestivalVO {
 	
-	private int festival_num;
+	private int festivalNum;
     private String festival_name;
     private String festival_address;
     private String festival_content;
