@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fullcourse.member.MemberVO;
 
@@ -26,7 +28,6 @@ public class TourController {
 			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
 		log.info("/tourMain...");
 
-//		List<TourVO> vos = service.tourSelectAllTop();
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		
 		//best 여행지
@@ -158,7 +159,7 @@ public class TourController {
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		model.addAttribute("vos", vos);
 
-		// member테이블에 들어있는 모든회원수는 몇명?
+		// tour테이블에 들어있는 모든여행지수는 몇개?
 		int total_rows = service.getTotalRows();
 		log.info("total_rows:" + total_rows);
 
@@ -194,7 +195,7 @@ public class TourController {
 
 		model.addAttribute("vos", vos);
 
-		// 키워드검색 모든회원수는 몇명?
+		// 키워드검색 모든여행지는 몇개?
 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
 		log.info("total_rows:" + total_rows);
 
@@ -217,4 +218,11 @@ public class TourController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping("/tour2")
+	public String getTourList() {
+		
+		return null;
+		
+	}
 }

@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FestivalVO {
 	
-	private int festival_num;
-    private String festival_name;
-    private String festival_address;
-    private String festival_content;
-    private String festival_start;
-    private String festival_final;
-    private String festival_usetime;
-    private String festival_tel;
-    private int festival_view;
-    private int festival_thumbUp;
-    private String festival_img;
+	private int festivalNum;
+    private String festivalName;
+    private String festivalAddress;
+    private String festivalContent;
+    private String festivalStart;
+    private String festivalFinal;
+    private String festivalUsetime;
+    private String festivalTel;
+    private int festivalViews;
+    private int festivalThumbUp;
+    private String festivalImg;
     private MultipartFile file;
 }

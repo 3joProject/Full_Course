@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+				<!-- Search Form start-->
+				<div class="mb-5">
+					<div class="bg-white" style="padding: 30px;">
+						<div class="input-group">
+							<form class="form-inline my-2 my-lg-0 justify-content-end" action="festivalSearchList">
+								<select class="selectpicker" name="searchKey">
+									<option value="address">주소</option>
+									<option value="festivalName">여행지이름</option>
+								</select>
+
+								<input class="form-control mr-sm-2" type="search" placeholder="Search"
+									aria-label="Search" name="searchWord" value="ad">
+								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+					<!-- Search Form end-->
+					
+					
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">festivalNum</th>
+								<th scope="col">festivalName</th>
+								<th scope="col">festivalAddress</th>
+								<th scope="col">festivalContent</th>
+								<th scope="col">festivalStart</th>
+								<th scope="col">festivalFinal</th>
+								<th scope="col">festivalUsetime</th>
+								<th scope="col">festivalViews</th>
+								<th scope="col">festivalThumbUp</th>
+								<th scope="col">festivalImg</th>
+								<th scope="col"></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vo : ${vos}">
+								<tr>
+									<th scope="row"><a th:href="@{|festivalSelectOne?festivalNum=${vo.festivalNum}|}">
+										<span th:text="${vo.festivalNum}"></span></a></th>
+									<td><a th:href="@{|festivalSelectOne?festivalNum=${vo.festivalNum}|}"><span
+												th:text="${vo.festivalName}"></span></a></td>
+									<td><span th:text="${vo.festivalAddress}"></span></td>
+									<td><span th:text="${vo.festivalContent}"></span></td>
+									<td><span th:text="${vo.festivalStart}"></span></td>
+									<td><span th:text="${vo.festivalFinal}"></span></td>
+									<td><span th:text="${vo.festivalUsetime}"></span></td>
+									<td><span th:text="${vo.festivalViews}"></span></td>
+									<td><span th:text="${vo.festivalThumbUp}"></span></td>
+									<td><span th:text="${vo.festivalImg}"></span></td>
+									<td><a th:href="@{|festivalDelete?festivalNum=${vo.festivalNum}|}"><span>delete</span></a></td>
+								</tr>
+
+							</th:block>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6">
+									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+										<th:block th:if="${param.searchKey}== null">
+											<a th:href="|festivalSelectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+										</th:block>
+										<th:block th:if="${param.searchKey}!= null">
+											<a
+												th:href="@{festivalSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+												&nbsp;</a>
+										</th:block>
+									</th:block>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</html>
