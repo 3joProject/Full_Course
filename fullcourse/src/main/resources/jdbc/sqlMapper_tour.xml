@@ -25,6 +25,11 @@
 		tourNum desc
 	</select>
 	
+	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">
+		SELECT * FROM Tour ORDER BY tourThumbUp DESC LIMIT 3;
+	</select>
+	
+	
 	<select id="tourSelectOne" resultType="com.fullcourse.tour.TourVO">
 		select * from Tour where
 		tourNum=#{tourNum}
