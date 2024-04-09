@@ -63,7 +63,7 @@
 								<td colspan="6">
 									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
 										<th:block th:if="${param.searchKey}== null">
-											<a th:href="|m_selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+											<a th:href="|tourSelectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
 										</th:block>
 										<th:block th:if="${param.searchKey}!= null">
 											<a
