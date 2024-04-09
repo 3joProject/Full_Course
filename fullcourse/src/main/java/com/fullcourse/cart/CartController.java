@@ -12,6 +12,7 @@ import com.fullcourse.product.ProductVO;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
@@ -22,8 +23,8 @@ public class CartController {
 	private CartService service;
 	
 	@GetMapping("/cart")
-	public String cart_selectAll(Model model) {
-		log.info("/cart_selectAll");
+	public String cart(Model model) {
+		log.info("cart");
 		
 		List<CartVO> vos = service.selectAll();
 		
@@ -34,39 +35,39 @@ public class CartController {
 		return "thymeleaf/cart/cartPage";
 	}
 	
-	@GetMapping("/cart_deleteOK")
-	public String cart_deleteOK(CartVO vo) {
-		log.info("/cart_deleteOK");
+	@GetMapping("/cart/deleteOK")
+	public RedirectView deleteOKcart(CartVO vo) {
+		log.info("deleteOKcart");
 		log.info(vo.toString());
 		
 		int result = service.deleteOK(vo);
 		log.info("result:{}",result);
 		
 		
-		return "redirect:cart";
+		return new RedirectView("/cart");
 	}
 	
-	@PostMapping("/cart_insertOK")
-	public String cart_insertOK(ProductVO vo) {
-		log.info("/cart_insertOK");
+	@PostMapping("/cart/insertOK")
+	public RedirectView insertOKcart(ProductVO vo) {
+		log.info("insertOKcart");
 		log.info(vo.toString());
 
 		int result = service.insertOK(vo);
 		log.info("result:{}",result);
 		
-		return "redirect:cart";
+		return new RedirectView("/cart");
 	}
 	
-	@GetMapping("/cart_updateOK")
-	public String cart_updateOK(CartVO vo) {
-		log.info("/cart_updateOK");
+	@GetMapping("/cart/updateOK")
+	public RedirectView updateOKcart(CartVO vo) {
+		log.info("updateOKcart");
 		log.info(vo.toString());
 
 		int result = service.updateOK(vo);
 		log.info("result:{}",result);
 		
 		
-		return "redirect:cart";
+		return new RedirectView("/cart");
 	}
 	
 	
