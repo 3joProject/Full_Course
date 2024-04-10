@@ -32,4 +32,16 @@ public class TripRecordService {
 	public int insertOK(TripRecordVO vo) {
 		return mapper.insertOK(vo);
 	}
+
+	public TripRecordVO selectOne(TripRecordVO vo) {
+		return mapper.selectOne(vo);
+	}
+
+	public int updateOK(TripRecordVO vo) {
+		return mapper.updateOK(vo);
+	}
+
+	public int deleteOK(TripRecordVO vo) {
+		return mapper.deleteOK(vo);
+	}
 }
