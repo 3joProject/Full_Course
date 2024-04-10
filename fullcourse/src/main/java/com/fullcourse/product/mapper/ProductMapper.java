@@ -16,7 +16,7 @@ public interface ProductMapper {
 	
 	public List<ProductVO> selectAll();
 	
-	public ProductVO selectOne(ProductVO productVO);
+	public ProductVO selectOne(ProductVO vo);
 	
 	List<ProductVO> searchList(String searchKey, String searchWord);
 	

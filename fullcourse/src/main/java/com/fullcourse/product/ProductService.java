@@ -45,9 +45,9 @@ public class ProductService {
 		return productMapper.selectAllPageBlock(map);
 	}
 	
-	public ProductVO selectOne(ProductVO productVO) {
+	public ProductVO selectOne(ProductVO vo) {
 		
-		return productMapper.selectOne(productVO);
+		return productMapper.selectOne(vo);
 	}
 	
 	public List<ProductVO> searchList(String searchKey, String searchWord) {
