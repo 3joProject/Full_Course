@@ -29,69 +29,7 @@ public class ProductService {
 		
 	}
 	
-	public List<ProductVO> selectAll() {
-		
-		return productMapper.selectAll();
-	}
-	
-	public List<ProductVO> selectAllPageBlock(int cpage, int pageBlock) {
-		
-		int startRow = (cpage-1) * pageBlock + 1;
-		
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("startRow", startRow-1);
-		map.put("pageBlock", pageBlock);
-		
-		return productMapper.selectAllPageBlock(map);
-	}
-	
-	public ProductVO selectOne(ProductVO vo) {
-		
-		return productMapper.selectOne(vo);
-	}
-	
-	public List<ProductVO> searchList(String searchKey, String searchWord) {
-		
-		Map<String, String> map = new HashMap<>();
-		map.put("searchWord", "%"+searchWord+"%");
-		
-		if(searchKey.equals("productMid")) {
-			return productMapper.searchListMid(map);
-		}else {
-			return productMapper.searchListTitle(map);
-		}
-	}
-	
-	public int getTotalRows() {
-        return productMapper.getTotalRows();
-    }
-	
-	public int getSearchTotalRows(String searchKey, String searchWord) {
-		Map<String, String> map = new HashMap<>();
-		map.put("searchWord", "%"+searchWord+"%");
-		
-		if(searchKey.equals("productMid")) {
-			return productMapper.search_total_rows_productMid(map);
-		}else {
-			return productMapper.search_total_rows_productTitle(map);
-		}
-	}
 
-	public List<ProductVO> searchListPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("searchWord", "%"+searchWord+"%");
-		
-		int startRow = (cpage - 1) * pageBlock + 1;
-		map.put("startRow", startRow-1);
-		map.put("pageBlock", pageBlock);
-		
-		if(searchKey.equals("id")) {
-			return productMapper.searchListMid_PAGE(map);
-		}else {
-			return productMapper.searchListTitle_PAGE(map);
-		}
-	}
 	
 	
 }
