@@ -6,8 +6,8 @@
 <mapper namespace="com.fullcourse.tour.mapper.TourMapper">
 	
 	<insert id="tourInsertOK" parameterType="com.fullcourse.tour.TourVO">
-    INSERT INTO tour (tourName, tourAddress, tourContent, tourUsetime, tourTel, tourViews, tourThumbUp, tourImg)
-    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourUsetime}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{tourImg})
+    INSERT INTO tour (tourName, tourAddress, tourContent, tourUsetime, tourTel, tourViews, tourThumbUp,longtitue, lattitue, tourImg)
+    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourUsetime}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
 </insert>
 
 	
