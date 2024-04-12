@@ -16,4 +16,10 @@ public interface TripRecordMapper {
 
 	int insertOK(TripRecordVO vo);
 
+	TripRecordVO selectOne(TripRecordVO vo);
+
+	int updateOK(TripRecordVO vo);
+
+	int deleteOK(TripRecordVO vo);
+
 }
