@@ -5,14 +5,15 @@
 
 	<select id="selectAll"
 		resultType="com.fullcourse.seller.sellerReview.SellerReviewVO">
-		select * from sellerReview where selrevId = 'user1' order by selrevDate desc
+		select * from sellerReview where selrevId = 'user1' order by selrevDate
+		desc
 	</select>
 
 	<insert id="insertOK"
 		parameterType="com.fullcourse.seller.sellerReview.SellerReviewVO">
 		insert into
 		sellerReview(selrevId,selrevContent,selrevDate,selrevWriter,selrevStatus)
-		values('user1',#{selrevContent},#{selrevDate},#{selrevWriter},'normal')
+		values('user1',#{selrevContent},#{selrevDate},#{selrevWriter},'NORMAL')
 	</insert>
 
 	<delete id="deleteOK"
@@ -22,10 +23,17 @@
 
 	<update id="updateOK"
 		parameterType="com.fullcourse.seller.sellerReview.SellerReviewVO">
-		update sellerReview set selrevContent=#{selrevContent},selrevDate=#{selrevDate}
+		update sellerReview set
+		selrevContent=#{selrevContent},selrevDate=#{selrevDate}
 		where selrevNum=#{selrevNum}
 	</update>
 
+	<insert id="report"
+		parameterType="com.fullcourse.admin.report.ReportVO">
+		insert into
+		report(reportCategory, reportContent,reportReportedId,reportReportId,reportReview,reportStatus)
+		values(#{reportCategory},#{reportContent},#{reportReportedId},#{reportReportId},#{reportReview},'NORMAL')
+	</insert>
 
 
 	<select id="selectOne"

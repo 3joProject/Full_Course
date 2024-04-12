@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fullcourse.admin.report.ReportVO;
 import com.fullcourse.seller.sellerReview.mapper.SellerReviewMapper;
 
 @Service
@@ -27,6 +28,10 @@ public class SellerReviewService {
 
 	public int updateOK(SellerReviewVO vo) {
 		return mapper.updateOK(vo);
+	}
+
+	public int report(ReportVO vo) {
+		return mapper.report(vo);
 	}
 	
 }
