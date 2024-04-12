@@ -7,11 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fullcourse.member.MemberVO;
+import com.fullcourse.tour.tourComment.TourCommentService;
+import com.fullcourse.tour.tourComment.TourCommentVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +20,8 @@ public class TourController {
 
 	@Autowired
 	private TourService service;
+	@Autowired
+	private TourCommentService comService;
 
 	// 여행 페이지 메인
 	@GetMapping("/tour")
@@ -51,6 +52,13 @@ public class TourController {
 
 		model.addAttribute("content", "thymeleaf/tour/th_tourDetails");
 		model.addAttribute("title", "여행상세페이지");
+		
+		//댓글목록 처리로직
+				TourCommentVO cvo = new TourCommentVO();
+				cvo.setTourcoTnum(vo.getTourNum());
+				List<TourCommentVO> cvos = comService.tourCommentSelectAll(cvo);
+				
+				model.addAttribute("cvos", cvos);
 
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
@@ -218,11 +226,5 @@ public class TourController {
 
 	}
 
-	@ResponseBody
-	@RequestMapping("/tour2")
-	public String getTourList() {
-		
-		return null;
-		
-	}
+	
 }

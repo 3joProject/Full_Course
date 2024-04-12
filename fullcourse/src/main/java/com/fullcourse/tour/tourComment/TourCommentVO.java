@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TourCommentVO {
 
-	private int tourco_num;
-    private String tourco_content;
-    private String tourco_writer;
-    private String tourco_date; // LocalDate로 변경하는 것이 좋을 수 있습니다.
-    private int tourco_tnum;
-    private TourCoStatus tourco_status;
+	private int tourcoNum;
+    private String tourcoContent;
+    private String tourcoWriter;
+    private String tourcoDate; // LocalDate로 변경하는 것이 좋을 수 있습니다.
+    private int tourcoTnum;
+    private TourCoStatus tourcoStatus;
 }

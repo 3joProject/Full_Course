@@ -5,24 +5,27 @@
 
 <mapper namespace="com.fullcourse.tour.tourComment.mapper.TourCommentMapper">
 	
-	<insert id="insertOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
-		insert into
-		member(id,pw,name,tel)
-		values(#{id},#{pw},#{name},#{tel})
+	<insert id="tourCommentInsertOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
+<!--		insert into-->
+<!--		tourcomment(tourcoContent,tourcoWriter,tourcoDate,tourcoTnum,tourcoStatus)-->
+<!--		values(#{tourcoContent},#{tourcoWriter},#{tourcoDate},#{tourcoTnum},#{tourcoStatus})-->
+INSERT INTO tourcomment(tourcoContent, tourcoWriter, tourcoTnum) 
+    VALUES (#{tourcoContent}, #{tourcoWriter}, #{tourcoTnum})
+
 	</insert>
 	
-	<update id="updateOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
-		update member set pw=#{pw},name=#{name},tel=#{tel}
-		where num=#{num}
+	
+	<update id="tourCommentUpdateOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
+		update tourcomment set tourcoContent=#{tourcoContent} 
+		where tourcoNum=#{tourcoNum}
 	</update>
 	
-	<delete id="deleteOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
-		delete from member where num=#{num}
+	<delete id="tourCommentDeleteOK" parameterType="com.fullcourse.tour.tourComment.TourCommentVO">
+		delete from tourcomment where tourcoNum=#{tourcoNum}
 	</delete>
 	
-	<select id="selectAll" resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member order by
-		num desc
+	<select id="tourCommentSelectAll" resultType="com.fullcourse.tour.tourComment.TourCommentVO">
+		select * from tourcomment where tourcoTnum=#{tourcoTnum} order by tourcoNum desc
 	</select>
 	
 	<select id="selectOne" resultType="com.fullcourse.tour.tourComment.TourCommentVO">
@@ -30,46 +33,6 @@
 		num=#{num}
 	</select>
 	
-	<select id="searchListID"
-		resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member where id like #{searchWord}
-	</select>
-
-	<select id="searchListNAME"
-		resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member where name like #{searchWord}
-	</select>
 	
-	<select id="selectAllPageBlock"
-		resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member 
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-	
-	<select id="searchListID_PAGE"
-		resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member
-		where id like #{searchWord} 
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-	
-	<select id="searchListNAME_PAGE"
-		resultType="com.fullcourse.tour.tourComment.TourCommentVO">
-		select * from member
-		where name like #{searchWord} 
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-	
-	<select id="getTotalRows"	resultType="int">
-		select count(*) total_rows from member
-	</select>
-	
-	<select id="search_total_rows_id"	resultType="int">
-		select count(*) total_rows from member  where id like #{searchWord}
-	</select>
-
-	<select id="search_total_rows_name"	resultType="int">
-		select count(*) total_rows from member  where name like #{searchWord}
-	</select>
 
 </mapper>
