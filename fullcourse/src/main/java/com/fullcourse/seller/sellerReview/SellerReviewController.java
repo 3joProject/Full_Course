@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.fullcourse.admin.report.ReportVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -66,4 +68,14 @@ public class SellerReviewController {
 		return new RedirectView("/sellerReview");
 	}
 	
+	@PostMapping("/sellerReview/report")
+	public RedirectView sellerReviewReport(@ModelAttribute("ReportVO") ReportVO vo) {
+		log.info("sellerReviewReport");
+		log.info("vo={}",vo);
+		
+		int result = service.report(vo);
+		log.info("result={}",result);
+		
+		return new RedirectView("/sellerReview");
+	}
 }
