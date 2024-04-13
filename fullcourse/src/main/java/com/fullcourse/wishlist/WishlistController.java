@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fullcourse.festival.FestivalVO;
@@ -104,23 +106,37 @@ public class WishlistController {
 	}
 	
 	@GetMapping("/wishList/insertOK/tour")
-	public RedirectView insertOKtour(TourVO vo) {
+	public RedirectView insertOKtour(TourVO vo, RedirectAttributes redirectAttributes) {
 		log.info("insertOKtour");
 		log.info("vo:{}",vo);
 		
-		int result = service.insertOKtour(vo);
-		log.info("result:{}",result);
+		int chkWDuplTour = service.chkWDuplTour(vo);
+		log.info("chkWDuplTour:{}",chkWDuplTour);
+		
+		if(chkWDuplTour > 0) {
+			redirectAttributes.addFlashAttribute("warningMessageTour", "이미 추가된 관광지입니다."); // 경고 메시지 설정
+		}else {
+			int result = service.insertOKtour(vo);
+			log.info("result:{}",result);
+		}
 		
 		return new RedirectView("/wishList");
 	}
 	
 	@GetMapping("/wishList/insertOK/festival")
-	public RedirectView insertOKfestival(FestivalVO vo) {
+	public RedirectView insertOKfestival(FestivalVO vo, RedirectAttributes redirectAttributes) {
 		log.info("insertOKfestival");
 		log.info("vo:{}",vo);
 		
-		int result = service.insertOKfestival(vo);
-		log.info("result:{}",result);
+		int chkWDuplFestival = service.chkWDuplFestival(vo);
+		log.info("chkWDuplFestival:{}",chkWDuplFestival);
+		
+		if(chkWDuplFestival > 0) {
+			redirectAttributes.addFlashAttribute("warningMessageFestival", "이미 추가된 축제입니다."); // 경고 메시지 설정
+		}else {
+			int result = service.insertOKfestival(vo);
+			log.info("result:{}",result);
+		}
 		
 		return new RedirectView("/wishList");
 	}

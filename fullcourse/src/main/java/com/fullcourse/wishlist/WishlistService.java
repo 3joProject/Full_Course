@@ -61,6 +61,14 @@ public class WishlistService {
 	public int deleteOK(WishlistVO vo) {
 		return mapper.deleteOK(vo);
 	}
+
+	public int chkWDuplFestival(FestivalVO vo) {
+		return mapper.chkWDuplFestival(vo);
+	}
+
+	public int chkWDuplTour(TourVO vo) {
+		return mapper.chkWDuplTour(vo);
+	}
 	
 	
 }

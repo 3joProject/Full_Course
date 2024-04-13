@@ -36,12 +36,19 @@
 		values(1,#{tourNum})
 	</insert>
 
+	<select id="chkWDuplTour" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListTourId=#{tourNum};
+	</select>
+
 	<insert id="insertOKfestival" parameterType="com.fullcourse.festival.FestivalVO">
 		insert into
 		wishList(wishlistId, wishListFestivalId)
 		values(1,#{festivalNum})
 	</insert>
 
+	<select id="chkWDuplFestival" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListFestivalId=#{festivalNum};
+	</select>
 
 	<delete id="deleteOK" parameterType="com.fullcourse.wishlist.WishlistVO">
 		delete from wishList where wishListNum=#{wishListNum}

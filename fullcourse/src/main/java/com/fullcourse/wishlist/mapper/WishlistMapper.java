@@ -26,6 +26,10 @@ public interface WishlistMapper {
 	int getTotalRowsFestival();
 
 	int deleteOK(WishlistVO vo);
+
+	int chkWDuplFestival(FestivalVO vo);
+
+	int chkWDuplTour(TourVO vo);
 	
 	
 
