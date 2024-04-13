@@ -58,7 +58,7 @@ public class CartController {
 		return new RedirectView("/cart");
 	}
 	
-	@GetMapping("/cart/updateOK")
+	@PostMapping("/cart/updateOK")
 	public RedirectView updateOKcart(CartVO vo) {
 		log.info("updateOKcart");
 		log.info(vo.toString());
