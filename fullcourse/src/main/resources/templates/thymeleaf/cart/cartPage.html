@@ -136,42 +136,54 @@
 
 			<!-- 장바구니 테이블 -->
 			<form method="post" action="#">
-			<table class="table">
-				<thead>
-					<tr>
-						<th><input type="checkbox" id="chkRowAll"></th>
-						<th scope="col">상품이미지</th>
-						<th scope="col">상품명</th>
-						<th scope="col">판매자아이디</th>
-						<th scope="col">상품내용</th>
-						<th scope="col">상품가격</th>
-						<th scope="col">구매수량</th>
-						<th scope="col">상품재고</th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="vo : ${vos}">
+				<table class="table">
+					<thead>
 						<tr>
-							<td><input type="checkbox" name="" value=""> </td>
-							<td><span scope="row" th:text="${vo.cartImage}"></span></td>
-							<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
-							<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
-							<td><span scope="row" th:text="${vo.cartContent}"></span></td>
-							<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
-							<td><input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"></td>
-							<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
-							<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
-							<td><a th:href="|cart/updateOK?cartNum=${vo.cartNum}&cartCount=9|">수정</a></td>
+							<th><input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()"></th>
+							<th scope="col">상품이미지</th>
+							<th scope="col">상품명</th>
+							<th scope="col">판매자아이디</th>
+							<th scope="col">상품내용</th>
+							<th scope="col">상품가격</th>
+							<th scope="col">구매수량</th>
+							<th scope="col">상품재고</th>
+							<th></th>
+							<th></th>
 						</tr>
-					</th:block>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<th:block th:each="vo, rowStat : ${vos}">
+							<tr>
+								<td><input type="checkbox" class="item-checkbox" onclick="updateChkRowAll()"></td>
+								<td><span scope="row" th:text="${vo.cartImage}"></span></td>
+								<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
+								<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
+								<td><span scope="row" th:text="${vo.cartContent}"></span></td>
+								<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
+								<td>
+<!--									<div>-->
+<!--									<input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}">-->
+<!--									</div>-->
+<!--									<a class="cartCount_modify_btn" th:data-cartNum="${vo.cartNum}">변경</a>-->
+								</td>
+								<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
+								<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
 
-			<!--버튼-->
-			<p><input type="submit" value="결제"> </p>
+						</th:block>
+					</tbody>
+				</table>
+
+				<!--버튼-->
+				<p><input type="submit" value="결제"> </p>
 			</form>
+			
+			
+			<!--수량 조정 form -->
+<!--			<form action="/cart/updateOK" method="post" class="quantity_update_form">-->
+<!--				<input type="hidden" name="cartNum" class="update_cartNum">-->
+<!--				<input type="hidden" name="cartCount" class="update_cartCount">-->
+<!--			</form>	-->
+			
 
 			<!--장바구니 추가용 임시 product 폼-->
 			<form method="post" action="cart/insertOK">
@@ -182,7 +194,7 @@
 				<p><label>상품이미지 : <input type="text" name="productImage"></label></p>
 				<p><label>상품내용 : <input type="text" name="productContent"></label></p>
 				<p><label>상품수량(재고) : <input type="number" name="productInventory"></label></p>
-				
+
 				<p><input type="submit" value="장바구니 추가 버튼"></p>
 			</form>
 
@@ -295,7 +307,92 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
+	<script>
+		// 모든 체크박스 선택 혹은 해제
+		function toggleAllCheckboxes() {
+			var checkboxes = document.querySelectorAll('.item-checkbox');
+			var chkRowAll = document.getElementById('chkRowAll');
+			var isChecked = chkRowAll.checked;
 
+			for (var i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].checked = isChecked;
+			}
+		};
+
+		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택
+		function updateChkRowAll() {
+			var checkboxes = document.querySelectorAll('.item-checkbox');
+			var chkRowAll = document.getElementById('chkRowAll');
+			var allChecked = true;
+
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (!checkboxes[i].checked) {
+					allChecked = false;
+					break;
+				}
+			}
+
+			chkRowAll.checked = allChecked;
+		};
+
+		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트
+		document.addEventListener('DOMContentLoaded', function () {
+			updateChkRowAll();
+		});
+	</script>
+
+	<script>
+		// 모든 체크박스 선택 혹은 해제
+		function toggleAllCheckboxes() {
+			var checkboxes = document.querySelectorAll('.item-checkbox');
+			var chkRowAll = document.getElementById('chkRowAll');
+			var isChecked = chkRowAll.checked;
+
+			for (var i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].checked = isChecked;
+			}
+		};
+
+		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택
+		function updateChkRowAll() {
+			var checkboxes = document.querySelectorAll('.item-checkbox');
+			var chkRowAll = document.getElementById('chkRowAll');
+			var allChecked = true;
+
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (!checkboxes[i].checked) {
+					allChecked = false;
+					break;
+				}
+			}
+
+			chkRowAll.checked = allChecked;
+		};
+
+		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트
+		document.addEventListener('DOMContentLoaded', function () {
+			updateChkRowAll();
+		});
+	</script>
+	
+	<script th:inline="javascript">
+    function updateLink(index) {
+        var newValue = document.getElementById('cartCount_' + index).value;
+        var cartNum = index + 1; // 예시로 카트 번호를 인덱스에 1을 더한 값으로 설정
+        var updateLink = document.getElementById('updateLink_' + index);
+        updateLink.href = '|cart/updateOK?cartNum=' + cartNum + '&cartCount=' + newValue;
+    };
+    
+	//수량 변경 버튼
+	//$('.cartCount_modify_btn').on('click',function(){
+	//	let cartNum = $(this).data('cartNum');
+	//	let cartCount =$(this).parent('td').find('input').val();
+	//	$('.update_cartNum').val(cartNum);
+	//	$('.update_cartCount').val(cartCount);
+	//	$('.quantity_update_form').submit();
+//	});
+    
+</script>
 
 </body>
 
