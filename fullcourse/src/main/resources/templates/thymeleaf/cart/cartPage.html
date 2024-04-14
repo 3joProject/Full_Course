@@ -135,55 +135,53 @@
 			</div>
 
 			<!-- 장바구니 테이블 -->
-			<form method="post" action="#">
-				<table class="table">
-					<thead>
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th><input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()"></th>
+						<th scope="col">상품이미지</th>
+						<th scope="col">상품명</th>
+						<th scope="col">판매자아이디</th>
+						<th scope="col">상품내용</th>
+						<th scope="col">상품가격</th>
+						<th scope="col">구매수량</th>
+						<th scope="col">상품재고</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="vo, rowStat : ${vos}">
 						<tr>
-							<th><input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()"></th>
-							<th scope="col">상품이미지</th>
-							<th scope="col">상품명</th>
-							<th scope="col">판매자아이디</th>
-							<th scope="col">상품내용</th>
-							<th scope="col">상품가격</th>
-							<th scope="col">구매수량</th>
-							<th scope="col">상품재고</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="vo, rowStat : ${vos}">
-							<tr>
-								<td><input type="checkbox" class="item-checkbox" onclick="updateChkRowAll()"></td>
-								<td><span scope="row" th:text="${vo.cartImage}"></span></td>
-								<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
-								<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
-								<td><span scope="row" th:text="${vo.cartContent}"></span></td>
-								<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
-								<td>
-<!--									<div>-->
-<!--									<input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}">-->
-<!--									</div>-->
-<!--									<a class="cartCount_modify_btn" th:data-cartNum="${vo.cartNum}">변경</a>-->
-								</td>
-								<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
-								<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
+							<td><input scope="row" type="hidden" th:value="${vo.cartNum}"></td>
+							<td><input type="checkbox" class="item-checkbox" onclick="updateChkRowAll()"></td>
+							<td><span scope="row" th:text="${vo.cartImage}"></span></td>
+							<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
+							<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
+							<td><span scope="row" th:text="${vo.cartContent}"></span></td>
+							<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
+							<td>
+								<div>
+									<input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"
+										min="1" th:max="${vo.cartInventory}">
+								</div>
+								<a class="cartCount_modify_btn">변경</a>
+							</td>
+							<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
+							<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
 
-						</th:block>
-					</tbody>
-				</table>
+					</th:block>
+				</tbody>
+			</table>
 
-				<!--버튼-->
-				<p><input type="submit" value="결제"> </p>
-			</form>
-			
-			
+
 			<!--수량 조정 form -->
-<!--			<form action="/cart/updateOK" method="post" class="quantity_update_form">-->
-<!--				<input type="hidden" name="cartNum" class="update_cartNum">-->
-<!--				<input type="hidden" name="cartCount" class="update_cartCount">-->
-<!--			</form>	-->
-			
+			<form id="quantity_update_form" action="cart/updateOK" method="post">
+				<input type="hidden" name="cartNum" id="update_cartNum">
+				<input type="hidden" name="cartCount" id="update_cartCount">
+			</form>
+
 
 			<!--장바구니 추가용 임시 product 폼-->
 			<form method="post" action="cart/insertOK">
@@ -374,26 +372,36 @@
 			updateChkRowAll();
 		});
 	</script>
-	
-	<script th:inline="javascript">
-    function updateLink(index) {
-        var newValue = document.getElementById('cartCount_' + index).value;
-        var cartNum = index + 1; // 예시로 카트 번호를 인덱스에 1을 더한 값으로 설정
-        var updateLink = document.getElementById('updateLink_' + index);
-        updateLink.href = '|cart/updateOK?cartNum=' + cartNum + '&cartCount=' + newValue;
-    };
-    
-	//수량 변경 버튼
-	//$('.cartCount_modify_btn').on('click',function(){
-	//	let cartNum = $(this).data('cartNum');
-	//	let cartCount =$(this).parent('td').find('input').val();
-	//	$('.update_cartNum').val(cartNum);
-	//	$('.update_cartCount').val(cartCount);
-	//	$('.quantity_update_form').submit();
-//	});
-    
-</script>
 
-</body>
+	<script>
+
+		$(document).ready(function () {
+			// 변경 버튼에 대한 클릭 이벤트 핸들러 등록
+			// jQuery를 사용하여 변경 버튼에 대한 클릭 이벤트 핸들러를 등록
+			$('.cartCount_modify_btn').click(function () {
+				// 폼의 기본 제출 동작 방지
+				//event.preventDefault();
+
+				// 클릭 이벤트 핸들러 함수 내용
+				// 클릭된 버튼에 대한 데이터를 가져옴
+				let cartNum = $(this).closest('tr').find('td:eq(0)').find('input').val();
+				console.log("cartNum", cartNum);
+				// 해당 td 요소 내의 input 값을 가져옴
+				let cartCount = $(this).closest('td').find('input').val();
+				console.log("cartCount", cartCount);
+				// 각각의 hidden input 필드에 값을 설정
+				$('#update_cartNum').val(cartNum);
+				console.log("update_cartNum", update_cartNum);
+				$('#update_cartCount').val(cartCount);
+				console.log("update_cartCount", update_cartNum);
+				// 폼을 제출
+				$('#quantity_update_form').submit();
+			});
+
+		});
+
+	</script>
+	
+
 
 </html>
