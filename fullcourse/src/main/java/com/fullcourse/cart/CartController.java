@@ -12,6 +12,7 @@ import com.fullcourse.product.ProductVO;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -48,12 +49,20 @@ public class CartController {
 	}
 	
 	@PostMapping("/cart/insertOK")
-	public RedirectView insertOKcart(CartVO vo) {
+	public RedirectView insertOKcart(CartVO vo, RedirectAttributes redirectAttributes) {
 		log.info("insertOKcart");
 		log.info(vo.toString());
 
-		int result = service.insertOK(vo);
-		log.info("result:{}",result);
+		int chkWDuplCart = service.chkWDuplCart(vo);
+		log.info("chkWDuplCart:{}",chkWDuplCart);
+		
+		if(chkWDuplCart > 0) {
+			redirectAttributes.addFlashAttribute("warningMessageCart", "이미 추가된 상품입니다."); // 경고 메시지 설정
+		}else {
+			int result = service.insertOK(vo);
+			log.info("result:{}",result);
+		}
+		
 		
 		return new RedirectView("/cart");
 	}
