@@ -55,4 +55,8 @@
 		order by ${orderBy} desc limit #{startRow},#{pageBlock}
 	</select>
 
+	<select id="productReview" resultType="com.fullcourse.product.productReview.ProductReviewVO">
+		select * from productReview where prorevPnum=#{productNum}
+	</select>
+	
 </mapper>

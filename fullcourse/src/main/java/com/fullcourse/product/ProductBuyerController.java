@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullcourse.product.productReview.ProductReviewVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -57,8 +59,13 @@ public class ProductBuyerController {
 	    log.info("vo:{}",vo);
 		
 		ProductVO vo2 = service.selectOne(vo);
-	    
+		log.info("vo2:{}",vo2);
 		model.addAttribute("vo2", vo2);
+		
+		List<ProductReviewVO> vos = service.productReview(vo);
+		
+		model.addAttribute("vos",vos);
+		log.info("vos:{}",vos);
 		
 		return "thymeleaf/product/selectOne";
 	}

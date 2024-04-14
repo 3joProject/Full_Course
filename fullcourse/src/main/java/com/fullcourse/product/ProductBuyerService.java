@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullcourse.product.mapper.ProductBuyerMapper;
+import com.fullcourse.product.productReview.ProductReviewVO;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ProductBuyerService {
 
@@ -91,6 +94,11 @@ public class ProductBuyerService {
 		
 		return mapper.selectAllOrderBy(map);
 		
+	}
+
+	public List<ProductReviewVO> productReview(ProductVO vo) {
+		log.info("productReview");
+		return mapper.productReview(vo);
 	}
 	
 	

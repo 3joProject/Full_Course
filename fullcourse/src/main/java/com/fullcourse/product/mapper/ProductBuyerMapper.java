@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.fullcourse.product.ProductVO;
+import com.fullcourse.product.productReview.ProductReviewVO;
 
 @Mapper
 public interface ProductBuyerMapper {
@@ -31,5 +32,7 @@ public interface ProductBuyerMapper {
 	public int search_total_rows_productTitle(Map<String, String> map);
 
 	public List<ProductVO> selectAllOrderBy(Map<String, Object> map);
+
+	public List<ProductReviewVO> productReview(ProductVO vo);
 	
 }
