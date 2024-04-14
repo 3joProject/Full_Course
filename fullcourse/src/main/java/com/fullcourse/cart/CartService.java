@@ -31,6 +31,10 @@ public class CartService {
 		return mapper.updateOK(vo);
 	}
 
+	public int chkWDuplCart(CartVO vo) {
+		return mapper.chkWDuplCart(vo);
+	}
+
 
 
 }
