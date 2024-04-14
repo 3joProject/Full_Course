@@ -48,7 +48,7 @@ public class CartController {
 	}
 	
 	@PostMapping("/cart/insertOK")
-	public RedirectView insertOKcart(ProductVO vo) {
+	public RedirectView insertOKcart(CartVO vo) {
 		log.info("insertOKcart");
 		log.info(vo.toString());
 

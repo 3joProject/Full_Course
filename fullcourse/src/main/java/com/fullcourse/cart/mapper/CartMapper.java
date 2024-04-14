@@ -14,7 +14,7 @@ public interface CartMapper {
 
 	public int deleteOK(CartVO vo);
 
-	public int insertOK(ProductVO vo);
+	public int insertOK(CartVO vo);
 
 	public int updateOK(CartVO vo);
 	

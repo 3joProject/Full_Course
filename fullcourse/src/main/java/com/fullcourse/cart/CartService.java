@@ -23,7 +23,7 @@ public class CartService {
 		return mapper.deleteOK(vo);
 	}
 
-	public int insertOK(ProductVO vo) {
+	public int insertOK(CartVO vo) {
 		return mapper.insertOK(vo);
 	}
 

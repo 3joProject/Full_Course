@@ -220,13 +220,14 @@
 
 			<!--장바구니 추가용 임시 product 폼-->
 			<form method="post" action="cart/insertOK">
-				<p><label>상품번호 : <input type="number" name="productNum"></label></p>
-				<p><label>판매자아이디 : <input type="text" name="productMid"></label></p>
-				<p><label>상품명 : <input type="text" name="productTitle"></label></p>
-				<p><label>금액(단가) : <input type="number" name="productPrice"></label></p>
-				<p><label>상품이미지 : <input type="text" name="productImage"></label></p>
-				<p><label>상품내용 : <input type="text" name="productContent"></label></p>
-				<p><label>상품수량(재고) : <input type="number" name="productInventory"></label></p>
+				<p><label>상품번호 : <input type="number" name="cartProduct"></label></p>
+				<p><label>판매자아이디 : <input type="text" name="cartSellerId"></label></p>
+				<p><label>상품명 : <input type="text" name="cartTitle"></label></p>
+				<p><label>금액(단가) : <input type="number" name="cartPrice"></label></p>
+				<p><label>구매수량 : <input type="number" name="cartCount"></label></p>
+				<p><label>상품이미지 : <input type="text" name="cartImage"></label></p>
+				<p><label>상품내용 : <input type="text" name="cartContent"></label></p>
+				<p><label>상품수량(재고) : <input type="number" name="cartInventory"></label></p>
 
 				<p><input type="submit" value="장바구니 추가 버튼"></p>
 			</form>

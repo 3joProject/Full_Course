@@ -11,10 +11,10 @@
 	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
 		insert into
 		cart( cartProduct, cartSellerId, cartTitle,
-		cartPrice, cartImage, cartContent, cartInventory)
-		values( #{productNum}, #{productMid}, #{productTitle},
-		#{productPrice}, #{productImage}, #{productContent},
-		#{productInventory})
+		cartPrice, cartImage, cartContent, cartInventory, cartCount)
+		values( #{cartProduct}, #{cartSellerId}, #{cartTitle},
+		#{cartPrice}, #{cartImage}, #{cartContent},
+		#{cartInventory}, #{cartCount})
 	</insert>
 
 	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
