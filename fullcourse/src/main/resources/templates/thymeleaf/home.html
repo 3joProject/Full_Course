@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{header :: common_header(~{::title})}">
+    <title>Home Page</title>
+</head>
+<body th:replace="~{layout :: layout}">
+    <div th:fragment="content">
+        <!-- 페이지 내용 -->
+        <h1>Welcome to the Home Page!</h1>
+        <p>This is the content of the home page.</p>
+    </div>
+</body>
+</html>
