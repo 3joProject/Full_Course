@@ -36,55 +36,23 @@
 		values(1,#{tourNum})
 	</insert>
 
+	<select id="chkWDuplTour" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListTourId=#{tourNum};
+	</select>
+
 	<insert id="insertOKfestival" parameterType="com.fullcourse.festival.FestivalVO">
 		insert into
 		wishList(wishlistId, wishListFestivalId)
 		values(1,#{festivalNum})
 	</insert>
 
+	<select id="chkWDuplFestival" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListFestivalId=#{festivalNum};
+	</select>
 
 	<delete id="deleteOK" parameterType="com.fullcourse.wishlist.WishlistVO">
 		delete from wishList where wishListNum=#{wishListNum}
 	</delete>
 
-
-	<select id="selectOne" resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where
-		num=#{num}
-	</select>
-
-	<select id="searchListID"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where id like #{searchWord}
-	</select>
-
-	<select id="searchListNAME"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member where name like #{searchWord}
-	</select>
-
-
-	<select id="searchListID_PAGE"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member
-		where id like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-	<select id="searchListNAME_PAGE"
-		resultType="com.fullcourse.wishlist.WishlistVO">
-		select * from member
-		where name like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-
-	<select id="search_total_rows_id" resultType="int">
-		select count(*) total_rows from member where id like #{searchWord}
-	</select>
-
-	<select id="search_total_rows_name" resultType="int">
-		select count(*) total_rows from member where name like #{searchWord}
-	</select>
 
 </mapper>

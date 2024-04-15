@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fullcourse.member.MemberVO;
+import com.fullcourse.tour.tourComment.TourCommentService;
+import com.fullcourse.tour.tourComment.TourCommentVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +20,8 @@ public class TourController {
 
 	@Autowired
 	private TourService service;
+	@Autowired
+	private TourCommentService comService;
 
 	// 여행 페이지 메인
 	@GetMapping("/tour")
@@ -26,7 +29,6 @@ public class TourController {
 			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
 		log.info("/tourMain...");
 
-//		List<TourVO> vos = service.tourSelectAllTop();
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		
 		//best 여행지
@@ -50,6 +52,13 @@ public class TourController {
 
 		model.addAttribute("content", "thymeleaf/tour/th_tourDetails");
 		model.addAttribute("title", "여행상세페이지");
+		
+		//댓글목록 처리로직
+				TourCommentVO cvo = new TourCommentVO();
+				cvo.setTourcoTnum(vo.getTourNum());
+				List<TourCommentVO> cvos = comService.tourCommentSelectAll(cvo);
+				
+				model.addAttribute("cvos", cvos);
 
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
@@ -158,7 +167,7 @@ public class TourController {
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		model.addAttribute("vos", vos);
 
-		// member테이블에 들어있는 모든회원수는 몇명?
+		// tour테이블에 들어있는 모든여행지수는 몇개?
 		int total_rows = service.getTotalRows();
 		log.info("total_rows:" + total_rows);
 
@@ -194,7 +203,7 @@ public class TourController {
 
 		model.addAttribute("vos", vos);
 
-		// 키워드검색 모든회원수는 몇명?
+		// 키워드검색 모든여행지는 몇개?
 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
 		log.info("total_rows:" + total_rows);
 
@@ -217,4 +226,5 @@ public class TourController {
 
 	}
 
+	
 }

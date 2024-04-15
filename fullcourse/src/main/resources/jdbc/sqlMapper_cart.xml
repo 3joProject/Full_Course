@@ -5,16 +5,16 @@
 
 	<select id="selectAll"
 		resultType="com.fullcourse.cart.CartVO">
-		SELECT * FROM cart;
+		SELECT * FROM cart where cartMid='user1';
 	</select>
 
 	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
 		insert into
-		cart( cartProduct, cartSellerId, cartTitle,
-		cartPrice, cartImage, cartContent, cartInventory)
-		values( #{productNum}, #{productMid}, #{productTitle},
-		#{productPrice}, #{productImage}, #{productContent},
-		#{productInventory})
+		cart(cartMid, cartProduct, cartSellerId, cartTitle,
+		cartPrice, cartImage, cartContent, cartInventory, cartCount)
+		values('user1', #{cartProduct}, #{cartSellerId}, #{cartTitle},
+		#{cartPrice}, #{cartImage}, #{cartContent},
+		#{cartInventory}, #{cartCount})
 	</insert>
 
 	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
@@ -24,5 +24,10 @@
 	<delete id="deleteOK" parameterType="com.fullcourse.cart.CartVO">
 		delete from cart where cartNum=#{cartNum}
 	</delete>
+
+	<select id="chkWDuplCart" resultType="int">
+		select count(*) from cart where cartMid='user1' and
+		cartProduct=#{cartProduct};
+	</select>
 
 </mapper>

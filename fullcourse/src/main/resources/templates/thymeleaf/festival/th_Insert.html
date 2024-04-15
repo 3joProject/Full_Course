@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+				<form class="validation-form" novalidate action="festivalInsertOK" method="post">
+
+					<!--					<div class="mb-3">-->
+					<!--						<label for="id">NUM</label> : <span th:text="${vo2.festivalNum}"></span> <input type="hidden"-->
+					<!--							class="form-control" name="festivalNum" id="festivalNum" placeholder="" th:value="${vo2.festivalNum}"-->
+					<!--							required>-->
+					<!--						<div class="invalid-feedback"></div>-->
+					<!--					</div>-->
+					<!--					<div class="mb-3">-->
+					<!--						<label for="num">NUM</label> <input type="text" class="form-control" name="festivalNum"-->
+					<!--							id="festivalNum" placeholder="" th:value="${vo2.festivalNum}" required>-->
+					<!--						<div class="invalid-feedback">Num 입력해주세요.</div>-->
+					<!--					</div>-->
+
+					<div class="mb-3">
+						<label for="name">축제이름</label> <input type="text" class="form-control" name="festivalName" id="festivalName"
+							placeholder="" value="축제4" required>
+						<div class="invalid-feedback">NAME 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="adress">주소</label> <input type="text" class="form-control" name="festivalAddress" id="festivalAddress"
+							placeholder="" value="주소4" required>
+						<div class="invalid-feedback">주소 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="content">내용</label> <input type="text" class="form-control" name="festivalContent"
+							id="festivalContent" placeholder="" value="내용4" required>
+						<div class="invalid-feedback">내용을 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="festivalStart">시작일</label> <input type="text" class="form-control" name="festivalStart"
+							id="festivalStart" placeholder="" value="2024-05-01" required>
+						<div class="invalid-feedback">시작일을 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="festivalFinal">종료일</label> <input type="text" class="form-control" name="festivalFinal"
+							id="festivalFinal" placeholder="" value="2024-05-03" required>
+						<div class="invalid-feedback">종료일을 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="useTime">이용시간</label> <input type="text" class="form-control" name="festivalUsetime"
+							id="festivalUsetime" placeholder="" value="08:00 - 17:00" required>
+						<div class="invalid-feedback">이용시간을 입력해주세요.</div>
+					</div>
+
+					<div class="mb-3">
+						<label for="tel">연락처</label> <input type="text" class="form-control" name="festivalTel" id="festivalTel"
+							placeholder="" value="010-0121-1234" required>
+						<div class="invalid-feedback">연락처를 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="views">조회수</label> <input type="text" class="form-control" name="festivalViews" id="festivalViews"
+							placeholder="" value="4" required>
+						<div class="invalid-feedback">조회수 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="thumbUp">좋아요</label> <input type="text" class="form-control" name="festivalThumbUp"
+							id="festivalThumbUp" placeholder="" value="4" required>
+						<div class="invalid-feedback">좋아요 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="img">이미지</label> <input type="text" class="form-control" name="festivalImg" id="festivalImg"
+							placeholder="" value="default.png" required>
+						<div class="invalid-feedback">이미지 입력해주세요.</div>
+					</div>
+
+				
+
+					<div class="mb-4"></div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">등록</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

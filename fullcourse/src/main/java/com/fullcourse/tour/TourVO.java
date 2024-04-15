@@ -20,6 +20,8 @@ public class TourVO {
 	private int tourViews;
 	private int tourThumbUp;
 	private String tourImg;
+	private double longtitue; //경도 mapx
+	private double lattitue; //위도 mapy
 	private MultipartFile file;
 
 }
