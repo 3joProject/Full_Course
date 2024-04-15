@@ -6,20 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fullcourse.chat.mapper.ChatAdminMapper;
 import com.fullcourse.chat.mapper.ChatMapper;
 
 @Service
 public class ChatAdminService {
 	
-	 	@Autowired
-	    private ChatMapper chatMapper;
+	@Autowired
+    private ChatAdminMapper adminMapper;
+	
+		public ChatAdminVO login(String adminId, String adminPw) {
+			return adminMapper.adminLogin(adminId, adminPw);
+		}
 
 	    public List<ChatRoomVO> getAllChatRooms() {
-	        return chatMapper.getAllChatRooms();
+	        return adminMapper.getAllChatRooms();
 	    }
 	    
 	    public ChatRoomVO getChatRoom(int chatRoomId) {
-		    return chatMapper.getChatRoomById(chatRoomId);  // 해당 채팅방 정보를 가져옴
+		    return adminMapper.getChatRoomById(chatRoomId);  // 해당 채팅방 정보를 가져옴
 		}
 	    
 	    

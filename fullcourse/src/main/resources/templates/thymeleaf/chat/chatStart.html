@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Chat Start Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>문의하기 채팅 시작</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
 <body>
-    <h1>Welcome to the Chat Page</h1>
-    <form th:action="@{/chat/new}" method="post">
-        <button type="submit">Start Chat</button>
-    </form>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>사이트 문의하기</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#" role="button">Contact</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                <hgroup>
+                    <h2>Welcome!</h2>
+                    <h3>아래 버튼을 클릭하여 관리자와 채팅을 시작하세요.</h3>
+                </hgroup>
+                <form th:action="@{/chat/new}" method="post" class="grid">
+                    <button type="submit" class="button-primary">문의하기 채팅 시작!</button>
+                </form>
+            </section>
+        </div>
+    </main>
 </body>
 </html>

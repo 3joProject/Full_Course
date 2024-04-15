@@ -15,10 +15,7 @@
         </selectKey>
     </insert>
     
-    <!-- 특정 채팅방 조회 -->
-    <select id="getChatRoomById" parameterType="int" resultType="com.fullcourse.chat.ChatRoomVO">
-        SELECT * FROM chat_rooms WHERE id = #{chatRoomId}
-    </select>
+     
     
     <!-- 채팅방 삭제 -->
     <delete id="deleteChatRoom">
