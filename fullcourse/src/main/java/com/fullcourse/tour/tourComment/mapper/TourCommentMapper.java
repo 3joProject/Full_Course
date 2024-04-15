@@ -17,4 +17,7 @@ public interface TourCommentMapper {
 
 	public List<TourCommentVO> tourCommentSelectAll(TourCommentVO vo);
 
+	//신고
+//	public int tourCommentReport(TourCommentVO vo);
+
 }
