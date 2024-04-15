@@ -8,7 +8,7 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.example</groupId> 
 	<artifactId>fullcourse</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fullcourse</name>
@@ -62,6 +62,32 @@
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		
+    
+		<!-- 스프링 부트 WebSocket 스타터 -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		
+    	<!-- STOMP 라이브러리 -->
+		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>sockjs-client</artifactId>
+    		<version>1.5.1</version>
+		</dependency>
+		
+		<dependency>
+        	<groupId>org.webjars</groupId>
+        	<artifactId>webjars-locator-core</artifactId>
+   		</dependency>
+    	
+		<dependency>
+        	<groupId>org.webjars</groupId>
+        	<artifactId>stomp-websocket</artifactId>
+        	<version>2.3.4</version>
+    	</dependency>
+    	
 	</dependencies>
 
 	<build>

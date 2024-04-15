@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Room</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <style>
+        #chat-messages { margin-bottom: 20px; }
+        .message { padding: 10px; margin-bottom: 5px; border-radius: 10px; }
+        .admin { background-color: #f1f1f1; }
+        .user { background-color: #aef1ae; text-align: right; }
+        #chat-form input, #chat-form button, #leave-button { width: 100%; padding: 10px; margin-top: 5px; }
+    </style>
+    <script th:inline="javascript">
+		var chatRoomId = null; // 전역 변수로 선언
+
+		document.addEventListener('DOMContentLoaded', function() {
+    		chatRoomId = /*[[${chatRoomId}]]*/ null;
+    		if (!chatRoomId) {
+        		console.error("Chat room ID is not defined.");
+        		return; // 채팅방 ID가 없으면 초기화 중단
+    		}
+
+    		connect();
+    
+    		var chatForm = document.getElementById('chat-form');
+    		chatForm.addEventListener('submit', function(event) {
+        		event.preventDefault();
+        		sendMessage();
+    		});
+    
+    		document.getElementById('leave-button').addEventListener('click', leaveChatRoom);
+		});
+
+		function connect() {
+    		var socket = new SockJS('/ws');
+    		stompClient = Stomp.over(socket);
+    		stompClient.connect({}, function(frame) {
+        		console.log('Connected: ' + frame);
+        		stompClient.subscribe('/topic/' + chatRoomId, function(message) {
+           		showMessage(JSON.parse(message.body));
+        		});
+    		});
+		}
+
+		function showMessage(message) {
+    		var chatMessages = document.getElementById('chat-messages');
+    		var messageElement = document.createElement('div');
+    		messageElement.className = 'message ' + (message.sender === 'User' ? 'user' : 'admin');
+    		messageElement.textContent = message.sender === 'User' ? 'You: ' + message.message : 'Admin: ' + message.message;
+    		chatMessages.appendChild(messageElement);
+		}
+
+		function sendMessage() {
+    		var messageInput = document.getElementById('chat-input');
+    		var message = messageInput.value.trim();
+    		if (message && stompClient) {
+        		var chatMessage = {
+            		sender: 'User',
+            		message: message,
+            		chatRoomId: chatRoomId
+        		};
+        		stompClient.send("/app/chat/" + chatRoomId, {}, JSON.stringify(chatMessage));
+        		messageInput.value = '';
+    		}
+		}
+
+		function leaveChatRoom() {
+    		if (confirm('Are you sure you want to leave this chat room?')) {
+        		fetch(`/chat/leave/${chatRoomId}`, { method: 'POST' })
+            		.then(response => {
+                		if (response.ok) {
+                    		window.location.href = '/chat/chatStart'; // Redirect to start page or another appropriate page
+                		}
+            		})
+            		.catch(error => console.error('Error leaving the chat room:', error));
+    		}
+		}
+    </script>
+</head>
+<body>
+    <h1>Chat Room</h1>
+    <div id="chat-messages" style="height:300px; overflow:auto;"></div>
+    <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+        <button type="submit">Send</button>
+    </form>
+    <button id="leave-button">Leave Chat Room</button>
+</body>
+</html>
