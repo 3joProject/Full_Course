@@ -25,7 +25,7 @@ public class PaymentController {
 	}
 	
 	
-    @GetMapping(value = "success")
+    @GetMapping(value = "success1")
     public String paymentResult(
             Model model,
             @RequestParam(value = "orderId") String orderId,
@@ -83,7 +83,7 @@ public class PaymentController {
             model.addAttribute("message", (String) jsonObject.get("message"));
         }
 
-        return "success";
+        return "thymeleaf/payment/success1";
     }
 
     @GetMapping(value = "fail")
