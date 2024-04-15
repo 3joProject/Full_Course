@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="getTotalRows"	resultType="int">
-		select count(*) total_rows from member
+		select count(*) total_rows from tour
 	</select>
 	
 	<select id="search_total_rows_address"	resultType="int">
