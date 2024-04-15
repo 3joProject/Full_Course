@@ -41,5 +41,12 @@ public class TourCommentService {
 		return mapper.tourCommentSelectAll(vo);
 	}
 
+
+	//신고
+//	public int tourCommentReport(TourCommentVO vo) {
+//		// TODO Auto-generated method stub
+//		return mapper.tourCommentReport(vo);
+//	}
+
 	
 }

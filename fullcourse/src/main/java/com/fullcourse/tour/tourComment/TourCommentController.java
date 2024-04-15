@@ -14,7 +14,7 @@ public class TourCommentController {
 	@Autowired
 	private TourCommentService service;
 	
-	@PostMapping("/tour/tourCommnetInsert")
+	@PostMapping("/tour/tourCommentInsert")
 	public String tourCommnetInsert(TourCommentVO vo) {
 		log.info("tourCommnetInsert...");
 		log.info("vo:{}",vo);
@@ -25,7 +25,7 @@ public class TourCommentController {
 		return "redirect:tourDetails?tourNum="+vo.getTourcoTnum();
 	}
 	
-	@GetMapping("/tour/tourCommentUpdateOK")
+	@PostMapping("/tour/tourCommentUpdateOK")
 	public String tourCommentUpdateOK(TourCommentVO vo) {
 		log.info("tourCommentUpdateOK...");
 		log.info("vo:{}",vo);
@@ -47,5 +47,16 @@ public class TourCommentController {
 		return "redirect:tourDetails?tourNum="+vo.getTourcoTnum();
 	}
 	
+	//신고 
+//	@GetMapping("/tour/tourCommentReport")
+//	public String tourCommentReport(TourCommentVO vo) {
+//		log.info("tourCommentReport...");
+//		log.info("vo:{}",vo);
+//
+//		int result = service.tourCommentReport(vo);
+//		log.info("result:{}",result);
+//
+//		return "redirect:tourDetails?tourNum="+vo.getTourcoTnum();
+//	}
 	
 }

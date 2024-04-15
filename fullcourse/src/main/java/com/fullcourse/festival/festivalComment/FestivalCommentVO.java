@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FestivalCommentVO {
-	private int festivalco_num;
-    private String festivalco_content;
-    private String festivalco_writer;
-    private String festivalco_date; // LocalDate로 변경하는 것이 좋을 수 있습니다.
-    private int festivalco_fnum;
-    private FestivalCoStatus festivalco_status;
+	private int festivalcoNum;
+    private String festivalcoContent;
+    private String festivalcoWriter;
+    private String festivalcoDate; // LocalDate로 변경하는 것이 좋을 수 있습니다.
+    private int festivalcoFnum;
+    private FestivalCoStatus festivalcoStatus;
 
 }

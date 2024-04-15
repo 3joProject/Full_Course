@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullcourse.festival.festivalComment.FestivalCommentService;
+import com.fullcourse.festival.festivalComment.FestivalCommentVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,6 +20,9 @@ public class FestivalController {
 
 	@Autowired
 	private FestivalService service;
+	
+	@Autowired
+	private FestivalCommentService comService;
 
 	// 축제 페이지 메인
 	@GetMapping("/festival")
@@ -47,6 +53,14 @@ public class FestivalController {
 
 		model.addAttribute("content", "thymeleaf/festival/th_festivalDetails");
 		model.addAttribute("title", "축제상세페이지");
+		
+		//댓글목록 처리로직
+		FestivalCommentVO cvo = new FestivalCommentVO();
+		cvo.setFestivalcoFnum(vo.getFestivalNum());
+		List<FestivalCommentVO> cvos = comService.festivalCommentSelectAll(cvo);
+		
+		model.addAttribute("cvos", cvos);
+
 
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
