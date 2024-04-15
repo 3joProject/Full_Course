@@ -80,16 +80,17 @@
 										</a>
 									</div>
 								</div>
+								</th:block>
 						</div>
 					</div>
 				</div>
 				<script th:inline="javascript">
 					$("#apiBtn").click(function () {
-						console.log('클릭안되니?');
+						console.log('여행api호출');
 						//배열을 루프 돌려서 '서울', '대전'..등등
 						callAPI('서울');
 					});
-					console.log('클릭안되니?');
+					//console.log('클릭');
 					// JavaScript 코드
 					function callAPI(keyword) {
 						const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
@@ -195,7 +196,7 @@
 					}
 				</script>
 
-				</th:block>
+				
 				<!-- 여행지목록 end -->
 
 			</div>

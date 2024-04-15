@@ -6,13 +6,13 @@
 <mapper namespace="com.fullcourse.tour.mapper.TourMapper">
 	
 	<insert id="tourInsertOK" parameterType="com.fullcourse.tour.TourVO">
-    INSERT INTO tour (tourName, tourAddress, tourContent, tourUsetime, tourTel, tourViews, tourThumbUp,longtitue, lattitue, tourImg)
-    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourUsetime}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
+    INSERT INTO tour (tourName, tourAddress, tourContent, tourTel, tourViews, tourThumbUp,longtitue, lattitue, tourImg)
+    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
 </insert>
 
 	
 	<update id="tourUpdateOK" parameterType="com.fullcourse.tour.TourVO">
-		update tour set tourName=#{tourName},tourAddress=#{tourAddress},tourContent=#{tourContent},tourUsetime=#{tourUsetime},tourTel=#{tourTel},tourImg=#{tourImg}
+		update tour set tourName=#{tourName},tourAddress=#{tourAddress},tourContent=#{tourContent},tourTel=#{tourTel},tourImg=#{tourImg}
 		where tourNum=#{tourNum}
 	</update>
 	
