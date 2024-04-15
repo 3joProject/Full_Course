@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <div>
+        <h2>Chat Rooms</h2>
+        <ul>
+            <li th:each="chatRoom : ${chatRooms}">
+                <span th:text="${chatRoom.name}">Chat Room Name</span>
+                <!-- 각 채팅방으로 이동하는 링크 -->
+                <a th:href="@{'/admin/chatRoom/' + ${chatRoom.id}}">Enter Room</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

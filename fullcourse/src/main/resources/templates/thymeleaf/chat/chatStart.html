@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Start Page</title>
+</head>
+<body>
+    <h1>Welcome to the Chat Page</h1>
+    <form th:action="@{/chat/new}" method="post">
+        <button type="submit">Start Chat</button>
+    </form>
+</body>
+</html>
