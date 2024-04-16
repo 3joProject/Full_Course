@@ -35,4 +35,6 @@ public interface MemberMapper {
 	public int search_total_rows_id(Map<String, String> map);
 
 	public int search_total_rows_name(Map<String, String> map);
+	
+	MemberVO login(String memberId, String memberPw);
 }
