@@ -1,106 +1,121 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>simpleMap</title>
-	<script
-		src="https://apis.openapi.sk.com/tmap/vectorjs?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
-	<script type="text/javascript">
-		var map, myMarker;
-		// 페이지가 로딩이 된 후 호출하는 함수입니다.
-		function initTmap() {
-			// map 생성
-			// Tmapv3.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다
-			map = new Tmapv3.Map("map_div", {
-				center: new Tmapv3.LatLng(37.56520450, 126.98702028),
-				width: "100%",	// 지도의 넓이
-				height: "800px",	// 지도의 높이
-				zoom: 16	// 지도 줌레벨
-			});
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>simpleMap</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
+<script type="text/javascript">
+	var map, myMarker;
+	// 페이지가 로딩이 된 후 호출하는 함수입니다.
+	function initTmap() {
+		// map 생성
+		// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다
+		map = new Tmapv2.Map("map_div", {
+			center: new Tmapv2.LatLng(37.56520450, 126.98702028),
+			width: "100%",	// 지도의 넓이
+			height: "1200px",	// 지도의 높이
+			zoom: 17	// 지도 줌레벨
+		});
 
 
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(
-					function (position) {
-						var myLat = position.coords.latitude;
-						var myLon = position.coords.longitude;
-						console.log("myLat", myLat);
-						console.log("myLon", myLon);
 
-						//팝업 생성
-						var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
-							+ "<div style='font-size: 12px; line-height: 15px;'>"
-							+ "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>현재위치"
-							+ "</div>" + "</div>";
 
-						myMarker = new Tmapv3.Marker({
-							position: new Tmapv3.LatLng(myLat, myLon),
-							map: map
-						});
-						InfoWindow = new Tmapv3.InfoWindow({
-							position: new Tmapv3.LatLng(myLat, myLon),
-							content: content,
-							offset: new Tmapv3.Point(0, 30),
-							type: 2,
-							map: map
-						});
-						map.setCenter(new Tmapv3.LatLng(myLat, myLon));
-						map.setZoom(15);
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				function (position) {
+					var myLat = position.coords.latitude;
+					var myLon = position.coords.longitude;
+					console.log("myLat", myLat);
+					console.log("myLon", myLon);
 
-						// 지도 객체 생성 후 마커를 등록하는 함수를 수행합니다.
-						addMarkersTooMuch(myLat, myLon);
+					//팝업 생성
+					var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+						+ "<div style='font-size: 12px; line-height: 15px;'>"
+						+ "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>현재위치"
+						+ "</div>" + "</div>";
+
+					myMarker = new Tmapv2.Marker({
+						position: new Tmapv2.LatLng(myLat, myLon),
+						map: map
 					});
+					InfoWindow = new Tmapv2.InfoWindow({
+						position: new Tmapv2.LatLng(myLat, myLon),
+						content: content,
+						offset: new Tmapv2.Point(0, 30),
+						type: 2,
+						map: map
+					});
+					map.setCenter(new Tmapv2.LatLng(myLat, myLon));
+					map.setZoom(1);
 
-
-			}
-
-		}
-
-		// 마커들을 저장할 배열입니다.
-		var markers = [];
-
-		// 100개의 마커를 추가하는 함수입니다.
-		function addMarkersTooMuch(myLat, myLon) {
-			removeMarkers();
-			for (var i = 0; i < 100; i++) {
-				var lat = Math.random() / 100;
-				var lng = Math.random() / 100;
-				//Marker 객체 생성.
-				var marker = new Tmapv3.Marker({
-					position: new Tmapv3.LatLng(myLat + lat, myLon + lng), //Marker의 중심좌표 설정.
-					label: 'test' //Marker의 라벨.
+					// 지도 객체 생성 후 마커를 등록하는 함수를 수행합니다.
+					addParkingMarkers();
 				});
-				marker.setMap(map); //Marker가 표시될 Map 설정.
-				markers.push(marker);
+
+			map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
+
+		}
+
+
+
+	}
+	//드래그 끝났을 때
+	function onDragend(e) {
+		var result = '드래그가 끝난 위치의 중앙좌표는' + e.latLng + '입니다.';
+		var resultDiv = document.getElementById("result");
+		resultDiv.innerHTML = result;
+	}
+
+	// 마커들을 저장할 배열입니다.
+	var markers = [];
+
+
+	// 모든 마커를 제거하는 함수입니다.
+	function removeMarkers() {
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null);
+		}
+		markers = [];
+	}
+
+
+	function addParkingMarkers() {
+		console.log("addParkingMarkers");
+		removeMarkers();
+		$.ajax({
+			url: "/api/parking",
+			data: {},
+			type: "get",
+			dataType: "json",
+			success: function (vos) {
+				console.log(vos);
+				for (var i = 0; i < vos.length; i++) {
+					var vo = vos[i]
+					console.log("vo", vo);
+					//Marker 객체 생성.
+					var parking = new Tmapv2.Marker({
+						position: new Tmapv2.LatLng(vo.prkPlceEntrcLa, vo.prkPlceEntrcLo), //Marker의 중심좌표 설정.
+						label: vo.prkPlceNm + '' + '주차장'//Marker의 라벨.
+					});
+					parking.setMap(map); //Marker가 표시될 Map 설정.
+					markers.push(vo);
+				}
+			}, error: function () {
+
 			}
-		}
 
-		// 모든 마커를 제거하는 함수입니다.
-		function removeMarkers() {
-			for (var i = 0; i < markers.length; i++) {
-				markers[i].setMap(null);
-			}
-			markers = [];
-		}
+		});
 
-		function fn_bound() {
-			//지도의 대각선 위경도 좌표를 보여줍니다.
-			var bound = map.getBounds(); //지도의 영역을 가져오는 함수
-			var result = '[ WGS84 ]영역은 ' + bound + '입니다.'; // 표출할 메시지
-			var resultDiv = document.getElementById("result"); // 메시지가 표시될 요소
-			resultDiv.innerHTML = result; // 요소의 메시지 값을 변경
-		}
+	}
 
+</script>
 
-	</script>
 </head>
 
 <body onload="initTmap()"><!-- 맵 생성 실행 -->
 	<div id="map_div"></div>
-	<div>
-		<button onClick="fn_bound()">WGS84 영역의 확인</button>
-		<p id="result" />
+	<p id="result" />
 	</div>
 </body>
 
