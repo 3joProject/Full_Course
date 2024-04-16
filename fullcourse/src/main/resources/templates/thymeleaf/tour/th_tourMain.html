@@ -81,6 +81,34 @@
 									</div>
 								</div>
 								</th:block>
+								
+								
+								<!--여기 -->
+<div class="col-12">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
+            <li class="page-item" th:class="${cpage == 1} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=1)}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+                <li class="page-item" th:class="${cpage == i} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=${i})}" th:text="${i}"></a>
+                </li>
+            </th:block>
+            <li class="page-item" th:class="${cpage == totalPageCount} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=${totalPageCount})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!--여기까지-->
+								
 						</div>
 					</div>
 				</div>
@@ -200,30 +228,6 @@
 				
 				<!-- 여행지목록 end -->
 				
-<!--여기 -->
-<div class="col-12">
-    <nav aria-label="Page navigation">
-        <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
-            <li class="page-item" th:class="${cpage == 1} ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=1)}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-                <li class="page-item" th:class="${cpage == i} ? 'page-item active' : 'page-item'">
-                    <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=${i})}" th:text="${i}"></a>
-                </li>
-            </th:block>
-            <li class="page-item" th:class="${cpage == totalPageCount} ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" th:href="@{/tour/tourSelectAll(cpage=${totalPageCount})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
 
 			</div>
 		</div>
