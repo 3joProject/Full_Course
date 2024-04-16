@@ -1,4 +1,4 @@
-package com.example.fullcourse.admin.user;
+package com.fullcourse.admin.user;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.fullcourse.admin.user.mapper.AdminUserMapper;
+import com.fullcourse.admin.user.mapper.AdminUserMapper;
 
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;

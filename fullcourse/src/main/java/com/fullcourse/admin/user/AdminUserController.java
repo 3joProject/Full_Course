@@ -1,4 +1,4 @@
-package com.example.fullcourse.admin.user;
+package com.fullcourse.admin.user;
 
 import java.sql.Date;
 import java.util.List;
