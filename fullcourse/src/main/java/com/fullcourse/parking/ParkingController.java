@@ -17,7 +17,8 @@ public class ParkingController {
 	public String parking() {
 		log.info("parking...");
 
+		
 		return "thymeleaf/parking/parking";
 	}
-
+	
 }
