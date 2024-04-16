@@ -78,4 +78,9 @@
         SELECT COUNT(*) total_rows FROM member
         WHERE memberName LIKE #{searchWord}
     </select>
+    
+    <select id="login" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberId = #{memberId} AND memberPw = #{memberPw}
+    </select>
 </mapper>

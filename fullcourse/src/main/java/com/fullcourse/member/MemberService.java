@@ -88,5 +88,9 @@ public class MemberService {
 			return mapper.search_total_rows_name(map);
 		}
 	}
+	// 로그인 메소드 추가
+    public MemberVO login(String memberId, String memberPw) {
+        return mapper.login(memberId, memberPw);
+    }
 
 }
