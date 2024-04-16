@@ -38,6 +38,20 @@
 											</div>
 										</div>
 									</div>
+									<!--									좋아요 시작 -->
+
+<div>
+	<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
+									<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
+									</div>
+									
+<!--									로직아이디어: 버튼 클릭시 -> 멤버id, 글번호, 카테고리 넘겨주기 -> tourlikedb추가
+										tour테이블의 좋아요 컬럼은 subquery로 tourlike 테이블의 같은 글번호 갯수 세어서 입력. 
+
+
+-->
+									<!--									좋아요 끝-->
+
 									<div class="bg-white mb-3" style="padding: 30px;">
 										<div class="d-flex mb-3">
 											<a class="text-primary text-uppercase text-decoration-none"
@@ -53,7 +67,6 @@
 
 										<h5 class="mb-3" th:text="${vo2.tourAddress}"></h5>
 										<h5 class="mb-3" th:text="${vo2.tourTel}">전화번호가 없습니다</h5>
-										<h5 class="mb-3" th:text="${vo2.tourUsetime}"></h5>
 
 									</div>
 								</div>
@@ -73,8 +86,8 @@
 										<div class="media-body">
 											<span style="display: none;" th:text="${comment.tourcoNum}"></span>
 											<h6 th:text="${comment.tourcoWriter}"></h6>
-												<!--												<a href="">John Doe</a> -->
-												<span>작성일: <small><i th:text="${comment.tourcoDate}"
+											<!--												<a href="">John Doe</a> -->
+											<span>작성일: <small><i th:text="${comment.tourcoDate}"
 														style="color: aqua;"></i></small>
 											</span>
 
@@ -199,6 +212,37 @@
 
 
 				});
+				
+					$("#likebtn").click(function () {
+						console.log("좋아요");
+						  // 현재 URL에서 tourNum 값을 가져오는 방법
+    let tourNum = new URLSearchParams(window.location.search).get("tourNum");
+    let category = 'tour';
+						 let data = { tourLikeTourNum: tourNum,tourLikeCategory: category };
+						sendToController(data);
+					});
+					
+					function sendToController(data) {
+						fetch('/tour/increaseThumbUp', {
+							method: 'POST', // 요청 메서드 (GET, POST 등)
+							headers: {
+								'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
+							},
+							body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+						})
+							.then(response => {
+								console.log('서버 응답:', response);
+								console.log('data', data);
+								
+								// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
+								// 추가적인 작업 수행
+							})
+							.catch(error => {
+								console.error('서버 요청 오류:', error);
+								// 서버 요청 중 오류가 발생했을 때 실행되는 함수
+							});
+					}
+			
 			</script>
 
 </html>

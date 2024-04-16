@@ -16,13 +16,18 @@
 		where tourNum=#{tourNum}
 	</update>
 	
+	<update id="tourIncreaseThumbUp" parameterType="com.fullcourse.tour.TourVO">
+		update tour set tourThumbUp=#{tourThumbUp} 
+		where tourNum=#{tourNum}
+	</update>
+	
 	<delete id="tourDeleteOK" parameterType="com.fullcourse.tour.TourVO">
 		delete from tour where tourNum=#{tourNum}
 	</delete>
 	
 	<select id="tourSelectAll" resultType="com.fullcourse.tour.TourVO">
 		select * from Tour order by
-		tourNum desc
+		tourNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">

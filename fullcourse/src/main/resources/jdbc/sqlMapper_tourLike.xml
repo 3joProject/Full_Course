@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.tour.mapper.TourLikeMapper">
+	
+	<insert id="tourLikeInsertOK" parameterType="com.fullcourse.tour.like.TourLikeVO">
+    INSERT INTO tourLike (tourLikeCategory, tourLikeMemberNum, tourLikeTourNum)
+    VALUES (#{tourLikeCategory}, #{tourLikeMemberNum}, #{tourLikeTourNum})
+</insert>
+
+	
+	<delete id="tourLikeDeleteOK" parameterType="com.fullcourse.tour.like.TourLikeVO">
+		delete from tourLike where tourLikeNum=#{tourLikeNum}
+	</delete>
+	
+
+</mapper>

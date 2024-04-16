@@ -79,5 +79,11 @@ public class TourService {
 		return mapper.tourSelectAllTop();
 	}
 
+	public int tourIncreaseThumbUp(TourVO vo) {
+		return mapper.tourIncreaseThumbUp();
+		
+	}
+
+
 	
 }
