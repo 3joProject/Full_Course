@@ -9,6 +9,6 @@ import com.fullcourse.parking.ParkingVO;
 @Mapper
 public interface ParkingMapper {
 
-	List<ParkingVO> marker();
+	List<ParkingVO> marker(double lat, double lng);
 
 }

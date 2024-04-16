@@ -13,7 +13,7 @@ public class ParkingService {
 	@Autowired
 	private ParkingMapper mapper;
 
-	public List<ParkingVO> marker() {
-		return mapper.marker();
+	public List<ParkingVO> marker(double lat, double lng) {
+		return mapper.marker(lat, lng);
 	}
 }

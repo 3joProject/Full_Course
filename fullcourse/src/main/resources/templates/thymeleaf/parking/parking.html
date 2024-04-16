@@ -18,9 +18,6 @@
 			zoom: 17	// 지도 줌레벨
 		});
 
-
-
-
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				function (position) {
@@ -50,21 +47,38 @@
 					map.setZoom(1);
 
 					// 지도 객체 생성 후 마커를 등록하는 함수를 수행합니다.
-					addParkingMarkers();
+					addParkingMarkers(myLat, myLon);
+					
+
+
 				});
 
-			map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
 
 		}
+
+		map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
+
 
 
 
 	}
+	//처음위치로 이동하는 함수입니다.
+	function Move() {
+		var lonlat = new Tmapv2.LatLng(37.56520450, 126.98702028);
+		map.setCenter(lonlat); // 지도의 중심 좌표를 설정합니다.
+	}
+
+
+
 	//드래그 끝났을 때
 	function onDragend(e) {
 		var result = '드래그가 끝난 위치의 중앙좌표는' + e.latLng + '입니다.';
 		var resultDiv = document.getElementById("result");
+		var newLat = e.latLng.lat();
+		var newLng = e.latLng.lng();
 		resultDiv.innerHTML = result;
+
+		addParkingMarkers(newLat, newLng);
 	}
 
 	// 마커들을 저장할 배열입니다.
@@ -80,12 +94,12 @@
 	}
 
 
-	function addParkingMarkers() {
+	function addParkingMarkers(lat, lng) {
 		console.log("addParkingMarkers");
 		removeMarkers();
 		$.ajax({
 			url: "/api/parking",
-			data: {},
+			data: {lat: lat, lng: lng},
 			type: "get",
 			dataType: "json",
 			success: function (vos) {
@@ -99,7 +113,7 @@
 						label: vo.prkPlceNm + '' + '주차장'//Marker의 라벨.
 					});
 					parking.setMap(map); //Marker가 표시될 Map 설정.
-					markers.push(vo);
+					markers.push(parking);
 				}
 			}, error: function () {
 
@@ -115,6 +129,7 @@
 
 <body onload="initTmap()"><!-- 맵 생성 실행 -->
 	<div id="map_div"></div>
+	<button onClick="Move()">처음 위치로 지도 이동</button>
 	<p id="result" />
 	</div>
 </body>
