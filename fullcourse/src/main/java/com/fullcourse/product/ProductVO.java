@@ -15,6 +15,6 @@ public class ProductVO {
 	private String productImage;
 	private String productContent;
 	private int productInventory;
+	private int productGuideNum;
 	
- 
 }

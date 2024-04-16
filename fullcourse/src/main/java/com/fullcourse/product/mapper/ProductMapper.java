@@ -8,6 +8,8 @@ import com.fullcourse.product.ProductVO;
 
 @Mapper
 public interface ProductMapper {
+	
+	
 	public int insertOK(ProductVO productVO);
 	
 	public int updateOK(ProductVO productVO);

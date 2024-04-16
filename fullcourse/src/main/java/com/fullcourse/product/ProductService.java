@@ -28,8 +28,5 @@ public class ProductService {
 		return productMapper.deleteOK(productVO);
 		
 	}
-	
 
-	
-	
 }
