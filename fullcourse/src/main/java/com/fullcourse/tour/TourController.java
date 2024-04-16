@@ -31,11 +31,28 @@ public class TourController {
 
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		
+		
 		//best 여행지
 		List<TourVO> vos2 = service.tourSelectAllTop();
 		model.addAttribute("vos2", vos2);
 
 		model.addAttribute("vos", vos);
+		
+		// tour테이블에 들어있는 모든여행지수는 몇개?
+				int total_rows = service.getTotalRows();
+				log.info("total_rows:" + total_rows);
+
+				int totalPageCount = 1;
+				if (total_rows / pageBlock == 0) {
+					totalPageCount = 1;
+				} else if (total_rows % pageBlock == 0) {
+					totalPageCount = total_rows / pageBlock;
+				} else {
+					totalPageCount = total_rows / pageBlock + 1;
+				}
+				// 페이지 링크 몇개?
+				log.info("totalPageCount:" + totalPageCount);
+				model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
 		model.addAttribute("title", "여행지목록");
 		return "thymeleaf/tour/th_tourLayout_main";

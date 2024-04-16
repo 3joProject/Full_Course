@@ -34,6 +34,8 @@ public interface TourMapper {
 
 	public List<TourVO> tourSelectAllTop();
 
+	public int tourIncreaseThumbUp();
+
 	
 
 }
