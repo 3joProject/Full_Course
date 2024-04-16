@@ -6,13 +6,13 @@
 <mapper namespace="com.fullcourse.festival.mapper.FestivalMapper">
 	
 	<insert id="festivalInsertOK" parameterType="com.fullcourse.festival.FestivalVO">
-    INSERT INTO festival (festivalName, festivalAddress, festivalContent, festivalStart, festivalFinal, festivalUsetime, festivalTel, festivalViews, festivalThumbUp, festivalImg)
-    VALUES (#{festivalName}, #{festivalAddress}, #{festivalContent}, #{festivalStart}, #{festivalFinal}, #{festivalUsetime}, #{festivalTel}, #{festivalViews}, #{festivalThumbUp}, #{festivalImg})
+    INSERT INTO festival (festivalName, festivalAddress, festivalContent, festivalStart, festivalFinal, festivalTel, festivalViews, festivalThumbUp, festivalImg)
+    VALUES (#{festivalName}, #{festivalAddress}, #{festivalContent}, #{festivalStart}, #{festivalFinal}, #{festivalTel}, #{festivalViews}, #{festivalThumbUp}, #{festivalImg})
 </insert>
 
 	
 	<update id="festivalUpdateOK" parameterType="com.fullcourse.festival.FestivalVO">
-		update festival set festivalName=#{festivalName},festivalAddress=#{festivalAddress},festivalContent=#{festivalContent},festivalStart=#{festivalStart},festivalFinal=#{festivalFinal},festivalUsetime=#{festivalUsetime},festivalTel=#{festivalTel},festivalImg=#{festivalImg}
+		update festival set festivalName=#{festivalName},festivalAddress=#{festivalAddress},festivalContent=#{festivalContent},festivalStart=#{festivalStart},festivalFinal=#{festivalFinal},festivalTel=#{festivalTel},festivalImg=#{festivalImg}
 		where festivalNum=#{festivalNum}
 	</update>
 	

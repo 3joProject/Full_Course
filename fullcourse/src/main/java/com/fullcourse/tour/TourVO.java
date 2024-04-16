@@ -15,7 +15,6 @@ public class TourVO {
 	private String tourName;
 	private String tourAddress;
 	private String tourContent;
-	private String tourUsetime;
 	private String tourTel;
 	private int tourViews;
 	private int tourThumbUp;
