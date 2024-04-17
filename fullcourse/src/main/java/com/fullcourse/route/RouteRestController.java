@@ -21,13 +21,21 @@ public class RouteRestController {
 	
 	@PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody RouteVO vo) {
+		 log.info("Received RouteVO: {}", vo); // VO를 로그에 출력
         try {
+        	
         	service.save(vo);
+        	
             return ResponseEntity.ok("{\"message\": \"con여행 일정이 저장되었습니다.\"}");
+            
         } catch (Exception e) {
+        	log.info("not");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body("{\"message\": \"con여행 일정 저장에 실패했습니다.\"}");
+            
+            
         }
     }
+	
 
 }

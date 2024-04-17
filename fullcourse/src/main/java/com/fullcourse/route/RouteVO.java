@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 public class RouteVO {
 	
 	private int routeNum;
+	private String routeName;
 	private String routeTraffic;
 	private String routeTime;
 	private String routeStartLocation;
 	private String routeEndLocation;
-	private String userId;
-	private double startlatitude;
-	private double startlongitude;
-	private double endlatitude;
-	private double endlongitude;
-	private double routeDistance;
+	//private String routeUserId;
+	private double routeStartLatitude;
+	private double routeStartLongitude;
+	private double routeEndLatitude;
+	private double routeEndLongitude;
+	//private double routeDistance;
 	private int routeOrder;
-	
 	
 }

@@ -7,10 +7,24 @@
 	
 	
 	  <insert id="save" parameterType="com.fullcourse.route.RouteVO">
-        INSERT INTO route ( routeTraffic, routeStartLocation, routeEndLocation, userId, startlatitude, startlongitude, 
-        endlatitude, endlongitude,routeTime, routeOrder)
-        VALUES ( #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{userId}, #{startlatitude}, #{startlongitude}, 
-        	#{endlatitude}, #{endlongitude}, #{routeTime}, #{routeOrder})
+        INSERT INTO route ( routeTraffic, routeStartLocation, routeEndLocation, routeStartLatitude, routeStartLongitude, 
+        routeEndLatitude, routeEndLongitude,routeTime, routeOrder)
+        VALUES ( #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude}, 
+        	#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime}, #{routeOrder})
     </insert>
+    
+    <select id="routeSelectAll" parameterType="com.fullcourse.route.RouteVO">
+		SELECT DISTINCT routeName FROM route 
+		
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from route
+	</select>
+	
+	
+	<select id="routeSelectOne" parameterType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName= #{routeName}
+	</select>
 	
 </mapper>
