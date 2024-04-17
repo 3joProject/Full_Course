@@ -159,8 +159,15 @@
 					<td><span scope="row" th:text="${vo.productPrice}"></span></td>
 					<td><span scope="row" th:text="${vo.productImage}"></span></td>
 					<td><span scope="row" th:text="${vo.productInventory}"></span></td>
-					<td><a th:href="|product/deleteOK?productNum=${vo.productNum}|">삭제</a></td>
-					<td><a th:href="|product/updateOK?productNum=${vo.productNum}|">수정</a></td>
+					<td>
+                		<form th:action="@{'/product/deleteOK'}" method="post">
+                    		<input type="hidden" name="productNum" th:value="${vo.productNum}" />
+                    		<button type="submit">삭제</button>
+                		</form>
+            		</td>
+            		<td>
+            		<button type="button" th:onclick="'location.href=\'' + @{selectOne(productNum=${vo.productNum})} + '\''">수정</button>
+            		</td>
 				</tr>
 			</th:block>
 		</tbody>
