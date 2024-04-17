@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.product.mapper.ProductBuyerMapper">
+
+	<select id="selectOne" resultType="com.fullcourse.product.ProductVO">
+		select * from product where
+		productNum=#{productNum}
+	</select>
+
+	<select id="searchListMid" resultType="com.fullcourse.product.ProductVO">
+		select * from product where productMid like #{searchWord}
+	</select>
+
+	<select id="searchListTitle" resultType="com.fullcourse.product.ProductVO">
+		select * from product where prouductTitle like #{searchWord}
+	</select>
+
+	<select id="selectAllPageBlock"
+		resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		order by productNum desc limit #{startRow},#{pageBlock}
+	</select>
+
+	<select id="searchListMid_PAGE"
+		resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		where productMid like #{searchWord}
+		order by productNum desc limit #{startRow},#{pageBlock}
+	</select>
+
+	<select id="searchListTitle_PAGE"
+		resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		where productTitle like #{searchWord}
+		order by productNum desc limit #{startRow},#{pageBlock}
+	</select>
+
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from product
+	</select>
+
+	<select id="search_total_rows_productMid" resultType="int">
+		select count(*) total_rows from product where productMid like
+		#{searchWord}
+	</select>
+
+	<select id="search_total_rows_productTitle" resultType="int">
+		select count(*) total_rows from product where productTitle like
+		#{searchWord}
+	</select>
+
+	<select id="selectAllOrderBy" resultType="com.fullcourse.product.ProductVO">
+		select * from product
+		order by ${orderBy} desc limit #{startRow},#{pageBlock}
+	</select>
+
+	<select id="productReview" resultType="com.fullcourse.product.productReview.ProductReviewVO">
+		select * from productReview where prorevPnum=#{productNum}
+	</select>
+	
+</mapper>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Login</title>
+</head>
+<body>
+    <h1>Admin Login</h1>
+    <form th:action="@{/chat/adminChatlogin}" method="post">
+        Admin Id: <input type="text" name="adminId" />
+        Password: <input type="password" name="adminPw" />
+        <button type="submit">Login</button>
+    </form>
+    <p th:if="${param.error}" style="color:red;">Invalid username or password.</p>
+</body>
+</html>

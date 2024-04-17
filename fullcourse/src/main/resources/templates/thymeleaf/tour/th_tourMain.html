@@ -1,0 +1,250 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+
+
+				<!-- Header Start -->
+				<div class="container-fluid page-header">
+					<div class="container">
+						<div class="d-flex flex-column align-items-center justify-content-center"
+							style="min-height: 400px">
+							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" th:href="@{/}">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Header End -->
+				<!-- 여행지목록 start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+							<h1>Best 여행지</h1>
+						</div>
+						<div class="row">
+							<th:block th:each="vo : ${vos2}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+										<img class="img-fluid" src="img/destination-1.jpg" alt="">
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
+											<h5 class="text-white"><span th:text="${vo.tourName}"></span></h5>
+											<span th:text="${vo.tourAddress}"></span>
+										</a>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				</th:block>
+				<!-- 여행지목록 end -->
+
+				<!-- 여행지목록 start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
+							<a th:href="@{/tour/tourSelectAll}">
+								<h1>여행지 목록</h1>
+							</a>
+
+							<!--<form action="/tour2" method="get">-->
+
+							<!--							누르지 마시오..-->
+							<button id="apiBtn">test</button>
+
+							<!--</form>-->
+						</div>
+						<div class="row">
+							<th:block th:each="vo : ${vos}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+<!--										<img class="img-fluid" src="img/destination-1.jpg" alt="">-->
+										<img class="img-fluid" th:src="${vo.tourImg}" alt="">
+
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
+											<h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
+											<span th:text="${vo.tourName}"></span>
+										</a>
+									</div>
+								</div>
+								</th:block>
+								
+								
+<!--							수정2-->
+						  <div class="col-12">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
+                                  <li class="page-item ">
+                                    <a class="page-link" th:href="@{/tour(cpage=1)}" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                  </li>
+                                  <li class="page-item active"><a class="page-link" th:href="@{/tour/tourSelectAll(cpage=1)}" >1</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                        </div>
+                        
+<!--                        수정	2끝	-->
+<!--수정3-->
+
+  <div class="col-12">
+                         	<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+				                	<th:block th:if="${param.searchKey}== null">
+					                	<a th:href="@{/tour/tourSelectAll(cpage=${i})}">[[${i}]] &nbsp;</a>
+			                		</th:block>
+			                		<th:block th:if="${param.searchKey}!= null">
+					                	<a th:href="@{/tour/tourSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]] &nbsp;</a>
+			                		</th:block>
+			                	</th:block>
+                        </div>
+<!--수정3끝-->
+
+						</div>
+					</div>
+				</div>
+				
+				<script th:inline="javascript">
+					$("#apiBtn").click(function () {
+						console.log('여행api호출');
+						//배열을 루프 돌려서 '서울', '대전'..등등
+						callAPI('서울');
+					});
+					//console.log('클릭');
+					// JavaScript 코드
+					function callAPI(keyword) {
+						const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
+						const url = `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${apiKey}&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=2&listYN=Y&arrange=A&contentTypeId=12&keyword=${keyword}&_type=json`;
+
+						return fetch(url)
+							.then(response => response.json())
+							.then(data => {
+								// 서버로 결과 전송
+								sendDataToServer(data);
+							})
+							.catch(error => {
+								console.error('Error:', error);
+							});
+					}
+
+					function sendDataToServer(data) {
+						//루프 item.size
+						let alldata = [];
+						for (let i = 0; i < data.response.body.items.item.length; i++) {
+							console.log(data.response.body.items.item[i].contentid);
+							// arr.push(data.response.body.items.item[i].contentid);
+
+							let contentid = data.response.body.items.item[i].contentid;
+
+							const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
+							const url = `http://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=${apiKey}&contentId=${contentid}&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&mapinfoYN=Y&firstImageYN=Y&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+
+
+
+							fetch(url)
+								.then(response => response.json())
+								.then(data => {
+									// 서버로 결과 전송
+									//sendDataToServer(data);
+									for (let i = 0; i < data.response.body.items.item.length; i++) {
+										let tourName = data.response.body.items.item[i].title;
+										let tourContent = data.response.body.items.item[i].overview;
+										let longtitue = data.response.body.items.item[i].mapx;
+										let lattitue = data.response.body.items.item[i].mapy;
+										let tourAddress = data.response.body.items.item[i].addr1;
+										let tourImg = data.response.body.items.item[i].firstimage;
+										let tourTel = data.response.body.items.item[i].tel;
+
+										// 아이템 객체를 구성하여 yourData에 추가
+										let newItem = {
+											tourName: tourName,
+											tourContent: tourContent,
+											longtitue: longtitue,
+											lattitue: lattitue,
+											tourAddress: tourAddress,
+											tourImg: tourImg,
+											tourTel: tourTel
+										};
+
+										//alldata.push(newItem);
+										sendToController(newItem);
+										console.log("여기" + JSON.stringify(newItem));
+										//console.log("ㅇㅇ" + JSON.stringify(tourName));
+										//console.log("ㅇㅇ" + JSON.stringify(tourContent));
+										//console.log("ㅇㅇ" + JSON.stringify(longtitue));
+										//console.log("ㅇㅇ" + JSON.stringify(lattitue));
+										//console.log("ㅇㅇ" + JSON.stringify(tourAddress));
+										//console.log("ㅇㅇ" + JSON.stringify(tourImg));
+										//console.log("ㅇㅇ" + JSON.stringify(tourTel));
+
+									}
+									//전체데이터 불러오기
+									//console.log("배열"+JSON.stringify(newItem));
+									// 서버로 데이터 전송
+									
+									//sendToController(alldata);
+
+								})
+								.catch(error => {
+									console.error('Error:', error);
+								});
+								
+
+						}
+						
+						// 결과 데이터를 스프링 부트 기반의 컨트롤러로 전송
+
+
+					}
+					function sendToController(data) {
+						fetch('/tour2', {
+							method: 'POST', // 요청 메서드 (GET, POST 등)
+							headers: {
+								'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
+							},
+							body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+						})
+							.then(response => {
+								console.log('서버 응답:', response);
+								// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
+								// 추가적인 작업 수행
+							})
+							.catch(error => {
+								console.error('서버 요청 오류:', error);
+								// 서버 요청 중 오류가 발생했을 때 실행되는 함수
+							});
+					}
+				</script>
+
+				
+				<!-- 여행지목록 end -->
+				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+ 
+</html>

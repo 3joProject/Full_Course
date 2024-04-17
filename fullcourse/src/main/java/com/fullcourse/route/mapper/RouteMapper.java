@@ -1,5 +1,6 @@
 package com.fullcourse.route.mapper;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,5 +20,5 @@ public interface RouteMapper {
 	public int getTotalRows();
 
 	public List<RouteVO> routeSelectOne(String routeName);
-	
+
 }

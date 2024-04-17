@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+				<form class="validation-form" novalidate action="tourUpdateOK" method="post">
+
+					<div class="mb-3">
+						<label for="id">NUM</label> : <span th:text="${vo2.tourNum}"></span> <input type="hidden"
+							class="form-control" name="tourNum" id="tourNum" placeholder="" th:value="${vo2.tourNum}" required>
+						<div class="invalid-feedback"></div>
+					</div>
+				
+					<div class="mb-3">
+						<label for="tourName">여행지명</label> <input type="text" class="form-control" name="tourName" id="tourName"
+							placeholder="" th:value="${vo2.tourName}" required>
+						<div class="invalid-feedback">NAME 입력해주세요.</div>
+					</div>
+								
+					<div class="mb-3">
+						<label for="address">주소</label> <input type="text" class="form-control" name="tourAddress" id="tourAddress"
+							placeholder="" th:value="${vo2.tourAddress}" required>
+						<div class="invalid-feedback">주소 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="content">내용</label> <input type="text" class="form-control" name="tourContent" id="tourContent"
+							placeholder="" th:value="${vo2.tourContent}" required>
+						<div class="invalid-feedback">내용을 입력해주세요.</div>
+				
+						<div class="mb-3">
+						<label for="tel">TEL</label> <input type="text" class="form-control" name="tourTel" id="tourTel"
+							placeholder="" th:value="${vo2.tourTel}" required>
+						<div class="invalid-feedback">TEL 입력해주세요.</div>
+					</div>
+						<div class="mb-3">
+						<label for="Img">Img</label> <input type="text" class="form-control" name="tourImg" id="tourImg"
+							placeholder="" th:value="${vo2.tourImg}" required>
+						<div class="invalid-feedback">img를 입력해주세요.</div>
+					</div>
+			
+					<div class="mb-4"></div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">수정
+						완료</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
