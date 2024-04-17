@@ -4,22 +4,19 @@
 <mapper namespace="com.fullcourse.parking.mapper.ParkingMapper">
 
 	<resultMap id="parkingResultMap" type="com.fullcourse.parking.ParkingVO">
-		<result property="prkCenterId" column="prkCenterId" />
-		<result property="prkPlceNm" column="prkPlceNm" />
-		<result property="prkPlceAdres" column="prkPlceAdres" />
 		<!-- format(prkPlceEntrcLa,6)으로 오는 값을 prkPlceEntrcLa 변수에 매핑 -->
 		<result property="prkPlceEntrcLa" column="format(prkPlceEntrcLa,6)" />
 		<!-- format(prkPlceEntrcLo,6)으로 오는 값을 prkPlceEntrcLo 변수에 매핑 -->
 		<result property="prkPlceEntrcLo" column="format(prkPlceEntrcLo,6)" />
-		<result property="prkCmprtCo" column="prkCmprtCo" />
 	</resultMap>
 
 	<select id="marker"
 		resultType="com.fullcourse.parking.ParkingVO" resultMap="parkingResultMap">
 		SELECT prkCenterId, prkPlceNm, prkPlceAdres,
-		format(prkPlceEntrcLa,6), format(prkPlceEntrcLo,6), prkCmprtCo FROM
-		prksttusinfo
-		where prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
+		format(prkPlceEntrcLa,6), format(prkPlceEntrcLo,6), pkfcParkingLotsTotal, pkfcAvailableParkingLotsTotla
+        FROM prksttusinfo p, prkrealtimeinfo r
+		where p.prkCenterId = r.prkRealTimeId and
+		prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
 		AND prkPlceEntrcLo BETWEEN #{lng} - 0.008 AND #{lng} + 0.008
 	</select>
 
