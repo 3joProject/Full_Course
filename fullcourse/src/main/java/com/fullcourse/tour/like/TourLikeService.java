@@ -24,10 +24,4 @@ public class TourLikeService {
 		return mapper.tourLikeDeleteOK(vo);
 	}
 
-	public int tourLikeInsertOK(TourVO vo) {
-		log.info("tourLikeInsertOK2...이거찍히냐");
-		return mapper.tourLikeInsertOK2(vo);
-
-	}
-
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullcourse.festival.mapper.FestivalMapper;
+import com.fullcourse.tour.TourVO;
 
 @Service
 public class FestivalService {
@@ -76,6 +77,15 @@ public class FestivalService {
 
 	public List<FestivalVO> festivalSelectAllTop() {
 		return mapper.festivalSelectAllTop();
+	}
+
+	public int updateLikeCount(FestivalVO vo) {
+		return mapper.updateLikeCount(vo);		
+	}
+
+	 
+	public int updateviewCount(FestivalVO vo) {
+		return mapper.updateViewCount(vo);		
 	}
 
 	
