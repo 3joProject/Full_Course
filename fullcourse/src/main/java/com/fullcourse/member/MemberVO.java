@@ -20,6 +20,6 @@ public class MemberVO {
 	    private Date memberDate;
 	    private String memberImg;
 	    private String memberSns;
-
+	    private int sellerFollow;
 	   
 	}
