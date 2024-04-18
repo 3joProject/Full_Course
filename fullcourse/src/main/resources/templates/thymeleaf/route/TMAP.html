@@ -127,16 +127,20 @@
 				center: new Tmapv2.LatLng(35.3116461479475, 128.679897664909),
 				width: "800px", // 지도의 넓이
 				height: "700px", // 지도의 높이
-				zoom: 17
+				zoom: 14
 			});
 
-			// DB에서 가져온 여행지 정보 (예시)
-			var places = [
-				{name: '주남저수지', latitude: 35.3116461479475, longitude: 128.679897664909, description: "주남저수지 설명 Lorem ipsum dolor sit amet."},
-				{name: '돌다리', latitude: 35.3302837564477, longitude: 128.696624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-				{name: '여행', latitude: 35.3402837564477, longitude: 128.676624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-				// 추가 여행지 정보 추가
-			];
+
+
+
+			/*
+						// DB에서 가져온 여행지 정보 (예시)
+						var places = [
+							{name: '주남저수지', latitude: 35.3116461479475, longitude: 128.679897664909, description: "주남저수지 설명 Lorem ipsum dolor sit amet."},
+							{name: '돌다리', latitude: 35.3302837564477, longitude: 128.696624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
+							{name: '여행', latitude: 35.3402837564477, longitude: 128.676624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
+							// 추가 여행지 정보 추가
+						]; */
 
 			// 새로 추가된 여행지 정보를 저장할 배열
 			var newPlaces = [];
@@ -144,19 +148,39 @@
 			var sidebar = document.getElementById('sidebar');
 			var smallScreen = document.getElementById('smallScreen');
 
-			//여행지 마커 생성 및 추가
-			places.forEach(function (place) {
-				var marker = new Tmapv2.Marker({
-					position: new Tmapv2.LatLng(place.latitude, place.longitude),
-					map: map,
-					title: place.name
-				});
 
-				// Marker에 클릭 이벤트 등록
-				marker.addListener("click", function (evt) {
-					showSmallScreen(place);
-				});
-			});
+			$.ajax({
+				url: 'route/gettour',
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					// 가져온 데이터를 places 변수에 할당
+					var places = data;
+
+					// places 변수를 이용하여 원하는 작업을 수행
+					console.log("place");
+					console.log(places); // 가져온 데이터 확인
+
+					//여행지 마커 생성 및 추가
+					places.forEach(function (place) {
+
+
+						var marker = new Tmapv2.Marker({
+							position: new Tmapv2.LatLng(place.lattitue, place.longtitue),
+							map: map,
+							title: place.name
+						});
+						console.log("not");
+						// Marker에 클릭 이벤트 등록
+						marker.addListener("click", function (evt) {
+							showSmallScreen(place);
+						});
+					});
+				}
+			})
+
+
+
 
 			// 작은 화면을 표시하는 함수
 			function showSmallScreen(place) {
@@ -167,15 +191,15 @@
 				smallScreen.style.display = "block";
 
 				// 여행지 정보 표시
-				document.getElementById('placeName').textContent = place.name;
-				document.getElementById('placeDescription').textContent = place.description;
+				document.getElementById('placeName').textContent = place.tourName;
+				document.getElementById('placeDescription').textContent = place.tourContent;
 
 				// "추가" 버튼 클릭 시 sidebar에 여행지 정보 newPlaces 배열에 추가
 				document.getElementById('addToSidebarButton').onclick = function () {
 					newPlaces.push(place);
-
+					console.log(newPlaces);
 					createTransportButtons(newPlaces.length - 1);
-					addToSidebar(place.name);
+					addToSidebar(place.tourName);
 				};
 			}
 
@@ -213,22 +237,14 @@
 					transportDiv.appendChild(carButton);
 					transportDiv.appendChild(walkButton);
 
+
 					const sidebar = document.getElementById('sidebar');
 					const listItem = sidebar.lastChild;
 					listItem.appendChild(transportDiv);
 				}
 			}
 
-			// 이전 여행지와 현재 여행지 사이의 교통 정보를 sessionStorage에 저장하는 함수
-			function saveTransportInfoToSessionStorage(transportInfo, index) {
-				sessionStorage.setItem('transportInfo_' + index, JSON.stringify(transportInfo));
-			}
 
-			// 저장된 교통 정보를 가져오는 함수
-			function getTransportInfoFromSessionStorage(index) {
-				const transportInfoJSON = sessionStorage.getItem('transportInfo_' + index);
-				return JSON.parse(transportInfoJSON);
-			}
 
 			// 도보 또는 자동차 버튼 클릭 시 호출되는 함수
 			function onTransportButtonClick(transportMode, index) {
@@ -241,6 +257,40 @@
 						transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
 					}
 					//saveTransportInfoToSessionStorage(transportInfo, index);
+
+
+					// 결과를 담을 컨테이너를 생성합니다.
+					const resultContainer = document.createElement('div');
+					resultContainer.classList.add('result-container');
+					resultContainer.textContent = "거리 : " + `${transportInfo.tDistance}` + "km, 소요 시간 : " + `${transportInfo.tTime}` + "분 "; // 예시로 tDistance와 tTime을 사용했습니다.
+
+					// 버튼과 결과 컨테이너를 감싸고 있는 div 요소를 찾습니다.
+					const containerDiv = this.parentNode;
+
+					// 이전에 추가된 결과 컨테이너가 있다면 삭제합니다.
+					const previousResultContainer = containerDiv.querySelector('.result-container');
+					if (previousResultContainer) {
+						containerDiv.removeChild(previousResultContainer);
+					}
+
+					// 자동차 또는 도보 버튼 옆에 결과 값을 추가합니다.
+					containerDiv.insertBefore(resultContainer, this.nextSibling);
+
+
+
+
+					// 클릭된 버튼의 배경색 변경
+					this.style.backgroundColor = 'lightblue';
+
+					// 나머지 버튼의 배경색을 초기화
+					const buttons = document.querySelectorAll('.get-transport-info');
+					buttons.forEach(button => {
+						if (button !== this) {
+							button.style.backgroundColor = ''; // 초기화
+						}
+					});
+
+
 					addItineraryInfo(transportInfo, index);
 					updateItinerary(transportInfo);
 				};
@@ -249,16 +299,17 @@
 			// 여행 정보를 itinerary 배열에 추가하는 함수
 			function addItineraryInfo(transportInfo, index) {
 				itinerary[index] = {
-					//routeName : "창원",
+					routeName: "창원1",
 					routeTraffic: selectedTransportMode,
+					routeDistance: transportInfo.tDistance,
 					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[index - 1].name,
-					routeEndLocation: newPlaces[index].name,
+					routeStartLocation: newPlaces[index - 1].tourName,
+					routeEndLocation: newPlaces[index].tourName,
 					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[index - 1].latitude,
-					routeStartLongitude: newPlaces[index - 1].longitude,
-					routeEndLatitude: newPlaces[index].latitude,
-					routeEndLongitude: newPlaces[index].longitude,
+					routeStartLatitude: newPlaces[index - 1].lattitue,
+					routeStartLongitude: newPlaces[index - 1].longtitue,
+					routeEndLatitude: newPlaces[index].lattitue,
+					routeEndLongitude: newPlaces[index].longtitue,
 					routeOrder: index
 				};
 			}
@@ -267,16 +318,17 @@
 			function updateItinerary(transportInfo) {
 				const currentIndex = newPlaces.length - 1;
 				itinerary[currentIndex] = {
-					//routeName : "창원",
+					routeName: "창원1",
 					routeTraffic: selectedTransportMode,
+					routeDistance: transportInfo.tDistance,
 					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[currentIndex - 1].name,
-					routeEndLocation: newPlaces[currentIndex].name,
+					routeStartLocation: newPlaces[currentIndex - 1].tourName,
+					routeEndLocation: newPlaces[currentIndex].tourName,
 					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[currentIndex - 1].latitude,
-					routeStartLongitude: newPlaces[currentIndex - 1].longitude,
-					routeEndLatitude: newPlaces[currentIndex].latitude,
-					routeEndLongitude: newPlaces[currentIndex].longitude,
+					routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
+					routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
+					routeEndLatitude: newPlaces[currentIndex].lattitue,
+					routeEndLongitude: newPlaces[currentIndex].longtitue,
 					routeOrder: currentIndex
 				};
 			}
@@ -313,18 +365,18 @@
 			// 여행 일정 저장 버튼 클릭 이벤트 핸들러
 			document.getElementById('saveItineraryButton').onclick = saveItinerary;
 
-/*
-			// 여행 일정 저장 버튼 클릭 이벤트 핸들러
-			document.getElementById('saveItineraryButton').onclick = function () {
-				// 여행 일정 저장 함수 호출
-				saveItinerary();
-
-				// 저장 후 이동할 페이지의 URL을 설정
-				var nextPageUrl = "/route/list";
-
-				// 현재 페이지를 다른 페이지로 이동
-				window.location.href = nextPageUrl;
-			}; */
+			/*
+						// 여행 일정 저장 버튼 클릭 이벤트 핸들러
+						document.getElementById('saveItineraryButton').onclick = function () {
+							// 여행 일정 저장 함수 호출
+							saveItinerary();
+			
+							// 저장 후 이동할 페이지의 URL을 설정
+							var nextPageUrl = "/route/list";
+			
+							// 현재 페이지를 다른 페이지로 이동
+							window.location.href = nextPageUrl;
+						}; */
 
 
 			//sidebar
@@ -342,19 +394,7 @@
 				deleteButton.classList.add('delete-button');
 				listItem.appendChild(deleteButton);
 
-				/*
-								// 추가된 여행지 위로 이동 버튼
-								var moveUpButton = document.createElement('button');
-								moveUpButton.textContent = '▲';
-								moveUpButton.classList.add('move-up');
-								listItem.appendChild(moveUpButton);
-				
-								// 추가된 여행지 아래로 이동 버튼
-								var moveDownButton = document.createElement('button');
-								moveDownButton.textContent = '▼';
-								moveDownButton.classList.add('move-down');
-								listItem.appendChild(moveDownButton);
-				*/
+
 			}
 
 
@@ -389,10 +429,10 @@
 					url: "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
 					async: false,
 					data: {
-						"startX": place1.longitude,
-						"startY": place1.latitude,
-						"endX": place2.longitude,
-						"endY": place2.latitude,
+						"startX": place1.longtitue,
+						"startY": place1.lattitue,
+						"endX": place2.longtitue,
+						"endY": place2.lattitue,
 						"reqCoordType": "WGS84GEO",
 						"resCoordType": "EPSG3857",
 						"startName": "출발지",
@@ -402,19 +442,15 @@
 						var resultData = response.features;
 
 
+						transportData.tDistance =
+							((resultData[0].properties.totalDistance) / 1000)
+								.toFixed(1);
+
 						transportData.tTime =
-							(resultData[0].properties.totalTime / 60)
-								.toFixed(0)
+							((resultData[0].properties.totalTime) / 60)
+								.toFixed(0);
 
-						//결과 출력
-						var tDistance = "총 거리 : "
-							+ ((resultData[0].properties.totalDistance) / 1000)
-								.toFixed(1) + "km,";
-						var tTime = " 총 시간 : "
-							+ ((resultData[0].properties.totalTime) / 60)
-								.toFixed(0) + "분";
 
-						$("#result").text(tDistance + tTime);
 
 						//기존 그려진 라인 & 마커가 있다면 초기화
 						if (resultdrawArr.length > 0) {
@@ -553,10 +589,10 @@
 					url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result&appKey=##",
 					async: false,
 					data: {
-						"startX": place1.longitude,
-						"startY": place1.latitude,
-						"endX": place2.longitude,
-						"endY": place2.latitude,
+						"startX": place1.longtitue,
+						"startY": place1.lattitue,
+						"endX": place2.longtitue,
+						"endY": place2.lattitue,
 						"reqCoordType": "WGS84GEO",
 						"resCoordType": "EPSG3857",
 						"searchOption": searchOption,
@@ -566,27 +602,15 @@
 
 						var resultData = response.features;
 
-						transportData.tDistance = "총 거리 : "
-							+ (resultData[0].properties.totalDistance / 1000)
-								.toFixed(1) + "km,";
 
-						tTime = " 총 시간 : "
-							+ (resultData[0].properties.totalTime / 60)
-								.toFixed(0) + "분,";
+						transportData.tDistance =
+							((resultData[0].properties.totalDistance) / 1000)
+								.toFixed(1);
 
 						transportData.tTime =
-							(resultData[0].properties.totalTime / 60)
-								.toFixed(0)
-						var tFare = " 총 요금 : "
-							+ resultData[0].properties.totalFare
-							+ "원,";
-						var taxiFare = " 예상 택시 요금 : "
-							+ resultData[0].properties.taxiFare
-							+ "원";
+							((resultData[0].properties.totalTime) / 60)
+								.toFixed(0);
 
-						$("#result").text(
-							transportData.tDistance + tTime + tFare
-							+ taxiFare);
 
 
 						for (var i in resultData) { //for문 [S]
@@ -672,14 +696,6 @@
 					newPlaces.pop();
 
 					sidebar.removeChild(listItem);
-				} else if (target.classList.contains("move-up") && listItem.previousElementSibling && !listItem.previousElementSibling.classList.contains("day-marker")) {
-					// 여행지가 1day 위로 이동하지 않도록 조건 추가
-					if (!listItem.classList.contains("day-marker")) {
-						sidebar.insertBefore(listItem, listItem.previousElementSibling);
-					}
-				} else if (target.classList.contains("move-down") && listItem.nextElementSibling) {
-					// 여행지가 1day 아래로 이동하지 않도록 조건 추가
-					sidebar.insertBefore(listItem.nextElementSibling, listItem);
 				}
 			}
 
@@ -935,6 +951,9 @@
 			});
 		});
 
+
+
+
 	</script>
 </head>
 
@@ -948,6 +967,7 @@
 
 		<!-- 여행 기간 표시 영역 -->
 		<div id="selectedDuration"></div>
+
 	</div>
 
 	<div id="smallScreen">
@@ -961,7 +981,7 @@
 		<div id="map_div"></div>
 	</div>
 	<div class="map_result">
-		<p id="result"></p>
+
 	</div>
 	<br />
 

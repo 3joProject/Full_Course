@@ -6,11 +6,11 @@
 <mapper namespace="com.fullcourse.route.mapper.RouteMapper">
 	
 	
-	  <insert id="save" parameterType="com.fullcourse.route.RouteVO">
-        INSERT INTO route ( routeTraffic, routeStartLocation, routeEndLocation, routeStartLatitude, routeStartLongitude, 
-        routeEndLatitude, routeEndLongitude,routeTime, routeOrder)
-        VALUES ( #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude}, 
-        	#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime}, #{routeOrder})
+	 <insert id="save" parameterType="com.fullcourse.route.RouteVO">
+        INSERT INTO route ( routeName, routeTraffic, routeStartLocation, routeEndLocation, routeStartLatitude, routeStartLongitude, 
+        routeEndLatitude, routeEndLongitude,routeTime, routeDistance, routeOrder)
+        VALUES ( #{routeName}, #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude}, 
+        	#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime}, #{routeDistance}, #{routeOrder})
     </insert>
     
     <select id="routeSelectAll" parameterType="com.fullcourse.route.RouteVO">
@@ -25,6 +25,11 @@
 	
 	<select id="routeSelectOne" parameterType="com.fullcourse.route.RouteVO">
 		SELECT * FROM route WHERE routeName= #{routeName}
+	</select>
+	
+	<select id="getTours" parameterType="com.fullcourse.route.TourVO">
+		SELECT * FROM tour
+		
 	</select>
 	
 </mapper>

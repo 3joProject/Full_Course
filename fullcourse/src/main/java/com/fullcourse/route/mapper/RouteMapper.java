@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.fullcourse.route.RouteVO;
+import com.fullcourse.route.TourVO;
 
 @Mapper
 public interface RouteMapper {
@@ -20,5 +21,8 @@ public interface RouteMapper {
 	public int getTotalRows();
 
 	public List<RouteVO> routeSelectOne(String routeName);
+
+
+	public List<TourVO> getTours();
 
 }
