@@ -34,6 +34,16 @@ public interface TourMapper {
 
 	public List<TourVO> tourSelectAllTop();
 
+	public int updateLikeCount(TourVO vo);
+
+	public int updateViewCount(TourVO vo);
+
+	public List<TourVO> searchWordaddress(Map<String, String> map);
+
+	public List<TourVO> searchListAddressPageBlock(Map<String, Object> map);
+
+
+
 	
 
 }

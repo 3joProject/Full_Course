@@ -19,4 +19,5 @@ public class TourCommentVO {
     private String tourcoDate; // LocalDate로 변경하는 것이 좋을 수 있습니다.
     private int tourcoTnum;
     private TourCoStatus tourcoStatus;
+	
 }

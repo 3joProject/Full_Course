@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.festival.mapper.FestivalLikeMapper">
+	
+	<insert id="festivalLikeInsertOK" parameterType="com.fullcourse.festival.like.FestivalLikeVO">
+    INSERT INTO festivalLike (festivalLikeCategory, festivalLikeMemberNum, festivalLikeFestivalNum)
+    VALUES (#{festivalLikeCategory}, #{festivalLikeMemberNum}, #{festivalLikeFestivalNum})
+</insert>
+
+	
+	<delete id="festivalLikeDeleteOK" parameterType="com.fullcourse.festival.like.FestivalLikeVO">
+		delete from festivalLike where festivalLikeNum=#{festivalLikeNum}
+	</delete>
+	
+
+</mapper>

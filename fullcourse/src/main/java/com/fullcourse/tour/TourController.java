@@ -26,16 +26,33 @@ public class TourController {
 	// 여행 페이지 메인
 	@GetMapping("/tour")
 	public String tourMain(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "6") int pageBlock, Model model) {
 		log.info("/tourMain...");
 
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
 		
+		
 		//best 여행지
 		List<TourVO> vos2 = service.tourSelectAllTop();
 		model.addAttribute("vos2", vos2);
-
 		model.addAttribute("vos", vos);
+		
+		// tour테이블에 들어있는 모든여행지수는 몇개?
+				int total_rows = service.getTotalRows();
+				log.info("total_rows:" + total_rows);
+
+				int totalPageCount = 1;
+				if (total_rows / pageBlock == 0) {
+					totalPageCount = 1;
+				} else if (total_rows % pageBlock == 0) {
+					totalPageCount = total_rows / pageBlock;
+				} else {
+					totalPageCount = total_rows / pageBlock + 1;
+				}
+				// 페이지 링크 몇개?
+				log.info("totalPageCount:" + totalPageCount);
+				model.addAttribute("totalPageCount", totalPageCount);
+				
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
 		model.addAttribute("title", "여행지목록");
 		return "thymeleaf/tour/th_tourLayout_main";
@@ -47,6 +64,9 @@ public class TourController {
 		log.info("tourDetails...");
 		log.info("vo:{}", vo);
 	
+		service.updateviewCount(vo);
+		log.info("updateview..");
+		log.info("vo:{}", vo);
 		TourVO vo2 = service.tourSelectOne(vo);
 		model.addAttribute("vo2", vo2);
 
@@ -160,7 +180,7 @@ public class TourController {
 	// 여행지 목록
 	@GetMapping("/tour/tourSelectAll")
 	public String tourSelectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "6") int pageBlock, Model model) {
 		log.info("tourSelectAll ...");
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 
@@ -192,7 +212,7 @@ public class TourController {
 	// 여행지 목록 검색
 	@GetMapping("/tour/tourSearchList")
 	public String tourSearchList(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, String searchKey, String searchWord, Model model) {
+			@RequestParam(defaultValue = "6") int pageBlock, String searchKey, String searchWord, Model model) {
 		log.info("tourSearchList ...");
 		log.info("searchKey:{}", searchKey);
 		log.info("searchWord:{}", searchWord);

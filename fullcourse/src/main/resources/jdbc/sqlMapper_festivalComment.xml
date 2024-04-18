@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.festival.festivalComment.mapper.FestivalCommentMapper">
+	
+	<insert id="festivalCommentInsertOK" parameterType="com.fullcourse.festival.festivalComment.FestivalCommentVO">
+		INSERT INTO festivalcomment(festivalcoContent, festivalcoWriter, festivalcoFnum) 
+    VALUES (#{festivalcoContent}, #{festivalcoWriter}, #{festivalcoFnum})
+	</insert>
+	
+	<update id="festivalCommentUpdateOK" parameterType="com.fullcourse.festival.festivalComment.FestivalCommentVO">
+		update festivalcomment set festivalcoContent=#{festivalcoContent} 
+		where festivalcoNum=#{festivalcoNum}
+	</update>
+	
+	<delete id="festivalCommentDeleteOK" parameterType="com.fullcourse.festival.festivalComment.FestivalCommentVO">
+		delete from festivalcomment where festivalcoNum=#{festivalcoNum}
+	</delete>
+	
+	<select id="festivalCommentSelectAll" resultType="com.fullcourse.festival.festivalComment.FestivalCommentVO">
+		select * from festivalcomment where festivalcoFnum=#{festivalcoFnum} order by festivalcoNum desc
+	</select>
+	
+	<select id="selectOne" resultType="com.fullcourse.festival.festivalComment.FestivalCommentVO">
+		select * from member where
+		num=#{num}
+	</select>
+	
+
+
+</mapper>

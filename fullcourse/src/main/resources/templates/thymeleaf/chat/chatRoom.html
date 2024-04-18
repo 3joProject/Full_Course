@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Chat Room</title>
+    <title>문의 채팅 룸</title>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <style>
-        #chat-messages { margin-bottom: 20px; }
+        #chat-messages { margin-bottom: 20px; overflow: auto; height: 300px; }
         .message { padding: 10px; margin-bottom: 5px; border-radius: 10px; }
-        .admin { background-color: #f1f1f1; }
+        .admin { background-color: rgb(255, 255, 128); }
         .user { background-color: #aef1ae; text-align: right; }
         #chat-form input, #chat-form button, #leave-button { width: 100%; padding: 10px; margin-top: 5px; }
     </style>
     <script th:inline="javascript">
-		var chatRoomId = null; // 전역 변수로 선언
+		var chatRoomId = /*[[${chatRoomId}]]*/ 'defaultRoomId';
 
 		document.addEventListener('DOMContentLoaded', function() {
-    		chatRoomId = /*[[${chatRoomId}]]*/ null;
-    		if (!chatRoomId) {
-        		console.error("Chat room ID is not defined.");
-        		return; // 채팅방 ID가 없으면 초기화 중단
-    		}
-
     		connect();
     
     		var chatForm = document.getElementById('chat-form');
@@ -38,7 +32,7 @@
     		stompClient.connect({}, function(frame) {
         		console.log('Connected: ' + frame);
         		stompClient.subscribe('/topic/' + chatRoomId, function(message) {
-           		showMessage(JSON.parse(message.body));
+           			showMessage(JSON.parse(message.body));
         		});
     		});
 		}
@@ -47,7 +41,7 @@
     		var chatMessages = document.getElementById('chat-messages');
     		var messageElement = document.createElement('div');
     		messageElement.className = 'message ' + (message.sender === 'User' ? 'user' : 'admin');
-    		messageElement.textContent = message.sender === 'User' ? 'You: ' + message.message : 'Admin: ' + message.message;
+    		messageElement.textContent = message.sender + ': ' + message.message;
     		chatMessages.appendChild(messageElement);
 		}
 
@@ -79,12 +73,12 @@
     </script>
 </head>
 <body>
-    <h1>Chat Room</h1>
-    <div id="chat-messages" style="height:300px; overflow:auto;"></div>
+    <h1>문의하기</h1>
+    <div id="chat-messages"></div>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
-        <button type="submit">Send</button>
+        <button type="submit">전송</button>
     </form>
-    <button id="leave-button">Leave Chat Room</button>
+    <button id="leave-button">채팅방 나가기</button>
 </body>
 </html>

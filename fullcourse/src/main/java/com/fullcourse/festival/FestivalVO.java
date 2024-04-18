@@ -21,7 +21,6 @@ public class FestivalVO {
     private String festivalContent;
     private String festivalStart;
     private String festivalFinal;
-    private String festivalUsetime;
     private String festivalTel;
     private int festivalViews;
     private int festivalThumbUp;

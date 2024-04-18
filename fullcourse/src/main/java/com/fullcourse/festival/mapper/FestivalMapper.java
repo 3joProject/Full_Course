@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.tour.TourVO;
 
 @Mapper
 public interface FestivalMapper {
@@ -31,5 +32,10 @@ public interface FestivalMapper {
 	public int search_total_rows_festivalName(Map<String, String> map);
 
 	public List<FestivalVO> festivalSelectAllTop();
+
+	public int updateViewCount(FestivalVO vo);
+	
+	public int updateLikeCount(FestivalVO vo);
+
 
 }

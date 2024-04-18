@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### TMAP API ###
+src/main/resources/templates/thymeleaf/tour/TMAP.html
+
+# 환경 설정 파일 무시
+src/main/resources/application.properties

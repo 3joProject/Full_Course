@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullcourse.festival.festivalComment.FestivalCommentService;
+import com.fullcourse.festival.festivalComment.FestivalCommentVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,6 +20,9 @@ public class FestivalController {
 
 	@Autowired
 	private FestivalService service;
+	
+	@Autowired
+	private FestivalCommentService comService;
 
 	// 축제 페이지 메인
 	@GetMapping("/festival")
@@ -29,8 +35,24 @@ public class FestivalController {
 		//best 축제
 		List<FestivalVO> vos2 = service.festivalSelectAllTop();
 		model.addAttribute("vos2", vos2);
-
 		model.addAttribute("vos", vos);
+		
+		// 축제테이블에 들어있는 모든 축제는 몇개?
+		int total_rows = service.getTotalRows();
+		log.info("total_rows:" + total_rows);
+
+		int totalPageCount = 1;
+		if (total_rows / pageBlock == 0) {
+			totalPageCount = 1;
+		} else if (total_rows % pageBlock == 0) {
+			totalPageCount = total_rows / pageBlock;
+		} else {
+			totalPageCount = total_rows / pageBlock + 1;
+		}
+		// 페이지 링크 몇개?
+		log.info("totalPageCount:" + totalPageCount);
+		model.addAttribute("totalPageCount", totalPageCount);
+		
 		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
 		model.addAttribute("title", "축제목록");
 		return "thymeleaf/festival/th_festivalLayout_main";
@@ -42,11 +64,22 @@ public class FestivalController {
 		log.info("festivalDetails...");
 		log.info("vo:{}", vo);
 	
+		service.updateviewCount(vo);
+		log.info("updateview..");
+		
 		FestivalVO vo2 = service.festivalSelectOne(vo);
 		model.addAttribute("vo2", vo2);
 
 		model.addAttribute("content", "thymeleaf/festival/th_festivalDetails");
 		model.addAttribute("title", "축제상세페이지");
+		
+		//댓글목록 처리로직
+		FestivalCommentVO cvo = new FestivalCommentVO();
+		cvo.setFestivalcoFnum(vo.getFestivalNum());
+		List<FestivalCommentVO> cvos = comService.festivalCommentSelectAll(cvo);
+		
+		model.addAttribute("cvos", cvos);
+
 
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
