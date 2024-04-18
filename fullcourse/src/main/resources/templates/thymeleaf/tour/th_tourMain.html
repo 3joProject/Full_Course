@@ -23,6 +23,29 @@
 					</div>
 				</div>
 				<!-- Header End -->
+				<!--지역 버튼 시작 -->
+				<div>
+					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="여행지">전국</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="daeguBtn" value="대구">대구</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="incheonBtn" value="인천">인천</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gwangjuBtn" value="광주">광주</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="daejeonBtn" value="대전">대전</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="ulsanBtn" value="울산">울산</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="sejongBtn" value="세종">세종</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeonggiBtn" value="경기">경기</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gangwonBtn" value="강원">강원</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="chungbukBtn" value="충청북">충북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="chungnamBtn" value="충청남">충남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongbukBtn" value="경상북">경북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongnamBtn" value="경상남">경남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jeonbukBtn" value="전라북">전북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jeonnamBtn" value="전라남">전남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jejuBtn" value="제주">제주</button>
+				</div>
+
+				<!--									지역 버튼 끝-->
 				<!-- 여행지목록 start-->
 
 				<div class="container-fluid py-5">
@@ -31,11 +54,13 @@
 							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행지</h6>
 							<h1>Best 여행지</h1>
 						</div>
-						<div class="row">
+						<div class="row" id="bestThreeList">
 							<th:block th:each="vo : ${vos2}">
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="destination-item position-relative overflow-hidden mb-2">
-										<img class="img-fluid" src="img/destination-1.jpg" alt="">
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											src="img/destination-1.jpg" alt="">
+
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
 											<h5 class="text-white"><span th:text="${vo.tourName}"></span></h5>
@@ -59,19 +84,25 @@
 								<h1>여행지 목록</h1>
 							</a>
 
-							<!--<form action="/tour2" method="get">-->
 
 							<!--							누르지 마시오..-->
 							<button id="apiBtn">test</button>
 
 							<!--</form>-->
 						</div>
-						<div class="row">
+						<div class="row" id="destinationList">
 							<th:block th:each="vo : ${vos}">
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="destination-item position-relative overflow-hidden mb-2">
-<!--										<img class="img-fluid" src="img/destination-1.jpg" alt="">-->
-										<img class="img-fluid" th:src="${vo.tourImg}" alt="">
+										<!--										<img class="img-fluid" src="img/destination-1.jpg" alt="">-->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.tourImg == null or vo.tourImg == ''}"
+											src="img/destination-1.jpg" alt="기본이미지대체텍스트" />
+										<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.tourImg != null and vo.tourImg != ''}" th:src="${vo.tourImg}"
+											alt="이미지대체텍스트" />
+										<!--										<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
 
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
@@ -80,63 +111,69 @@
 										</a>
 									</div>
 								</div>
-								</th:block>
-								
-								
-<!--							수정2-->
-						  <div class="col-12">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
-                                  <li class="page-item ">
-                                    <a class="page-link" th:href="@{/tour(cpage=1)}" aria-label="Previous">
-                                      <span aria-hidden="true">&laquo;</span>
-                                      <span class="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li class="page-item active"><a class="page-link" th:href="@{/tour/tourSelectAll(cpage=1)}" >1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                      <span class="sr-only">Next</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </nav>
-                        </div>
-                        
-<!--                        수정	2끝	-->
-<!--수정3-->
+							</th:block>
 
-  <div class="col-12">
-                         	<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-				                	<th:block th:if="${param.searchKey}== null">
-					                	<a th:href="@{/tour/tourSelectAll(cpage=${i})}">[[${i}]] &nbsp;</a>
-			                		</th:block>
-			                		<th:block th:if="${param.searchKey}!= null">
-					                	<a th:href="@{/tour/tourSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]] &nbsp;</a>
-			                		</th:block>
-			                	</th:block>
-                        </div>
-<!--수정3끝-->
+
+							
+							<!--수정3끝-->
 
 						</div>
+						<!--							수정2-->
+							<div class="col-12">
+								<nav aria-label="Page navigation">
+									<ul class="pagination pagination-lg justify-content-center bg-white mb-0"
+										style="padding: 30px;">
+										<li class="page-item ">
+											<a class="page-link" th:href="@{/tour(cpage=1)}" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+												<span class="sr-only">Previous</span>
+											</a>
+										</li>
+										<li class="page-item active"><a class="page-link"
+												th:href="@{/tour/tourSelectAll(cpage=1)}">1</a></li>
+										<li class="page-item"><a class="page-link" href="#">2</a></li>
+										<li class="page-item"><a class="page-link" href="#">3</a></li>
+										<li class="page-item">
+											<a class="page-link" href="#" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+												<span class="sr-only">Next</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+
+							<!--                        수정	2끝	-->
+							<!--수정3-->
+
+							<div class="col-12">
+								<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+									<th:block th:if="${param.searchKey}== null">
+										<a th:href="@{/tour/tourSelectAll(cpage=${i})}">[[${i}]] &nbsp;</a>
+									</th:block>
+									<th:block th:if="${param.searchKey}!= null">
+										<a
+											th:href="@{/tour/tourSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+											&nbsp;</a>
+									</th:block>
+								</th:block>
+							</div>
 					</div>
 				</div>
-				
+
 				<script th:inline="javascript">
 					$("#apiBtn").click(function () {
 						console.log('여행api호출');
 						//배열을 루프 돌려서 '서울', '대전'..등등
-						callAPI('서울');
+						//5)	[지역기반관광정보조회] 오퍼레이션명세
+						callAPI();
 					});
 					//console.log('클릭');
 					// JavaScript 코드
 					function callAPI(keyword) {
 						const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
-						const url = `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${apiKey}&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=2&listYN=Y&arrange=A&contentTypeId=12&keyword=${keyword}&_type=json`;
-
+						//	const url = `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${apiKey}&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=2&listYN=Y&arrange=A&contentTypeId=12&keyword=${keyword}&_type=json`;
+						const url = `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=${apiKey}&pageNo=1&numOfRows=20&MobileApp=AppTest&MobileOS=ETC&arrange=A&contentTypeId=12&_type=json`;
 						return fetch(url)
 							.then(response => response.json())
 							.then(data => {
@@ -202,17 +239,17 @@
 									//전체데이터 불러오기
 									//console.log("배열"+JSON.stringify(newItem));
 									// 서버로 데이터 전송
-									
+
 									//sendToController(alldata);
 
 								})
 								.catch(error => {
 									console.error('Error:', error);
 								});
-								
+
 
 						}
-						
+
 						// 결과 데이터를 스프링 부트 기반의 컨트롤러로 전송
 
 
@@ -235,16 +272,136 @@
 								// 서버 요청 중 오류가 발생했을 때 실행되는 함수
 							});
 					}
+
+					//지역목록 시작
+					$(".regionBtn").click(function () {
+						let region = $(this).val();
+						console.log(region);
+
+						sendToControllerForUpdate(region);
+					});
+
+					function sendToControllerForUpdate(region) {
+
+						let data = {searchKey: "tourAddress", searchWord: region, cpage:"1", pageBlock:"6"};
+						$.ajax({
+							url: '/tour/searchRegion',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify(data),
+							success: function (response) {
+								console.log('서버 응답:', response);
+
+								//vos = response;
+								updateHTMLWithVos(response);
+
+								let bestThree = getBestThree(response);
+								updateHTMLWithBestThree(bestThree);
+								// best3 여행지 콘솔에 출력
+								console.log('Best 3 여행지:', bestThree);
+								//document.getElementById('thumbUpCount').innerText = response.tourThumbUp;
+								// vos에서 tourThumbUp 기준으로 내림차순 정렬
+
+							},
+							error: function (xhr, status, error) {
+								console.error('서버 요청 오류:', error);
+							}
+						});
+					}
+					// vos에서 tourThumbUp이 가장 높은 상위 3개의 항목을 반환하는 함수
+					function getBestThree(vos) {
+						vos.sort(function (a, b) {
+							return b.tourThumbUp - a.tourThumbUp;
+						});
+						return vos.slice(0, 3);
+					}
+					function updateHTMLWithVos(vos) {
+    // vos를 이용하여 HTML을 업데이트
+    let destinationHTML = '';
+    for (let i = 0; i < vos.length; i++) {
+        let vo = vos[i];
+        if (!vo.tourImg) {
+            // 이미지가 비어 있는 경우 기본 이미지로 대체하여 표시
+            destinationHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="img/destination-1.jpg" style="max-width: 100%; height: auto;" alt="기본이미지 대체 텍스트">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/tour/tourDetails?tourNum=${vo.tourNum}">
+                            <h5 class="text-white">${vo.tourName}</h5>
+                            <span>${vo.tourAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+        } else {
+            // 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용
+            destinationHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="${vo.tourImg}" style="max-width: 100%; height: auto;" alt="">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/tour/tourDetails?tourNum=${vo.tourNum}">
+                            <h5 class="text-white">${vo.tourName}</h5>
+                            <span>${vo.tourAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+        }
+    }
+    // vos를 반영할 HTML 요소에 할당
+    document.getElementById('destinationList').innerHTML = destinationHTML;
+}
+
+
+					function updateHTMLWithBestThree(bestThree) {
+						// HTML을 업데이트
+						let bestThreeHTML = '';
+						for (let i = 0; i < bestThree.length; i++) {
+							let vo = bestThree[i];
+							// 이미지가 비어 있는지 확인
+							if (!vo.tourImg) {
+								// 이미지가 비어 있는 경우 기본 이미지를 대체하여 표시
+								bestThreeHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="img/destination-1.jpg" style="max-width: 100%; height: auto;" alt="기본이미지 대체 텍스트">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/tour/tourDetails?tourNum=${vo.tourNum}">
+                            <h5 class="text-white">${vo.tourName}</h5>
+                            <span>${vo.tourAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+							} else {
+								// 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용
+								bestThreeHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="${vo.tourImg}" style="max-width: 100%; height: auto;" alt="">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/tour/tourDetails?tourNum=${vo.tourNum}">
+                            <h5 class="text-white">${vo.tourName}</h5>
+                            <span>${vo.tourAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+							}
+						}
+
+						// bestThreeHTML을 bestThreeList 요소에 할당하여 업데이트
+						document.getElementById('bestThreeList').innerHTML = bestThreeHTML;
+					}
 				</script>
 
-				
 				<!-- 여행지목록 end -->
-				
+
+
 
 			</div>
 		</div>
 	</div>
 </div>
 
- 
+
+
 </html>

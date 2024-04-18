@@ -40,17 +40,19 @@
 									</div>
 									<!--									좋아요 시작 -->
 
-<div>
-	<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
-									<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
+									<div>
+										<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
+										<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
 									</div>
-									
-<!--									로직아이디어: 버튼 클릭시 -> 멤버id, 글번호, 카테고리 넘겨주기 -> tourlikedb추가
-										tour테이블의 좋아요 컬럼은 subquery로 tourlike 테이블의 같은 글번호 갯수 세어서 입력. 
 
-
--->
 									<!--									좋아요 끝-->
+									
+<!--									조회수 시작-->
+<div>
+										<span>조회수: </span> <span id="pageViewCount" th:text="${vo2.tourViews}"></span>
+									</div>
+
+<!--조회수끝-->
 
 									<div class="bg-white mb-3" style="padding: 30px;">
 										<div class="d-flex mb-3">
@@ -61,6 +63,7 @@
 												Travel</a>
 										</div>
 										<h2 class="mb-3" th:text="${vo2.tourName}"></h2>
+										<p th:text="${vo2.tourNum}"></p>
 										<p th:text="${vo2.tourContent}"></p>
 
 										<h4 class="mb-3">이용정보</h4>
@@ -172,6 +175,7 @@
 				</div>
 			</div>
 			<script>
+				//댓글 기능 시작
 				$(document).ready(function () {
 					$(".showModifyForm").hide();
 					$(".commentModifyBtns").hide();
@@ -212,37 +216,59 @@
 
 
 				});
-				
-					$("#likebtn").click(function () {
-						console.log("좋아요");
-						  // 현재 URL에서 tourNum 값을 가져오는 방법
-    let tourNum = new URLSearchParams(window.location.search).get("tourNum");
-    let category = 'tour';
-						 let data = { tourLikeTourNum: tourNum,tourLikeCategory: category };
-						sendToController(data);
-					});
-					
-					function sendToController(data) {
-						fetch('/tour/increaseThumbUp', {
-							method: 'POST', // 요청 메서드 (GET, POST 등)
-							headers: {
-								'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
-							},
-							body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+				//댓글 기능 끝
+ //좋아요 기능시작
+				$("#likebtn").click(function () {
+					console.log("좋아요");
+					// 현재 URL에서 tourNum 값을 가져오는 방법
+					let tourNum = new URLSearchParams(window.location.search).get("tourNum");
+					let category = 'tour';
+					let user = '1';
+					let data = {tourLikeTourNum: tourNum, tourLikeCategory: category, tourLikeMemberNum: user};
+					sendToController(data);
+				});
+
+				function sendToController(data) {
+					fetch('/tour/increaseThumbUp', {
+						method: 'POST', // 요청 메서드 (GET, POST 등)
+						headers: {
+							'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
+						},
+						body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+					})
+						.then(response => {
+							console.log('서버 응답:', response);
+							console.log('data', data);
+							sendToControllerForUpdate(data);
+
+
+							// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
+							// 추가적인 작업 수행
 						})
-							.then(response => {
-								console.log('서버 응답:', response);
-								console.log('data', data);
-								
-								// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
-								// 추가적인 작업 수행
-							})
-							.catch(error => {
-								console.error('서버 요청 오류:', error);
-								// 서버 요청 중 오류가 발생했을 때 실행되는 함수
-							});
-					}
-			
+						.catch(error => {
+							console.error('서버 요청 오류:', error);
+							// 서버 요청 중 오류가 발생했을 때 실행되는 함수
+						});
+				}
+				function sendToControllerForUpdate(data) {
+					data = {tourNum: data.tourLikeTourNum};
+					$.ajax({
+						url: '/tour/updateThumbUp',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify(data),
+						success: function (response) {
+							console.log('서버 응답:', response);
+							
+							document.getElementById('thumbUpCount').innerText = response.tourThumbUp;
+						},
+						error: function (xhr, status, error) {
+							console.error('서버 요청 오류:', error);
+						}
+					});
+				}
+
+//좋아요 기능끝
 			</script>
 
 </html>

@@ -10,6 +10,5 @@ public interface TourLikeMapper {
 
 	public int tourLikeInsertOK(TourLikeVO vo);
 	public int tourLikeDeleteOK(TourLikeVO vo);
-	public int tourLikeInsertOK2(TourVO vo);
 
 }
