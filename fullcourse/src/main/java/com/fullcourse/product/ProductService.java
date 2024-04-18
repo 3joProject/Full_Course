@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fullcourse.product.mapper.ProductMapper;
 import com.fullcourse.route.RouteVO;
+import com.fullcourse.board.BoardVO;
 import com.fullcourse.member.MemberVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ public class ProductService {
 
 	
 	public int insertOK(ProductVO productVO) {
+		
 		return productMapper.insertOK(productVO);
 	}
 	
