@@ -20,7 +20,7 @@ public class RouteVO {
 	private double routeStartLongitude;
 	private double routeEndLatitude;
 	private double routeEndLongitude;
-	//private double routeDistance;
+	private double routeDistance;
 	private int routeOrder;
 	
 }

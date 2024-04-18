@@ -1,5 +1,7 @@
 package com.fullcourse.route;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +34,17 @@ public class RouteRestController {
         	log.info("not");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body("{\"message\": \"con여행 일정 저장에 실패했습니다.\"}");
-            
-            
         }
     }
+	
+	@GetMapping("/gettour")
+	public ResponseEntity<List<TourVO>> getTour() {
+		// 여행 데이터를 가져오는 로직을 구현
+		List<TourVO> tourList = service.getTours();
+		return ResponseEntity.ok(tourList);
+		
+		
+	}
 	
 
 }

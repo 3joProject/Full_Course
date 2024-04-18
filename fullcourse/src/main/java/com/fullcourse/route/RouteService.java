@@ -40,6 +40,11 @@ public class RouteService {
 		// TODO Auto-generated method stub
 		return mapper.routeSelectOne(routeName);
 	}
+
+	public List<TourVO> getTours() {
+		// TODO Auto-generated method stub
+		return mapper.getTours();
+	}
 	
 
 }
