@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.cart.mapper.CartMapper">
+
+	<select id="selectAll"
+		resultType="com.fullcourse.cart.CartVO">
+		SELECT * FROM cart where cartMid='user1';
+	</select>
+
+	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
+		insert into
+		cart(cartMid, cartProduct, cartSellerId, cartTitle,
+		cartPrice, cartImage, cartContent, cartInventory, cartCount)
+		values('user1', #{cartProduct}, #{cartSellerId}, #{cartTitle},
+		#{cartPrice}, #{cartImage}, #{cartContent},
+		#{cartInventory}, #{cartCount})
+	</insert>
+
+	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
+		update cart set cartCount=#{cartCount} where cartNum=#{cartNum}
+	</update>
+
+	<delete id="deleteOK" parameterType="com.fullcourse.cart.CartVO">
+		delete from cart where cartNum=#{cartNum}
+	</delete>
+
+	<select id="chkWDuplCart" resultType="int">
+		select count(*) from cart where cartMid='user1' and
+		cartProduct=#{cartProduct};
+	</select>
+
+</mapper>

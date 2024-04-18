@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+				<form class="validation-form" novalidate action="festivalUpdateOK" method="post">
+
+					<div class="mb-3">
+						<label for="id">NUM</label> : <span th:text="${vo2.festivalNum}"></span> <input type="hidden"
+							class="form-control" name="festivalNum" id="festivalNum" placeholder="" th:value="${vo2.festivalNum}" required>
+						<div class="invalid-feedback"></div>
+					</div>
+				
+					<div class="mb-3">
+						<label for="festivalName">축제명</label> <input type="text" class="form-control" name="festivalName" id="festivalName"
+							placeholder="" th:value="${vo2.festivalName}" required>
+						<div class="invalid-feedback">NAME 입력해주세요.</div>
+					</div>
+								
+					<div class="mb-3">
+						<label for="address">주소</label> <input type="text" class="form-control" name="festivalAddress" id="festivalAddress"
+							placeholder="" th:value="${vo2.festivalAddress}" required>
+						<div class="invalid-feedback">주소 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="content">내용</label> <input type="text" class="form-control" name="festivalContent" id="festivalContent"
+							placeholder="" th:value="${vo2.festivalContent}" required>
+						<div class="invalid-feedback">내용을 입력해주세요.</div>
+					</div>
+						<div class="mb-3">
+						<label for="Usetime">이용시간</label> <input type="text" class="form-control" name="festivalUsetime" id="festivalUsetime"
+							placeholder="" th:value="${vo2.festivalUsetime}" required>
+						<div class="invalid-feedback">이용시간을 입력해주세요.</div>
+					</div>
+						<div class="mb-3">
+						<label for="tel">TEL</label> <input type="text" class="form-control" name="festivalTel" id="festivalTel"
+							placeholder="" th:value="${vo2.festivalTel}" required>
+						<div class="invalid-feedback">TEL 입력해주세요.</div>
+					</div>
+						<div class="mb-3">
+						<label for="Img">Img</label> <input type="text" class="form-control" name="festivalImg" id="festivalImg"
+							placeholder="" th:value="${vo2.festivalImg}" required>
+						<div class="invalid-feedback">img를 입력해주세요.</div>
+					</div>
+			
+					<div class="mb-4"></div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">수정
+						완료</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

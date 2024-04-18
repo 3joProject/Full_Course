@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>1:1 채팅 목록</h1>
+    <div>
+        <h2>채팅 시작하기</h2>
+        <ul>
+            <!-- 각 채팅방을 반복하여 출력 -->
+            <li th:each="chatRoom : ${chatRooms}">
+                <!-- 채팅방 ID와 생성 날짜를 표시 -->
+                <span th:text="'채팅방 번호 #' + ${chatRoom.chatRoomId} + ' - 채팅 시작 일시: ' + ${chatRoom.chatCreatedAt}">Chat Room Info</span>
+                <!-- 각 채팅방에 들어가는 링크 -->
+                <a th:href="@{'/chat/chatRoom/' + ${chatRoom.chatRoomId}}">채팅 입장</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

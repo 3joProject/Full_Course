@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+				<form class="validation-form" novalidate action="tourInsertOK" method="post">
+
+					<!--					<div class="mb-3">-->
+					<!--						<label for="id">NUM</label> : <span th:text="${vo2.tourNum}"></span> <input type="hidden"-->
+					<!--							class="form-control" name="tourNum" id="tourNum" placeholder="" th:value="${vo2.tourNum}"-->
+					<!--							required>-->
+					<!--						<div class="invalid-feedback"></div>-->
+					<!--					</div>-->
+					<!--					<div class="mb-3">-->
+					<!--						<label for="num">NUM</label> <input type="text" class="form-control" name="tourNum"-->
+					<!--							id="tourNum" placeholder="" th:value="${vo2.tourNum}" required>-->
+					<!--						<div class="invalid-feedback">Num 입력해주세요.</div>-->
+					<!--					</div>-->
+
+					<div class="mb-3">
+						<label for="name">여행지이름</label> <input type="text" class="form-control" name="tourName" id="tourName"
+							placeholder="" value="여행지4" required>
+						<div class="invalid-feedback">NAME 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="adress">주소</label> <input type="text" class="form-control" name="tourAddress" id="tourAddress"
+							placeholder="" value="주소4" required>
+						<div class="invalid-feedback">주소 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="content">내용</label> <input type="text" class="form-control" name="tourContent"
+							id="tourContent" placeholder="" value="내용4" required>
+						<div class="invalid-feedback">내용을 입력해주세요.</div>
+					</div>
+				
+
+					<div class="mb-3">
+						<label for="tel">연락처</label> <input type="text" class="form-control" name="tourTel" id="tourTel"
+							placeholder="" value="010-0121-1234" required>
+						<div class="invalid-feedback">연락처를 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="longtitue">경도</label> <input type="text" class="form-control" name="longtitue" id="longtitue"
+							placeholder="" value="127.0280213987" required>
+						<div class="invalid-feedback">경도를 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="lattitue">위도</label> <input type="text" class="form-control" name="lattitue" id="lattitue"
+							placeholder="" value="37.5899857439" required>
+						<div class="invalid-feedback">위도를 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="views">조회수</label> <input type="text" class="form-control" name="tourViews" id="tourViews"
+							placeholder="" value="4" required>
+						<div class="invalid-feedback">조회수 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="thumbUp">좋아요</label> <input type="text" class="form-control" name="tourThumbUp"
+							id="tourThumbUp" placeholder="" value="4" required>
+						<div class="invalid-feedback">좋아요 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="img">이미지</label> <input type="text" class="form-control" name="tourImg" id="tourImg"
+							placeholder="" value="default.png" required>
+						<div class="invalid-feedback">이미지 입력해주세요.</div>
+					</div>
+
+				
+
+					<div class="mb-4"></div>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">등록</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
