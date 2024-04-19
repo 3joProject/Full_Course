@@ -88,5 +88,15 @@ public class FestivalService {
 		return mapper.updateViewCount(vo);		
 	}
 
+	public List<FestivalVO> searchListAddressPageBlock(String searchKey, String searchWord, int cpage, int pageBlock) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchWord", searchWord+"%");
+		int startRow = (cpage - 1) * pageBlock + 1;
+		map.put("startRow", startRow-1);
+		map.put("pageBlock", pageBlock);
+		return mapper.searchListAddressPageBlock(map);
+	}
+
+
 	
 }

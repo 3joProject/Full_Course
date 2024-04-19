@@ -37,5 +37,7 @@ public interface FestivalMapper {
 	
 	public int updateLikeCount(FestivalVO vo);
 
+	public List<FestivalVO> searchListAddressPageBlock(Map<String, Object> map);
+
 
 }
