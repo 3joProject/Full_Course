@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+			<!-- 장바구니 테이블 -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th><input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()"></th>
+						<th scope="col">상품이미지</th>
+						<th scope="col">상품명</th>
+						<th scope="col">판매자아이디</th>
+						<th scope="col">상품내용</th>
+						<th scope="col">상품가격</th>
+						<th scope="col">구매수량</th>
+						<th scope="col">상품재고</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="vo, rowStat : ${vos}">
+						<tr>
+							<td><input scope="row" type="hidden" th:value="${vo.cartNum}"></td>
+							<td><input type="checkbox" class="item-checkbox" onclick="updateChkRowAll()"></td>
+							<td><span scope="row" th:text="${vo.cartImage}"></span></td>
+							<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
+							<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
+							<td><span scope="row" th:text="${vo.cartContent}"></span></td>
+							<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
+							<td>
+								<div>
+									<input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"
+										min="1" th:max="${vo.cartInventory}">
+								</div>
+								<a class="cartCount_modify_btn">변경</a>
+							</td>
+							<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
+							<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
+
+					</th:block>
+				</tbody>
+			</table>
+
+			<div id="selectedProductsForm">
+				<h2>선택된 상품 정보</h2>
+				<form id="checkoutForm" action="/payment" method="get">
+					<!-- 선택된 상품 정보들이 여기에 동적으로 추가될 것입니다 -->
+
+				</form>
+			</div>
+
+			<table id="selectedProductsTable">
+				<thead>
+					<tr>
+						<th>상품명</th>
+						<th>가격</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 선택된 상품들의 정보가 여기에 추가될 것입니다 -->
+				</tbody>
+
+			</table>
+			<table id="totalPriceTable">
+				<thead>
+					<tr>
+						<th>결제할 총 금액</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 선택된 상품들의 총 가격 정보가 여기에 추가-->
+				</tbody>
+
+			</table>
+
+			<button id="checkoutButton">결제하기</button>
+
+
+
+			<!--수량 조정 form -->
+			<form id="quantity_update_form" action="cart/updateOK" method="post">
+				<input type="hidden" name="cartNum" id="update_cartNum">
+				<input type="hidden" name="cartCount" id="update_cartCount">
+			</form>
+
+
+			<!--장바구니 추가용 임시 product 폼-->
+			<form method="post" action="cart/insertOK">
+				<p><label>상품번호 : <input type="number" name="cartProduct"></label></p>
+				<p><label>판매자아이디 : <input type="text" name="cartSellerId"></label></p>
+				<p><label>상품명 : <input type="text" name="cartTitle"></label></p>
+				<p><label>금액(단가) : <input type="number" name="cartPrice"></label></p>
+				<p><label>구매수량 : <input type="number" name="cartCount"></label></p>
+				<p><label>상품이미지 : <input type="text" name="cartImage"></label></p>
+				<p><label>상품내용 : <input type="text" name="cartContent"></label></p>
+				<p><label>상품수량(재고) : <input type="number" name="cartInventory"></label></p>
+
+				<p><input type="submit" value="장바구니 추가 버튼"></p>
+			</form>
+
+			<!--중복된 관광지 즐겨찾기 시 경고창-->
+			<div th:if="${warningMessageCart != null}" class="alert alert-warning">
+				<span th:text="${warningMessageCart}"></span>
+			</div>
+
+
+		</div>
+	</div>
+	</div>
+	<!-- Service End -->
+
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="lib/tempusdominus/js/moment.min.js"></script>
+	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<!-- Contact Javascript File -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+
+	<!--	<script>-->
+	<!--		// 모든 체크박스 선택 혹은 해제-->
+	<!--		function toggleAllCheckboxes() {-->
+	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
+	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
+	<!--			var isChecked = chkRowAll.checked;-->
+
+	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
+	<!--				checkboxes[i].checked = isChecked;-->
+	<!--			}-->
+	<!--		};-->
+
+	<script>
+		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택
+		function updateChkRowAll() {
+			var checkboxes = document.querySelectorAll('.item-checkbox');
+			var chkRowAll = document.getElementById('chkRowAll');
+			var allChecked = true;
+
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (!checkboxes[i].checked) {
+					allChecked = false;
+					break;
+				}
+			}
+
+			chkRowAll.checked = allChecked;
+		};
+
+	</script>
+
+	<!--		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트-->
+	<!--		document.addEventListener('DOMContentLoaded', function () {-->
+	<!--			updateChkRowAll();-->
+	<!--		});-->
+	<!--	</script>-->
+
+	<!--	<script>-->
+	<!--		// 모든 체크박스 선택 혹은 해제-->
+	<!--		function toggleAllCheckboxes() {-->
+	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
+	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
+	<!--			var isChecked = chkRowAll.checked;-->
+
+	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
+	<!--				checkboxes[i].checked = isChecked;-->
+	<!--			}-->
+	<!--		};-->
+
+	<!--		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택-->
+	<!--		function updateChkRowAll() {-->
+	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
+	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
+	<!--			var allChecked = true;-->
+
+	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
+	<!--				if (!checkboxes[i].checked) {-->
+	<!--					allChecked = false;-->
+	<!--					break;-->
+	<!--				}-->
+	<!--			}-->
+
+	<!--			chkRowAll.checked = allChecked;-->
+	<!--		};-->
+
+	<!--		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트-->
+	<!--		document.addEventListener('DOMContentLoaded', function () {-->
+	<!--			updateChkRowAll();-->
+	<!--		});-->
+	<!--	</script>-->
+
+	<script>
+
+		$(document).ready(function () {
+			// 변경 버튼에 대한 클릭 이벤트 핸들러 등록
+			// jQuery를 사용하여 변경 버튼에 대한 클릭 이벤트 핸들러를 등록
+			$('.cartCount_modify_btn').click(function () {
+				// 폼의 기본 제출 동작 방지
+				//event.preventDefault();
+
+				// 클릭 이벤트 핸들러 함수 내용
+				// 클릭된 버튼에 대한 데이터를 가져옴
+				let cartNum = $(this).closest('tr').find('td:eq(0)').find('input').val();
+				console.log("cartNum", cartNum);
+				// 해당 td 요소 내의 input 값을 가져옴
+				let cartCount = $(this).closest('td').find('input').val();
+				console.log("cartCount", cartCount);
+				// 각각의 hidden input 필드에 값을 설정
+				$('#update_cartNum').val(cartNum);
+				console.log("update_cartNum", update_cartNum);
+				$('#update_cartCount').val(cartCount);
+				console.log("update_cartCount", update_cartNum);
+				// 폼을 제출
+				$('#quantity_update_form').submit();
+			});
+
+		});
+
+	</script>
+
+	<script>
+		// 체크박스의 클릭 이벤트 처리
+		$('.item-checkbox').click(function () {
+			var selectedProducts = []; // 선택된 상품들의 정보를 저장할 배열
+			var totalAmount = 0; // 선택된 상품들의 총 결제 금액 초기화
+
+			// 체크된 상품들을 식별하여 배열에 추가
+			$('.item-checkbox:checked').each(function () {
+				var $row = $(this).closest('tr'); // 체크된 상품의 행을 찾음
+				var productName = $row.find('td:eq(3)').text().trim(); // 상품명 가져오기
+				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
+				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
+				var totalPrice = productPrice * productQuantity; // 상품가격과 수량을 곱하여 총 가격 계산
+				selectedProducts.push({name: productName, price: totalPrice});
+				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가
+
+			});
+			// 아래 테이블에 선택된 상품 정보를 표시
+			var $table = $('#selectedProductsTable tbody');
+			$table.empty(); // 기존 내용 지우기
+
+
+
+			selectedProducts.forEach(function (product) {
+				var html = `<tr>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                    </tr>`;
+				$table.append(html);
+			});
+
+			var $tabletotla = $('#totalPriceTable tbody');
+			$tabletotla.empty();
+			// 총 결제 금액을 출력하는 행 추가
+			var totalHtml = `<tr><td>${totalAmount.toFixed(2)}원</td></tr>`;
+			$tabletotla.append(totalHtml);
+
+			// 아래 테이블의 <form>에 선택된 상품 정보를 추가
+			var $form = $('#checkoutForm'); // 아래 테이블의 <form> 요소
+			$form.empty(); // 기존 내용 지우기
+
+			// 선택된 상품들을 <form>에 추가
+			selectedProducts.forEach(function (product) {
+				var html = `<input type="hidden" name="orderId" value="${product.name}">
+                    <input type="hidden" name="amount" value="${product.price}">`;
+				$form.append(html);
+			});
+		});
+
+		// 전체 체크박스 클릭 시 모든 상품 정보를 표시하는 함수
+		function toggleAllCheckboxes() {
+			var isChecked = $('#chkRowAll').prop('checked');
+
+			// 전체 상품 체크박스 상태 변경
+			$('.item-checkbox').prop('checked', isChecked);
+
+			// 선택된 상품 정보 업데이트
+			updateSelectedProducts();
+		}
+
+		// 선택된 상품 정보 업데이트 함수
+		function updateSelectedProducts() {
+			var selectedProducts = []; // 선택된 상품들의 정보를 저장할 배열
+			var totalAmount = 0; // 선택된 상품들의 총 결제 금액 초기화
+			// 모든 상품 행을 순회하며 정보를 수집
+			$('.item-checkbox:checked').each(function () {
+				var $row = $(this).closest('tr'); // 체크된 상품의 행을 찾음
+				var productName = $row.find('td:eq(3)').text().trim(); // 상품명 가져오기
+				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
+				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
+				var totalPrice = productPrice * productQuantity; // 가격과 수량을 곱하여 총 가격 계산
+				selectedProducts.push({name: productName, price: totalPrice});
+				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가            
+			});
+
+			// 선택된 상품 정보를 표시하는 테이블 업데이트
+			var $tableBody = $('#selectedProductsTable tbody');
+			$tableBody.empty(); // 기존 내용 비우기
+
+			// 선택된 상품들을 테이블에 추가
+			selectedProducts.forEach(function (product) {
+				var html = `<tr><td>${product.name}</td><td>${product.price}</td></tr>`;
+				$tableBody.append(html);
+
+			});
+
+			var $tabletotla2 = $('#totalPriceTable tbody');
+			$tabletotla2.empty();
+			// 총 결제 금액을 출력하는 행 추가
+			var totalHtml = `<tr><td>${totalAmount.toFixed(2)}원</td></tr>`;
+			$tabletotla2.append(totalHtml);
+
+
+			// 선택된 상품 정보를 <form>에 추가
+			var $form = $('#checkoutForm'); // 아래 테이블의 <form> 요소
+			$form.empty(); // 기존 내용 지우기
+
+			// 선택된 상품들을 <form>에 추가
+			selectedProducts.forEach(function (product) {
+				var html = `<input type="hidden" name="orderId" value="${product.name}">
+                    <input type="hidden" name="amount" value="${product.price}">`;
+				$form.append(html);
+			});
+		}
+
+		// 페이지 로드 시에도 초기 업데이트를 수행
+		$(document).ready(function () {
+			updateSelectedProducts();
+		});
+
+
+	</script>
+
+	<script>
+		// 결제하기 버튼 클릭 이벤트 핸들러
+		$('#checkoutButton').click(function () {
+			// 선택된 상품 정보를 가져와서 URL에 추가하여 페이지 이동
+			var selectedProducts = [];
+			var totalAmount = 0;
+			$('#selectedProductsTable tbody tr').each(function () {
+				var productName = $(this).find('td:eq(0)').text();
+				var productPrice = parseFloat($(this).find('td:eq(1)').text()); // 가격을 숫자로 변환하여 계산
+				selectedProducts.push(productName);
+				totalAmount += productPrice; // 가격을 누적하여 합계 계산
+			});
+
+			// URL 파라미터로 선택된 상품 정보 추가
+			var url = '/payment?';
+			url += 'orderId=' + encodeURIComponent(selectedProducts.join(', ')); // 상품명들을 쉼표로 구분하여 합침
+			url += '&amount=' + encodeURIComponent(totalAmount.toFixed(2)); // 합계를 소수점 2자리까지 표시하여 전달
+
+			// 결제 페이지로 이동
+			window.location.href = url;
+		});
+	</script>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</html>
