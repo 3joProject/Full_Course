@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>구매 내역 목록</title>
+    <style>
+        .buylist-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .buylist-header {
+            background-color: #f3f3f3;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .buylist-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+        }
+        .buylist-image {
+            width: 150px;
+            height: 150px;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+        .buylist-details {
+            flex-grow: 1;
+        }
+        .buylist-details span {
+            display: block;
+        }
+        .buylist-action {
+            padding: 10px;
+            text-align: right;
+        }
+        .buylist-action button {
+            padding: 5px 15px;
+        }
+        .pagination {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .pagination span {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .pagination span.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="buylist-container">
+        <div class="buylist-header">
+            <h1>구매 내역</h1>
+        </div>
+        
+        <!-- 구매 내역 아이템 -->
+        <!-- 반복되는 아이템 부분은 서버 측 템플릿 엔진이나 JavaScript로 동적 생성 예정 -->
+        <div class="buylist-item">
+            <div class="buylist-image">구매 상품 이미지</div>
+            <div class="buylist-details">
+                <span>상품명: 커피머신</span>
+                <span>금액: 20,000원</span>
+                <span>수량: 1개</span>
+                <span>구매일자: 2024/03/22</span>
+            </div>
+            <div class="buylist-action">
+                <button>확인</button>
+            </div>
+        </div>
+        <!-- ... 추가 구매 내역 아이템 ... -->
+        
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <span class="active">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</body>
+</html>

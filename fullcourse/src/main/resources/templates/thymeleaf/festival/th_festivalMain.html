@@ -1,0 +1,434 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+
+
+				<!-- Header Start -->
+				<div class="container-fluid page-header">
+					<div class="container">
+						<div class="d-flex flex-column align-items-center justify-content-center"
+							style="min-height: 400px">
+							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Header End -->
+				
+					<!--지역 버튼 시작 -->
+				<div>
+					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="여행지">전국</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="daeguBtn" value="대구">대구</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="incheonBtn" value="인천">인천</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gwangjuBtn" value="광주">광주</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="daejeonBtn" value="대전">대전</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="ulsanBtn" value="울산">울산</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="sejongBtn" value="세종">세종</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeonggiBtn" value="경기">경기</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gangwonBtn" value="강원">강원</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="chungbukBtn" value="충청북도">충북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="chungnamBtn" value="충청남도">충남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongbukBtn" value="경상북도">경북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongnamBtn" value="경상남도">경남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jeonbukBtn" value="전라북도">전북</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jeonnamBtn" value="전라남도">전남</button>
+					<button class="btn-sm btn-outline-primary regionBtn" id="jejuBtn" value="제주">제주</button>
+				</div>
+
+				<!-- 축제 start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase festivalDestination" style="letter-spacing: 5px;">전국
+							</h6>
+							<h1>Best 축제</h1>
+						</div>
+						<div class="row" id="bestThreeList">
+							<th:block th:each="vo : ${vos2}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+<!--										<img class="img-fluid" src="img/destination-1.jpg" alt="">-->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											src="/img/destination-1.jpg" alt="">
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|festival/festivalDetails?festivalNum=${vo.festivalNum}|}">
+											<h5 class="text-white"><span th:text="${vo.festivalAddress}"></span></h5>
+											<span th:text="${vo.festivalName}"></span>
+										</a>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				</th:block>
+				<!-- 축제 end -->
+
+			
+
+
+				<!--		축제 api 호출start					누르지 마시오..-->
+				<button id="apiBtnFes">test</button>
+
+				<!--		축제 api 호출end					누르지 마시오..-->
+				<!--  start-->
+
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase festivalDestination" style="letter-spacing: 5px;">전국
+							</h6>
+							<a href="/festival/festivalSelectAll">
+								<h1>축제 목록</h1>
+							</a>
+						</div>
+
+
+						<div class="row" id="destinationList">
+							<th:block th:each="vo : ${vos}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="destination-item position-relative overflow-hidden mb-2">
+										<!--										<img class="img-fluid" th:src="${vo.festivalImg}" alt="">-->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.festivalImg == null or vo.festivalImg == ''}"
+											src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
+										<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.festivalImg != null and vo.festivalImg != ''}" th:src="${vo.festivalImg}"
+											alt="이미지대체텍스트" />
+										<a class="destination-overlay text-white text-decoration-none"
+											th:href="@{|festival/festivalDetails?festivalNum=${vo.festivalNum}|}">
+											<h5 class="text-white"><span th:text="${vo.festivalAddress}"></span></h5>
+											<span th:text="${vo.festivalName}"></span>
+										</a>
+									</div>
+								</div>
+
+							</th:block>
+
+
+							<!--							수정2-->
+<!--							<div class="col-12">-->
+<!--								<nav aria-label="Page navigation">-->
+<!--									<ul class="pagination pagination-lg justify-content-center bg-white mb-0"-->
+<!--										style="padding: 30px;">-->
+<!--										<li class="page-item ">-->
+<!--											<a class="page-link" th:href="@{/festival(cpage=1)}" aria-label="Previous">-->
+<!--												<span aria-hidden="true">&laquo;</span>-->
+<!--												<span class="sr-only">Previous</span>-->
+<!--											</a>-->
+<!--										</li>-->
+<!--										<li class="page-item active"><a class="page-link"-->
+<!--												th:href="@{/festival/festivalSelectAll(cpage=1)}">1</a></li>-->
+<!--										<li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--										<li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--										<li class="page-item">-->
+<!--											<a class="page-link" href="#" aria-label="Next">-->
+<!--												<span aria-hidden="true">&raquo;</span>-->
+<!--												<span class="sr-only">Next</span>-->
+<!--											</a>-->
+<!--										</li>-->
+<!--									</ul>-->
+<!--								</nav>-->
+<!--							</div>-->
+
+<!--							                        수정	2끝	-->
+<!--							수정3-->
+
+<!--							<div class="col-12">-->
+<!--								<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">-->
+<!--									<th:block th:if="${param.searchKey}== null">-->
+<!--										<a th:href="@{/festival/festivalSelectAll(cpage=${i})}">[[${i}]] &nbsp;</a>-->
+<!--									</th:block>-->
+<!--									<th:block th:if="${param.searchKey}!= null">-->
+<!--										<a-->
+<!--											th:href="@{/festival/festivalSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]-->
+<!--											&nbsp;</a>-->
+<!--									</th:block>-->
+<!--								</th:block>-->
+<!--							</div>-->
+<!--							수정3끝-->
+
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+
+				<a th:href="@{/festival/festivalSelectAll(cpage=1)}" class="moreBtn">+축제 더보기</a>
+				<!--  end -->
+				<script th:inline="javascript">
+					$("#apiBtnFes").click(function () {
+						console.log('축제api호출');
+						//배열을 루프 돌려서 '서울', '대전'..등등
+						callAPI('20240101');
+					});
+					//console.log('클릭');
+					// JavaScript 코드
+					function callAPI(keyword) {
+						const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
+						const url = `http://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${apiKey}&numOfRows=2&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=A&listYN=Y&eventStartDate=${keyword}&_type=json`;
+
+						return fetch(url)
+							.then(response => response.json())
+							.then(data => {
+								// 이 부분에서 eventstartdate를 추출하여 사용합니다.
+
+								// 서버로 결과 전송
+								sendDataToServer(data);
+							})
+							.catch(error => {
+								console.error('Error:', error);
+							});
+					}
+
+					function sendDataToServer(data) {
+						//루프 item.size
+						let alldata = [];
+						for (let i = 0; i < data.response.body.items.item.length; i++) {
+							console.log(data.response.body.items.item[i].contentid);
+							console.log(data.response.body.items.item[i].eventstartdate);
+							console.log(data.response.body.items.item[i].eventenddate);
+							// arr.push(data.response.body.items.item[i].contentid);
+
+							let contentid = data.response.body.items.item[i].contentid;
+							let festivalStart = data.response.body.items.item[i].eventstartdate;
+							let festivalEnd = data.response.body.items.item[i].eventenddate;
+
+							const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
+							const url = `http://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=${apiKey}&contentId=${contentid}&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&mapinfoYN=Y&firstImageYN=Y&MobileOS=ETC&MobileApp=AppTest&_type=json`;
+
+
+
+							fetch(url)
+								.then(response => response.json())
+								.then(data => {
+									// 서버로 결과 전송
+									//sendDataToServer(data);
+									for (let i = 0; i < data.response.body.items.item.length; i++) {
+										let festivalName = data.response.body.items.item[i].title;
+										let festivalContent = data.response.body.items.item[i].overview;
+										let longtitue = data.response.body.items.item[i].mapx;
+										let lattitue = data.response.body.items.item[i].mapy;
+										let festivalAddress = data.response.body.items.item[i].addr1;
+										let festivalImg = data.response.body.items.item[i].firstimage;
+										let festivalTel = data.response.body.items.item[i].tel;
+										//	let festivalStart = data.response.body.items.item[i].eventstartdate;
+										//	let festivalEnd = data.response.body.items.item[i].eventenddate;
+
+										// 아이템 객체를 구성하여 yourData에 추가
+										let newItem = {
+											festivalName: festivalName,
+											festivalContent: festivalContent,
+											longtitue: longtitue,
+											lattitue: lattitue,
+											festivalAddress: festivalAddress,
+											festivalImg: festivalImg,
+											festivalTel: festivalTel,
+											festivalStart: festivalStart,
+											festivalFinal: festivalEnd
+										};
+
+										//alldata.push(newItem);
+										sendToController(newItem);
+										console.log("여기" + JSON.stringify(newItem));
+										//console.log("ㅇㅇ" + JSON.stringify(festivalName));
+										//console.log("ㅇㅇ" + JSON.stringify(festivalContent));
+										//console.log("ㅇㅇ" + JSON.stringify(longtitue));
+										//console.log("ㅇㅇ" + JSON.stringify(lattitue));
+										//console.log("ㅇㅇ" + JSON.stringify(festivalAddress));
+										//console.log("ㅇㅇ" + JSON.stringify(festivalImg));
+										//console.log("ㅇㅇ" + JSON.stringify(festivalTel));
+
+									}
+									//전체데이터 불러오기
+									//console.log("배열"+JSON.stringify(newItem));
+									// 서버로 데이터 전송
+
+									//sendToController(alldata);
+
+								})
+								.catch(error => {
+									console.error('Error:', error);
+								});
+
+
+						}
+
+						// 결과 데이터를 스프링 부트 기반의 컨트롤러로 전송
+
+
+					}
+					function sendToController(data) {
+						fetch('/festival2', {
+							method: 'POST', // 요청 메서드 (GET, POST 등)
+							headers: {
+								'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
+							},
+							body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+						})
+							.then(response => {
+								console.log('서버 응답:', response);
+								// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
+								// 추가적인 작업 수행
+							})
+							.catch(error => {
+								console.error('서버 요청 오류:', error);
+								// 서버 요청 중 오류가 발생했을 때 실행되는 함수
+							});
+					}
+					//지역목록 시작
+					$(".regionBtn").click(function () {
+						let region = $(this).val();
+						console.log(region);
+
+						sendToControllerForUpdate(region);
+						changeRegionText(region);
+					});
+					function changeRegionText(region) {
+						// 선택한 지역으로 "여행지" 텍스트를 변경합니다.
+						let elements = document.querySelectorAll('.festivalDestination');
+						elements.forEach(function (element) {
+							element.innerHTML = region;
+						})
+					};
+
+					function sendToControllerForUpdate(region) {
+
+						let data = {searchKey: "festivalAddress", searchWord: region, cpage: "1", pageBlock: "9"};
+						$.ajax({
+							url: '/festival/searchRegion',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify(data),
+							success: function (response) {
+								console.log('서버 응답:', response);
+
+								//vos = response;
+								updateHTMLWithVos(response);
+
+								let bestThree = getBestThree(response);
+								updateHTMLWithBestThree(bestThree);
+								// best3 여행지 콘솔에 출력
+								console.log('Best 3 여행지:', bestThree);
+								//document.getElementById('thumbUpCount').innerText = response.festivalThumbUp;
+								// vos에서 festivalThumbUp 기준으로 내림차순 정렬
+
+							},
+							error: function (xhr, status, error) {
+								console.error('서버 요청 오류:', error);
+							}
+						});
+					}
+					// vos에서 festivalThumbUp이 가장 높은 상위 3개의 항목을 반환하는 함수
+					function getBestThree(vos) {
+						vos.sort(function (a, b) {
+							return b.festivalThumbUp - a.festivalThumbUp;
+						});
+						return vos.slice(0, 3);
+					}
+					function updateHTMLWithVos(vos) {
+						// vos를 이용하여 HTML을 업데이트
+						let destinationHTML = '';
+						for (let i = 0; i < vos.length; i++) {
+							let vo = vos[i];
+							if (!vo.festivalImg) {
+								// 이미지가 비어 있는 경우 기본 이미지로 대체하여 표시
+								destinationHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="/img/destination-1.jpg" style="max-width: 100%; height: auto;" alt="기본이미지 대체 텍스트">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
+                            <h5 class="text-white">${vo.festivalName}</h5>
+                            <span>${vo.festivalAddress}</span>
+                        </a>
+                    </div>
+                </div>
+                
+                `;
+							} else {
+								// 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용
+								destinationHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="${vo.festivalImg}" style="max-width: 100%; height: auto;" alt="">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
+                            <h5 class="text-white">${vo.festivalName}</h5>
+                            <span>${vo.festivalAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+							}
+						}
+						// vos를 반영할 HTML 요소에 할당
+						document.getElementById('destinationList').innerHTML = destinationHTML;
+					}
+
+
+					function updateHTMLWithBestThree(bestThree) {
+						// HTML을 업데이트
+						let bestThreeHTML = '';
+						for (let i = 0; i < bestThree.length; i++) {
+							let vo = bestThree[i];
+							// 이미지가 비어 있는지 확인
+							if (!vo.festivalImg) {
+								// 이미지가 비어 있는 경우 기본 이미지를 대체하여 표시
+								bestThreeHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="/img/destination-1.jpg" style="max-width: 100%; height: auto;" alt="기본이미지 대체 텍스트">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
+                            <h5 class="text-white">${vo.festivalName}</h5>
+                            <span>${vo.festivalAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+							} else {
+								// 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용
+								bestThreeHTML += `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="${vo.festivalImg}" style="max-width: 100%; height: auto;" alt="">
+                        <a class="destination-overlay text-white text-decoration-none"
+                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
+                            <h5 class="text-white">${vo.festivalName}</h5>
+                            <span>${vo.festivalAddress}</span>
+                        </a>
+                    </div>
+                </div>`;
+							}
+						}
+
+						// bestThreeHTML을 bestThreeList 요소에 할당하여 업데이트
+						document.getElementById('bestThreeList').innerHTML = bestThreeHTML;
+					}
+
+
+					// 전국 버튼에 클릭 이벤트 핸들러 추가
+					$("#AllRegionBtn").click(function () {
+						// 전체 페이지 새로고침
+						window.location.reload();
+						// 또는 다른 URL로 이동
+						// window.location.href = "/원래페이지주소";
+					});
+
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</html>

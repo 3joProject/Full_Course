@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.wishlist.mapper.WishlistMapper">
+
+	<select id="selectAllTour"
+		resultType="com.fullcourse.wishlist.WishlistViewVO">
+		select wishlist.wishListNum, wishlist.wishListId, tour.tourNum, tour.tourname,
+		tour.tourAddress, tour.tourContent, tour.tourUsetime
+		from tour, wishlist where tour.tourNum = wishlist.wishListTourId and
+		wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
+	</select>
+
+	<select id="selectAllFestival"
+		resultType="com.fullcourse.wishlist.WishlistViewVO">
+		select wishlist.wishListNum, wishlist.wishListId,
+		festival.festivalNum, festival.festivalName, festival.festivalAddress,
+		festival.festivalContent,
+		festival.festivalStart, festival.festivalFinal, festival.festivalUsetime
+		from wishlist, festival where festival.festivalNum =
+		wishlist.wishListFestivalId and wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
+	</select>
+
+	<select id="getTotalRowsTour" resultType="int">
+		select count(*) totalRowsTour from wishList, tour where tour.tourNum = wishlist.wishListTourId and wishListId=1
+	</select>
+	
+	<select id="getTotalRowsFestival" resultType="int">
+		select count(*) totalRowsFestival from wishList, festival 
+		where festival.festivalNum = wishlist.wishListFestivalId and wishListId=1
+	</select>
+
+	<insert id="insertOKtour" parameterType="com.fullcourse.tour.TourVO">
+		insert into
+		wishList(wishlistId, wishListTourId)
+		values(1,#{tourNum})
+	</insert>
+
+	<select id="chkWDuplTour" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListTourId=#{tourNum};
+	</select>
+
+	<insert id="insertOKfestival" parameterType="com.fullcourse.festival.FestivalVO">
+		insert into
+		wishList(wishlistId, wishListFestivalId)
+		values(1,#{festivalNum})
+	</insert>
+
+	<select id="chkWDuplFestival" resultType="int">
+		select count(*) from wishlist where wishListId=1 and wishListFestivalId=#{festivalNum};
+	</select>
+
+	<delete id="deleteOK" parameterType="com.fullcourse.wishlist.WishlistVO">
+		delete from wishList where wishListNum=#{wishListNum}
+	</delete>
+
+
+</mapper>

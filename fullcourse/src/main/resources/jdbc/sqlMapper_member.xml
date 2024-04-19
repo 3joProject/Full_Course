@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.member.mapper.MemberMapper">
+    <insert id="insertOK" parameterType="com.fullcourse.member.MemberVO">
+        INSERT INTO member(memberId, memberPw, memberName, memberAddress, memberTel, memberEmail, memberSns)
+        VALUES (#{memberId}, #{memberPw}, #{memberName}, #{memberAddress}, #{memberTel}, #{memberEmail}, #{memberSns})
+    </insert>
+
+    <update id="updateOK" parameterType="com.fullcourse.member.MemberVO">
+        UPDATE member
+        SET memberPw = #{memberPw},
+            memberName = #{memberName},
+            memberAddress = #{memberAddress},
+            memberTel = #{memberTel},
+            memberEmail = #{memberEmail},
+            memberSns = #{memberSns}
+        WHERE memberNum = #{memberNum}
+    </update>
+
+    <delete id="deleteOK" parameterType="com.fullcourse.member.MemberVO">
+        DELETE FROM member
+        WHERE memberNum = #{memberNum}
+    </delete>
+
+    <select id="selectAll" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        ORDER BY memberNum DESC
+    </select>
+
+    <select id="selectOne" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberNum = #{memberNum}
+    </select>
+
+    <select id="searchListID" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberId LIKE #{searchWord}
+    </select>
+
+    <select id="searchListNAME" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberName LIKE #{searchWord}
+    </select>
+
+    <select id="selectAllPageBlock" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        ORDER BY memberNum DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <select id="searchListID_PAGE" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberId LIKE #{searchWord}
+        ORDER BY memberNum DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <select id="searchListNAME_PAGE" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberName LIKE #{searchWord}
+        ORDER BY memberNum DESC
+        LIMIT #{startRow}, #{pageBlock}
+    </select>
+
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) total_rows FROM member
+    </select>
+
+    <select id="search_total_rows_id" resultType="int">
+        SELECT COUNT(*) total_rows FROM member
+        WHERE memberId LIKE #{searchWord}
+    </select>
+
+    <select id="search_total_rows_name" resultType="int">
+        SELECT COUNT(*) total_rows FROM member
+        WHERE memberName LIKE #{searchWord}
+    </select>
+    
+    <select id="login" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member
+        WHERE memberId = #{memberId} AND memberPw = #{memberPw}
+    </select>
+</mapper>

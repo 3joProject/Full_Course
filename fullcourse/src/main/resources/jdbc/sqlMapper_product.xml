@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.product.mapper.ProductMapper">
+
+	<insert id="insertOK" parameterType="com.fullcourse.product.ProductVO">
+		insert into
+		product(
+			productMid,
+			productTitle,
+			productPrice,
+			productImage,			
+			productContent,
+			productInventory,
+			productGuideNum)
+		values(
+		    #{productMid},
+			#{productTitle},
+			#{productPrice},
+			#{productImage},
+			#{productContent},
+			#{productInventory},
+			#{productGuideNum})
+	</insert>
+
+	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
+		update product set
+		productTitle=#{productTitle},productPrice=#{productPrice},productImage=#{productImage},productContent=#{productContent},productInventory=#{productInventory}
+		where productNum=#{productNum}
+	</update>
+	
+	<select id="selectProductById" parameterType="int" resultType="com.fullcourse.product.ProductVO">
+    	SELECT * FROM product WHERE productNum = #{productNum}
+	</select>
+
+	<delete id="deleteOK" parameterType="com.fullcourse.product.ProductVO">
+		delete from product where productNum=#{productNum}
+	</delete>
+
+	<select id="selectAll" resultType="com.fullcourse.product.ProductVO">
+		select * from product order by productNum desc
+	</select>
+	
+	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
+        SELECT routeNum, routeName FROM route
+    </select>
+
+</mapper>

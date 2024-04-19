@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.route.mapper.RouteMapper">
+	
+	
+	 <insert id="save" parameterType="com.fullcourse.route.RouteVO">
+        INSERT INTO route ( routeName, routeTraffic, routeStartLocation, routeEndLocation, routeStartLatitude, routeStartLongitude, 
+        routeEndLatitude, routeEndLongitude,routeTime, routeDistance, routeOrder)
+        VALUES ( #{routeName}, #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude}, 
+        	#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime}, #{routeDistance}, #{routeOrder})
+    </insert>
+    
+    <select id="routeSelectAll" parameterType="com.fullcourse.route.RouteVO">
+		SELECT DISTINCT routeName FROM route 
+		
+	</select>
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*) total_rows from route
+	</select>
+	
+	
+	<select id="routeSelectOne" parameterType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName=#{routeName}
+	</select>
+	
+	<select id="getTours" parameterType="com.fullcourse.route.TourVO">
+		SELECT * FROM tour
+	</select>
+	
+	<select id="getRoute" parameterType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName= #{routeName}
+	</select>
+	
+</mapper>

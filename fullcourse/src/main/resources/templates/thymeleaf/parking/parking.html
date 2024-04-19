@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>simpleMap</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
+<script type="text/javascript">
+	var map, myMarker, myLat, myLon, rect;
+	// 페이지가 로딩이 된 후 호출하는 함수입니다.
+	function initTmap() {
+		// map 생성
+		// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다
+		map = new Tmapv2.Map("map_div", {
+			center: new Tmapv2.LatLng(37.56520450, 126.98702028),
+			width: "100%",	// 지도의 넓이
+			height: "800px",	// 지도의 높이
+			zoom: 15	// 지도 줌레벨
+		});
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				function (position) {
+					myLat = position.coords.latitude;
+					myLon = position.coords.longitude;
+					console.log("myLat", myLat);
+					console.log("myLon", myLon);
+
+					//팝업 생성
+					var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+						+ "<div style='font-size: 12px; line-height: 15px;'>"
+						+ "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>현재위치"
+						+ "</div>" + "</div>";
+
+					myMarker = new Tmapv2.Marker({
+						position: new Tmapv2.LatLng(myLat, myLon),
+						map: map
+					});
+					infoWindow = new Tmapv2.InfoWindow({
+						position: new Tmapv2.LatLng(myLat, myLon),
+						content: content,
+						offset: new Tmapv2.Point(0, 30),
+						type: 2,
+						map: map
+					});
+					map.setCenter(new Tmapv2.LatLng(myLat, myLon));
+					map.setZoom(1);
+
+					//주차장 검색 선 표시
+
+					makeRect(myLat, myLon);
+
+					// 지도 객체 생성 후 마커를 등록하는 함수를 수행합니다.
+					addParkingMarkers(myLat, myLon);
+				});
+		}
+
+		map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
+
+	}
+	//처음위치로 이동하는 함수입니다.
+	function Move(myLat, myLon) {
+		var lonlat = new Tmapv2.LatLng(myLat, myLon);
+		console.log(lonlat);
+		map.setCenter(lonlat); // 지도의 중심 좌표를 설정합니다.
+	}
+
+	//드래그 끝났을 때
+	function onDragend(e) {
+		var result = '드래그가 끝난 위치의 중앙좌표는' + e.latLng + '입니다.';
+		var resultDiv = document.getElementById("result");
+		var newLat = e.latLng.lat();
+		var newLng = e.latLng.lng();
+		resultDiv.innerHTML = result;
+
+		makeRect(newLat, newLng);
+
+		addParkingMarkers(newLat, newLng);
+	}
+
+	// 마커들을 저장할 배열입니다.
+	var markers = [];
+
+	// 모든 마커를 제거하는 함수입니다.
+	function removeMarkers() {
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null);
+		}
+		markers = [];
+	}
+
+	//닫기 아이콘 클릭시 호출되는 함수.
+	function onClose(popup) {
+		console.log("onClose");
+		infoWindow.setVisible(false);
+	}
+
+	function makeRect(lat, lng) {
+		// 이전에 생성된 사각형이 있다면 제거
+		if (rect) {
+			rect.setMap(null);
+		}
+		rect = new Tmapv2.Rectangle({
+			bounds: new Tmapv2.LatLngBounds(new Tmapv2.LatLng(lat - 0.008, lng - 0.008), new Tmapv2.LatLng(lat + 0.008, lng + 0.008)),// 사각형 영역 좌표
+			strokeColor: "red",	//테두리 색상
+			fillColor: "pink", // 사각형 내부 색상
+			map: map	// 지도 객체
+		});
+	}
+
+	function clearRect() {
+		rect.clear();
+	}
+
+
+
+	function addParkingMarkers(lat, lng) {
+		console.log("addParkingMarkers");
+		removeMarkers();
+		$.ajax({
+			url: "/api/parking",
+			data: {lat: lat, lng: lng},
+			type: "get",
+			dataType: "json",
+			success: function (vos) {
+				console.log(vos);
+				for (var i = 0; i < vos.length; i++) {
+					var vo = vos[i]
+
+					// 비율 계산
+					var ratio = vo.pkfcAvailableParkingLotsTotla / vo.pkfcParkingLotsTotal;
+					console.log("ratio",ratio);
+					// 마커 아이콘 경로 설정
+					var iconPath = "";
+					if (ratio === 0) {
+						iconPath = "../../images/parking/red_marker.png";
+					} else if (ratio > 0 && ratio < 0.5) {
+						iconPath = "../../images/parking/orange_marker.png";
+					} else {
+						iconPath = "../../images/parking/blue_marker.png";
+					}
+					
+					//Marker 객체 생성.
+					var parking = new Tmapv2.Marker({
+						position: new Tmapv2.LatLng(vo.prkPlceEntrcLa, vo.prkPlceEntrcLo), //Marker의 중심좌표 설정.
+						icon: iconPath
+					});
+					parking.setMap(map); //Marker가 표시될 Map 설정.
+
+					// 클로저를 사용하여 각 클릭 이벤트 핸들러 내에서 vo 값 고정
+					(function (vo) {
+						parking.addListener("click", function (evt) {
+
+							// 이전에 열린 팝업이 있을 경우 닫기
+							infoWindow.setVisible(false);
+
+
+
+							var content = "<div style='position: static; display: flex; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; flex-direction: column; top: 180px; left : 800px; width : 300px; background-color: #FFFFFF; padding: 5px;'>" +
+								"<a href='javascript:onClose()' class='btn-close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px; background: url(../../images/parking/close-button.svg) no-repeat center;'></a>" +
+								"</div>" +
+								"<div class='info-box' style='padding: 10px;'>" +
+								"<p style='margin-bottom: 7px; overflow: hidden;'>" +
+								"<span class='tit' style=' font-size: 16px; font-weight: bold;'>" + vo.prkPlceNm + "</span>" +
+								"</p>" +
+								"<p>" +
+								"<span class='new-addr'>총 주차 구획 수 : " + vo.pkfcParkingLotsTotal + "</span>" +
+								"</p>" +
+								"<p>" +
+								"<span class='new-addr'>이용 가능한 구획 수 : " + vo.pkfcAvailableParkingLotsTotla + "</span>" +
+								"</p>" +
+								"</div>" +
+								"</div>";
+							//Popup 객체 생성.
+							infoWindow = new Tmapv2.InfoWindow({
+								position: new Tmapv2.LatLng(vo.prkPlceEntrcLa, vo.prkPlceEntrcLo), //Popup 이 표출될 맵 좌표
+								content: content, //Popup 표시될 text
+								border: '0px solid #FF0000',
+								type: 2, //Popup의 type 설정.
+								map: map //Popup이 표시될 맵 객체
+							});
+
+
+						});
+
+					})(vo);
+
+					markers.push(parking);
+
+				}
+			}, error: function () {
+
+			}
+
+		});
+
+	}
+
+
+</script>
+
+</head>
+
+<body onload="initTmap()"><!-- 맵 생성 실행 -->
+	<div id="map_div"></div>
+	<button onClick="Move(myLat, myLon)">현재 위치로 지도 이동</button>
+	<p id="result" />
+	</div>
+</body>
+
+</html>
