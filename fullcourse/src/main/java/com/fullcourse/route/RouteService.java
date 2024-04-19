@@ -45,6 +45,11 @@ public class RouteService {
 		// TODO Auto-generated method stub
 		return mapper.getTours();
 	}
+
+	public List<RouteVO> getRoute() {
+		// TODO Auto-generated method stub
+		return mapper.getRoute();
+	}
 	
 
 }

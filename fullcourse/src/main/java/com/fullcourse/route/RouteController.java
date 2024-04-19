@@ -24,7 +24,7 @@ public class RouteController {
 	@Autowired
     private RouteService service;
 	
-	@GetMapping("/")
+	@GetMapping("/route")
 	public String map() {
 		
 		log.info("map..");
@@ -60,15 +60,15 @@ public class RouteController {
 	
 	@GetMapping("/route/{routeName}")
 	public String selectOne(@PathVariable String routeName, Model model) {
-		
+		log.info("routename : {}", routeName);
 		List<RouteVO> routes = service.routeSelectOne(routeName);
 		
-		model.addAttribute("vos", routes);
-		
+		model.addAttribute("routes", routes);
 		
 		return "thymeleaf/route/selectOne";
-		
-  }
+
+	}
+	
 }
 
 	
