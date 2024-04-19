@@ -15,6 +15,7 @@ public class MemberService {
 	//@Repository를 DI하지않고 대신 @Mapper클래스를 DI합니다.
 	@Autowired
 	private MemberMapper mapper;
+	
 
 	public int insertOK(MemberVO vo) {
 		return mapper.insertOK(vo);
@@ -91,6 +92,19 @@ public class MemberService {
 	// 로그인 메소드 추가
     public MemberVO login(String memberId, String memberPw) {
         return mapper.login(memberId, memberPw);
+    }
+    
+    public MemberVO getMemberById(String memberId) {
+        return mapper.findMemberById(memberId);
+    }
+    public void followMember(String memberId, String followerId) {
+        // 이 메소드는 판매자의 팔로워 수를 증가시키는 로직을 포함해야 합니다.
+        mapper.increaseFollowerCount(memberId);
+        // 팔로워 관계를 저장하는 로직을 추가할 수 있습니다.
+        mapper.addFollower(memberId, followerId);
+    }
+    public List<MemberVO> getFollowingByMemberId(String memberId) {
+        return mapper.findFollowingByMemberId(memberId);
     }
 
 
