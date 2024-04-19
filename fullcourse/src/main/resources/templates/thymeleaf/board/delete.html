@@ -4,14 +4,14 @@
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3">[[${title}]]</h4>
-				<form class="validation-form" novalidate action="m_deleteOK"
+				<form class="validation-form" novalidate action="deleteOK"
 					method="post">
 
 					<div class="mb-3">
-						<label for="id">상품 번호</label> : 
-						<span th:text="${param.productNum}"></span> 번을 정말 삭제하시겠습니까?
+						<label for="id">게시글</label> : 
+						<span th:text="${param.boardNum}"></span> 번을 정말 삭제하시겠습니까?
 						<input type="hidden" class="form-control"
-							name="productNum" id="productNum" placeholder="" th:value="${param.productNum}" required>
+							name="boardNum" id="boardNum" placeholder="" th:value="${param.boardNum}" required>
 						<div class="invalid-feedback"></div>
 					</div>
 					

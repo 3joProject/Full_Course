@@ -1,6 +1,6 @@
 package com.fullcourse.board;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ public class BoardVO {
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter;
-	private Date boardDate;
+	private LocalDateTime boardDate;
 	private String boardImage;
 	
 	
