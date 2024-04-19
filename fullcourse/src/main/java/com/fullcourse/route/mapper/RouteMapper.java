@@ -11,6 +11,8 @@ import com.fullcourse.route.TourVO;
 @Mapper
 public interface RouteMapper {
 	
+	List<RouteVO> getRoute = null;
+
 	public void save(RouteVO vo);
 	
 	public void getAllRoutes(RouteVO vo);
@@ -22,5 +24,7 @@ public interface RouteMapper {
 	public List<RouteVO> routeSelectOne(String routeName);
 
 	public List<TourVO> getTours();
+
+	public List<RouteVO> getRoute();
 	
 }

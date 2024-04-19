@@ -43,6 +43,13 @@ public class RouteRestController {
 		List<TourVO> tourList = service.getTours();
 		return ResponseEntity.ok(tourList);
 		
+	}
+	
+	@GetMapping("/getroute")
+	public ResponseEntity<List<RouteVO>> getRoute() {
+		// 여행 데이터를 가져오는 로직을 구현
+		List<RouteVO> RouteList = service.getRoute();
+		return ResponseEntity.ok(RouteList);
 		
 	}
 	

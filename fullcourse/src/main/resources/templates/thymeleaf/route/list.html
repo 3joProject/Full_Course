@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+				<!-- Search Form start-->
+				<div class="mb-5">
+					<div class="bg-white" style="padding: 30px;">
+						<div class="input-group">
+							<form class="form-inline my-2 my-lg-0 justify-content-end" action="tourSearchList">
+								<select class="selectpicker" name="searchKey">
+									<option value="address">주소</option>
+									<option value="tourName">여행지이름</option>
+								</select>
+
+								<input class="form-control mr-sm-2" type="search" placeholder="Search"
+									aria-label="Search" name="searchWord" value="ad">
+								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+					<!-- Search Form end-->
+					
+					
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">routeNum</th>
+								<th scope="col">routeName</th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vo : ${vos}">
+								<tr>
+									<th scope="row"><a th:href="@{|routeSelectOnex?routeNum=${vo.routeNum}|}">
+										<span th:text="${vo.routeNum}"></span></a></th>
+									<td><a th:href="@{|/route/${vo.routeName}?routeName=${vo.routeName}|}"><span
+												th:text="${vo.routeName}"></span></a></td>
+									<td><span th:text="${vo.routeName}"></span></td>
+									<td><span th:text="${vo.routeName}"></span></td>
+									<td><a th:href="@{|routeDelete?routeNum=${vo.routeNum}|}"><span>delete</span></a></td>
+								</tr>
+
+							</th:block>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6">
+									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+										<th:block th:if="${param.searchKey}== null">
+											<a th:href="|routeSelectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+										</th:block>
+										<th:block th:if="${param.searchKey}!= null">
+											<a
+												th:href="@{routeSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+												&nbsp;</a>
+										</th:block>
+									</th:block>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</html>

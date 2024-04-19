@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -119,6 +120,23 @@
 		let itinerary = [];
 		var user1 = "user1";
 
+/*
+		$.ajax({
+			url: '/route/getroute',
+			type: 'GET',
+			dataType: 'json',
+			success: function (data) {
+				console.log(data)
+				data.forEach(function (route) {
+				  var listItem = document.createElement('li');
+            listItem.textContent = route.routeStartLocation;
+            document.getElementById('routeList').appendChild(listItem);
+				});
+			}
+		});
+*/
+
+
 		// 페이지가 로딩이 된 후 호출하는 함수입니다.
 		function initTmap() {
 			// map 생성
@@ -147,7 +165,7 @@
 
 			// DB에서 가져온 여행지 정보
 			$.ajax({
-				url: 'route/gettour',
+				url: '/route/gettour',
 				type: 'GET',
 				dataType: 'json',
 				success: function (data) {
@@ -166,7 +184,6 @@
 							map: map,
 							title: place.name
 						});
-						console.log("not");
 						// Marker에 클릭 이벤트 등록
 						marker.addListener("click", function (evt) {
 							showSmallScreen(place);
@@ -915,9 +932,10 @@
 			<button id="closeCalendarBtn">닫기</button>
 		</div>
 
-		<!-- 여행 기간 표시 영역 -->
-		<div id="selectedDuration"></div>
-
+		<li th:each="route : ${routes}">
+			<a th:text="${route.routeStartLocation}"></a>
+		</li>
+		<ul id="routeList"></ul>
 	</div>
 
 	<div id="smallScreen">
@@ -930,7 +948,7 @@
 	<div id="map_wrap" class="map_wrap">
 		<div id="map_div"></div>
 	</div>
-		<div class="map_result">
+	<div class="map_result">
 	</div>
 	<br />
 

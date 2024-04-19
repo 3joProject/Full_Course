@@ -24,12 +24,15 @@
 	
 	
 	<select id="routeSelectOne" parameterType="com.fullcourse.route.RouteVO">
-		SELECT * FROM route WHERE routeName= #{routeName}
+		SELECT * FROM route WHERE routeName=#{routeName}
 	</select>
 	
 	<select id="getTours" parameterType="com.fullcourse.route.TourVO">
 		SELECT * FROM tour
-		
+	</select>
+	
+	<select id="getRoute" parameterType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName= #{routeName}
 	</select>
 	
 </mapper>
