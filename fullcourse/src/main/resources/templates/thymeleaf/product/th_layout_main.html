@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head
-	th:replace="thymeleaf/header :: common_header(title)">
+	th:replace="~{thymeleaf/header :: common_header(title)}">
 <title>회원가입프로그램</title>
 <!-- 공통 CSS-->
 <link href="/css/main.css" rel="stylesheet">
@@ -11,10 +11,10 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-	<div th:replace="thymeleaf/top_menu2 :: test_top_menu"></div>
+	<div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
 
-	<div th:replace="${content} :: common_content(${title})"></div>	
+	<div th:replace="~{${content} :: common_content(${title})}"></div>	
 		
-	<div th:replace="thymeleaf/footer :: test_copy"></div>
+	<div th:replace="~{thymeleaf/footer :: test_copy}"></div>
 </body>
 </html>
