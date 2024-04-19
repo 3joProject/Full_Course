@@ -1,0 +1,274 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+
+
+				<!-- Header Start -->
+				<div class="container-fluid page-header">
+					<div class="container">
+						<div class="d-flex flex-column align-items-center justify-content-center"
+							style="min-height: 400px">
+							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Header End -->
+
+				<!-- Blog Start -->
+				<div class="container-fluid py-5">
+					<div class="container py-5">
+						<div class="row">
+							<div class="col-lg-8">
+								<!-- Blog Detail Start -->
+								<div class="pb-3">
+									<div class="blog-item">
+										<div class="position-relative">
+											<img class="img-fluid w-100" th:src="${vo2.tourImg}" alt="">
+											<div class="blog-date">
+												<h6 class="font-weight-bold mb-n1">01</h6>
+												<small class="text-white text-uppercase">Jan</small>
+											</div>
+										</div>
+									</div>
+									<!--									좋아요 시작 -->
+
+									<div>
+										<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
+										<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
+									</div>
+
+									<!--									좋아요 끝-->
+									
+<!--									조회수 시작-->
+<div>
+										<span>조회수: </span> <span id="pageViewCount" th:text="${vo2.tourViews}"></span>
+									</div>
+
+<!--조회수끝-->
+
+									<div class="bg-white mb-3" style="padding: 30px;">
+										<div class="d-flex mb-3">
+											<a class="text-primary text-uppercase text-decoration-none"
+												href="">Admin</a>
+											<span class="text-primary px-2">|</span>
+											<a class="text-primary text-uppercase text-decoration-none" href="">Tours &
+												Travel</a>
+										</div>
+										<h2 class="mb-3" th:text="${vo2.tourName}"></h2>
+										<p th:text="${vo2.tourNum}"></p>
+										<p th:text="${vo2.tourContent}"></p>
+
+										<h4 class="mb-3">이용정보</h4>
+
+										<h5 class="mb-3" th:text="${vo2.tourAddress}"></h5>
+										<h5 class="mb-3" th:text="${vo2.tourTel}">전화번호가 없습니다</h5>
+
+									</div>
+								</div>
+								<!-- Blog Detail End -->
+
+
+
+								<!-- Comment List Start -->
+								<div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+									<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Comments</h4>
+
+
+									<!-- 반복문을 통해 각 댓글을 출력 -->
+									<div th:each="comment : ${cvos}" class="media mb-4">
+										<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+											style="width: 45px;">
+										<div class="media-body">
+											<span style="display: none;" th:text="${comment.tourcoNum}"></span>
+											<h6 th:text="${comment.tourcoWriter}"></h6>
+											<!--												<a href="">John Doe</a> -->
+											<span>작성일: <small><i th:text="${comment.tourcoDate}"
+														style="color: aqua;"></i></small>
+											</span>
+
+											<!-- 댓글 내용을 출력 -->
+											<div>댓글 내용:</div>
+											<p th:text="${comment.tourcoContent}" class="showComments"
+												th:id="showComments+${comment.tourcoNum}"></p>
+											<form class="showModifyForm" th:id="showModifyForm+${comment.tourcoNum}">
+												<input type="text" th:value="${comment.tourcoContent}" />
+
+											</form>
+
+											<!-- 댓글 수정누르면 input보이게 변경-->
+											<a href="#nolink" class="commentModifyBtn"
+												th:id="commentModifyBtn+${comment.tourcoNum}">댓글수정</a>
+											<!--												<a href="#nolink" class="'commentModifyBtn'+ ${comment.tourcoNum}" >댓글수정</a>-->
+											<div class="commentModifyBtns"
+												th:id="commentModifyBtns+${comment.tourcoNum}">
+
+
+
+												<form action="/tour/tourCommentUpdateOK" method="POST">
+													<input type="hidden" name="tourcoNum"
+														th:value="${comment.tourcoNum}">
+													<input type="hidden" name="tourcoTnum"
+														th:value="${comment.tourcoTnum}">
+													<input type="text" name="tourcoContent" placeholder="수정할 내용을 입력하세요">
+													<input class="btn-sm btn-outline-primary" type="submit" value="저장"
+														style="margin-top: 10px;">
+												</form>
+												<a href="#nolink" class="commentModifiyCancelBtn"
+													th:id="commentModifiyCancelBtn+${comment.tourcoNum}">취소</a>
+											</div>
+											<a th:href="@{tourCommentDeleteOK(tourcoNum=${comment.tourcoNum},tourcoTnum=${comment.tourcoTnum})}"
+												class="deleteComment btn btn-sm btn-outline-primary"
+												th:id="deleteComment+${comment.tourcoNum}">댓글삭제</a>
+
+											<!--											<button class="btn btn-sm btn-outline-primary">Delete</button>-->
+
+
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+								<!-- Comment Form Start -->
+								<div class="bg-white mb-3" style="padding: 30px;">
+									<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Leave a comment</h4>
+									<form action="/tour/tourCommentInsert" method="POST">
+										<!-- action 속성을 수정해야 할 수 있습니다. -->
+										<div class="form-group">
+											<label for="tourcoWriter">Name *</label>
+											<input type="text" class="form-control" id="tourcoWriter"
+												name="tourcoWriter"> <!-- name 속성을 tourcoWriter로 변경 -->
+										</div>
+
+										<div class="form-group">
+											<label for="tourcoContent">Message *</label>
+											<textarea id="tourcoContent" cols="30" rows="5" class="form-control"
+												name="tourcoContent"></textarea> <!-- name 속성을 tourcoContent로 변경 -->
+										</div>
+
+										<!-- Hidden 필드로 tourNum 값을 전달합니다. -->
+										<input type="hidden" name="tourcoTnum" th:value="${param.tourNum}">
+
+										<div class="form-group mb-0">
+											<input type="submit" value="Leave a comment"
+												class="btn btn-primary font-weight-semi-bold py-2 px-3">
+										</div>
+									</form>
+								</div>
+								<!-- Comment Form End -->
+
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+				//댓글 기능 시작
+				$(document).ready(function () {
+					$(".showModifyForm").hide();
+					$(".commentModifyBtns").hide();
+
+				});
+
+				$(".commentModifyBtn").click(function () {
+					console.log("야야야야");
+					var id = $(this).attr('id');
+					var commentNum = id.replace('commentModifyBtn', '');
+					var showComments = 'showComments' + commentNum;
+					var showModifyForm = 'showModifyForm' + commentNum;
+					var commentModifyBtns = 'commentModifyBtns' + commentNum;
+					var commentModifyBtn = 'commentModifyBtn' + commentNum;
+					var deleteComment = 'deleteComment' + commentNum;
+					$("#" + showComments).hide();
+					$("#" + showModifyForm).show();
+					$("#" + commentModifyBtns).show();
+					$("#" + commentModifyBtn).hide();
+					$("#" + deleteComment).hide();
+
+				});
+				$(".commentModifiyCancelBtn").click(function () {
+					console.log("눌리냐");
+					var id = $(this).attr('id');
+					var commentNum = id.replace('commentModifiyCancelBtn', '');
+					var showComments = 'showComments' + commentNum;
+					var showModifyForm = 'showModifyForm' + commentNum;
+					var commentModifyBtns = 'commentModifyBtns' + commentNum;
+					var commentModifyBtn = 'commentModifyBtn' + commentNum;
+					var deleteComment = 'deleteComment' + commentNum;
+					$("#" + showComments).show();
+					$("#" + showModifyForm).hide();
+					$("#" + commentModifyBtns).hide();
+					$("#" + commentModifyBtn).show();
+					$("#" + deleteComment).show();
+
+
+
+				});
+				//댓글 기능 끝
+ //좋아요 기능시작
+				$("#likebtn").click(function () {
+					console.log("좋아요");
+					// 현재 URL에서 tourNum 값을 가져오는 방법
+					let tourNum = new URLSearchParams(window.location.search).get("tourNum");
+					let category = 'tour';
+					let user = '1';
+					let data = {tourLikeTourNum: tourNum, tourLikeCategory: category, tourLikeMemberNum: user};
+					sendToController(data);
+				});
+
+				function sendToController(data) {
+					fetch('/tour/increaseThumbUp', {
+						method: 'POST', // 요청 메서드 (GET, POST 등)
+						headers: {
+							'Content-Type': 'application/json' // 전송할 데이터 타입 (JSON, XML 등)
+						},
+						body: JSON.stringify(data) // 전송할 데이터 (JSON 문자열로 변환하여 전송)
+					})
+						.then(response => {
+							console.log('서버 응답:', response);
+							console.log('data', data);
+							sendToControllerForUpdate(data);
+
+
+							// 성공적으로 서버에서 응답을 받았을 때 실행되는 함수
+							// 추가적인 작업 수행
+						})
+						.catch(error => {
+							console.error('서버 요청 오류:', error);
+							// 서버 요청 중 오류가 발생했을 때 실행되는 함수
+						});
+				}
+				function sendToControllerForUpdate(data) {
+					data = {tourNum: data.tourLikeTourNum};
+					$.ajax({
+						url: '/tour/updateThumbUp',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify(data),
+						success: function (response) {
+							console.log('서버 응답:', response);
+							
+							document.getElementById('thumbUpCount').innerText = response.tourThumbUp;
+						},
+						error: function (xhr, status, error) {
+							console.error('서버 요청 오류:', error);
+						}
+					});
+				}
+
+//좋아요 기능끝
+			</script>
+
+</html>

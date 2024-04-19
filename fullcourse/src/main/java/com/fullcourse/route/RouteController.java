@@ -1,6 +1,7 @@
 package com.fullcourse.route;
 
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,9 @@ public class RouteController {
 		model.addAttribute("routes", routes);
 		
 		return "thymeleaf/route/selectOne";
+
 	}
 	
-
 }
+
+	

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}">로그인</title>
+</head>
+<body>
+    <h1 th:text="${title}">로그인</h1>
+    <form action="#" th:action="@{/login}" method="post">
+        <div>
+            <label for="memberId">사용자 ID:</label>
+            <input type="text" id="memberId" name="memberId" required>
+        </div>
+        <div>
+            <label for="memberPw">비밀번호:</label>
+            <input type="password" id="memberPw" name="memberPw" required>
+        </div>
+        <div>
+            <button type="submit">로그인</button>
+        </div>
+        <p th:if="${error}" th:text="${error}">로그인 정보가 올바르지 않습니다.</p>
+    </form>
+</body>
+</html>

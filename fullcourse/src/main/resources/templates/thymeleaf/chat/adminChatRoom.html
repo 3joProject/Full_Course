@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>관리자 채팅 룸</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <style>
+        #chat-messages { margin-bottom: 20px; overflow: auto; height: 300px; }
+        .message { padding: 10px; margin-bottom: 5px; border-radius: 10px; }
+        .admin { background-color: rgb(255, 255, 128); }
+        .user { background-color: #aef1ae; text-align: right; }
+        #chat-form input, #chat-form button { width: 100%; padding: 10px; margin-top: 5px; }
+    </style>
+    <script th:inline="javascript">
+        var roomId = /*[[${chatRoom.chatRoomId}]]*/ 'defaultRoomId';
+        var stompClient = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            connect();
+            var chatForm = document.getElementById('chat-form');
+            chatForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                sendMessage();
+            });
+        });
+
+        function connect() {
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/' + roomId, function(message) {
+                    showMessage(JSON.parse(message.body));
+                });
+            });
+        }
+
+        function showMessage(message) {
+            var chatMessages = document.getElementById('chat-messages');
+            var messageElement = document.createElement('div');
+            messageElement.textContent = message.sender + ': ' + message.message;
+            chatMessages.appendChild(messageElement);
+        }
+
+        function sendMessage() {
+            var messageInput = document.getElementById('chat-input');
+            var message = messageInput.value.trim();
+            if (message && stompClient) {
+                var chatMessage = {
+                    sender: 'Admin',
+                    message: message,
+                    chatRoomId: roomId
+                };
+                stompClient.send("/app/chat/" + roomId, {}, JSON.stringify(chatMessage));
+                messageInput.value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>관리자 채팅 룸 #<span th:text="${chatRoom.chatRoomId}"></span></h1>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+        <button type="submit">전송</button>
+    </form>
+</body>
+</html>

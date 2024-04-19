@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>개인정보 수정</title>
+    <!-- 스타일과 자바스크립트 링크 -->
+</head>
+<body>
+    <h1>개인정보 수정</h1>
+    <form action="/member/updateProfile" method="post">
+        <!-- memberNum은 수정되지 않으므로 hidden 필드에 포함 -->
+        <input type="hidden" id="memberNum" name="memberNum" th:value="${member.memberNum}">
+
+        <label for="memberId">아이디:</label>
+        <input type="text" id="memberId" name="memberId" th:value="${member.memberId}" readonly>
+
+        <label for="memberName">이름:</label>
+        <input type="text" id="memberName" name="memberName" th:value="${member.memberName}">
+
+        <label for="memberAddress">주소:</label>
+        <input type="text" id="memberAddress" name="memberAddress" th:value="${member.memberAddress}">
+
+        <label for="memberTel">전화번호:</label>
+        <input type="text" id="memberTel" name="memberTel" th:value="${member.memberTel}">
+
+        <label for="memberEmail">이메일:</label>
+        <input type="email" id="memberEmail" name="memberEmail" th:value="${member.memberEmail}">
+
+        <!-- memberPw, memberDate, memberImg, memberSns는 필요에 따라 추가 -->
+
+        <button type="submit">정보 수정</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fullcourse.chat.mapper.ChatMapper">
+	
+	<!-- 모든 채팅방 조회 -->
+    <select id="getAllChatRooms" resultType="com.fullcourse.chat.ChatRoomVO">
+        SELECT * FROM chatRoom
+    </select>
+
+	<!-- 채팅방 생성 -->
+    <insert id="createChatRoom" parameterType="com.fullcourse.chat.ChatRoomVO">
+        INSERT INTO chatRoom (chatCreatedat) VALUES (NOW())
+        <selectKey keyProperty="chatRoomId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    
+     
+    
+    <!-- 채팅방 삭제 -->
+    <delete id="deleteChatRoom">
+        DELETE FROM chatRoom WHERE chatRoomId = #{chatRoomId}
+    </delete>
+    
+</mapper>

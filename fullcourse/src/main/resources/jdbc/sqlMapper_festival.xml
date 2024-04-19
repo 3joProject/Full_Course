@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.festival.mapper.FestivalMapper">
+	
+	<insert id="festivalInsertOK" parameterType="com.fullcourse.festival.FestivalVO">
+    INSERT INTO festival (festivalName, festivalAddress, festivalContent, festivalStart, festivalFinal, festivalTel, festivalViews, festivalThumbUp, festivalImg)
+    VALUES (#{festivalName}, #{festivalAddress}, #{festivalContent}, #{festivalStart}, #{festivalFinal}, #{festivalTel}, #{festivalViews}, #{festivalThumbUp}, #{festivalImg})
+</insert>
+
+	
+	<update id="festivalUpdateOK" parameterType="com.fullcourse.festival.FestivalVO">
+		update festival set festivalName=#{festivalName},festivalAddress=#{festivalAddress},festivalContent=#{festivalContent},festivalStart=#{festivalStart},festivalFinal=#{festivalFinal},festivalTel=#{festivalTel},festivalImg=#{festivalImg}
+		where festivalNum=#{festivalNum}
+	</update>
+	
+	<delete id="festivalDeleteOK" parameterType="com.fullcourse.festival.FestivalVO">
+		delete from festival where festivalNum=#{festivalNum}
+	</delete>
+	
+	<select id="festivalSelectAll" resultType="com.fullcourse.festival.FestivalVO">
+		select * from festival order by
+		festivalNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="festivalSelectAllTop" resultType="com.fullcourse.festival.FestivalVO">
+		SELECT * FROM Festival ORDER BY festivalThumbUp DESC LIMIT 3;
+	</select>
+	
+	
+	<select id="festivalSelectOne" resultType="com.fullcourse.festival.FestivalVO">
+		select * from Festival where
+		festivalNum=#{festivalNum}
+	</select>
+				
+	<select id="searchListADDRESS_PAGE"
+		resultType="com.fullcourse.festival.FestivalVO">
+		select * from festival
+		where festivalAddress like #{searchWord} 
+		order by festivalNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="searchListNAME_PAGE"
+		resultType="com.fullcourse.festival.FestivalVO">
+		select * from festival
+		where festivalName like #{searchWord} 
+		order by festivalNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows"	resultType="int">
+		select count(*) total_rows from festival
+	</select>
+	
+	<select id="search_total_rows_address"	resultType="int">
+		select count(*) total_rows from festival where festivalAddress like #{searchWord}
+	</select>
+
+	<select id="search_total_rows_festivalName"	resultType="int">
+		select count(*) total_rows from festival where festivalName like #{searchWord}
+	</select>
+	
+<!--	방법1-->
+<!--	<update id="updateLikeCount" parameterType="com.fullcourse.festival.FestivalVO">-->
+<!--		update Festival set festivalThumbUp=#{festivalThumbUp} where festivalNum=#{festivalNum}-->
+<!--	</update>-->
+
+
+<!--방법2	-->
+	<update id="updateLikeCount" parameterType="com.fullcourse.festival.FestivalVO">
+		update Festival set festivalThumbUp= festivalThumbUp+1 where festivalNum=#{festivalNum}
+	</update>
+	
+	<update id="updateViewCount" parameterType="com.fullcourse.festival.FestivalVO">
+		update Festival set festivalViews= festivalViews+1 where festivalNum=#{festivalNum}
+	</update>
+	
+	<select id="searchListAddressPageBlock"
+		resultType="com.fullcourse.festival.FestivalVO">
+		
+		select * from Festival
+		where FestivalAddress like #{searchWord} 
+		order by festivalNum desc limit #{startRow},#{pageBlock}
+	</select>
+
+</mapper>

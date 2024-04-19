@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.tour.mapper.TourMapper">
+	
+	<insert id="tourInsertOK" parameterType="com.fullcourse.tour.TourVO">
+    INSERT INTO tour (tourName, tourAddress, tourContent, tourTel, tourViews, tourThumbUp,longtitue, lattitue, tourImg)
+    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
+</insert>
+
+	
+	<update id="tourUpdateOK" parameterType="com.fullcourse.tour.TourVO">
+		update tour set tourName=#{tourName},tourAddress=#{tourAddress},tourContent=#{tourContent},tourTel=#{tourTel},tourImg=#{tourImg}
+		where tourNum=#{tourNum}
+	</update>
+	
+<!--	<update id="tourIncreaseThumbUp" parameterType="com.fullcourse.tour.TourVO">-->
+<!--		update tour set tourThumbUp=#{tourThumbUp} -->
+<!--		where tourNum=#{tourNum}-->
+<!--	</update>-->
+	
+	<delete id="tourDeleteOK" parameterType="com.fullcourse.tour.TourVO">
+		delete from tour where tourNum=#{tourNum}
+	</delete>
+	
+	<select id="tourSelectAll" resultType="com.fullcourse.tour.TourVO">
+		select * from Tour order by
+		tourNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">
+		SELECT * FROM Tour ORDER BY tourThumbUp DESC LIMIT 3;
+	</select>
+	
+	
+	<select id="tourSelectOne" resultType="com.fullcourse.tour.TourVO">
+		select * from Tour where
+		tourNum=#{tourNum}
+	</select>
+				
+	<select id="searchListADDRESS_PAGE"
+		resultType="com.fullcourse.tour.TourVO">
+		select * from tour
+		where tourAddress like #{searchWord} 
+		order by tourNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="searchListNAME_PAGE"
+		resultType="com.fullcourse.tour.TourVO">
+		select * from tour
+		where tourName like #{searchWord} 
+		order by tourNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="getTotalRows"	resultType="int">
+		select count(*) total_rows from tour
+	</select>
+	
+	<select id="search_total_rows_address"	resultType="int">
+		select count(*) total_rows from tour where tourAddress like #{searchWord}
+	</select>
+
+	<select id="search_total_rows_tourName"	resultType="int">
+		select count(*) total_rows from tour where tourName like #{searchWord}
+	</select>
+
+
+	<update id="updateLikeCount" parameterType="com.fullcourse.tour.TourVO">
+		update tour set tourThumbUp=#{tourThumbUp} where tourNum=#{tourNum}
+	</update>
+	
+<!--	<update id="updateLikeCount" parameterType="com.fullcourse.tour.TourVO">-->
+<!--       <selectKey keyProperty="tourThumbUp" order="AFTER" resultType="int">-->
+<!--        SELECT tourThumbUp from tour where tourNum=#{tourNum}-->
+<!--    </selectKey>-->
+<!--      update tour set tourThumbUp=#{tourThumbUp} where tourNum=#{tourNum}-->
+<!--   </update>-->
+
+
+	<update id="updateViewCount" parameterType="com.fullcourse.tour.TourVO">
+		update tour set tourViews= tourViews+1 where tourNum=#{tourNum}
+	</update>
+	
+	<select id="searchWordaddress"
+		resultType="com.fullcourse.tour.TourVO">
+		select * from tour
+		where tourAddress like #{searchWord} 
+		order by tourNum desc 
+	</select>
+	
+	<select id="searchListAddressPageBlock"
+		resultType="com.fullcourse.tour.TourVO">
+		
+		select * from tour
+		where tourAddress like #{searchWord} 
+		order by tourNum desc limit #{startRow},#{pageBlock}
+	</select>
+</mapper>
