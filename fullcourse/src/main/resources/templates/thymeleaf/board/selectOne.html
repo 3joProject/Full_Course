@@ -5,15 +5,72 @@
     <meta charset="UTF-8">
     <title th:text="${title}">게시판 상세</title>
     <link rel="stylesheet" href="/css/main.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .board-details {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .board-info h2 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .board-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+        .board-content {
+            margin-top: 20px;
+        }
+        .board-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .navigation a, .button {
+            display: inline-block;
+            padding: 10px 15px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .navigation a:hover, .button:hover {
+            background-color: #0056b3;
+        }
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .button.delete {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="board-details">
-            <h1>게시판 상세보기</h1>
             <div class="board-info">
                 <h2 th:text="${vo.boardTitle}">게시글 제목</h2>
                 <p><strong>작성자:</strong> <span th:text="${vo.boardWriter}">작성자명</span></p>
-                <p><strong>작성일:</strong> <span th:text="${#dates.format(vo.boardDate, 'yyyy-MM-dd HH:mm')}">작성일자</span></p>
+                <p><strong>작성일:</strong> <span th:text="${#temporals.format(vo.boardDate, 'yyyy-MM-dd HH:mm:ss')}">작성일자</span></p>
             </div>
             <div class="board-content">
                 <p th:text="${vo.boardContent}">게시글 내용</p>
@@ -23,6 +80,12 @@
             </div>
             <div class="navigation">
                 <a href="/board/selectAll">목록으로 돌아가기</a>
+            </div>
+            
+            <!-- 글 수정 및 삭제 버튼, 로그인한 사용자가 작성자와 동일한 경우에만 표시 -->
+            <div class="button-group" th:if="${vo.boardWriter} == ${session.member.memberId}">
+                <button th:href="@{/board/update(boardNum=${vo.boardNum})}" class="button">수정하기</button>
+                <button th:href="@{/board/delete(boardNum=${vo.boardNum})}" class="button delete">삭제하기</button>
             </div>
         </div>
     </div>

@@ -42,36 +42,23 @@
                     		<a th:href="@{/board/selectOne(boardNum=${board.boardNum})}" th:text="${board.boardTitle}">게시글 제목</a>
                 		</td>
                 		<td th:text="${board.boardWriter}">작성자</td>
-                		<td th:text="${#dates.format(board.boardDate, 'yyyy-MM-dd')}">작성일</td>
-                		
-                		
-                    
+                		<td th:text="${board.boardDate}">작성일</td>
                 		
             		</tr>
         		</tbody>
     		</table>
     		
-    		<tr>
-				<td colspan="8">
-					<center>
-						<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-							<th:block th:if="${param.searchKey}== null and ${param.orderBy}== null">
-								<a th:href="|selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
-							</th:block>
-							<th:block th:if="${param.searchKey}!= null">
-								<a
-									th:href="@{searchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
-									&nbsp;</a>
-							</th:block>
-							<th:block th:if="${param.orderBy}!= null">
-								<a
-									th:href="@{orderBy(cpage=${i},orderBy=${param.orderBy})}">[[${i}]]
-									&nbsp;</a>
-							</th:block>
-						</th:block>
-					</center>
-				</td>
-			</tr>
+    		 <!-- 페이지네이션 링크 -->
+                    <div style="text-align: center;">
+                        <th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+                            <a th:href="|selectAll?cpage=${i}|" th:text="${i}" class="page-link">[[${i}]]</a>
+                        </th:block>
+                    </div>
+                    
+                    <!-- 글 작성 버튼 -->
+                    <div class="text-right mt-4">
+                        <a href="/board/insert" class="btn btn-primary">글쓰기</a>
+                    </div>
 			</div>
 				
 				
