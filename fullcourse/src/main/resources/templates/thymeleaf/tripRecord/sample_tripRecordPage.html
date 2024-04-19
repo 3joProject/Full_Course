@@ -138,6 +138,7 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<th></th>
 						<th><input type="checkbox" id="chkRowAll"></th>
 						<th scope="col">번호</th>
 						<th scope="col">여행날짜</th>
@@ -147,11 +148,13 @@
 						<th scope="col">이미지파일</th>
 						<th></th>
 						<th></th>
+						
 					</tr>
 				</thead>
 				<tbody>
 					<th:block th:each="vo, rowStat : ${vos}">
 						<tr>
+							<td><input scope="row" type="hidden" th:value="${vo.triprecNum}"> </td>
 							<td><input type="checkbox" name="" value=""> </td>
 							<td><span scope="row" th:text="${rowStat.count}"></span></td>
 							<td><span scope="row" th:text="${vo.triprecTripdate}"></span></td>
@@ -159,29 +162,112 @@
 							<td><span scope="row" th:text="${vo.triprecContent}"></span></td>
 							<td><span scope="row" th:text="${vo.triprecDate}"></span></td>
 							<td><span scope="row" th:text="${vo.triprecImage}"></span></td>
-							<td><a th:href="|tripRecord/update?triprecNum=${vo.triprecNum}|">수정</a></td>
+							<td>
+								<button class="modify">수정</button>
+							</td>
 							<td><a th:href="|tripRecord/deleteOK?triprecNum=${vo.triprecNum}|">삭제</a></td>
 						</tr>
 					</th:block>
 				</tbody>
 				<tfoot>
-				<tr>
-					<td colspan="7">
-						<center>
-							<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-								<a th:href="|tripRecord?cpage=${i}|">[[${i}]] &nbsp;</a>
-							</th:block>
-							</th:block>
-						</center>
-					</td>
-				</tr>
-			</tfoot>
+					<tr>
+						<td colspan="10">
+							<center>
+								<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+									<a th:href="|tripRecord?cpage=${i}|">[[${i}]] &nbsp;</a>
+								</th:block>
+								</th:block>
+							</center>
+						</td>
+					</tr>
+				</tfoot>
 			</table>
-			
-			<a href="tripRecord/insert">여행기록 추가하기</a>
+
+			<button class="insert">여행기록 추가하기</button>
 		</div>
 	</div>
 	</div>
+
+	<!-- Modify Modal -->
+	<div id="modifyModal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">리뷰 수정</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="modifyForm">
+						<input type="hidden" id="triprecNum" name="triprecNum">
+						<div class="form-group">
+							<label for="triprecTripdate">여행날짜</label>
+							<input type="text" class="form-control" id="triprecTripdate" name="triprecTripdate">
+						</div>
+						<div class="form-group">
+							<label for="triprecAddress">주소</label>
+							<input type="text" class="form-control" id="triprecAddress" name="triprecAddress">
+						</div>
+						<div class="form-group">
+							<label for="triprecContent">내용</label>
+							<input type="text" class="form-control" id="triprecContent" name="triprecContent">
+						</div>
+						<div class="form-group">
+							<label for="triprecDate">기록날짜</label>
+							<input type="text" class="form-control" id="triprecDate" name="triprecDate" readonly>
+						</div>
+						<div class="form-group">
+							<label for="triprecImage">이미지 파일</label>
+							<input type="text" class="form-control" id="triprecImage" name="triprecImage">
+						</div>
+						<button type="submit" class="btn btn-primary">수정 완료</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- insert Modal -->
+	<div id="insertModal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">여행기록 추가</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="insertForm">
+						<input type="hidden" id="triprecMnum2" name="triprecMnum" value="1">
+						<div class="form-group">
+							<label for="triprecTripdate">여행날짜</label>
+							<input type="text" class="form-control" id="triprecTripdate2" name="triprecTripdate">
+						</div>
+						<div class="form-group">
+							<label for="triprecAddress">여행주소</label>
+							<input type="text" class="form-control" id="triprecAddress2" name="triprecAddress">
+						</div>
+						<div class="form-group">
+							<label for="triprecContent">내용</label>
+							<input type="text" class="form-control" id="triprecContent2" name="triprecContent">
+						</div>
+						<div class="form-group">
+							<label for="triprecDate">기록시간</label>
+							<input type="text" class="form-control" id="triprecDate2" name="triprecDate" readonly>
+						</div>
+						<div class="form-group">
+							<label for="triprecImage">이미지 파일</label>
+							<input type="text" class="form-control" id="triprecImage2" name="triprecImage" >
+						</div>
+						<button type="submit" class="btn btn-primary">저장</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Service End -->
 
 
@@ -280,12 +366,158 @@
 	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"
+		rel="stylesheet" />
+
+
 	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
+
+	<!--수정 모달 JS -->
+	<script>
+		$(document).ready(function () {
+			$('.modify').click(function () {
+				var triprecNum = $(this).closest('tr').find('td:eq(0)').find('input').val();
+				var triprecTripdate = $(this).closest('tr').find('td:eq(3)').text();
+				var triprecAddress = $(this).closest('tr').find('td:eq(4)').text();
+				var triprecContent = $(this).closest('tr').find('td:eq(5)').text();
+				var triprecDate = $(this).closest('tr').find('td:eq(6)').text();
+				var triprecImage = $(this).closest('tr').find('td:eq(7)').text();
+
+				$('#triprecNum').val(triprecNum);
+				$('#triprecTripdate').val(triprecTripdate);
+				$('#triprecAddress').val(triprecAddress);
+				console.log("triprecAddress",triprecAddress);
+				$('#triprecContent').val(triprecContent);
+				$('#triprecDate').val(triprecDate);
+				$('#triprecImage').val(triprecImage);
+
+				$('#modifyModal').modal('show');
+			});
+
+			$('#modifyForm').submit(function (event) {
+				event.preventDefault(); // 기본 제출 이벤트 방지
+
+				var formData = $(this).serialize(); // 폼 데이터 가져오기
+
+				// 수정 요청 보내기
+				$.ajax({
+					type: 'POST',
+					url: '/tripRecord/updateOK',
+					data: formData,
+					success: function (response) {
+						// 성공적으로 업데이트된 경우 처리
+						console.log('리뷰가 성공적으로 수정되었습니다.');
+						$('#modifyModal').modal('hide'); // 모달 닫기
+						// 여기에 필요한 추가적인 작업을 수행할 수 있습니다.
+						window.location.reload();
+					},
+					error: function (xhr, status, error) {
+						// 요청이 실패한 경우 처리
+						console.error('리뷰 수정 중 오류 발생:', error);
+						// 여기에 오류 처리를 추가할 수 있습니다.
+					}
+				});
+			});
+		});
+	</script>
+
+	<!--기록 추가 모달 JS -->
+	<script>
+		$(document).ready(function () {
+			$('.insert').click(function () {
+				
+				var triprecTripdate = $('#triprecTripdate2').val();
+				var triprecAddress = $('#triprecAddress2').val();
+				var triprecContent = $('#triprecContent2').val();
+				var triprecDate = $('#triprecDate2').val();
+				var triprecImage = $('#triprecImage2').val();
+				
+				$('#triprecTripdate2').val(triprecTripdate);
+				$('#triprecAddress2').val(triprecAddress);
+				$('#triprecContent2').val(triprecContent);
+				$('#triprecDate2').val(triprecDate);
+				$('#triprecImage2').val(triprecImage);
+
+				$('#insertModal').modal('show');
+			});
+
+			$('#insertForm').submit(function (event) {
+				event.preventDefault(); // 기본 제출 이벤트 방지
+
+				var triprecMnum = $('#triprecMnum2').val()
+				var triprecTripdate = $('#triprecTripdate2').val();
+				var triprecAddress = $('#triprecAddress2').val();
+				var triprecContent = $('#triprecContent2').val();
+				var triprecDate = $('#triprecDate2').val();
+				var triprecImage = $('#triprecImage2').val();
+				
+				var formData = {
+					triprecMnum: $('#triprecMnum2').val(),
+					triprecTripdate: $('#triprecTripdate2').val(),
+					triprecAddress: $('#triprecAddress2').val(),
+					triprecContent: $('#triprecContent2').val(),
+					triprecDate: $('#triprecDate2').val(),
+					triprecImage: $('#triprecImage2').val()
+				};
+				console.log(formData);
+				// 신고 요청 보내기
+				$.ajax({
+					type: 'POST',
+					url: '/tripRecord/insertOK',
+					data: formData,
+					success: function (response) {
+						// 성공적으로 업데이트된 경우 처리
+						console.log('성공적으로 신고되었습니다.');
+						$('#insertModal').modal('hide'); // 모달 닫기
+						// 여기에 필요한 추가적인 작업을 수행할 수 있습니다.
+						window.location.reload();
+					},
+					error: function (xhr, status, error) {
+						// 요청이 실패한 경우 처리
+						console.error('신고 중 오류 발생:', error);
+						// 여기에 오류 처리를 추가할 수 있습니다.
+					}
+				});
+			});
+		});
+	</script>
+
+	<script>
+		// 현재 날짜와 시간을 가져와서 작성일시 필드에 설정
+		var currentDate = new Date();
+		// 날짜 및 시간을 원하는 형식으로 변환
+		var dateString = currentDate.getFullYear() + '-' +
+			('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' +
+			('0' + currentDate.getDate()).slice(-2) + ' ' +
+			('0' + currentDate.getHours()).slice(-2) + ':' +
+			('0' + currentDate.getMinutes()).slice(-2) + ':' +
+			('0' + currentDate.getSeconds()).slice(-2);
+		document.getElementById("triprecDate").value = dateString;
+		document.getElementById("triprecDate2").value = dateString;
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			// Datepicker를 여행날짜 입력 필드에 연결
+			$('#triprecTripdate').datepicker({
+				format: 'yyyy-mm-dd', // 날짜 형식 지정
+				autoclose: true, // 달력을 클릭하면 자동으로 닫힘
+				todayHighlight: true // 오늘 날짜를 강조 표시
+			});
+			
+			$('#triprecTripdate2').datepicker({
+				format: 'yyyy-mm-dd', // 날짜 형식 지정
+				autoclose: true, // 달력을 클릭하면 자동으로 닫힘
+				todayHighlight: true // 오늘 날짜를 강조 표시
+			});
+		});
+	</script>
 
 
 
