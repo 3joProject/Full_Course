@@ -16,24 +16,31 @@
 	
 					<div class="mb-4">
                  		<label for="boardTitle" class="block text-gray-700 text-sm font-bold mb-2">제목</label>
-                   		<input type="text" id="boardTitle" name="boardTitle" placeholder="제목을 입력해주세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                   		<input type="text" class="form-control p-4" name="boardTitle" placeholder="제목"
+                                        required="required" data-validation-required-message="제목을 입력해주세요." />
+                                        
+                       
                 	</div>
                 
                 	<div class="mb-4">
                     	<label for="boardContent" class="block text-gray-700 text-sm font-bold mb-2">내용</label>
-                    	<textarea id="boardContent" name="boardContent" rows="4" placeholder="내용을 입력해주세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                    	<input type="text" class="form-control p-4" name="boardContent" id="subject" placeholder="내용"
+                                    required="required" data-validation-required-message="Please enter a subject" />
                 	</div>
                             
                 	<div class="mb-4">
                     	<label for="boardImage" class="block text-gray-700 text-sm font-bold mb-2">이미지 첨부</label>
-                    	<input type="file" id="boardImage" name="boardImage" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" accept="image/*">
+                    	<input type="file" class="form-control p-4" name="boardImage" id="subject" placeholder=""
+                                    required="required" accept="image/*" />
                 	</div>
 					
 					
 					<div>
 					<form class="validation-form" novalidate action="/board/insertOK" method="post" enctype="multipart/form-data">
     				<!-- input fields here -->
-    					<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">글쓰기 완료</button>
+    					<div class="text-center">
+                                <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">글쓰기 완료</button>
+                        </div>
 					</form>
 					</div>
 				</form>

@@ -28,9 +28,10 @@ public class BoardService {
 		return boardMapper.deleteOK(boardVO);
 	}
 	
-	public List<BoardVO> selectAllBoards() {
-		return boardMapper.selectAllBoards();
+	public BoardVO selectOne(BoardVO boardVO) {
+		return boardMapper.selectOne(boardVO);
 	}
+	
 
 	public BoardVO getBoardById(int boardNum) {
 		return boardMapper.selectBoardById(boardNum);
@@ -47,10 +48,36 @@ public class BoardService {
 		return boardMapper.selectAllBoardsPageBlock(map);
 	}
 	
+	public List<BoardVO> searchListPageBlock(
+			String searchKey, String searchWord, 
+			int cpage, int pageBlock) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchWord", "%"+searchWord+"%");
+		
+		int startRow = (cpage - 1) * pageBlock + 1;
+		map.put("startRow", startRow-1);
+		map.put("pageBlock", pageBlock);
+		
+		if(searchKey.equals("id")) {
+			return boardMapper.searchListWIRTER_PAGE(map);
+		}else {
+			return boardMapper.searchListTITLE_PAGE(map);
+		}
+	}
+
 	public int getTotalRows() {
         return boardMapper.getTotalRows();
     }
 	
-	
+	public int getSearchTotalRows(String searchKey, String searchWord) {
+		Map<String, String> map = new HashMap<>();
+		map.put("searchWord", "%"+searchWord+"%");
+		
+		if(searchKey.equals("id")) {
+			return boardMapper.search_total_rows_writer(map);
+		}else {
+			return boardMapper.search_total_rows_title(map);
+		}
+	}
 	
 }

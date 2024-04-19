@@ -18,7 +18,53 @@
 			NOW(),
 			#{boardImage})
 	</insert>
-
 	
+	<update id="updateOK" parameterType="com.fullcourse.board.BoardVO">
+		update board set boardTitle=#{boardTitle}, boardContent=#{boardContent}
+		where boardNum=#{boardNum}
+	</update>
+	
+	<delete id="deleteOK" parameterType="com.fullcourse.board.BoardVO">
+		delete from board where boardNum=#{boardNum}
+	</delete>
+	
+	<select id="selectOne" resultType="com.fullcourse.board.BoardVO">
+		select * from board where
+		boardNum=#{boardNum}
+	</select>
 
+	<!-- 게시글 목록 페이징 처리 쿼리 -->
+    <select id="selectAllBoardsPageBlock" resultType="com.fullcourse.board.BoardVO">
+        SELECT *
+        FROM board
+        order by boardNum desc limit #{startRow}, #{pageBlock}
+    </select>
+    
+    <select id="searchListWIRTER_PAGE"
+		resultType="com.fullcourse.board.BoardVO">
+		select * from board
+		where boardWriter like #{searchWord} 
+		order by boardNum desc limit #{startRow},#{pageBlock}
+	</select>
+	
+	<select id="searchListTITLE_PAGE"
+		resultType="com.fullcourse.board.BoardVO">
+		select * from board
+		where boardTitle like #{searchWord} 
+		order by boardNum desc limit #{startRow},#{pageBlock}
+	</select>
+
+    <!-- 게시글 총 개수 확인 쿼리 -->
+    <select id="getTotalRows" resultType="int">
+        SELECT COUNT(*) total_rows FROM board
+    </select>
+    
+    <select id="search_total_rows_writer"	resultType="int">
+		select count(*) total_rows from board where boardWriter like #{searchWord}
+	</select>
+
+	<select id="search_total_rows_title"	resultType="int">
+		select count(*) total_rows from board where boardTitle like #{searchWord}
+	</select>
+    
 </mapper>

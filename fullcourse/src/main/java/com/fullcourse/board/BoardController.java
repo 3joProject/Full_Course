@@ -91,4 +91,17 @@ public class BoardController {
 		
 		return "thymeleaf/board/selectAll";
 	}
+	
+	@GetMapping("/selectOne")
+	public String m_selectOne(BoardVO boardVO, Model model) {
+		log.info("boardVO:{}", boardVO);
+
+		BoardVO vo = boardService.selectOne(boardVO);
+
+		model.addAttribute("vo", vo);
+
+		model.addAttribute("content", "thymeleaf/board/selectOne");
+		model.addAttribute("title", "게시판 상세");
+		return "thymeleaf/board/layout_main";
+	}
 }
