@@ -32,8 +32,11 @@ public class CartController {
 		log.info("{}",vos);
 		
 		model.addAttribute("vos",vos);
+		model.addAttribute("content","thymeleaf/cart/th_cartMain");
+		model.addAttribute("title","장바구니");
 		
-		return "thymeleaf/cart/cartPage";
+		
+		return "thymeleaf/cart/th_cartLayout_main";
 	}
 	
 	@GetMapping("/cart/deleteOK")

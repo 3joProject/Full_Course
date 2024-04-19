@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fullcourse.product.productReview.ProductReviewVO;
 
@@ -50,7 +51,10 @@ public class ProductBuyerController {
 //		model.addAttribute("content", "thymeleaf/product/th_selectAll");
 //		model.addAttribute("title", "상품목록");
 		
-		return "thymeleaf/product/selectAll";
+		model.addAttribute("content","thymeleaf/product/th_selectAll");
+		model.addAttribute("title","여행상품쇼핑");
+		
+		return "thymeleaf/product/th_layout_main";
 	}
 	
 	@GetMapping("/selectOne")
@@ -66,8 +70,10 @@ public class ProductBuyerController {
 		
 		model.addAttribute("vos",vos);
 		log.info("vos:{}",vos);
+		model.addAttribute("content","thymeleaf/product/th_selectOne");
+		model.addAttribute("title","여행상품 상세보기");
 		
-		return "thymeleaf/product/selectOne";
+		return "thymeleaf/product/th_layout_main";
 	}
 	
 	@GetMapping("/searchList")
@@ -96,8 +102,10 @@ public class ProductBuyerController {
 		}
 		
 		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("content","thymeleaf/product/th_selectAll");
+		model.addAttribute("title","여행상품쇼핑");
 		
-	    return "thymeleaf/product/selectAll";
+	    return "thymeleaf/product/th_layout_main";
 	}
 	
 	@GetMapping("/orderBy")
@@ -129,10 +137,10 @@ public class ProductBuyerController {
 		//페이지 링크 개수
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
-//		model.addAttribute("content", "thymeleaf/product/th_selectAll");
-//		model.addAttribute("title", "상품목록");
+		model.addAttribute("content","thymeleaf/product/th_selectAll");
+		model.addAttribute("title","여행상품쇼핑");
 		
-		return "thymeleaf/product/selectAll";
+		return "thymeleaf/product/th_layout_main";
 	}
 	
 }

@@ -15,14 +15,14 @@ public class WishlistViewVO {
 	private String tourName;
 	private String tourAddress;
 	private String tourContent;
-	private String tourUsetime;
+	private String tourTel;
 	private int festivalNum;
 	private String festivalName;
 	private String festivalAddress;
 	private String festivalContent;
 	private String festivalStart;
 	private String festivalFinal;
-	private String festivalUsetime;
+	private String festivalTel;
 	
 	
 }

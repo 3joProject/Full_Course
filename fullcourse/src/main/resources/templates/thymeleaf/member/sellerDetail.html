@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>판매자 상세 정보</title>
+</head>
+<body>
+    <h1>판매자 상세 정보</h1>
+    <div>
+        <p>이름: <span th:text="${seller.memberName}"></span></p>
+        <p>이메일: <span th:text="${seller.memberEmail}"></span></p>
+        <p>전화번호: <span th:text="${seller.memberTel}"></span></p>
+        <!-- 기타 필요한 정보 추가 -->
+            <!-- 팔로우 버튼 -->
+<form action="/followMember/{memberId}" method="post">
+    <button type="submit">팔로우</button>
+</form>
+    </div>
+    <a th:href="@{/}">홈으로</a>
+
+</body>
+</html>
