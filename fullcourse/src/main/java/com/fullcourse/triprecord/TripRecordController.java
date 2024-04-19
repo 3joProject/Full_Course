@@ -43,15 +43,10 @@ public class TripRecordController {
 		log.info("totalPageCount:{} ", totalPageCount);
 
 		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("content","thymeleaf/tripRecord/th_tripRecordMain");
+		model.addAttribute("title","여행기록");
 
-		return "thymeleaf/tripRecord/tripRecordPage";
-	}
-
-	@GetMapping("/tripRecord/insert")
-	public String tripRecordInsert() {
-		log.info("tripRecordInsert");
-
-		return "thymeleaf/tripRecord/tripRecordInsertPage";
+		return "thymeleaf/tripRecord/th_tripRecordLayout_main";
 	}
 
 	@PostMapping("/tripRecord/insertOK")
@@ -62,25 +57,8 @@ public class TripRecordController {
 		int result = service.insertOK(vo);
 		log.info("result:{}", result);
 
-		if (result == 1) {
-			return new RedirectView("/tripRecord");
-		} else {
-			return new RedirectView("/tripRecord/insert");
-		}
-
-	}
-
-	@GetMapping("/tripRecord/update")
-	public String tripRecordUpdate(TripRecordVO vo, Model model) {
-		log.info("tripRecordUpdate");
-		log.info("vo:{}", vo);
-
-		TripRecordVO vo2 = service.selectOne(vo);
-		log.info("vo2:{}", vo2);
-
-		model.addAttribute("vo2", vo2);
-
-		return "thymeleaf/tripRecord/tripRecordUpdatePage";
+		return new RedirectView("/tripRecord");
+	
 	}
 
 	@PostMapping("/tripRecord/updateOK")
@@ -91,12 +69,8 @@ public class TripRecordController {
 		int result = service.updateOK(vo);
 		log.info("result:{}", result);
 
-		if (result == 1) {
-			return new RedirectView("/tripRecord");
-		} else {
-			return new RedirectView("/tripRecord/update");
-		}
-
+		return new RedirectView("/tripRecord");
+		
 	}
 	
 	@GetMapping("/tripRecord/deleteOK")
