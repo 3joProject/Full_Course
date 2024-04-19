@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>정보 수정</title>
+</head>
+<body>
+    <h1>정보 수정</h1>
+    <form action="/updateProfile" method="post">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" value="{{ name }}">
+        
+        <label for="email">이메일:</label>
+        <input type="email" id="email" name="email" value="{{ email }}">
+
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" name="phone" value="{{ phone }}">
+
+        <button type="submit">저장하기</button>
+    </form>
+</body>
+</html>
