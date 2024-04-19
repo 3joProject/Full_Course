@@ -6,7 +6,7 @@
 	<select id="selectAllTour"
 		resultType="com.fullcourse.wishlist.WishlistViewVO">
 		select wishlist.wishListNum, wishlist.wishListId, tour.tourNum, tour.tourname,
-		tour.tourAddress, tour.tourContent, tour.tourUsetime
+		tour.tourAddress, tour.tourContent, tour.tourTel
 		from tour, wishlist where tour.tourNum = wishlist.wishListTourId and
 		wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>
@@ -16,7 +16,7 @@
 		select wishlist.wishListNum, wishlist.wishListId,
 		festival.festivalNum, festival.festivalName, festival.festivalAddress,
 		festival.festivalContent,
-		festival.festivalStart, festival.festivalFinal, festival.festivalUsetime
+		festival.festivalStart, festival.festivalFinal, festival.festivalTel
 		from wishlist, festival where festival.festivalNum =
 		wishlist.wishListFestivalId and wishListId=1 order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>

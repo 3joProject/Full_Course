@@ -100,9 +100,11 @@ public class WishlistController {
 //		log.info("vosAll2:{}",vosAll);
 //		
 //		model.addAttribute("vosAll",vosAll);
+		model.addAttribute("content", "thymeleaf/wishList/th_wishListMain");
+		model.addAttribute("title", "즐겨찾기");
 		
 
-		return "thymeleaf/wishList/wishListPage";
+		return "thymeleaf/wishList/th_wishListLayout_main";
 	}
 	
 	@GetMapping("/wishList/insertOK/tour")

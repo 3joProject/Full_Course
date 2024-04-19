@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+
+	<!--	검색-->
+	<form action="searchList">
+		<select class="selectpicker" name="searchKey">
+			<option value="productTitle">상품명</option>
+			<option value="productMid">판매자명</option>
+		</select>
+
+		<input type="search" placeholder="Search" aria-label="Search" name="searchWord"
+			value="ad">
+		<button type="submit">Search</button>
+	</form>
+	
+	<!--	정렬하기-->
+	<form action="orderBy">
+		<select class="selectpicker" name="orderBy">
+			<option value="productPrice">가격순</option>
+			<option value="productInventory">재고순</option>
+		</select>
+		<button type="submit">정렬</button>
+	</form>
+
+
+	<!-- 상품목록 테이블 -->
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">상품명</th>
+				<th scope="col">판매자아이디</th>
+				<th scope="col">상품내용</th>
+				<th scope="col">상품가격</th>
+				<th scope="col">상품이미지</th>
+				<th scope="col">상품재고</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="vo : ${productList}">
+				<tr>
+					<td><a th:href="@{'selectOne?productNum=' + ${vo.productNum}}"><span scope="row"
+								th:text="${vo.productTitle}"></span></a></td>
+					<td><span scope="row" th:text="${vo.productMid}"></span></td>
+					<td><span scope="row" th:text="${vo.productContent}"></span></td>
+					<td><span scope="row" th:text="${vo.productPrice}"></span></td>
+					<td><span scope="row" th:text="${vo.productImage}"></span></td>
+					<td><span scope="row" th:text="${vo.productInventory}"></span></td>
+					<td>
+                		<form th:action="@{'/product/deleteOK'}" method="post">
+                    		<input type="hidden" name="productNum" th:value="${vo.productNum}" />
+                    		<button type="submit">삭제</button>
+                		</form>
+            		</td>
+            		<td>
+            		<button type="button" th:onclick="'location.href=\'' + @{selectOne(productNum=${vo.productNum})} + '\''">수정</button>
+            		</td>
+				</tr>
+			</th:block>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td colspan="8">
+					<center>
+						<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+							<th:block th:if="${param.searchKey}== null and ${param.orderBy}== null">
+								<a th:href="|selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+							</th:block>
+							<th:block th:if="${param.searchKey}!= null">
+								<a
+									th:href="@{searchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+									&nbsp;</a>
+							</th:block>
+							<th:block th:if="${param.orderBy}!= null">
+								<a
+									th:href="@{orderBy(cpage=${i},orderBy=${param.orderBy})}">[[${i}]]
+									&nbsp;</a>
+							</th:block>
+						</th:block>
+					</center>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="lib/tempusdominus/js/moment.min.js"></script>
+	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<!-- Contact Javascript File -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
