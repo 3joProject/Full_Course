@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fullcourse.member.mapper.MemberMapper;
 
@@ -105,6 +106,11 @@ public class MemberService {
     }
     public List<MemberVO> getFollowingByMemberId(String memberId) {
         return mapper.findFollowingByMemberId(memberId);
+    }
+    
+    @Transactional
+    public boolean updateMemberInfo(MemberVO member) {
+        return mapper.updateMemberInfo(member) > 0;
     }
 
 
