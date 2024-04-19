@@ -26,7 +26,7 @@ public class TourController {
 	// 여행 페이지 메인
 	@GetMapping("/tour")
 	public String tourMain(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "6") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
 		log.info("/tourMain...");
 
 		List<TourVO> vos = service.tourSelectAll(cpage, pageBlock);
@@ -180,7 +180,7 @@ public class TourController {
 	// 여행지 목록
 	@GetMapping("/tour/tourSelectAll")
 	public String tourSelectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "6") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
 		log.info("tourSelectAll ...");
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 
@@ -212,7 +212,7 @@ public class TourController {
 	// 여행지 목록 검색
 	@GetMapping("/tour/tourSearchList")
 	public String tourSearchList(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "6") int pageBlock, String searchKey, String searchWord, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, String searchKey, String searchWord, Model model) {
 		log.info("tourSearchList ...");
 		log.info("searchKey:{}", searchKey);
 		log.info("searchWord:{}", searchWord);

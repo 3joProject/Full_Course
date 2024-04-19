@@ -27,7 +27,7 @@ public class FestivalController {
 	// 축제 페이지 메인
 	@GetMapping("/festival")
 	public String festivalMain(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
 		log.info("/festivalMain...");
 
 		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
@@ -181,7 +181,7 @@ public class FestivalController {
 	// 축제 목록
 	@GetMapping("/festival/festivalSelectAll")
 	public String festivalSelectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
 		log.info("festivalSelectAll ...");
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 
@@ -213,7 +213,7 @@ public class FestivalController {
 	// 축제 목록 검색
 	@GetMapping("/festival/festivalSearchList")
 	public String festivalSearchList(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, String searchKey, String searchWord, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, String searchKey, String searchWord, Model model) {
 		log.info("festivalSearchList ...");
 		log.info("searchKey:{}", searchKey);
 		log.info("searchWord:{}", searchWord);
@@ -222,7 +222,7 @@ public class FestivalController {
 //		List<MemberVO> vos = service.searchList(searchKey,searchWord);
 		List<FestivalVO> vos = service.searchListPageBlock(searchKey, searchWord, cpage, pageBlock);
 
-		model.addAttribute("vos", vos);
+	
 
 		// 키워드검색 모든축제는 몇개?
 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
@@ -240,7 +240,7 @@ public class FestivalController {
 		model.addAttribute("totalPageCount", totalPageCount);
 //		model.addAttribute("totalPageCount", 10);//테스트용
 
-
+		model.addAttribute("vos", vos);
 		model.addAttribute("content", "thymeleaf/festival/th_selectAll");
 		model.addAttribute("title", "회원목록");
 		return "thymeleaf/festival/th_festivalLayout_main";

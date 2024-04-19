@@ -75,5 +75,13 @@
 	<update id="updateViewCount" parameterType="com.fullcourse.festival.FestivalVO">
 		update Festival set festivalViews= festivalViews+1 where festivalNum=#{festivalNum}
 	</update>
+	
+	<select id="searchListAddressPageBlock"
+		resultType="com.fullcourse.festival.FestivalVO">
+		
+		select * from Festival
+		where FestivalAddress like #{searchWord} 
+		order by festivalNum desc limit #{startRow},#{pageBlock}
+	</select>
 
 </mapper>

@@ -1,5 +1,8 @@
 package com.fullcourse.festival;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,44 +49,60 @@ public class FestivalRestApiController {
 		return "호출완료!";
 	}
 // 방법1
-//	@RequestMapping("/festival/updateThumbUp")
-//	public FestivalVO updateThumbUp(@RequestBody FestivalVO vo) {
-//
-//		System.out.println("전송받은 데이터 내용: " + vo);
-//		System.out.println("Received data from client: " + vo);
-//		
-//		
-//		
-//		  // 클라이언트로부터 받은 festivalNum을 사용하여 해당하는 여행 정보를 조회합니다.
-//        FestivalVO vo2 = new FestivalVO();
-//        vo2.setFestivalNum(vo.getFestivalNum());
-//        log.info("vo2: {}", vo2.getFestivalNum()); // 로그로 확인
-//        FestivalVO festivalVO = service.festivalSelectOne(vo2);
-//        log.info("festival: {}", festivalVO); // 로그로 확인
-//
-//		if (festivalVO != null) {
-//			// FestivalVO를 업데이트하거나 다른 작업 수행
-//			// festivalThumbUp 값을 증가시킴
-//			festivalVO.setFestivalThumbUp(festivalVO.getFestivalThumbUp() + 1);
-//			  log.info("festival: {}", festivalVO); // 로그로 확인
-//			service.updateLikeCount(festivalVO);
-//
-//			return festivalVO;
-//		} else {
-//			return null;
-//		}
-//
-//	}
-
-	// 방법2
 	@RequestMapping("/festival/updateThumbUp")
-	public String updateThumbUp(@RequestBody FestivalVO vo) {
+	public FestivalVO updateThumbUp(@RequestBody FestivalVO vo) {
 
 		System.out.println("전송받은 데이터 내용: " + vo);
 		System.out.println("Received data from client: " + vo);
-		service.updateLikeCount(vo);
+		
+		
+		
+		  // 클라이언트로부터 받은 festivalNum을 사용하여 해당하는 여행 정보를 조회합니다.
+        FestivalVO vo2 = new FestivalVO();
+        vo2.setFestivalNum(vo.getFestivalNum());
+        log.info("vo2: {}", vo2.getFestivalNum()); // 로그로 확인
+        FestivalVO festivalVO = service.festivalSelectOne(vo2);
+        log.info("festival: {}", festivalVO); // 로그로 확인
 
-		return "호출완료";
+		if (festivalVO != null) {
+			// FestivalVO를 업데이트하거나 다른 작업 수행
+			// festivalThumbUp 값을 증가시킴
+			festivalVO.setFestivalThumbUp(festivalVO.getFestivalThumbUp() + 1);
+			  log.info("festival: {}", festivalVO); // 로그로 확인
+			service.updateLikeCount(festivalVO);
 
+			return festivalVO;
+		} else {
+			return null;
+		}
+
+	}
+
+	// 방법2
+//	@RequestMapping("/festival/updateThumbUp")
+//	public String updateThumbUp(@RequestBody FestivalVO vo) {
+//
+//		System.out.println("전송받은 데이터 내용: " + vo);
+//		System.out.println("Received data from client: " + vo);
+//		service.updateLikeCount(vo);
+//
+//		return "호출완료";
+//
+//	}
+	
+	@RequestMapping("/festival/searchRegion")
+	public List<FestivalVO> searchRegion(@RequestBody Map<String, String> requestData) {
+
+		System.out.println("전송받은 데이터 내용: " + requestData);
+		System.out.println("Received data from client: " + requestData);
+		// 서비스를 통해 데이터베이스에 저장
+		//likeService.tourLikeInsertOK(vo);
+
+		 int cpage = Integer.parseInt(requestData.get("cpage"));
+		    int pageBlock = Integer.parseInt(requestData.get("pageBlock"));
+		String searchKey = requestData.get("searchKey");
+		 String searchWord = requestData.get("searchWord");
+		List<FestivalVO> vos = service.searchListAddressPageBlock(searchKey,searchWord,cpage,pageBlock); 
+		return vos;
 	}
 }
