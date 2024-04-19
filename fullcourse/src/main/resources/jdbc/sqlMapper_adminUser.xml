@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.fullcourse.admin.user.mapper.AdminUserMapper">
+	
+	<select id="userList" resultType="com.example.fullcourse.admin.user.UserVO">
+		select * from member order by
+		member_num desc
+	</select>
+	
+	<select id="getTotalRows"	resultType="int">
+		select count(*) total_rows from member
+	</select>
+
+</mapper>

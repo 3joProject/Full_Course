@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+				<h4 class="mb-3">[[${title}]]</h4>
+				
+				
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">ID</th>
+							<th scope="col">PW</th>
+							<th scope="col">NAME</th>
+							<th scope="col">EMAIL</th>
+							<th scope="col">date</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vo : ${vos}">
+							<tr>
+								<th scope="row"><a th:href="|admin/user/list?member_num=${vo.member_num}|"><span>[[${vo.member_num}]]</span></a></th>
+								<td><a th:href="|admin/user/list?member_num=${vo.member_num}|"><span
+										th:text="${vo.member_id}"></span></a></td>
+								<td><span th:text="${vo.member_pw}"></span></td>
+								<td><span th:text="${vo.member_name}"></span></td>
+								<td><span th:text="${vo.member_email}"></span></td>
+								
+							</tr>
+						</th:block>
+					</tbody>
+					
+				</table>
+				
+			</div>
+		</div>
+	</div>
+</div>
+</html>
