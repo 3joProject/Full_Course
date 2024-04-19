@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+	
 	<head>
 		<meta charset="utf-8">
 		<title>TRAVELER - Free Travel Website Template</title>
@@ -126,6 +127,7 @@
 		</div>
 		</div>
 		<!-- Booking End -->
+		*/
 
 
 		<!-- 임시 즐겨찾기 관광지 테이블 -->
@@ -135,7 +137,7 @@
 					<th scope="col">관광지명</th>
 					<th scope="col">주소</th>
 					<th scope="col">내용</th>
-					<th scope="col">이용시간</th>
+					<th scope="col">전화</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -145,7 +147,7 @@
 						<td><span scope="row" th:text="${vo.tourName}"></span></td>
 						<td><span scope="row" th:text="${vo.tourAddress}"></span></td>
 						<td><span scope="row" th:text="${vo.tourContent}"></span></td>
-						<td><span scope="row" th:text="${vo.tourUsetime}"></span></td>
+						<td><span scope="row" th:text="${vo.tourTel}"></span></td>
 						<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
 					</tr>
 				</th:block>
@@ -173,9 +175,9 @@
 					<th scope="col">축제명</th>
 					<th scope="col">주소</th>
 					<th scope="col">내용</th>
-					<th scope="col">이용시간</th>
 					<th scope="col">축제시작</th>
 					<th scope="col">축제끝</th>
+					<th scope="col">전화</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -185,9 +187,9 @@
 						<td><span scope="row" th:text="${vo.festivalName}"></span></td>
 						<td><span scope="row" th:text="${vo.festivalAddress}"></span></td>
 						<td><span scope="row" th:text="${vo.festivalContent}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalUsetime}"></span></td>
 						<td><span scope="row" th:text="${vo.festivalStart}"></span></td>
 						<td><span scope="row" th:text="${vo.festivalFinal}"></span></td>
+						<td><span scope="row" th:text="${vo.festivalTel}"></span></td>
 						<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
 					</tr>
 				</th:block>
