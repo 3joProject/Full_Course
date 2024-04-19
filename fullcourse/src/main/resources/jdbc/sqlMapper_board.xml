@@ -3,7 +3,7 @@
 
 <mapper namespace="com.fullcourse.board.mapper.BoardMapper">
 
-	<insert id="insertOK" parameterType="com.fullcourse.Board.BoardVO">
+	<insert id="insertOK" parameterType="com.fullcourse.board.BoardVO">
 		insert into
 		board(
 			boardTitle,
