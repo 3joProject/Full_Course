@@ -13,7 +13,7 @@
 		parameterType="com.fullcourse.seller.sellerReview.SellerReviewVO">
 		insert into
 		sellerReview(selrevId,selrevContent,selrevDate,selrevWriter,selrevStatus)
-		values('user1',#{selrevContent},#{selrevDate},#{selrevWriter},'NORMAL')
+		values(#{selrevId},#{selrevContent},#{selrevDate},#{selrevWriter},'NORMAL')
 	</insert>
 
 	<delete id="deleteOK"

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.fullcourse.member.MemberVO;
+import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
 @Mapper
 public interface MemberMapper {
@@ -59,6 +60,8 @@ public interface MemberMapper {
             "memberEmail = #{member.memberEmail} " +
             "WHERE memberId = #{member.memberId}")
     int updateMemberInfo(@Param("member") MemberVO member);
+
+	public List<SellerReviewVO> reviewSelectAll(String sellerId);
 	 
 	 
 	
