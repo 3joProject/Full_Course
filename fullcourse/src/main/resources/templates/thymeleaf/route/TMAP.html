@@ -985,6 +985,171 @@
 				}
 
 
+			}
+			chktraffic = [];
+			drawInfoArr = [];
+			resultMarkerArr = [];
+			resultdrawArr = [];
+		}
+
+
+		//달력 기능.
+		document.addEventListener("DOMContentLoaded", function () {
+			var showCalendarBtn = document.getElementById('showCalendarBtn');
+			var closeCalendarBtn = document.getElementById('closeCalendarBtn');
+			var calendar = document.getElementById('calendar');
+			var selectedDateInput = document.getElementById('selectedDate');
+			var selectedDateDisplay = document.getElementById('selectedDateDisplay');
+
+			// 달력 열기 버튼 클릭 이벤트
+			showCalendarBtn.addEventListener('click', function () {
+				calendar.style.display = 'block';
+			});
+
+			// 전체화면으로 보이기
+			aspectRatio: 2
+
+			// 닫기 버튼 클릭 이벤트
+			closeCalendarBtn.addEventListener('click', function () {
+				calendar.style.display = 'none';
+			});
+
+			// 날짜 선택 시 이벤트
+			selectedDateInput.addEventListener('change', function () {
+				var selectedDate = selectedDateInput.value;
+				showCalendarBtn.innerHTML = "여행 시작일 : <div id='selectedDateDisplay'>" + selectedDate + "</div>";
+				calendar.style.display = 'none'; // 달력 숨기기
+
+			});
+		});
+
+
+
+		//여행지 추가하기(마커추가) start
+		function addTour(lonlat) {
+			removeMarkers();
+
+			// 마커를 찍은 위치의 경도와 위도 값을 가져와서 변수에 저장
+			var longitude = lonlat.lng();
+			var latitude = lonlat.lat();
+
+			// 숨겨진 필드에 해당 값 할당
+			document.getElementById("longtitue").value = longitude;
+			document.getElementById("lattitue").value = latitude;
+
+			marker = new Tmapv2.Marker({
+				position: new Tmapv2.LatLng(lonlat.lat(), lonlat.lng()),
+				map: map
+			});
+
+			console.log("점찍은 위치:" + lonlat);
+			markers.push(marker);
+
+		}
+
+		function removeMarkers() {
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setMap(null);
+			}
+			markers = [];
+		}
+
+
+		function toggleAddTour() {
+			
+			console.log("여행지 추가 모드: " + (addTourEnabled ? "활성화" : "비활성화")); // 여행지 추가 모드 상태를 콘솔에 출력
+			if (addTourEnabled) {
+				addTourEnabled = false;
+				alert("여행지 추가 모드가 비활성화되었습니다.");
+				setTimeout(removeMarkers, 0);
+				hideAddTourScreen(); // 여행지 추가 모드가 비활성화될 때 화면을 숨깁니다.
+			} else {
+				addTourEnabled = true;
+				alert("여행지 추가 모드가 활성화되었습니다. 지도를 클릭하여 여행지를 추가하세요. 여행지추가 버튼을 한 번 더 누르시면 모드가 비활성화 됩니다");
+				map.addListener("click", function (e) {
+					addTourScreen(e.latLng); // 클릭한 위치를 전달하여 화면을 표시합니다.
+				}, {passive: true});
+			}
+			
+		}
+
+
+
+		// 화면을 표시하는 함수
+		function addTourScreen(latlng) {
+			var addTourScreen = document.getElementById("addTourScreen");
+			addTourScreen.style.display = "block";
+
+			// "추가" 버튼 클릭 시
+			document.getElementById('addToTourVO').onclick = function () {
+				// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
+				console.log("여행지가 추가되었습니다.");
+				//addTourEnabled = false; // 모드를 비활성화합니다.
+				addTourScreen.style.display = "none"; // 화면을 숨깁니다.
+				addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
+
+				// 모달 열기
+				var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+				modal.show();
+			};
+			document.getElementById('cancelToTourVO').onclick = function () {
+				hideAddTourScreen();
+
+			};
+
+		}
+		
+		
+
+		// 화면을 숨기는 함수
+		function hideAddTourScreen() {
+			var addTourScreen = document.getElementById("addTourScreen");
+			addTourScreen.style.display = "none";
+		}
+
+
+
+		
+		document.addEventListener('DOMContentLoaded', function() {
+
+		//여행지 추가 모달 start
+		var exampleModal = document.getElementById('exampleModal')
+		exampleModal.addEventListener('show.bs.modal', function (event) {
+			// Button that triggered the modal
+			var button = event.relatedTarget
+			// Extract info from data-bs-* attributes
+			var recipient = button.getAttribute('data-bs-whatever')
+			// If necessary, you could initiate an AJAX request here
+			// and then do the updating in a callback.
+			//
+			// Update the modal's content.
+			var modalTitle = exampleModal.querySelector('.modal-title')
+			var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+			modalTitle.textContent = 'New message to ' + recipient
+			modalBodyInput.value = recipient
+			//여행지 추가 모달 end
+		})
+		
+		});
+		
+
+	</script>
+</head>
+
+<body onload="initTmap()">
+	<div id="sidebar">
+		<button id="showCalendarBtn">여행 시작일 : 2024-04-08</button>
+		<div id="calendar">
+			<input type="date" id="selectedDate">
+			<button id="closeCalendarBtn">닫기</button>
+		</div>
+
+		<!-- 여행 기간 표시 영역 -->
+		<div id="selectedDuration"></div>
+
+
+
 				function toggleAddTour() {
 
 					console.log("여행지 추가 모드: " + (addTourEnabled ? "활성화" : "비활성화")); // 여행지 추가 모드 상태를 콘솔에 출력

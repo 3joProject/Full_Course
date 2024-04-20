@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>우리 동네 플러스 admin</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin/admin.css">
+</head>
+
+<body>
+
+	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-box">
+			<!--	<div class="sidebar-header">공지사항</div> -->
+				<ul class="sidebar-menu">
+					<li><a href="/admin/notice/selectAll">공지사항</a></li>
+					<li><a href="/admin/members">회원 목록</a></li>
+					<li><a href="/admin/travelers">여행자 목록</a></li>
+					<li><a href="/admin/festivals">축제 목록</a></li>
+					<li><a href="/admin/travel-products">여행상품 목록</a></li>
+					<li><a href="/admin/reports">신고 목록</a></li>
+					<li><a href="/admin/qna">Q&A 관리</a></li>
+					<li><a href="/admin/adminlist/selectAll">관리자 명단</a></li>
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="admin-info">
+				<span>공지사항 : 01234</span>
+				<button class="btn">글쓰기</button>
+				<button class="btn">수정</button>
+				<button class="btn">삭제</button>
+			</div>
+
+			<div class="page-content">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Num</th>
+							<th scope="col">ID</th>
+							<th scope="col">PW</th>
+							<th scope="col">NAME</th>
+							<th scope="col">Email</th>
+							<th scope="col">Date</th>
+							<th scope="col">DELETE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vos : ${vos}">
+							<tr>
+								<th scope="row"><a th:href="|selectOne?adminNum=${vos.adminNum}|"><span>[[${vos.adminNum}]]</span></a></th>
+								<td><a th:href="|selectOne?adminNum=${vos.adminNum}|"><span
+										th:text="${vos.adminId}"></span></a></td>
+								<td><span th:text="${vos.adminPw}"></span></td>
+								<td><span th:text="${vos.adminName}"></span></td>
+								<td><span th:text="${vos.adminEmail}"></span></td>
+								<td><span th:text="${vos.adminDate}"></span></td>
+								<td><a th:href="|m_delete?adminNum=${vos.adminNum}|">
+									<span>delete</span>
+								</a></td>
+							</tr>
+						</th:block>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div>
+			<div class="pagination">
+				<span class="page-btn">1</span>
+				<span class="page-btn">2</span>
+				<span class="page-btn">3</span>
+				<span class="page-btn">4</span>
+				<span class="page-btn">5</span>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
