@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>우리 동네 풀코스 admin</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin/admin.css">
+</head>
+
+<body>
+
+	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-box">
+				<div class="sidebar-header">공지사항</div>
+				<ul class="sidebar-menu">
+					<li><a href="/admin/members">회원 목록</a></li>
+					<li><a href="/admin/travelers">여행자 목록</a></li>
+					<li><a href="/admin/assignments">숙제 목록</a></li>
+					<li><a href="/admin/travel-products">여행상품 목록</a></li>
+					<li><a href="/admin/reports">신고 목록</a></li>
+					<li><a href="/admin/qna">Q&A 관리</a></li>
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="content">
+
+
+			<div class="admin-info">
+				<span>공지사항 : 01234</span>
+				<button class="btn">글쓰기</button>
+				<button class="btn">수정</button>
+				<button class="btn">삭제</button>
+			</div>
+
+			<div class="page-content">
+				<!-- 페이지 내용 -->
+			</div>
+			<div class="pagination">
+				<span class="page-btn">1</span>
+				<span class="page-btn">2</span>
+				<span class="page-btn">3</span>
+				<span class="page-btn">4</span>
+				<span class="page-btn">5</span>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</body>
+
+</html>

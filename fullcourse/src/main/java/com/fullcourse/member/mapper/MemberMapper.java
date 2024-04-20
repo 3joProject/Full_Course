@@ -53,10 +53,14 @@ public interface MemberMapper {
 
 	public List<MemberVO> findFollowingByMemberId(String memberId);
 
+
 	public List<SellerReviewVO> reviewSelectAll(String sellerId);
 
 	void updateMember(MemberVO memberVO);
 
 	MemberVO getMemberByNum(int memberNum);
+
+	 
+	
 
 }

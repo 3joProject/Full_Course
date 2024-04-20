@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-box {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+  background-color: #6ab04c;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  font-weight: bold;
+}
+
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 10px;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+}
+
+.sidebar-menu li:last-child {
+  border-bottom: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.admin-info {
+  display: flex;
+  align-items: center;
+}
+
+.admin-info span {
+  margin-right: 10px;
+}
+
+.btn {
+  background-color: #6ab04c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-btn {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.page-btn.active {
+  background-color: #6ab04c;
+  color: #fff;
+}
+
+.sidebar-menu li a {   /* href 링크 디자인 제거 */
+  color: inherit; /* 부모 요소의 색을 상속 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.active {
+    background-color: #4CAF50; /* 녹색 톤 */
+    color: white;
+}
+
+

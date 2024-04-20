@@ -1,9 +1,13 @@
 package com.fullcourse.member;
 
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -105,6 +111,11 @@ public class MemberController {
             model.addAttribute("error", "해당 판매자 정보를 찾을 수 없습니다.");
             return "thymeleaf/member/error"; // 오류 페이지 또는 적절한 에러 메시지 페이지로 리다이렉션
         }
+        List<SellerReviewVO> vos = memberService.reviewSelectAll(sellerId);
+		log.info("vos:{}",vos);
+
+		model.addAttribute("vos",vos);
+        
 
         model.addAttribute("seller", seller);
         return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동

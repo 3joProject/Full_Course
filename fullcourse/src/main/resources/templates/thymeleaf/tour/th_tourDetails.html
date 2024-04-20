@@ -1,58 +1,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="common_content(title)">
-	<div class="container">
+	<div class="container" id="tourAndFestivalContainer">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3">[[${title}]]</h4>
+<!--				<h4 class="mb-3">[[${title}]]</h4>-->
+				<h4 class="mb-3"></h4>
 
 
 				<!-- Header Start -->
-				<div class="container-fluid page-header">
-					<div class="container">
-						<div class="d-flex flex-column align-items-center justify-content-center"
-							style="min-height: 400px">
-							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
-							<div class="d-inline-flex text-white">
-								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
-								<i class="fa fa-angle-double-right pt-1 px-3"></i>
-								<p class="m-0 text-uppercase">Blog Detail</p>
-							</div>
-						</div>
-					</div>
-				</div>
+<!--				<div class="container-fluid page-header">-->
+<!--					<div class="container">-->
+<!--						<div class="d-flex flex-column align-items-center justify-content-center"-->
+<!--							style="min-height: 400px">-->
+<!--							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>-->
+<!--														<div class="d-inline-flex text-white">-->
+<!--															<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>-->
+<!--															<i class="fa fa-angle-double-right pt-1 px-3"></i>-->
+<!--															<p class="m-0 text-uppercase">Blog Detail</p>-->
+<!--														</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
 				<!-- Header End -->
 
 				<!-- Blog Start -->
 				<div class="container-fluid py-5">
 					<div class="container py-5">
-						<div class="row">
-							<div class="col-lg-8">
+						<div>
+							<div>
 								<!-- Blog Detail Start -->
 								<div class="pb-3">
 									<div class="blog-item">
 										<div class="position-relative">
 											<img class="img-fluid w-100" th:src="${vo2.tourImg}" alt="">
-											<div class="blog-date">
-												<h6 class="font-weight-bold mb-n1">01</h6>
-												<small class="text-white text-uppercase">Jan</small>
-											</div>
+
 										</div>
 									</div>
-									<!--									좋아요 시작 -->
 
-									<div>
-										<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
-										<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
+									<div id="LikeAndViewArea" style="display: flex; justify-content: space-between;">
+										<!--									조회수 시작-->
+										<div>
+											<span>조회수: </span> <span id="pageViewCount"
+												th:text="${vo2.tourViews}"></span>
+										</div>
+										<!--조회수끝-->
+
+										<!--									좋아요 시작 -->
+										<div>
+											<span class="heart"></span> <!-- 하트 아이콘 -->
+											<span id="thumbUpCount" th:text="${vo2.tourThumbUp}"></span>
+											<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
+										</div>
+										<!--									좋아요 끝-->
 									</div>
 
-									<!--									좋아요 끝-->
-									
-<!--									조회수 시작-->
-<div>
-										<span>조회수: </span> <span id="pageViewCount" th:text="${vo2.tourViews}"></span>
-									</div>
-
-<!--조회수끝-->
 
 									<div class="bg-white mb-3" style="padding: 30px;">
 										<div class="d-flex mb-3">
@@ -60,14 +61,12 @@
 												href="">Admin</a>
 											<span class="text-primary px-2">|</span>
 											<a class="text-primary text-uppercase text-decoration-none" href="">Tours &
-												Travel</a>
+												Festival</a>
 										</div>
 										<h2 class="mb-3" th:text="${vo2.tourName}"></h2>
 										<p th:text="${vo2.tourNum}"></p>
 										<p th:text="${vo2.tourContent}"></p>
-
 										<h4 class="mb-3">이용정보</h4>
-
 										<h5 class="mb-3" th:text="${vo2.tourAddress}"></h5>
 										<h5 class="mb-3" th:text="${vo2.tourTel}">전화번호가 없습니다</h5>
 
@@ -109,9 +108,6 @@
 											<!--												<a href="#nolink" class="'commentModifyBtn'+ ${comment.tourcoNum}" >댓글수정</a>-->
 											<div class="commentModifyBtns"
 												th:id="commentModifyBtns+${comment.tourcoNum}">
-
-
-
 												<form action="/tour/tourCommentUpdateOK" method="POST">
 													<input type="hidden" name="tourcoNum"
 														th:value="${comment.tourcoNum}">
@@ -127,9 +123,6 @@
 											<a th:href="@{tourCommentDeleteOK(tourcoNum=${comment.tourcoNum},tourcoTnum=${comment.tourcoTnum})}"
 												class="deleteComment btn btn-sm btn-outline-primary"
 												th:id="deleteComment+${comment.tourcoNum}">댓글삭제</a>
-
-											<!--											<button class="btn btn-sm btn-outline-primary">Delete</button>-->
-
 
 										</div>
 									</div>
@@ -217,7 +210,7 @@
 
 				});
 				//댓글 기능 끝
- //좋아요 기능시작
+				//좋아요 기능시작
 				$("#likebtn").click(function () {
 					console.log("좋아요");
 					// 현재 URL에서 tourNum 값을 가져오는 방법
@@ -259,7 +252,7 @@
 						data: JSON.stringify(data),
 						success: function (response) {
 							console.log('서버 응답:', response);
-							
+
 							document.getElementById('thumbUpCount').innerText = response.tourThumbUp;
 						},
 						error: function (xhr, status, error) {
@@ -268,7 +261,7 @@
 					});
 				}
 
-//좋아요 기능끝
+				//좋아요 기능끝
 			</script>
 
 </html>

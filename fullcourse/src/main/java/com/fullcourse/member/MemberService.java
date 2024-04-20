@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fullcourse.member.mapper.MemberMapper;
+import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
 @Service
 public class MemberService {
@@ -117,5 +118,9 @@ public class MemberService {
     public MemberVO getMemberByNum(int memberNum) {
         return mapper.getMemberByNum(memberNum);
     }
+
+	public List<SellerReviewVO> reviewSelectAll(String sellerId) {
+		return mapper.reviewSelectAll(sellerId);
+	}
 
 }
