@@ -125,29 +125,29 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
         return "redirect:/member/" + memberId;
     }
-    @GetMapping("/member/updateMemberInfo")
-    public String updateMemberInfoForm(HttpSession session, Model model) {
-        Integer memberNum = (Integer) session.getAttribute("memberNum");
-        log.info("Member Number: {}", memberNum);
-        if (memberNum == null) {
-            log.info("Member Number not found in session, redirecting to login page.");
-            return "redirect:/login"; // 로그인 페이지로 리디렉트
-        }
-
-        MemberVO memberVO = memberService.getMemberByNum(memberNum);
-        if (memberVO == null) {
-            log.warn("No member found with memberNum: {}", memberNum);
-            return "redirect:/mypage"; // 오류 페이지 또는 적절한 메시지 페이지로 리다이렉트
-        }
-
-        model.addAttribute("memberVO", memberVO);
-        return "thymeleaf/member/updateMemberInfo";
-    }
-    @PostMapping("/updateMemberInfo")
-    public String updateMemberInfo(MemberVO memberVO) {
-        memberService.updateMember(memberVO);
-        return "redirect:/mypage";
-    }
+//    @GetMapping("/member/updateMemberInfo")
+//    public String updateMemberInfoForm(HttpSession session, Model model) {
+//        Integer memberNum = (Integer) session.getAttribute("memberNum");
+//        log.info("Member Number: {}", memberNum);
+//        if (memberNum == null) {
+//            log.info("Member Number not found in session, redirecting to login page.");
+//            return "redirect:/login"; // 로그인 페이지로 리디렉트
+//        }
+//
+//        MemberVO memberVO = memberService.getMemberByNum(memberNum);
+//        if (memberVO == null) {
+//            log.warn("No member found with memberNum: {}", memberNum);
+//            return "redirect:/mypage"; // 오류 페이지 또는 적절한 메시지 페이지로 리다이렉트
+//        }
+//
+//        model.addAttribute("memberVO", memberVO);
+//        return "thymeleaf/member/updateMemberInfo";
+//    }
+//    @PostMapping("/updateMemberInfo")
+//    public String updateMemberInfo(MemberVO memberVO) {
+//        memberService.updateMember(memberVO);
+//        return "redirect:/mypage";
+//    }
 
 
 
