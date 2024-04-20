@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequestMapping
 public class MemberController {
 
 	@Autowired
@@ -48,6 +50,10 @@ public class MemberController {
 			return "redirect:insert";
 		}
 	}
+    @ModelAttribute("memberVO")
+    public MemberVO memberVO() {
+        return new MemberVO();  // 또는 필요한 로직으로 초기화된 객체
+    }
 	// 로그인 폼 페이지
     @GetMapping("/login")
     public String login(Model model) {
@@ -61,6 +67,7 @@ public class MemberController {
         MemberVO member = memberService.login(memberId, memberPw);
 
         if (member != null) {
+        	session.setAttribute("memberNum", member.getMemberNum());
             session.setAttribute("member", member);
             log.info("로그인 성공: {}", memberId);
             return "redirect:/index";
@@ -118,26 +125,33 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
         return "redirect:/member/" + memberId;
     }
-    @GetMapping("/edit")
-    public String showEditForm(@RequestParam("memberId") String memberId, Model model) {
-        // 회원 정보 조회 로직 (생략)
-        // model.addAttribute("member", memberData);
-        return "thymeleaf/member/edit";
-    }
-
-    @PostMapping("/update")
-    public String updateMemberInfo(@ModelAttribute("member") MemberVO member, RedirectAttributes redirectAttributes) {
-        if (memberService.updateMemberInfo(member)) {
-            redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            return "redirect:/member/profile";
-        } else {
-            redirectAttributes.addFlashAttribute("message", "회원 정보 업데이트에 실패했습니다.");
-            return "redirect:/member/edit";
+    @GetMapping("/member/updateMemberInfo")
+    public String updateMemberInfoForm(HttpSession session, Model model) {
+        Integer memberNum = (Integer) session.getAttribute("memberNum");
+        log.info("Member Number: {}", memberNum);
+        if (memberNum == null) {
+            log.info("Member Number not found in session, redirecting to login page.");
+            return "redirect:/login"; // 로그인 페이지로 리디렉트
         }
+
+        MemberVO memberVO = memberService.getMemberByNum(memberNum);
+        if (memberVO == null) {
+            log.warn("No member found with memberNum: {}", memberNum);
+            return "redirect:/mypage"; // 오류 페이지 또는 적절한 메시지 페이지로 리다이렉트
+        }
+
+        model.addAttribute("memberVO", memberVO);
+        return "thymeleaf/member/updateMemberInfo";
+    }
+    @PostMapping("/updateMemberInfo")
+    public String updateMemberInfo(MemberVO memberVO) {
+        memberService.updateMember(memberVO);
+        return "redirect:/mypage";
     }
 
-    
-    
+
+
+       
 	
 	
 }
