@@ -26,17 +26,16 @@
 	</delete>
 	
 	<select id="tourSelectAll" resultType="com.fullcourse.tour.TourVO">
-		select * from Tour order by
+		select * from tour order by
 		tourNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
 	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">
-		SELECT * FROM Tour ORDER BY tourThumbUp DESC LIMIT 3;
+		SELECT * FROM tour ORDER BY tourThumbUp DESC LIMIT 3;
 	</select>
 	
-	
 	<select id="tourSelectOne" resultType="com.fullcourse.tour.TourVO">
-		select * from Tour where
+		select * from tour where
 		tourNum=#{tourNum}
 	</select>
 				
