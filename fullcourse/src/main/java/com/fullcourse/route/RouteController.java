@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fullcourse.tour.TourService;
+import com.fullcourse.tour.TourVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +24,8 @@ public class RouteController {
 //	@Value("${tmap.api.key}")
 //	private String tmapApiKey;
 	
-	
+	@Autowired
+	private TourService toService;
 	@Autowired
     private RouteService service;
 	
@@ -68,6 +73,22 @@ public class RouteController {
 		return "thymeleaf/route/selectOne";
 
 	}
+	
+	// 여행지입력 완료 처리 -> tourDeails페이지로 이동?
+		@PostMapping("/route/tourInsertOK")
+		public String tourInsertOK(TourVO vo) {
+			log.info("route..tourInsertOK...");
+			log.info("vo:{}", vo);
+
+			int result = toService.tourInsertOK(vo);
+			log.info("result:{}", result);
+
+			if (result == 1) {
+				return "redirect:/route";
+			} else {
+				return "redirect:/route";
+			}
+		}
 	
 }
 
