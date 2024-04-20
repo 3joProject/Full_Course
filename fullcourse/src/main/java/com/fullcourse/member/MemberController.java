@@ -69,6 +69,7 @@ public class MemberController {
         if (member != null) {
         	session.setAttribute("memberNum", member.getMemberNum());
             session.setAttribute("member", member);
+            session.setMaxInactiveInterval(3600);
             log.info("로그인 성공: {}", memberId);
             return "redirect:/index";
         } else {

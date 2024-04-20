@@ -5,7 +5,7 @@
 
 	<select id="selectAll"
 		resultType="com.fullcourse.cart.CartVO">
-		SELECT * FROM cart where cartMid='user1';
+		SELECT * FROM cart where cartMid=#{memberId};
 	</select>
 
 	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
