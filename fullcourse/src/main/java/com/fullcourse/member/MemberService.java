@@ -109,14 +109,18 @@ public class MemberService {
         return mapper.findFollowingByMemberId(memberId);
     }
     
-    @Transactional
-    public boolean updateMemberInfo(MemberVO member) {
-        return mapper.updateMemberInfo(member) > 0;
+    
+    public void updateMember(MemberVO memberVO) {
+        mapper.updateMember(memberVO);
+    }
+
+    
+    public MemberVO getMemberByNum(int memberNum) {
+        return mapper.getMemberByNum(memberNum);
     }
 
 	public List<SellerReviewVO> reviewSelectAll(String sellerId) {
 		return mapper.reviewSelectAll(sellerId);
 	}
-
 
 }
