@@ -1,0 +1,115 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  background-color: #f2f2f2;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background: linear-gradient(to right, #6ab04c, #badc58);
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.header h1 {
+  color: #fff;
+  font-size: 28px;
+  margin: 0;
+}
+
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 폼 스타일 */
+.content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.content form div {
+  margin-bottom: 20px;
+}
+
+.content form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.content form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.content form button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.content form button:hover {
+  background-color: #45a049;
+}
+
+.content form p {
+  color: #ff0000;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  background-color: #badc58;
+  color: #fff;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.footer {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+}

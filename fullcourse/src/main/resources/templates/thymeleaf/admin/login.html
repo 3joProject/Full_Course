@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>우리 동네 플러스 admin</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin/adminLogin.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="header">
+			<h1>우리 동네 플러스</h1>
+		</div>
+		<div class="content">
+			<form action="#" th:action="@{/admin/login}" method="post">
+				<div>
+					<label for="adminId">사용자 ID:</label>
+					<input type="text" id="adminId" name="adminId" required>
+				</div>
+				<div>
+					<label for="adminPw">비밀번호:</label>
+					<input type="password" id="adminPw" name="adminPw" required>
+				</div>
+				<div>
+					<button type="submit">로그인</button>
+				</div>
+				<p th:if="${error}" th:text="${error}">로그인 정보가 올바르지 않습니다.</p>
+			</form>
+		</div>
+
+	</div>
+</body>
+
+</html>
