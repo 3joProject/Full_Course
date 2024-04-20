@@ -94,5 +94,9 @@
 		WHERE f.follower_id = #{memberId}
 	</select>
 
+	<select id="reviewSelectAll" resultType="com.fullcourse.seller.sellerReview.SellerReviewVO">
+		select * from sellerReview where selrevId = #{sellerId} order by selrevDate
+		desc
+	</select>
 
 </mapper>

@@ -89,6 +89,50 @@ public class BoardController {
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
 		
-		return "thymeleaf/board/selectAll";
+		model.addAttribute("content", "thymeleaf/board/selectAll");
+		model.addAttribute("title", "게시판목록");
+		
+		return "thymeleaf/board/layout_main";
+	}
+	
+	@GetMapping("/selectOne")
+	public String m_selectOne(BoardVO boardVO, Model model) {
+		log.info("boardVO:{}", boardVO);
+
+		BoardVO vo = boardService.selectOne(boardVO);
+
+		model.addAttribute("vo", vo);
+
+		model.addAttribute("content", "thymeleaf/board/selectOne");
+		model.addAttribute("title", "게시판 상세");
+		
+		return "thymeleaf/board/layout_main";
+	}
+	
+	// m_updateOK 만들기
+	@PostMapping("/updateOK")
+	public String updateOK(BoardVO boardVO) {
+
+		int result = boardService.updateOK(boardVO);
+
+		return "redirect:selectOne?boardNum=" + boardVO.getBoardNum();
+
+	}
+		
+	@GetMapping("/delete")
+	public String m_delete(Model model) {
+		log.info("/m_delete...");
+
+		model.addAttribute("content", "thymeleaf/board/delete");
+		model.addAttribute("title", "글삭제");
+		return "thymeleaf/board/layout_main";
+	}
+
+	@PostMapping("/deleteOK")
+	public String deleteOK(BoardVO boardVO) {
+
+		int result = boardService.deleteOK(boardVO);
+
+		return "redirect:selectAll";
 	}
 }
