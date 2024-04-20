@@ -7,14 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.fullcourse.product.ProductVO;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import com.fullcourse.member.MemberVO;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -24,10 +24,15 @@ public class CartController {
 	private CartService service;
 	
 	@GetMapping("/cart")
-	public String cart(Model model) {
+	public String cart(Model model, HttpServletRequest request) {
 		log.info("cart");
 		
-		List<CartVO> vos = service.selectAll();
+	    // 세션에서 memberNum 가져오기
+	    HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("memberNum: {}", member.toString());
+	    
+		List<CartVO> vos = service.selectAll(member.getMemberId());
 		
 		log.info("{}",vos);
 		
