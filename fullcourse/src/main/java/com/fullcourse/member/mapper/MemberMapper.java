@@ -51,15 +51,8 @@ public interface MemberMapper {
 
 	public List<MemberVO> findFollowingByMemberId(String memberId);
 	
-	@Update("UPDATE member SET " +
-            "memberPw = #{member.memberPw}, " +
-            "memberName = #{member.memberName}, " +
-            "memberAddress = #{member.memberAddress}, " +
-            "memberTel = #{member.memberTel}, " +
-            "memberEmail = #{member.memberEmail} " +
-            "WHERE memberId = #{member.memberId}")
-    int updateMemberInfo(@Param("member") MemberVO member);
-	 
+	 void updateMember(MemberVO memberVO);
+	    MemberVO getMemberByNum(int memberNum);
 	 
 	
 }

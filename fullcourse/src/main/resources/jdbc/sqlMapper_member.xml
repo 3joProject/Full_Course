@@ -9,26 +9,25 @@
 		#{memberTel}, #{memberEmail}, #{memberSns})
 	</insert>
 
-	<update id="updateOK" parameterType="com.fullcourse.member.MemberVO">
-		UPDATE member
-		SET memberPw = #{memberPw},
-		memberName = #{memberName},
-		memberAddress = #{memberAddress},
-		memberTel = #{memberTel},
-		memberEmail = #{memberEmail},
-		memberSns = #{memberSns}
-		WHERE memberNum = #{memberNum}
-	</update>
+	 <update id="updateMember" parameterType="com.fullcourse.member.MemberVO">
+        UPDATE members
+        SET
+            member_id = #{memberId},
+            member_pw = #{memberPw},
+            member_name = #{memberName},
+            member_address = #{memberAddress},
+            member_tel = #{memberTel},
+            member_email = #{memberEmail},
+            member_img = #{memberImg},
+            member_sns = #{memberSns}
+        WHERE
+            member_num = #{memberNum}
+    </update>
 
-	<delete id="deleteOK" parameterType="com.fullcourse.member.MemberVO">
-		DELETE FROM member
-		WHERE memberNum = #{memberNum}
-	</delete>
+	<select id="getMemberByNum" resultType="com.fullcourse.member.MemberVO">
+        SELECT * FROM member WHERE memberNum = #{memberNum}
+    </select>
 
-	<select id="selectAll" resultType="com.fullcourse.member.MemberVO">
-		SELECT * FROM member
-		ORDER BY memberNum DESC
-	</select>
 
 	<select id="selectOne" resultType="com.fullcourse.member.MemberVO">
 		SELECT * FROM member
