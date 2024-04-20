@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fullcourse.admin.AdminVO;
 import com.fullcourse.admin.notice.mapper.AdminNoticeMapper;
 
 @Service
