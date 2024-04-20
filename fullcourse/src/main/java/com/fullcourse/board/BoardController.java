@@ -109,11 +109,14 @@ public class BoardController {
 		return "thymeleaf/board/layout_main";
 	}
 	
-	// m_updateOK 만들기
+	
 	@PostMapping("/updateOK")
 	public String updateOK(BoardVO boardVO) {
+		log.info("/updateOK...");
+		log.info("vo:{}", boardVO);
 
 		int result = boardService.updateOK(boardVO);
+		log.info("result:{}", result);
 
 		return "redirect:selectOne?boardNum=" + boardVO.getBoardNum();
 
@@ -121,7 +124,7 @@ public class BoardController {
 		
 	@GetMapping("/delete")
 	public String m_delete(Model model) {
-		log.info("/m_delete...");
+		log.info("/delete...");
 
 		model.addAttribute("content", "thymeleaf/board/delete");
 		model.addAttribute("title", "글삭제");
