@@ -51,6 +51,8 @@ public interface MemberMapper {
 	 void addFollower(@Param("followerId") String followerId, @Param("followingId") String followingId);
 
 	public List<MemberVO> findFollowingByMemberId(String memberId);
+
+	public List<SellerReviewVO> reviewSelectAll(String sellerId);
 	
 
 	 
