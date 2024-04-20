@@ -178,7 +178,7 @@
 				if (addTourEnabled) {
 					addTour(e.latLng);
 				}
-			});
+		});
 			// DB에서 가져온 여행지 정보
 			$.ajax({
 				url: 'route/gettour',
@@ -971,20 +971,23 @@
 
 
 		function toggleAddTour() {
-			addTourEnabled = !addTourEnabled;
+			
 			console.log("여행지 추가 모드: " + (addTourEnabled ? "활성화" : "비활성화")); // 여행지 추가 모드 상태를 콘솔에 출력
 			if (addTourEnabled) {
+				addTourEnabled = false;
+				alert("여행지 추가 모드가 비활성화되었습니다.");
+				setTimeout(removeMarkers, 0);
+				hideAddTourScreen(); // 여행지 추가 모드가 비활성화될 때 화면을 숨깁니다.
+			} else {
+				addTourEnabled = true;
 				alert("여행지 추가 모드가 활성화되었습니다. 지도를 클릭하여 여행지를 추가하세요. 여행지추가 버튼을 한 번 더 누르시면 모드가 비활성화 됩니다");
 				map.addListener("click", function (e) {
 					addTourScreen(e.latLng); // 클릭한 위치를 전달하여 화면을 표시합니다.
 				}, {passive: true});
-			} else {
-				alert("여행지 추가 모드가 비활성화되었습니다.");
-				setTimeout(removeMarkers, 0);
-
-				hideAddTourScreen(); // 여행지 추가 모드가 비활성화될 때 화면을 숨깁니다.
 			}
+			
 		}
+
 
 
 		// 화면을 표시하는 함수
@@ -996,7 +999,7 @@
 			document.getElementById('addToTourVO').onclick = function () {
 				// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
 				console.log("여행지가 추가되었습니다.");
-				addTourEnabled = false; // 모드를 비활성화합니다.
+				//addTourEnabled = false; // 모드를 비활성화합니다.
 				addTourScreen.style.display = "none"; // 화면을 숨깁니다.
 				addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
 
@@ -1010,6 +1013,8 @@
 			};
 
 		}
+		
+		
 
 		// 화면을 숨기는 함수
 		function hideAddTourScreen() {
@@ -1018,6 +1023,8 @@
 		}
 
 
+		
+		document.addEventListener('DOMContentLoaded', function() {
 		//여행지 추가 모달 start
 		var exampleModal = document.getElementById('exampleModal')
 		exampleModal.addEventListener('show.bs.modal', function (event) {
@@ -1036,6 +1043,11 @@
 			modalBodyInput.value = recipient
 			//여행지 추가 모달 end
 		})
+		
+		});
+		
+		
+
 	</script>
 </head>
 
@@ -1090,18 +1102,19 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form id="addTourForm">
+					<form class="validation-form" id="addTourForm" action="/route/tourInsertOK" method="post">
 						<div class="mb-3">
 							<label for="tourName" class="col-form-label">여행지 이름:</label>
 							<input type="text" class="form-control" id="tourName" name="tourName">
 						</div>
 						<div class="mb-3">
 							<label for="tourAddress" class="col-form-label">여행지 주소:</label>
-							<input type="text" class="form-control" id="tourAddress" name="tourAddress">
+							<input type="text" class="form-control" id="tourAddress" name="tourAddress" value="경남 창원시 의창구 대산면 가술리">
 						</div>
 						<div class="mb-3">
 							<label for="tourContent" class="col-form-label">여행지 설명:</label>
-							<textarea class="form-control" id="tourContent" name="tourContent"></textarea>
+							<textarea class="form-control" id="tourContent" name="tourContent" 
+							value="주남돌다리도 두드려보고 건너자"></textarea>
 						</div>
 						<div class="mb-3">
 							<label for="tourTel" class="col-form-label">여행지 연락처(선택):</label>
@@ -1118,12 +1131,18 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Send message</button>
+					<button id="addGuideToTourBtn" type="submit" class="btn btn-primary">Send message</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!--모달: 여행지 추가 form end-->
+	<script>
+		$("#addGuideToTourBtn").click(function(){
+			console.log("send message click");
+			addTourForm.submit();
+		});
+	</script>
 
 </body>
 
