@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.fullcourse.member.MemberVO;
+import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
 @Mapper
 public interface MemberMapper {
@@ -51,10 +52,11 @@ public interface MemberMapper {
 
 	public List<MemberVO> findFollowingByMemberId(String memberId);
 
-	public List<SellerReviewVO> reviewSelectAll(String sellerId);
 	
 	 void updateMember(MemberVO memberVO);
 	    MemberVO getMemberByNum(int memberNum);
+
+		public List<SellerReviewVO> reviewSelectAll(String sellerId);
 	 
 	
 }
