@@ -54,7 +54,7 @@ public class FestivalController {
 		model.addAttribute("totalPageCount", totalPageCount);
 		
 		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
-		model.addAttribute("title", "축제");
+		model.addAttribute("title", "축제목록");
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
 

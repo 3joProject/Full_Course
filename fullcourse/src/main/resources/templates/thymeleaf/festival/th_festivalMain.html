@@ -4,8 +4,7 @@
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 
-<!--				<h4 class="mb-3">[[${title}]]</h4>-->
-				<h4 class="mb-3"></h4>
+				<h4 class="mb-3">[[${title}]]</h4>
 
 
 
@@ -15,18 +14,18 @@
 						<div class="d-flex flex-column align-items-center justify-content-center"
 							style="min-height: 400px">
 							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
-<!--							<div class="d-inline-flex text-white">-->
-<!--								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>-->
-<!--								<i class="fa fa-angle-double-right pt-1 px-3"></i>-->
-<!--								<p class="m-0 text-uppercase">Blog Detail</p>-->
-<!--							</div>-->
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Header End -->
 				
 					<!--지역 버튼 시작 -->
-					<div id="regionSelection">
+				<div>
 					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="여행지">전국</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
@@ -54,7 +53,7 @@
 						<div class="text-center mb-3 pb-3">
 							<h6 class="text-primary text-uppercase festivalDestination" style="letter-spacing: 5px;">전국
 							</h6>
-							<h1>좋아요 Best 축제</h1>
+							<h1>Best 축제</h1>
 						</div>
 						<div class="row" id="bestThreeList">
 							<th:block th:each="vo : ${vos2}">
@@ -90,7 +89,9 @@
 						<div class="text-center mb-3 pb-3">
 							<h6 class="text-primary text-uppercase festivalDestination" style="letter-spacing: 5px;">전국
 							</h6>
+							<a href="/festival/festivalSelectAll">
 								<h1>축제 목록</h1>
+							</a>
 						</div>
 
 
@@ -98,9 +99,14 @@
 							<th:block th:each="vo : ${vos}">
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="destination-item position-relative overflow-hidden mb-2">
+										<!--										<img class="img-fluid" th:src="${vo.festivalImg}" alt="">-->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.festivalImg == null or vo.festivalImg == ''}"
+											src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
 										<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 										<img class="img-fluid" style="max-width: 100%; height: auto;"
-											th:if="${vo.festivalImg != null and vo.festivalImg != ''}" th:src="${vo.festivalImg}"										alt="이미지대체텍스트" />
+											th:if="${vo.festivalImg != null and vo.festivalImg != ''}" th:src="${vo.festivalImg}"
+											alt="이미지대체텍스트" />
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|festival/festivalDetails?festivalNum=${vo.festivalNum}|}">
 											<h5 class="text-white"><span th:text="${vo.festivalAddress}"></span></h5>

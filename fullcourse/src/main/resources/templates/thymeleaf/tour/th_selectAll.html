@@ -4,10 +4,9 @@
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 
-<!--				<h4 class="mb-3">[[${title}]]</h4>-->
-				<h4 class="mb-3"></h4>
+				<h4 class="mb-3">[[${title}]]</h4>
 				<!--지역 버튼 시작 -->
-				<div id="regionSelection">
+				<div>
 					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="여행지">전국</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
@@ -32,11 +31,11 @@
 				<!-- Search Form start-->
 				<div class="mb-5">
 					<div class="bg-white" style="padding: 30px;">
-						<div class="input-group" style="justify-content: flex-end;">
+						<div class="input-group">
 							<form class="form-inline my-2 my-lg-0 justify-content-end" action="tourSearchList">
 								<select class="selectpicker" name="searchKey">
-									<option value="tourName">여행지이름</option>
 									<option value="address">주소</option>
+									<option value="tourName">여행지이름</option>
 								</select>
 
 								<input class="form-control mr-sm-2" type="search" placeholder="Search"
@@ -106,7 +105,9 @@
 						<div class="container pt-5 pb-3">
 							<div class="text-center mb-3 pb-3">
 								<h6 class="text-primary text-uppercase" id="tourDestination" style="letter-spacing: 5px;">전국</h6>
+								<a th:href="@{/tour/tourSelectAll}">
 									<h1>여행지 목록</h1>
+								</a>
 
 
 

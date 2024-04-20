@@ -54,7 +54,7 @@ public class TourController {
 				model.addAttribute("totalPageCount", totalPageCount);
 				
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
-		model.addAttribute("title", "여행지");
+		model.addAttribute("title", "여행지목록");
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
 

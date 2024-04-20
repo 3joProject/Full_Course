@@ -3,94 +3,89 @@
 	<div class="container">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
-<!--				<h4 class="mb-3">[[${title}]]</h4>-->
-				<h4 class="mb-3"></h4>
+				<h4 class="mb-3">[[${title}]]</h4>
+				
+				
+    <!-- Header Start -->
+    <div class="container-fluid page-header">
+        <div class="container">
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+                <h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Blog Detail</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+    
+    <!-- Blog Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Blog Detail Start -->
+                    <div class="pb-3">
+                        <div class="blog-item">
+                            <div class="position-relative">
+                                <img class="img-fluid w-100" th:src="${vo2.festivalImg}" alt="">
+                                <div class="blog-date">
+                                    <h6 class="font-weight-bold mb-n1">01</h6>
+                                    <small class="text-white text-uppercase">Jan</small>
+                                </div>
+                            </div>
+                        </div>
+                        	<!--									좋아요 시작 -->
 
-
-				<!-- Header Start -->
-<!--				<div class="container-fluid page-header">-->
-<!--					<div class="container">-->
-<!--						<div class="d-flex flex-column align-items-center justify-content-center"-->
-<!--							style="min-height: 400px">-->
-<!--							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>-->
-<!--							<div class="d-inline-flex text-white">-->
-<!--								<p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>-->
-<!--								<i class="fa fa-angle-double-right pt-1 px-3"></i>-->
-<!--								<p class="m-0 text-uppercase">Blog Detail</p>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-				<!-- Header End -->
-
-				<!-- Blog Start -->
-				<div class="container-fluid py-5">
-					<div class="container py-5">
-						<div>
-							<div>
-								<!-- Blog Detail Start -->
-								<div class="pb-3">
-									<div class="blog-item">
-										<div class="position-relative">
-											<img class="img-fluid w-100" th:src="${vo2.festivalImg}" alt="">
-
-										</div>
-									</div>
-									
-									<div  id="LikeAndViewArea" style="display: flex; justify-content: space-between;">
-									<!--조회수 시작-->
 									<div>
-										<span>조회수: </span> <span id="pageViewCount"
-											th:text="${vo2.festivalViews}"></span>
-									</div>
-									<!--조회수끝-->
-									<!--좋아요 시작 -->
-									<div>
-										  <span class="heart"></span> <!-- 하트 아이콘 -->
 										<span id="thumbUpCount" th:text="${vo2.festivalThumbUp}"></span>
-										<button class="btn-sm btn-outline-primary" id="likebtn">
-											좋아요</button>
+										<button class="btn-sm btn-outline-primary" id="likebtn">좋아요</button>
 									</div>
-									<!--좋아요 끝-->
+
+									<!--									좋아요 끝-->
+									
+<!--									조회수 시작-->
+<div>
+										<span>조회수: </span> <span id="pageViewCount" th:text="${vo2.festivalViews}"></span>
 									</div>
-									
-									
-									<div class="bg-white mb-3" style="padding: 30px;">
-										<div class="d-flex mb-3">
-											<a class="text-primary text-uppercase text-decoration-none"
-												href="">Admin</a>
-											<span class="text-primary px-2">|</span>
-											<a class="text-primary text-uppercase text-decoration-none" href="">Tours &
-												Festival</a>
-										</div>
 
-
-										<h2 class="mb-3" th:text="${vo2.festivalName}"></h2>
+<!--조회수끝-->
+                        <div class="bg-white mb-3" style="padding: 30px;">
+                            <div class="d-flex mb-3">
+                                <a class="text-primary text-uppercase text-decoration-none" href="">Admin</a>
+                                <span class="text-primary px-2">|</span>
+                                <a class="text-primary text-uppercase text-decoration-none" href="">Tours & Travel</a>
+                            </div>
+                            
+                                
+                                	<h2 class="mb-3" th:text="${vo2.festivalName}"></h2>
 										<p th:text="${vo2.festivalNum}"></p>
 										<p th:text="${vo2.festivalContent}"></p>
+
 										<h4 class="mb-3">이용정보</h4>
+
 										<h5 class="mb-3" th:text="${vo2.festivalAddress}"></h5>
 										<h5 class="mb-3" th:text="${vo2.festivalTel}">전화번호가 없습니다</h5>
-										<span>축제시작일:</span>
-										<h5 class="mb-3" th:text="${vo2.festivalStart}"></h5>
-										<span>축제종료일:</span>
-										<h5 class="mb-3" th:text="${vo2.festivalFinal}"></h5>
-									</div>
-								</div>
-								<!-- Blog Detail End -->
-
-								<!-- Comment List Start -->
-								<div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-									<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Comments</h4>
-									<!-- 반복문을 통해 각 댓글을 출력 -->
+										<span>축제시작일:</span><h5 class="mb-3" th:text="${vo2.festivalStart}"></h5>
+										<span>축제종료일:</span><h5 class="mb-3" th:text="${vo2.festivalFinal}"></h5>
+                        </div>
+                    </div>
+                    <!-- Blog Detail End -->
+    
+                    <!-- Comment List Start -->
+                    <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+                        <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Comments</h4>
+                        <!-- 반복문을 통해 각 댓글을 출력 -->
 									<div th:each="comment : ${cvos}" class="media mb-4">
 										<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
 											style="width: 45px;">
 										<div class="media-body">
 											<span style="display: none;" th:text="${comment.festivalcoNum}"></span>
 											<h6 th:text="${comment.festivalcoWriter}"></h6>
-											<!--												<a href="">John Doe</a> -->
-											<span>작성일: <small><i th:text="${comment.festivalcoDate}"
+												<!--												<a href="">John Doe</a> -->
+												<span>작성일: <small><i th:text="${comment.festivalcoDate}"
 														style="color: aqua;"></i></small>
 											</span>
 
@@ -98,8 +93,7 @@
 											<div>댓글 내용:</div>
 											<p th:text="${comment.festivalcoContent}" class="showComments"
 												th:id="showComments+${comment.festivalcoNum}"></p>
-											<form class="showModifyForm"
-												th:id="showModifyForm+${comment.festivalcoNum}">
+											<form class="showModifyForm" th:id="showModifyForm+${comment.festivalcoNum}">
 												<input type="text" th:value="${comment.festivalcoContent}" />
 
 											</form>
@@ -112,13 +106,13 @@
 												th:id="commentModifyBtns+${comment.festivalcoNum}">
 
 
+
 												<form action="/festival/festivalCommentUpdateOK" method="POST">
 													<input type="hidden" name="festivalcoNum"
 														th:value="${comment.festivalcoNum}">
 													<input type="hidden" name="festivalcoFnum"
 														th:value="${comment.festivalcoFnum}">
-													<input type="text" name="festivalcoContent"
-														placeholder="수정할 내용을 입력하세요">
+													<input type="text" name="festivalcoContent" placeholder="수정할 내용을 입력하세요">
 													<input class="btn-sm btn-outline-primary" type="submit" value="저장"
 														style="margin-top: 10px;">
 												</form>
@@ -129,14 +123,16 @@
 												class="deleteComment btn btn-sm btn-outline-primary"
 												th:id="deleteComment+${comment.festivalcoNum}">댓글삭제</a>
 
+											<!--											<button class="btn btn-sm btn-outline-primary">Delete</button>-->
+
 
 										</div>
 									</div>
-								</div>
-								<!-- Comment List End -->
-
-								<!-- Comment Form Start -->
-								<div class="bg-white mb-3" style="padding: 30px;">
+                    </div>
+                    <!-- Comment List End -->
+    
+                    <!-- Comment Form Start -->
+                    <div class="bg-white mb-3" style="padding: 30px;">
 									<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Leave a comment</h4>
 									<form action="/festival/festivalCommentInsert" method="POST">
 										<!-- action 속성을 수정해야 할 수 있습니다. -->
@@ -149,8 +145,7 @@
 										<div class="form-group">
 											<label for="festivalcoContent">Message *</label>
 											<textarea id="festivalcoContent" cols="30" rows="5" class="form-control"
-												name="festivalcoContent"></textarea>
-											<!-- name 속성을 festivalcoContent로 변경 -->
+												name="festivalcoContent"></textarea> <!-- name 속성을 festivalcoContent로 변경 -->
 										</div>
 
 										<!-- Hidden 필드로 festivalNum 값을 전달합니다. -->
@@ -162,14 +157,14 @@
 										</div>
 									</form>
 								</div>
-								<!-- Comment Form End -->
-							</div>
-
-						</div>
-					</div>
-				</div>
+                    <!-- Comment Form End -->
+                </div>
+    
 			</div>
-			<script>
+		</div>
+	</div>
+</div>
+<script>
 				$(document).ready(function () {
 					$(".showModifyForm").hide();
 					$(".commentModifyBtns").hide();
@@ -210,7 +205,7 @@
 
 
 				});
-
+				
 				$("#likebtn").click(function () {
 					console.log("좋아요");
 					// 현재 URL에서 festivalNum 값을 가져오는 방법
@@ -252,7 +247,7 @@
 						data: JSON.stringify(data),
 						success: function (response) {
 							console.log('서버 응답:', response);
-
+							
 							document.getElementById('thumbUpCount').innerText = response.festivalThumbUp;
 						},
 						error: function (xhr, status, error) {

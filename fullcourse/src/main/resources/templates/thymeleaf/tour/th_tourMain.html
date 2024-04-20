@@ -4,8 +4,7 @@
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 
-<!--				<h4 class="mb-3">[[${title}]]</h4>-->
-				<h4 class="mb-3"></h4>
+				<h4 class="mb-3">[[${title}]]</h4>
 
 
 
@@ -15,17 +14,17 @@
 						<div class="d-flex flex-column align-items-center justify-content-center"
 							style="min-height: 400px">
 							<h3 class="display-4 text-white text-uppercase">[[${title}]]</h3>
-<!--							<div class="d-inline-flex text-white">-->
-<!--								<p class="m-0 text-uppercase"><a class="text-white" th:href="@{/}">Home</a></p>-->
-<!--								<i class="fa fa-angle-double-right pt-1 px-3"></i>-->
-<!--								<p class="m-0 text-uppercase">Blog Detail</p>-->
-<!--							</div>-->
+							<div class="d-inline-flex text-white">
+								<p class="m-0 text-uppercase"><a class="text-white" th:href="@{/}">Home</a></p>
+								<i class="fa fa-angle-double-right pt-1 px-3"></i>
+								<p class="m-0 text-uppercase">Blog Detail</p>
+							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Header End -->
 				<!--지역 버튼 시작 -->
-				<div id="regionSelection">
+				<div>
 					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="여행지">전국</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
 					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
@@ -54,7 +53,7 @@
 						<div class="text-center mb-3 pb-3">
 							<h6 class="text-primary text-uppercase tourDestination" style="letter-spacing: 5px;">여행지
 							</h6>
-							<h1>좋아요 Best 여행지</h1>
+							<h1>Best 여행지</h1>
 						</div>
 						<div class="row" id="bestThreeList">
 							<th:block th:each="vo : ${vos2}">
@@ -83,7 +82,9 @@
 						<div class="text-center mb-3 pb-3">
 							<h6 class="text-primary text-uppercase tourDestination" style="letter-spacing: 5px;">여행지
 							</h6>
+							<a th:href="@{/tour/tourSelectAll}">
 								<h1>여행지 목록</h1>
+							</a>
 
 
 							<!--							누르지 마시오..-->
