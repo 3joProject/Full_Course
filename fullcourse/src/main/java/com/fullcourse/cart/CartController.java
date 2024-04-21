@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fullcourse.member.MemberVO;
 
@@ -26,22 +28,29 @@ public class CartController {
 	@GetMapping("/cart")
 	public String cart(Model model, HttpServletRequest request) {
 		log.info("cart");
-		
+			
 	    // 세션에서 memberNum 가져오기
 	    HttpSession session = request.getSession();
 	    MemberVO member = (MemberVO) session.getAttribute("member");
-	    log.info("memberNum: {}", member.toString());
+	    log.info("MemberVO:{}",member);
 	    
-		List<CartVO> vos = service.selectAll(member.getMemberId());
-		
-		log.info("{}",vos);
-		
-		model.addAttribute("vos",vos);
-		model.addAttribute("content","thymeleaf/cart/th_cartMain");
-		model.addAttribute("title","장바구니");
-		
-		
-		return "thymeleaf/cart/th_cartLayout_main";
+	    
+	    if(member == null) {
+	        return "redirect:/login";
+	    }else {
+		    log.info("memberNum: {}", member.toString());
+
+			List<CartVO> vos = service.selectAll(member.getMemberId());
+			log.info("{}",vos);
+			
+			model.addAttribute("vos",vos);
+			model.addAttribute("content","thymeleaf/cart/th_cartMain");
+			model.addAttribute("title","장바구니");
+			
+			return "thymeleaf/cart/th_cartLayout_main";
+	    }
+	    
+
 	}
 	
 	@GetMapping("/cart/deleteOK")
@@ -57,10 +66,23 @@ public class CartController {
 	}
 	
 	@PostMapping("/cart/insertOK")
-	public RedirectView insertOKcart(CartVO vo, RedirectAttributes redirectAttributes) {
+	public RedirectView insertOKcart(CartVO vo, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		log.info("insertOKcart");
 		log.info(vo.toString());
-
+		
+		HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    
+	    if(member == null) {
+	        return new RedirectView("/login");
+	    }else {
+	    
+	    log.info("MemberVO:{}",member.toString());
+	    
+	    vo.setCartMid(member.getMemberId());
+	    log.info(vo.toString());
+	    
 		int chkWDuplCart = service.chkWDuplCart(vo);
 		log.info("chkWDuplCart:{}",chkWDuplCart);
 		
@@ -70,9 +92,9 @@ public class CartController {
 			int result = service.insertOK(vo);
 			log.info("result:{}",result);
 		}
-		
-		
 		return new RedirectView("/cart");
+	    }
+
 	}
 	
 	@PostMapping("/cart/updateOK")

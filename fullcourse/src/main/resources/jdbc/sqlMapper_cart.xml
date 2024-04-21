@@ -12,7 +12,7 @@
 		insert into
 		cart(cartMid, cartProduct, cartSellerId, cartTitle,
 		cartPrice, cartImage, cartContent, cartInventory, cartCount)
-		values('user1', #{cartProduct}, #{cartSellerId}, #{cartTitle},
+		values(#{cartMid}, #{cartProduct}, #{cartSellerId}, #{cartTitle},
 		#{cartPrice}, #{cartImage}, #{cartContent},
 		#{cartInventory}, #{cartCount})
 	</insert>
@@ -25,8 +25,8 @@
 		delete from cart where cartNum=#{cartNum}
 	</delete>
 
-	<select id="chkWDuplCart" resultType="int">
-		select count(*) from cart where cartMid='user1' and
+	<select id="chkWDuplCart" parameterType="com.fullcourse.cart.CartVO" resultType="int">
+		select count(*) from cart where cartMid=#{cartMid} and
 		cartProduct=#{cartProduct};
 	</select>
 
