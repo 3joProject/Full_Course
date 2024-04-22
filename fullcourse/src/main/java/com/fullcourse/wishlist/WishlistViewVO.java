@@ -16,6 +16,7 @@ public class WishlistViewVO {
 	private String tourAddress;
 	private String tourContent;
 	private String tourTel;
+	private String tourImg;
 	private int festivalNum;
 	private String festivalName;
 	private String festivalAddress;
@@ -23,6 +24,7 @@ public class WishlistViewVO {
 	private String festivalStart;
 	private String festivalFinal;
 	private String festivalTel;
+	private String festivalImg;
 	
 	
 }
