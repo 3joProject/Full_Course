@@ -50,6 +50,13 @@
 										<span id="thumbUpCount" th:text="${vo2.festivalThumbUp}"></span>
 										<button class="btn-sm btn-outline-primary" id="likebtn">
 											좋아요</button>
+											<!--									즐겨찾기 시작 -->
+											<form method="get" action="/wishList/insertOK/festival"
+											style="display: inline-block; margin-left: 10px;">
+												<input type="hidden" th:value="${vo2.festivalNum}" name="wishListFestivalId">
+												<button class="btn-sm btn-outline-primary" type="submit">즐겨찾기</button>
+											</form>
+										<!--									즐겨찾기 끝-->
 									</div>
 									<!--좋아요 끝-->
 									</div>

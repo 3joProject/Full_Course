@@ -17,19 +17,19 @@ public interface WishlistMapper {
 
 	List<WishlistViewVO> selectAllFestival(Map<String, Integer> map);
 
-	int insertOKtour(TourVO vo);
+	int insertOKtour(WishlistVO vo);
 	
-	int getTotalRowsTour();
+	int getTotalRowsTour(int wishListId);
 
-	int insertOKfestival(FestivalVO vo);
+	int insertOKfestival(WishlistVO vo);
 
-	int getTotalRowsFestival();
+	int getTotalRowsFestival(int wishListId);
 
 	int deleteOK(WishlistVO vo);
 
-	int chkWDuplFestival(FestivalVO vo);
+	int chkWDuplFestival(WishlistVO vo);
 
-	int chkWDuplTour(TourVO vo);
+	int chkWDuplTour(WishlistVO vo);
 	
 	
 
