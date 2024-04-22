@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="common_content(title)">
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
+
+				<h4 class="mb-3">[[${title}]]</h4>
+
+				<!-- 임시 판매내역 테이블 -->
+				<table class="table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th></th>
+							<th scope="col">상품이미지</th>
+							<th scope="col">상품명</th>
+							<th scope="col">상품내용</th>
+							<th scope="col">상품가격</th>
+							<th scope="col">상품재고</th>
+							<th scope="col">가이드번호</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vo, rowStat : ${vos}">
+							<tr>
+								<td><span scope="row" th:text="${rowStat.count}"></span></td>
+								<td><input scope="row" type="hidden" th:value="${vo.productNum}"></td>
+								<td><span scope="row" th:text="${vo.productImage}"></span></td>
+								<td><span scope="row" th:text="${vo.productTitle}"></span></td>
+								<td><span scope="row" th:text="${vo.productContent}"></span></td>
+								<td><span scope="row" th:text="${vo.productPrice}"></span></td>
+								<td><span scope="row" th:text="${vo.productInventory}"></span></td>
+								<td><span scope="row" th:text="${vo.productGuideNum}"></span></td>
+								<td>
+									<button class="modify">수정</button>
+								</td>
+								<td>
+									<form th:action="@{'deleteOK'}" method="post">
+										<input type="hidden" name="productNum" th:value="${vo.productNum}" />
+										<button type="submit">삭제</button>
+									</form>
+								</td>
+							</tr>
+						</th:block>
+					</tbody>
+
+				</table>
+				<a href="insert">상품 등록하기</a>
+
+				<!-- Modify Modal -->
+				<div id="modifyModal" class="modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">상품 수정</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="modifyForm">
+									<input type="hidden" id="productNum" name="productNum">
+									<div class="form-group">
+										<label for="productImage">상품 이미지 파일</label>
+										<input type="text" class="form-control" id="productImage" name="productImage">
+									</div>
+									<div class="form-group">
+										<label for="productTitle">상품명</label>
+										<input type="text" class="form-control" id="productTitle" name="productTitle">
+									</div>
+									<div class="form-group">
+										<label for="productContent">상품내용</label>
+										<input type="text" class="form-control" id="productContent"
+											name="productContent">
+									</div>
+									<div class="form-group">
+										<label for="productPrice">상품가격</label>
+										<input type="number" class="form-control" id="productPrice" name="productPrice">
+									</div>
+									<div class="form-group">
+										<label for="productInventory">상품재고</label>
+										<input type="text" class="form-control" id="productInventory"
+											name="productInventory">
+									</div>
+									<div class="form-group">
+										<label for="productGuideNum">상품 가이드북</label>
+										<select class="form-control" id="productGuideNum" name="productGuideNum">
+											<option>경로를 선택해주세요</option>
+											<!-- Thymeleaf를 사용하여 서버로부터 받은 경로 목록을 반복 -->
+											<option th:each="route : ${routes}" th:text="${route.routeNum}"></option>
+										</select>
+									</div>
+									<button type="submit" class="btn btn-primary">수정 완료</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--수정 모달 JS -->
+				<script>
+					$(document).ready(function () {
+						$('.modify').click(function () {
+							var productNum = $(this).closest('tr').find('td:eq(1)').find('input').val();
+							var productImage = $(this).closest('tr').find('td:eq(2)').text();
+							var productTitle = $(this).closest('tr').find('td:eq(3)').text();
+							var productContent = $(this).closest('tr').find('td:eq(4)').text();
+							var productPrice = $(this).closest('tr').find('td:eq(5)').text();
+							var productInventory = $(this).closest('tr').find('td:eq(6)').text();
+							var productGuideNum = $(this).closest('tr').find('td:eq(7)').text();
+
+							$('#productNum').val(productNum);
+							$('#productImage').val(productImage);
+							$('#productTitle').val(productTitle);
+							$('#productContent').val(productContent);
+							$('#productPrice').val(productPrice);
+							$('#productInventory').val(productInventory);
+							$('#productGuideNum').val(productGuideNum);
+
+							$('#modifyModal').modal('show');
+						});
+
+						$('#modifyForm').submit(function (event) {
+							event.preventDefault(); // 기본 제출 이벤트 방지
+
+							var formData = $(this).serialize(); // 폼 데이터 가져오기
+
+							// 수정 요청 보내기
+							$.ajax({
+								type: 'POST',
+								url: 'updateOK',
+								data: formData,
+								success: function (response) {
+									// 성공적으로 업데이트된 경우 처리
+									console.log('상품이 성공적으로 수정되었습니다.');
+									$('#modifyModal').modal('hide'); // 모달 닫기
+									// 여기에 필요한 추가적인 작업을 수행할 수 있습니다.
+									window.location.reload();
+								},
+								error: function (xhr, status, error) {
+									// 요청이 실패한 경우 처리
+									console.error('리뷰 수정 중 오류 발생:', error);
+									// 여기에 오류 처리를 추가할 수 있습니다.
+								}
+							});
+						});
+					});
+				</script>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</html>
