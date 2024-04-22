@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fullcourse.member.MemberVO;
 
@@ -95,35 +97,61 @@ public class BoardController {
 		return "thymeleaf/board/layout_main";
 	}
 	
+	
 	@GetMapping("/selectOne")
-	public String m_selectOne(BoardVO boardVO, Model model) {
-		log.info("boardVO:{}", boardVO);
-
-		BoardVO vo = boardService.selectOne(boardVO);
-
-		model.addAttribute("vo", vo);
-
-		model.addAttribute("content", "thymeleaf/board/selectOne");
-		model.addAttribute("title", "게시판 상세");
-		
-		return "thymeleaf/board/layout_main";
+	public String selectOne(@RequestParam("boardNum") int boardNum, Model model) {
+		log.info("Select board with boardNum: {}", boardNum);
+	    BoardVO board = boardService.getBoardById(boardNum);
+	    if (board != null) {
+	        model.addAttribute("vo", board);
+	        model.addAttribute("content", "thymeleaf/board/selectOne");
+			model.addAttribute("title", "게시판 상세");
+			
+	        return "thymeleaf/board/layout_main";
+	    } else {
+	        return "redirect:/board/selectAll";
+	    }
 	}
 	
+	@GetMapping("/update")
+	public String update(@RequestParam("boardNum") int boardNum, Model model, HttpSession session) {
+	    if (!isLoggedIn(session)) {
+	        return "redirect:/login";
+	    }
+
+	    BoardVO board = boardService.getBoardById(boardNum);
+	    if (board != null) {
+	        model.addAttribute("vo", board);
+	        return "thymeleaf/board/update"; // 해당 뷰 파일 이름 확인
+	    } else {
+	        return "redirect:/board/selectAll";
+	    }
+	}
 	
 	@PostMapping("/updateOK")
-	public String updateOK(BoardVO boardVO) {
-		log.info("/updateOK...");
-		log.info("vo:{}", boardVO);
+	public String updateOK(BoardVO vo, RedirectAttributes redirectAttributes, HttpSession session) {
+	    log.info("/updateOK...");
+	    log.info("vo:{}", vo);
 
-		int result = boardService.updateOK(boardVO);
-		log.info("result:{}", result);
+	    // Check and set the writer if null
+	    if (vo.getBoardWriter() == null) {
+	        MemberVO loggedInMember = (MemberVO) session.getAttribute("member");
+	        if (loggedInMember != null) {
+	            vo.setBoardWriter(loggedInMember.getMemberId());
+	        } else {
+	            return "redirect:/login"; // Redirect to login if no user session
+	        }
+	    }
 
-		return "redirect:selectOne?boardNum=" + boardVO.getBoardNum();
+	    int result = boardService.updateOK(vo);
+	    log.info("result:{}", result);
 
+	    redirectAttributes.addAttribute("boardNum", vo.getBoardNum());
+	    return "redirect:/board/selectOne?boardNum=" + vo.getBoardNum();
 	}
-		
+	
 	@GetMapping("/delete")
-	public String m_delete(Model model) {
+	public String delete(Model model) {
 		log.info("/delete...");
 
 		model.addAttribute("content", "thymeleaf/board/delete");
