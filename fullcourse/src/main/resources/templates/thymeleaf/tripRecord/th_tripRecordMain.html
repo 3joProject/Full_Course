@@ -84,8 +84,8 @@
 							<form id="modifyForm">
 								<input type="hidden" id="triprecNum" name="triprecNum">
 								<div class="form-group">
-									<label for="triprecTripdate">여행날짜</label>
-									<input type="text" class="form-control" id="triprecTripdate" name="triprecTripdate">
+									<label for="triprecTripdate1">여행날짜</label>
+									<input type="text" class="form-control" id="triprecTripdate1" name="triprecTripdate">
 								</div>
 								<div class="form-group">
 									<label for="triprecAddress">주소</label>
@@ -96,8 +96,8 @@
 									<input type="text" class="form-control" id="triprecContent" name="triprecContent">
 								</div>
 								<div class="form-group">
-									<label for="triprecDate">기록날짜</label>
-									<input type="text" class="form-control" id="triprecDate" name="triprecDate"
+									<label for="triprecDate1">기록날짜</label>
+									<input type="text" class="form-control" id="triprecDate1" name="triprecDate"
 										readonly>
 								</div>
 								<div class="form-group">
@@ -125,25 +125,25 @@
 							<form id="insertForm">
 								<input type="hidden" id="triprecMnum2" name="triprecMnum" value="1">
 								<div class="form-group">
-									<label for="triprecTripdate">여행날짜</label>
+									<label for="triprecTripdate2">여행날짜</label>
 									<input type="text" class="form-control" id="triprecTripdate2"
 										name="triprecTripdate">
 								</div>
 								<div class="form-group">
-									<label for="triprecAddress">여행주소</label>
+									<label for="triprecAddress2">여행주소</label>
 									<input type="text" class="form-control" id="triprecAddress2" name="triprecAddress">
 								</div>
 								<div class="form-group">
-									<label for="triprecContent">내용</label>
+									<label for="triprecContent2">내용</label>
 									<input type="text" class="form-control" id="triprecContent2" name="triprecContent">
 								</div>
 								<div class="form-group">
-									<label for="triprecDate">기록시간</label>
+									<label for="triprecDate2">기록시간</label>
 									<input type="text" class="form-control" id="triprecDate2" name="triprecDate"
 										readonly>
 								</div>
 								<div class="form-group">
-									<label for="triprecImage">이미지 파일</label>
+									<label for="triprecImage2">이미지 파일</label>
 									<input type="text" class="form-control" id="triprecImage2" name="triprecImage">
 								</div>
 								<button type="submit" class="btn btn-primary">저장</button>
@@ -153,31 +153,7 @@
 				</div>
 			</div>
 
-			<!-- Service End -->
 
-
-
-			<!-- JavaScript Libraries -->
-			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-			<script src="lib/easing/easing.min.js"></script>
-			<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-			<script src="lib/tempusdominus/js/moment.min.js"></script>
-			<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-			<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"
-				rel="stylesheet" />
-
-
-			<!-- Contact Javascript File -->
-			<script src="mail/jqBootstrapValidation.min.js"></script>
-			<script src="mail/contact.js"></script>
-
-			<!-- Template Javascript -->
-			<script src="js/main.js"></script>
 
 			<!--수정 모달 JS -->
 			<script>
@@ -191,9 +167,8 @@
 						var triprecImage = $(this).closest('tr').find('td:eq(7)').text();
 
 						$('#triprecNum').val(triprecNum);
-						$('#triprecTripdate').val(triprecTripdate);
+						$('#triprecTripdate1').val(triprecTripdate);
 						$('#triprecAddress').val(triprecAddress);
-						console.log("triprecAddress", triprecAddress);
 						$('#triprecContent').val(triprecContent);
 						$('#triprecDate').val(triprecDate);
 						$('#triprecImage').val(triprecImage);
@@ -299,14 +274,14 @@
 					('0' + currentDate.getHours()).slice(-2) + ':' +
 					('0' + currentDate.getMinutes()).slice(-2) + ':' +
 					('0' + currentDate.getSeconds()).slice(-2);
-				document.getElementById("triprecDate").value = dateString;
+				document.getElementById("triprecDate1").value = dateString;
 				document.getElementById("triprecDate2").value = dateString;
 			</script>
 
 			<script>
 				$(document).ready(function () {
 					// Datepicker를 여행날짜 입력 필드에 연결
-					$('#triprecTripdate').datepicker({
+					$('#triprecTripdate1').datepicker({
 						format: 'yyyy-mm-dd', // 날짜 형식 지정
 						autoclose: true, // 달력을 클릭하면 자동으로 닫힘
 						todayHighlight: true // 오늘 날짜를 강조 표시
