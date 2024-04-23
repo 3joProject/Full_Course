@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>문의하기 채팅 시작</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<head
+	th:replace="thymeleaf/header :: common_header(title)">
+<title>우리동네풀코스</title>
+<!-- 공통 CSS-->
+<link href="/css/main.css" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="container-fluid">
-        <ul>
-            <li><strong>사이트 문의하기</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#" role="button">Contact</a></li>
-        </ul>
+	<div th:replace="thymeleaf/top_menu2 :: test_top_menu"></div>
+
+	<nav class="container-fluid">
+        
     </nav>
     <main class="container">
         <div class="grid">
             <section>
                 <hgroup>
                     <h2>Welcome!</h2>
-                    <h3>아래 버튼을 클릭하여 관리자와 채팅을 시작하세요.</h3>
+                    <h3>아래 버튼을 클릭하여 사이트 관리자와 채팅을 시작하세요.</h3>
                 </hgroup>
                 <form th:action="@{/chat/new}" method="post" class="grid">
                     <button type="submit" class="button-primary">문의하기 채팅 시작!</button>
@@ -30,5 +29,7 @@
             </section>
         </div>
     </main>
+		
+	<div th:replace="thymeleaf/footer :: test_copy"></div>
 </body>
 </html>

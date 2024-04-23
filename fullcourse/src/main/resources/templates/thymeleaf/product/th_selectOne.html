@@ -100,7 +100,20 @@
 									<td><span scope="row" th:text="${vo.prorevContent}"></span></td>
 									<td><span scope="row" th:text="${vo.prorevDate}"></span></td>
 									<td><span scope="row" th:text="${vo.prorevWriter}"></span></td>
+								</tr>
+							</th:block>
+						</tbody>	
 					</table>
+					
+					<!-- 상품 리뷰 작성 -->
+					<form th:action="@{/reviews}" method="post">
+    					<input type="hidden" name="prorevPnum" th:value="${product.prorevPnum}" />
+    					<textarea name="prorevContent"></textarea>
+    					<button type="submit">Submit Review</button>
+					</form>
+					
+					
+					
 				</div>
 
 				<div id="productInquiryTable" class="table-container" style="display: none;">
