@@ -12,7 +12,7 @@ public interface TripRecordMapper {
 
 	List<TripRecordVO> selectAll(Map<String, Integer> map);
 
-	int getTotalRows();
+	int getTotalRows(int tripRecMnum);
 
 	int insertOK(TripRecordVO vo);
 
@@ -21,5 +21,7 @@ public interface TripRecordMapper {
 	int updateOK(TripRecordVO vo);
 
 	int deleteOK(TripRecordVO vo);
+
+	List<TripRecordVO> marker(int triprecMnum);
 
 }

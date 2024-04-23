@@ -18,5 +18,7 @@ public class TripRecordVO {
 	private String triprecImage;
 	private String triprecDate;
 	private String triprecAddress;
-	
+	private float triprecLat;
+	private float triprecLon;
+
 }
