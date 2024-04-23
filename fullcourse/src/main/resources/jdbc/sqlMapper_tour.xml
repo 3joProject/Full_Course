@@ -30,9 +30,9 @@
 		tourNum desc limit #{startRow},#{pageBlock}
 	</select>
 	
-	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">
-		SELECT * FROM tour ORDER BY tourThumbUp DESC LIMIT 3;
-	</select>
+<!--	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">-->
+<!--		SELECT * FROM tour ORDER BY tourThumbUp DESC LIMIT 3;-->
+<!--	</select>-->
 	
 	<select id="tourSelectOne" resultType="com.fullcourse.tour.TourVO">
 		select * from tour where
@@ -96,4 +96,49 @@
 		where tourAddress like #{searchWord} 
 		order by tourNum desc limit #{startRow},#{pageBlock}
 	</select>
+	
+	<!--검색 조건 설정 위한 쿼리-->
+    <sql id="whereQuery">
+        <where>
+		
+            <if test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
+                <if test="searchCondition == 'TOUR_NAME'">
+                    AND tourName LIKE CONCAT('%', #{searchKeyword}, '%')
+                </if>
+                <if test="searchCondition == 'TOUR_ADDRESS'">
+                    AND tourAddress LIKE CONCAT('%', #{searchKeyword}, '%')
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <!--리스트 총 갯수-->
+    <select id="selectListTotalCount" parameterType="com.fullcourse.tour.TourVO" resultType="int">
+        SELECT count(tourNum)
+        FROM tour
+        <include refid="whereQuery"/>
+    </select>
+
+    <!--리스트 불러오기 (나중에 등록한 순)-->
+    <select id="selectTourListWithPaging" parameterType="com.fullcourse.tour.TourVO" resultType="com.fullcourse.tour.TourVO">
+        SELECT *
+        FROM tour
+        <include refid="whereQuery"/>
+        ORDER BY
+        tourNum DESC
+        LIMIT
+        #{firstIndex}, #{recordCountPerPage}
+    </select>
+    
+     <!--best3불러오기 (좋아요 많은순)-->
+    <select id="tourSelectAllTop" parameterType="com.fullcourse.tour.TourVO" resultType="com.fullcourse.tour.TourVO">
+        SELECT *
+        FROM tour
+        <include refid="whereQuery"/>
+        ORDER BY
+        tourThumbUp DESC
+        LIMIT
+        3
+    </select>
+
 </mapper>

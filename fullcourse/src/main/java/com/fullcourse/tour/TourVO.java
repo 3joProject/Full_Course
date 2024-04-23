@@ -2,6 +2,8 @@ package com.fullcourse.tour;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fullcourse.paging.PagingVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TourVO {
+public class TourVO extends PagingVO {
 
 	private int tourNum;
 	private String tourName;
