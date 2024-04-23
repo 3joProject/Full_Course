@@ -9,24 +9,23 @@
 		#{memberTel}, #{memberEmail}, #{memberSns})
 	</insert>
 
-	 <update id="updateMember" parameterType="com.fullcourse.member.MemberVO">
-        UPDATE members
-        SET
-            member_id = #{memberId},
-            member_pw = #{memberPw},
-            member_name = #{memberName},
-            member_address = #{memberAddress},
-            member_tel = #{memberTel},
-            member_email = #{memberEmail},
-            member_img = #{memberImg},
-            member_sns = #{memberSns}
-        WHERE
-            member_num = #{memberNum}
-    </update>
+	<update id="updateMember" parameterType="com.fullcourse.member.MemberVO">
+		UPDATE member
+		SET
+		memberId = #{memberId},
+		memberPw = #{memberPw},
+		memberName = #{memberName},
+		memberAddress = #{memberAddress},
+		memberTel = #{memberTel},
+		memberEmail = #{memberEmail},
+		memberImg = #{memberImg},
+		memberSns = #{memberSns}
+		WHERE memberNum = #{memberNum}
+	</update>
 
 	<select id="getMemberByNum" resultType="com.fullcourse.member.MemberVO">
-        SELECT * FROM member WHERE memberNum = #{memberNum}
-    </select>
+		SELECT * FROM member WHERE memberNum = #{memberNum}
+	</select>
 
 
 	<select id="selectOne" resultType="com.fullcourse.member.MemberVO">
@@ -94,8 +93,10 @@
 		WHERE f.follower_id = #{memberId}
 	</select>
 
-	<select id="reviewSelectAll" resultType="com.fullcourse.seller.sellerReview.SellerReviewVO">
-		select * from sellerReview where selrevId = #{sellerId} order by selrevDate
+	<select id="reviewSelectAll"
+		resultType="com.fullcourse.seller.sellerReview.SellerReviewVO">
+		select * from sellerReview where selrevId = #{sellerId} order by
+		selrevDate
 		desc
 	</select>
 

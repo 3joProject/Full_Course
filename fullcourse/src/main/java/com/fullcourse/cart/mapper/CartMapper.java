@@ -10,7 +10,7 @@ import com.fullcourse.product.ProductVO;
 @Mapper
 public interface CartMapper {
 	
-	public List<CartVO> selectAll();
+	public List<CartVO> selectAll(String memberId);
 
 	public int deleteOK(CartVO vo);
 

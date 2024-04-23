@@ -22,7 +22,7 @@ public class ChatController {
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 
-	@GetMapping("/chat")
+	@GetMapping("/chat/chatStart")
 	public String getChatStartPage(Model model) {
 		return "thymeleaf/chat/chatStart"; //채팅 시작 페이지 반환
 	}

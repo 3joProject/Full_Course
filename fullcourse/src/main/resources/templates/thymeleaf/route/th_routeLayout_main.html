@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{thymeleaf/header :: common_header(~{::title})}">
+<head th:replace="thymeleaf/header :: common_header(~{::title})">
 
 <!--<title>우리동네 풀코스</title>-->
 <!-- 공통 CSS-->
@@ -8,11 +8,11 @@
 
 </head>
 <body>
-	<div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
+	<div th:replace="thymeleaf/top_menu2 :: test_top_menu"></div>
 
-	<div th:replace="~{${content} :: common_content(${title})}"></div>
+	<div th:replace="${content} :: common_content(${title})"></div>
 
-	<div th:replace="~{thymeleaf/footer :: test_copy}"></div>
+	<div th:replace="thymeleaf/footer :: test_copy"></div>
 	
 	
 	 <!-- JavaScript Libraries -->

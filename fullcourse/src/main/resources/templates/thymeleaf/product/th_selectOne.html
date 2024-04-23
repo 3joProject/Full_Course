@@ -8,150 +8,200 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
-	<!-- 상품 상세조회 테이블 -->
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">상품명</th>
-				<th scope="col">판매자아이디</th>
-				<th scope="col">상품내용</th>
-				<th scope="col">상품가격</th>
-				<th scope="col">상품수량</th>
-				<th scope="col">상품재고</th>
-				<th scope="col">상품이미지</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<th:block>
-				<tr>
-					<td><span scope="row" th:text="${vo2.productTitle}"></span></td>
-					<td><a th:href="|/seller/${vo2.productMid}|" scope="row" th:text="${vo2.productMid}"></a></td>
-					<td><span scope="row" th:text="${vo2.productContent}"></span></td>
-					<td><span scope="row" th:text="${vo2.productPrice}"></span></td>
-					<td><input scope="row" type="number" value="1" min="1" th:max="${vo2.productInventory}"></td>
-					<td><span scope="row" th:text="${vo2.productInventory}"></span></td>
-					<td><span scope="row" th:text="${vo2.productImage}"></span></td>
-					<td><button class="purchase_btn">구매하기</button></td>
-				</tr>
-			</th:block>
-		</tbody>
-	</table>
-
-	<!-- 구매하기 form-->
-	<form id="payment_form" action="/payment" method="get">
-		<input type="hidden" name="orderId" id="orderId">
-		<input type="hidden" name="amount" id="amount">
-	</form>
-
-	<!-- 라디오 버튼 -->
-	<input type="radio" id="productDetailRadio" name="tableRadio" checked>
-	<label for="productDetailRadio">상품 상세</label>
-
-	<input type="radio" id="productReviewRadio" name="tableRadio">
-	<label for="productReviewRadio">상품 리뷰</label>
-
-	<input type="radio" id="productInquiryRadio" name="tableRadio">
-	<label for="productInquiryRadio">상품 문의</label>
-
-	<!-- 테이블들 -->
-	<div id="productDetailTable" class="table-container">
-		<!-- 상품 상세 테이블 -->
-		<table class="table">
-			<td><span th:text="${vo2.productContent}"></span></td>
-		</table>
-	</div>
-
-	<div id="productReviewTable" class="table-container" style="display: none;">
-		<!-- 상품 리뷰 테이블 -->
-		<table class="table">
-			<thead>
-					<tr>
-						<th></th>
-						<th scope="col">번호</th>
-						<th scope="col">리뷰내용</th>
-						<th scope="col">작성일시</th>
-						<th scope="col">작성자</th>
-						
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="vo, rowStat : ${vos}">
+				<!-- 상품 상세조회 테이블 -->
+				<table class="table">
+					<thead>
 						<tr>
-							<td><input scope="row" type="hidden" th:value="${vo.prorevNum}"></td>
-							<td><span scope="row" th:text="${rowStat.count}"></span></td>
-							<td><span scope="row" th:text="${vo.prorevContent}"></span></td>
-							<td><span scope="row" th:text="${vo.prorevDate}"></span></td>
-							<td><span scope="row" th:text="${vo.prorevWriter}"></span></td>
-		</table>
-	</div>
+							<th scope="col">상품명</th>
+							<th scope="col">판매자아이디</th>
+							<th scope="col">상품내용</th>
+							<th scope="col">상품가격</th>
+							<th scope="col">상품수량</th>
+							<th scope="col">상품재고</th>
+							<th scope="col">상품이미지</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block>
+							<tr>
+								<td><span scope="row" th:text="${vo2.productTitle}"></span></td>
+								<td><a th:href="|/seller/${vo2.productMid}|" scope="row"
+										th:text="${vo2.productMid}"></a></td>
+								<td><span scope="row" th:text="${vo2.productContent}"></span></td>
+								<td><span scope="row" th:text="${vo2.productPrice}"></span></td>
+								<td><input scope="row" type="number" value="1" min="1" th:max="${vo2.productInventory}">
+								</td>
+								<td><span scope="row" th:text="${vo2.productInventory}"></span></td>
+								<td><span scope="row" th:text="${vo2.productImage}"></span></td>
+								<td><input scope="row" type="hidden" th:value="${vo2.productNum}"></td>
+								<td><button class="purchase_btn">구매하기</button></td>
+								<td><button class="cart_btn">장바구니</button></td>
 
-	<div id="productInquiryTable" class="table-container" style="display: none;">
-		<!-- 상품 문의 테이블 -->
-		<table class="table">
-			<!-- 상품 문의 테이블 내용 -->
-		</table>
-	</div>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+
+				<!-- 구매하기 form-->
+				<form id="payment_form" action="/payment" method="get">
+					<input type="hidden" name="orderId" id="orderId">
+					<input type="hidden" name="amount" id="amount">
+				</form>
+				<!-- 장바구니 form-->
+				<form id="cart_form" action="/cart/insertOK" method="post">
+					<input type="hidden" name="cartTitle" id="cartTitle">
+					<input type="hidden" name="cartSellerId" id="cartSellerId">
+					<input type="hidden" name="cartContent" id="cartContent">
+					<input type="hidden" name="cartPrice" id="cartPrice">
+					<input type="hidden" name="cartCount" id="cartCount">
+					<input type="hidden" name="cartInventory" id="cartInventory">
+					<input type="hidden" name="cartImage" id="cartImage">
+					<input type="hidden" name="cartProduct" id="cartProduct">
+				</form>
+
+				<!-- 라디오 버튼 -->
+				<input type="radio" id="productDetailRadio" name="tableRadio" checked>
+				<label for="productDetailRadio">상품 상세</label>
+
+				<input type="radio" id="productReviewRadio" name="tableRadio">
+				<label for="productReviewRadio">상품 리뷰</label>
+
+				<input type="radio" id="productInquiryRadio" name="tableRadio">
+				<label for="productInquiryRadio">상품 문의</label>
+
+				<!-- 테이블들 -->
+				<div id="productDetailTable" class="table-container">
+					<!-- 상품 상세 테이블 -->
+					<table class="table">
+						<td><span th:text="${vo2.productContent}"></span></td>
+					</table>
+				</div>
+
+				<div id="productReviewTable" class="table-container" style="display: none;">
+					<!-- 상품 리뷰 테이블 -->
+					<table class="table">
+						<thead>
+							<tr>
+								<th></th>
+								<th scope="col">번호</th>
+								<th scope="col">리뷰내용</th>
+								<th scope="col">작성일시</th>
+								<th scope="col">작성자</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vo, rowStat : ${vos}">
+								<tr>
+									<td><input scope="row" type="hidden" th:value="${vo.prorevNum}"></td>
+									<td><span scope="row" th:text="${rowStat.count}"></span></td>
+									<td><span scope="row" th:text="${vo.prorevContent}"></span></td>
+									<td><span scope="row" th:text="${vo.prorevDate}"></span></td>
+									<td><span scope="row" th:text="${vo.prorevWriter}"></span></td>
+					</table>
+				</div>
+
+				<div id="productInquiryTable" class="table-container" style="display: none;">
+					<!-- 상품 문의 테이블 -->
+					<table class="table">
+						<!-- 상품 문의 테이블 내용 -->
+					</table>
+				</div>
 
 
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+				<!-- JavaScript Libraries -->
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
-	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
 
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+				<!-- 구매버튼 클릭-->
+				<script>
+					$(document).ready(function () {
+						// 구매하기 버튼 클릭 이벤트 처리
+						$('.purchase_btn').click(function () {
+							// 클릭된 버튼이 속한 행에서 상품 정보 추출
+							var $row = $(this).closest('tr');
+							var productName = $row.find('td:eq(0)').text(); // 상품명
+							var productPrice = parseFloat($row.find('td:eq(3)').text()); // 상품가격
+							var productQuantity = parseFloat($row.find('input[type="number"]').val()); // 상품수량
+							var totalPrice = productPrice * productQuantity; // 상품 가격과 수량을 곱한 총 가격
 
-	<!-- 구매버튼 클릭-->
-	<script>
-		$(document).ready(function () {
-			// 구매하기 버튼 클릭 이벤트 처리
-			$('.purchase_btn').click(function () {
-				// 클릭된 버튼이 속한 행에서 상품 정보 추출
-				var $row = $(this).closest('tr');
-				var productName = $row.find('td:eq(0)').text(); // 상품명
-				var productPrice = parseFloat($row.find('td:eq(3)').text()); // 상품가격
-				var productQuantity = parseFloat($row.find('input[type="number"]').val()); // 상품수량
-				var totalPrice = productPrice * productQuantity; // 상품 가격과 수량을 곱한 총 가격
+							console.log("productName", productName);
+							console.log("totalPrice", totalPrice);
 
-				console.log("productName", productName);
-				console.log("totalPrice", totalPrice);
+							// 폼에 상품 정보 설정
+							$('#orderId').val(productName); // 상품명 설정
+							$('#amount').val(totalPrice.toFixed(2)); // 상품가격과 수량을 곱한 총 가격 설정
 
-				// 폼에 상품 정보 설정
-				$('#orderId').val(productName); // 상품명 설정
-				$('#amount').val(totalPrice.toFixed(2)); // 상품가격과 수량을 곱한 총 가격 설정
+							// 폼 제출
+							$('#payment_form').submit();
+						});
+					});
 
-				// 폼 제출
-				$('#payment_form').submit();
-			});
-		});
+				</script>
 
-	</script>
+				<script>
+					$(document).ready(function () {
+						// 구매하기 버튼 클릭 이벤트 처리
+						$('.cart_btn').click(function () {
+							// 클릭된 버튼이 속한 행에서 상품 정보 추출
+							var $row = $(this).closest('tr');
+							var cartTitle = $row.find('td:eq(0)').text();
+							var cartSellerId = $row.find('td:eq(1)').text();
+							var cartContent = $row.find('td:eq(2)').text();
+							var cartPrice = $row.find('td:eq(3)').text();
+							var cartCount = $row.find('input[type="number"]').val();
+							var cartInventory = $row.find('td:eq(5)').text();
+							var cartImage = $row.find('td:eq(6)').text();
+							var cartProduct = $row.find('td:eq(7)').find('input').val();
 
-	<script>
-		$(document).ready(function () {
-			// 라디오 버튼 클릭 이벤트 처리
-			$('input[type="radio"][name="tableRadio"]').change(function () {
-				// 모든 테이블 숨기기
-				$('.table-container').hide();
+							console.log("cartTitle", cartTitle);
+							console.log("cartSellerId", cartSellerId);
+							console.log("cartContent", cartContent);
+							console.log("cartPrice", cartPrice);
+							console.log("cartCount", cartCount);
+							console.log("cartInventory", cartInventory);
+							console.log("cartImage", cartImage);
+							console.log("cartProduct", cartProduct);
 
-				// 선택된 라디오 버튼에 해당하는 테이블 보이기
-				var targetId = $(this).attr('id').replace('Radio', 'Table');
-				$('#' + targetId).show();
-			});
-		});
-	</script>
+							// 폼에 상품 정보 설정
+							$('#cartTitle').val(cartTitle);
+							$('#cartSellerId').val(cartSellerId);
+							$('#cartContent').val(cartContent);
+							$('#cartPrice').val(cartPrice);
+							$('#cartCount').val(cartCount);
+							$('#cartInventory').val(cartInventory);
+							$('#cartImage').val(cartImage);
+							$('#cartProduct').val(cartProduct);
+
+							// 폼 제출
+							$('#cart_form').submit();
+						});
+					});
+
+				</script>
+
+				<script>
+					$(document).ready(function () {
+						// 라디오 버튼 클릭 이벤트 처리
+						$('input[type="radio"][name="tableRadio"]').change(function () {
+							// 모든 테이블 숨기기
+							$('.table-container').hide();
+
+							// 선택된 라디오 버튼에 해당하는 테이블 보이기
+							var targetId = $(this).attr('id').replace('Radio', 'Table');
+							$('#' + targetId).show();
+						});
+					});
+				</script>
+
 
 			</div>
 		</div>
 	</div>
 </div>
+
 </html>

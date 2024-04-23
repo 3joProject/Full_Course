@@ -14,9 +14,9 @@ public class CartService {
 	@Autowired
 	private CartMapper mapper;
 	
-	public List<CartVO> selectAll() {
+	public List<CartVO> selectAll(String memberId) {
 
-		return mapper.selectAll();
+		return mapper.selectAll(memberId);
 	}
 
 	public int deleteOK(CartVO vo) {

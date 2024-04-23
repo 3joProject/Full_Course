@@ -30,12 +30,13 @@ public class RouteController {
     private RouteService service;
 	
 	@GetMapping("/route")
-	public String map() {
+	public String map(Model model) {
 		
 		log.info("map..");
 
-		
-		return "thymeleaf/route/TMAP"; // index.html 파일을 반환
+		model.addAttribute("content", "thymeleaf/route/TMAP");
+//		return "thymeleaf/route/TMAP"; // index.html 파일을 반환
+		return "thymeleaf/route/th_routeLayout_main"; // index.html 파일을 반환
 	}
 
 	@GetMapping("/route/list")

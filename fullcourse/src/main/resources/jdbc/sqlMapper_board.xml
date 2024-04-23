@@ -32,6 +32,12 @@
 		select * from board where
 		boardNum=#{boardNum}
 	</select>
+	
+	<select id="selectBoardById" resultType="com.fullcourse.board.BoardVO">
+        SELECT *
+        FROM board
+        WHERE boardNum = #{boardNum}
+    </select>
 
 	<!-- 게시글 목록 페이징 처리 쿼리 -->
     <select id="selectAllBoardsPageBlock" resultType="com.fullcourse.board.BoardVO">

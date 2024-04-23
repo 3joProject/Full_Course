@@ -6,136 +6,130 @@
 			<div class="input-form col-md-12 mx-auto">
 
 				<h4 class="mb-3">[[${title}]]</h4>
-	
 
 
 
-		<!-- 임시 즐겨찾기 관광지 테이블 -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">관광지명</th>
-					<th scope="col">주소</th>
-					<th scope="col">내용</th>
-					<th scope="col">전화</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="vo : ${vosTour}">
-					<tr>
-						<td><span scope="row" th:text="${vo.tourName}"></span></td>
-						<td><span scope="row" th:text="${vo.tourAddress}"></span></td>
-						<td><span scope="row" th:text="${vo.tourContent}"></span></td>
-						<td><span scope="row" th:text="${vo.tourTel}"></span></td>
-						<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
-					</tr>
-				</th:block>
-			</tbody>
 
-			<tfoot>
-				<tr>
-					<td colspan="7">
-						<center>
-							<th:block th:each="i : ${#numbers.sequence(1,totalPageCountTour)}">
-								<a th:href="@{wishList(tpage=${i},fpage=${param.fpage})}">[[${i}]] &nbsp;</a>
-							</th:block>
-							</th:block>
-						</center>
-					</td>
-				</tr>
-			</tfoot>
+				<!-- 임시 즐겨찾기 관광지 테이블 -->
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">이미지</th>
+							<th scope="col">관광지명</th>
+							<th scope="col">주소</th>
+							<th scope="col">내용</th>
+							<th scope="col">전화</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vo : ${vosTour}">
+							<tr>
+								<td><span scope="row" th:text="${vo.tourImg}"></span></td>
+								<td><span scope="row" th:text="${vo.tourName}"></span></td>
+								<td><span scope="row" th:text="${vo.tourAddress}"></span></td>
+								<td><span scope="row" th:text="${vo.tourContent}"></span></td>
+								<td><span scope="row" th:text="${vo.tourTel}"></span></td>
+								<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
+							</tr>
+						</th:block>
+					</tbody>
 
-		</table>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<center>
+									<th:block th:each="i : ${#numbers.sequence(1,totalPageCountTour)}">
+										<a th:href="@{wishList(tpage=${i},fpage=${param.fpage})}">[[${i}]] &nbsp;</a>
+									</th:block>
+									</th:block>
+								</center>
+							</td>
+						</tr>
+					</tfoot>
 
-		<!-- 임시 즐겨찾기 축제 테이블 -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">축제명</th>
-					<th scope="col">주소</th>
-					<th scope="col">내용</th>
-					<th scope="col">축제시작</th>
-					<th scope="col">축제끝</th>
-					<th scope="col">전화</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="vo : ${vosFestival}">
-					<tr>
-						<td><span scope="row" th:text="${vo.festivalName}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalAddress}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalContent}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalStart}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalFinal}"></span></td>
-						<td><span scope="row" th:text="${vo.festivalTel}"></span></td>
-						<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
-					</tr>
-				</th:block>
-			</tbody>
+				</table>
 
-			<tfoot>
-				<tr>
-					<td colspan="7">
-						<center>
-							<th:block th:each="j : ${#numbers.sequence(1,totalPageCountFestival)}">
-								<a th:href="@{wishList(fpage=${j},tpage=${param.tpage})}">[[${j}]] &nbsp;</a>
-							</th:block>
-							</th:block>
-						</center>
-					</td>
-				</tr>
-			</tfoot>
+				<!-- 임시 즐겨찾기 축제 테이블 -->
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">이미지</th>
+							<th scope="col">축제명</th>
+							<th scope="col">주소</th>
+							<th scope="col">내용</th>
+							<th scope="col">축제시작</th>
+							<th scope="col">축제끝</th>
+							<th scope="col">전화</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vo : ${vosFestival}">
+							<tr>
+								<td><span scope="row" th:text="${vo.festivalImg}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalName}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalAddress}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalContent}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalStart}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalFinal}"></span></td>
+								<td><span scope="row" th:text="${vo.festivalTel}"></span></td>
+								<td><a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a></td>
+							</tr>
+						</th:block>
+					</tbody>
 
-		</table>
+					<tfoot>
+						<tr>
+							<td colspan="8">
+								<center>
+									<th:block th:each="j : ${#numbers.sequence(1,totalPageCountFestival)}">
+										<a th:href="@{wishList(fpage=${j},tpage=${param.tpage})}">[[${j}]] &nbsp;</a>
+									</th:block>
+									</th:block>
+								</center>
+							</td>
+						</tr>
+					</tfoot>
 
-		즐겨찾기 추가용 임시 폼
-		<form method="get" action="wishList/insertOK/tour">
-			<p><label>관광지번호 : <input type="number" name="tourNum"></label></p>
-			<p><input type="submit" value="관광지 즐겨찾기 추가"></p>
-		</form>
+				</table>
 
-		즐겨찾기 추가용 임시 폼
-		<form method="get" action="wishList/insertOK/festival">
-			<p><label>축제번호 : <input type="number" name="festivalNum"></label></p>
-			<p><input type="submit" value="축제 즐겨찾기 추가"></p>
-		</form>
+				<!-- JavaScript Libraries -->
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+				<script src="lib/easing/easing.min.js"></script>
+				<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+				<script src="lib/tempusdominus/js/moment.min.js"></script>
+				<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+				<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-		<!--중복된 관광지 즐겨찾기 시 경고창-->
-		<div th:if="${warningMessageTour != null}" class="alert alert-warning">
-			<span th:text="${warningMessageTour}"></span>
-		</div>
-		
-		<!--중복된 축제 즐겨찾기 시 경고창-->
-		<div th:if="${warningMessageFestival != null}" class="alert alert-warning">
-			<span th:text="${warningMessageFestival}"></span>
-		</div>
+				<!-- Contact Javascript File -->
+				<script src="mail/jqBootstrapValidation.min.js"></script>
+				<script src="mail/contact.js"></script>
 
+				<!-- Template Javascript -->
+				<script src="js/main.js"></script>
 
-		<!-- JavaScript Libraries -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-		<script src="lib/easing/easing.min.js"></script>
-		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="lib/tempusdominus/js/moment.min.js"></script>
-		<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+				<!-- 경고 메시지가 있는 경우 JavaScript로 alert 창을 표시 -->
+				<script th:if="${warningMessageTour != null}">
+					$(document).ready(function () {
+						var warningMessage = "[[${warningMessageTour}]]";
+						alert(warningMessage);
+					});
+				</script>
 
-		<!-- Contact Javascript File -->
-		<script src="mail/jqBootstrapValidation.min.js"></script>
-		<script src="mail/contact.js"></script>
+				<script th:if="${warningMessageFestival != null}">
+					$(document).ready(function () {
+						var warningMessage = "[[${warningMessageFestival}]]";
+						alert(warningMessage);
+					});
+				</script>
 
-		<!-- Template Javascript -->
-		<script src="js/main.js"></script>
-	</body>
-	
-				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
-	
-	
+
 
 </html>

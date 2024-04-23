@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fullcourse.member.MemberVO;
 import com.fullcourse.route.RouteVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +85,7 @@ public class ProductController {
 		int result = productService.updateOK(productVO);
 		log.info("result:{}",result);
 		
-		return "redirect:selectOne?num=" + productVO.getProductNum();
+		return "redirect:sellList";
 	}
 	
 	
@@ -100,6 +101,33 @@ public class ProductController {
         return "redirect:selectAll";
     }
 	
+    @GetMapping("/sellList")
+    public String sellList(Model model, HttpServletRequest request) {
+    	
+    	// 세션에서 member 가져오기
+	    HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("MemberVO:{}",member);
+	    
+	    
+	    if(member == null) {
+	        return "redirect:/login";
+	    }else {
+		
+	    String productMid = member.getMemberId();
+	    	
+        List<ProductVO> vos = productService.sellListSelectAll(productMid);
+        log.info("vos:{}",vos);
+		model.addAttribute("content", "thymeleaf/product/th_sellListMain");
+		model.addAttribute("title", "판매내역");
+		model.addAttribute("vos", vos);
+		
+		List<RouteVO> routes = productService.findAllRoutes();  // 경로 데이터를 불러오는 서비스 메소드 호출
+	    model.addAttribute("routes", routes);
+		
+		return "thymeleaf/product/th_layout_main";
+        }
+	}
 
 	
 }

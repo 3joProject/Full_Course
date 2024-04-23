@@ -45,4 +45,8 @@ public class ProductService {
 	public ProductVO selectProductById(int productNum) {
 		return productMapper.selectProductById(productNum);
 	}
+
+	public List<ProductVO> sellListSelectAll(String productMid) {
+		return productMapper.sellListSelectAll(productMid);
+	}
 }

@@ -83,9 +83,23 @@
             </div>
             
             <!-- 글 수정 및 삭제 버튼, 로그인한 사용자가 작성자와 동일한 경우에만 표시 -->
-            <div class="button-group" th:if="${vo.boardWriter} == ${session.member.memberId}">
-                <button th:href="@{/board/update(boardNum=${vo.boardNum})}" class="button">수정하기</button>
-                <button th:href="@{/board/delete(boardNum=${vo.boardNum})}" class="button delete">삭제하기</button>
+            <div class="button-group" th:if="${session?.member != null and vo.boardWriter == session.member.memberId}">
+                
+                <!-- 글 수정 폼 -->
+				<form th:action="@{/board/updateOK}" method="post">
+    				<input type="hidden" name="boardNum" th:value="${vo.boardNum}" />
+    				<input type="hidden" name="boardTitle" th:value="${vo.boardTitle}" />
+    				<input type="hidden" name="boardContent" th:value="${vo.boardContent}" />
+    				<input type="hidden" name="boardWriter" th:value="${vo.boardWriter}" />
+    				<input type="hidden" name="boardDate" th:value="${vo.boardDate}" />
+    				<input type="hidden" name="boardImage" th:value="${vo.boardImage}" />
+    				<button type="submit" class="button">수정하기</button>
+				</form>
+				<!-- 삭제 폼 -->
+				<form th:action="@{/board/deleteOK}" method="post">
+    				<input type="hidden" name="boardNum" th:value="${vo.boardNum}" />
+    				<button type="submit" class="button delete">삭제하기</button>
+				</form>
             </div>
         </div>
     </div>

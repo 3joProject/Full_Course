@@ -25,7 +25,7 @@
 
 	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
 		update product set
-		productTitle=#{productTitle},productPrice=#{productPrice},productImage=#{productImage},productContent=#{productContent},productInventory=#{productInventory}
+		productTitle=#{productTitle},productPrice=#{productPrice},productImage=#{productImage},productContent=#{productContent},productInventory=#{productInventory}, productGuideNum=#{productGuideNum}
 		where productNum=#{productNum}
 	</update>
 	
@@ -45,4 +45,7 @@
         SELECT routeNum, routeName FROM route
     </select>
 
+	<select id="sellListSelectAll" resultType="com.fullcourse.product.ProductVO">
+		select * from product where productMid=#{productMid}
+	</select>
 </mapper>

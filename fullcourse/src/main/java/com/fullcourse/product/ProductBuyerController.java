@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.fullcourse.member.MemberVO;
 import com.fullcourse.product.productReview.ProductReviewVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,7 +27,13 @@ public class ProductBuyerController {
 
 	@GetMapping("/selectAll")
 	public String selectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "9") int pageBlock, Model model, 
+			HttpServletRequest request) {
+		
+	    HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("MemberVO:{}",member);
+	    model.addAttribute("member",member);
 		
 		log.info("/selectAll");
 		

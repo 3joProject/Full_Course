@@ -1,23 +1,21 @@
 package com.fullcourse.wishlist;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.member.MemberVO;
 import com.fullcourse.tour.TourVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -30,17 +28,29 @@ public class WishlistController {
 	
 	@GetMapping("/wishList")
 	public String wishList(@RequestParam(name="tpage",defaultValue = "1") int tpage, @RequestParam(name="fpage",defaultValue = "1") int fpage,
-			@RequestParam(name="pageBlock",defaultValue = "3") int pageBlock, Model model) {
+			@RequestParam(name="pageBlock",defaultValue = "3") int pageBlock, Model model, 
+			HttpServletRequest request) {
 		log.info("wishList");
 		log.info("tpage : {}, fpage : {}, pageBlock : {}", tpage, fpage, pageBlock);
 
-		List<WishlistViewVO> vosTour = service.selectAllTour(tpage, pageBlock);
 		
+		HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("MemberVO:{}",member);
+	    
+	    if(member == null) {
+	        return "redirect:/login";
+	    }else {
+	  
+	    int wishListId = member.getMemberNum();
+	    log.info("wishListId:{}",wishListId);
+		
+	    List<WishlistViewVO> vosTour = service.selectAllTour(tpage, pageBlock, wishListId);
 		log.info("vosTour:{}",vosTour);
-		
 		model.addAttribute("vosTour",vosTour);
 		
-		int totalRowsTour = service.getTotalRowsTour();
+		
+		int totalRowsTour = service.getTotalRowsTour(wishListId);
 		log.info("totalRowsTour:{}", totalRowsTour);
 		
 		int totalPageCountTour = 1;
@@ -57,13 +67,13 @@ public class WishlistController {
 		model.addAttribute("totalPageCountTour", totalPageCountTour);
 		
 		
-		List<WishlistViewVO> vosFestival = service.selectAllFestival(fpage, pageBlock);
+		List<WishlistViewVO> vosFestival = service.selectAllFestival(fpage, pageBlock, wishListId);
 		
 		log.info("vosFestival:{}",vosFestival);
 		
 		model.addAttribute("vosFestival",vosFestival);
 		
-		int totalRowsFestival = service.getTotalRowsFestival();
+		int totalRowsFestival = service.getTotalRowsFestival(wishListId);
 		log.info("totalRowsFestival:{}", totalRowsFestival);
 		
 		int totalPageCountFestival = 1;
@@ -105,13 +115,26 @@ public class WishlistController {
 		
 
 		return "thymeleaf/wishList/th_wishListLayout_main";
+	    }
 	}
 	
 	@GetMapping("/wishList/insertOK/tour")
-	public RedirectView insertOKtour(TourVO vo, RedirectAttributes redirectAttributes) {
+	public RedirectView insertOKtour(WishlistVO vo, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		log.info("insertOKtour");
 		log.info("vo:{}",vo);
 		
+		HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("MemberVO:{}",member);
+	    
+	    if(member == null) {
+	        return new RedirectView("/login");
+	    }else {
+		
+	    vo.setWishListId(member.getMemberNum());
+	    log.info("vo:{}",vo);
+	    
 		int chkWDuplTour = service.chkWDuplTour(vo);
 		log.info("chkWDuplTour:{}",chkWDuplTour);
 		
@@ -123,11 +146,24 @@ public class WishlistController {
 		}
 		
 		return new RedirectView("/wishList");
+	    }
 	}
 	
 	@GetMapping("/wishList/insertOK/festival")
-	public RedirectView insertOKfestival(FestivalVO vo, RedirectAttributes redirectAttributes) {
+	public RedirectView insertOKfestival(WishlistVO vo, RedirectAttributes redirectAttributes, 
+			HttpServletRequest request) {
 		log.info("insertOKfestival");
+		log.info("vo:{}",vo);
+		
+		HttpSession session = request.getSession();
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    log.info("MemberVO:{}",member);
+		
+		if(member == null) {
+	        return new RedirectView("/login");
+	    }else {
+	    	
+		vo.setWishListId(member.getMemberNum());
 		log.info("vo:{}",vo);
 		
 		int chkWDuplFestival = service.chkWDuplFestival(vo);
@@ -141,6 +177,7 @@ public class WishlistController {
 		}
 		
 		return new RedirectView("/wishList");
+	    }
 	}
 	
 	@GetMapping("/wishList/deleteOK")
