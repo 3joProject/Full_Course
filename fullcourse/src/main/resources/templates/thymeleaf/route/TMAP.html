@@ -30,6 +30,7 @@
 
 				.savebutton {
 					margin-left: 500px;
+
 				}
 
 				.ft_select_wrap {
@@ -233,6 +234,7 @@
 						// 작은 화면 보이기
 						smallScreen.style.display = "block";
 
+
 						// 여행지 정보 표시
 						document.getElementById('placeName').textContent = place.tourName;
 						document.getElementById('placeDescription').textContent = place.tourContent;
@@ -299,6 +301,7 @@
 								transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
 							}
 
+
 							// 결과를 담을 컨테이너를 생성합니다.
 							const resultContainer = document.createElement('div');
 							resultContainer.classList.add('result-container');
@@ -333,72 +336,83 @@
 					}
 
 					// 여행 정보를 itinerary 배열에 추가하는 함수
-					function addItineraryInfo(transportInfo, index) {
-						itinerary[index] = {
-							routeName: "창원1",
-							routeTraffic: selectedTransportMode,
-							routeDistance: transportInfo.tDistance,
-							routeTime: transportInfo.tTime,
-							routeStartLocation: newPlaces[index - 1].tourName,
-							routeEndLocation: newPlaces[index].tourName,
-							//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-							routeStartLatitude: newPlaces[index - 1].lattitue,
-							routeStartLongitude: newPlaces[index - 1].longtitue,
-							routeEndLatitude: newPlaces[index].lattitue,
-							routeEndLongitude: newPlaces[index].longtitue,
-							routeOrder: index
-						};
-					}
+			function addItineraryInfo(transportInfo, index) {
+				itinerary[index] = {
+					routeName: "",
+					routeTraffic: selectedTransportMode,
+					routeDistance: transportInfo.tDistance,
+					routeTime: transportInfo.tTime,
+					routeStartLocation: newPlaces[index - 1].tourName,
+					routeEndLocation: newPlaces[index].tourName,
+					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
+					routeStartLatitude: newPlaces[index - 1].lattitue,
+					routeStartLongitude: newPlaces[index - 1].longtitue,
+					routeEndLatitude: newPlaces[index].lattitue,
+					routeEndLongitude: newPlaces[index].longtitue,
+					routeOrder: index
+				};
+			}
 
-					// 여행 일정 업데이트 함수 수정
-					function updateItinerary(transportInfo) {
-						const currentIndex = newPlaces.length - 1;
-						itinerary[currentIndex] = {
-							routeName: "창원1",
-							routeTraffic: selectedTransportMode,
-							routeDistance: transportInfo.tDistance,
-							routeTime: transportInfo.tTime,
-							routeStartLocation: newPlaces[currentIndex - 1].tourName,
-							routeEndLocation: newPlaces[currentIndex].tourName,
-							//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-							routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
-							routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
-							routeEndLatitude: newPlaces[currentIndex].lattitue,
-							routeEndLongitude: newPlaces[currentIndex].longtitue,
-							routeOrder: currentIndex
-						};
-					}
+			// 여행 일정 업데이트 함수 수정
+			function updateItinerary(transportInfo) {
+				const currentIndex = newPlaces.length - 1;
+				itinerary[currentIndex] = {
+					routeName: "",
+					routeTraffic: selectedTransportMode,
+					routeDistance: transportInfo.tDistance,
+					routeTime: transportInfo.tTime,
+					routeStartLocation: newPlaces[currentIndex - 1].tourName,
+					routeEndLocation: newPlaces[currentIndex].tourName,
+					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
+					routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
+					routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
+					routeEndLatitude: newPlaces[currentIndex].lattitue,
+					routeEndLongitude: newPlaces[currentIndex].longtitue,
+					routeOrder: currentIndex
+				};
+			}
 
-					// 여행 일정 저장 함수
-					function saveItinerary() {
+			// 여행 일정 저장 함수
+			function saveItinerary() {
 
-						console.log(itinerary);
+				// 입력 필드에서 값 가져오기
+				const routeNameInput = document.getElementById('routeNameInput');
+				const routeNameValue = routeNameInput.value;
 
-						// 각 일정을 순회하면서 서버로 데이터 전송
-						itinerary.forEach(function (item) {
-							$.ajax({
-								method: "POST",
-								url: "/route/save",
-								data: JSON.stringify(item),
-								contentType: "application/json; charset=utf-8",
-								dataType: "json",
-								success: function (response) {
-									console.log(response.message);
-									console.log("여행 일정이 저장되었습니다.html");
-									window.location.href = "/route/list";
-								},
-								error: function (request, status, error) {
-									console.log("여행 일정 저장에 실패했습니다html");
-									console.log(request); // 요청 정보 확인
-									console.log(status); // 상태 코드 확인
-									console.log(error); // 오류 메시지 확인
-								}
-							});
-						});
-					}
+				// 입력 값이 비어 있는지 확인
+				if (!routeNameValue) {
+					alert('여행 경로 이름을 입력하세요.');
+					return;
+				}
 
-					// 여행 일정 저장 버튼 클릭 이벤트 핸들러
-					document.getElementById('saveItineraryButton').onclick = saveItinerary;
+				console.log(itinerary);
+
+				// 각 일정을 순회하면서 서버로 데이터 전송
+				itinerary.forEach(function (item) {
+					 item.routeName = routeNameValue; // 변수명 변경
+					$.ajax({
+						method: "POST",
+						url: "/route/save",
+						data: JSON.stringify(item),
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (response) {
+							console.log(response.message);
+							console.log("여행 일정이 저장되었습니다.html");
+							window.location.href = "/route/list";
+						},
+						error: function (request, status, error) {
+							console.log("여행 일정 저장에 실패했습니다html");
+							console.log(request); // 요청 정보 확인
+							console.log(status); // 상태 코드 확인
+							console.log(error); // 오류 메시지 확인
+						}
+					});
+				});
+			}
+
+			// 여행 일정 저장 버튼 클릭 이벤트 핸들러
+			document.getElementById('saveItineraryButton').onclick = saveItinerary;
 
 					//sidebar
 					function addToSidebar(placeName) {
@@ -984,7 +998,6 @@
 					markers = [];
 				}
 
-
 				function toggleAddTour() {
 
 					console.log("여행지 추가 모드: " + (addTourEnabled ? "활성화" : "비활성화")); // 여행지 추가 모드 상태를 콘솔에 출력
@@ -1003,10 +1016,10 @@
 
 				}
 
-
-
 				// 화면을 표시하는 함수
 				function addTourScreen(latlng) {
+          //비활성화 기능추가
+          if (addTourEnabled) {
 					var addTourScreen = document.getElementById("addTourScreen");
 					addTourScreen.style.display = "block";
 
@@ -1026,18 +1039,17 @@
 						hideAddTourScreen();
 
 					};
+          } else {
+				alert("비활성화 상태입니다. ");
+			}
 
 				}
-
-
 
 				// 화면을 숨기는 함수
 				function hideAddTourScreen() {
 					var addTourScreen = document.getElementById("addTourScreen");
 					addTourScreen.style.display = "none";
 				}
-
-
 
 				document.addEventListener('DOMContentLoaded', function () {
 					//여행지 추가 모달 start
@@ -1053,6 +1065,7 @@
 						// Update the modal's content.
 						var modalTitle = exampleModal.querySelector('.modal-title')
 						var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
 
 						modalTitle.textContent = 'New message to ' + recipient
 						modalBodyInput.value = recipient
@@ -1074,9 +1087,10 @@
 					<button id="closeCalendarBtn">닫기</button>
 				</div>
 
+
 				<!-- 여행 기간 표시 영역 -->
 				<div id="selectedDuration"></div>
-
+	<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 			</div>
 
 			<div id="smallScreen">
@@ -1105,9 +1119,6 @@
 				<button id="cancelToTourVO">취소</button>
 			</div>
 
-
-
-
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog">
@@ -1115,6 +1126,7 @@
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel">New message</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
 						</div>
 						<div class="modal-body">
 							<form class="validation-form" id="addTourForm" action="/route/tourInsertOK" method="post">
@@ -1162,5 +1174,4 @@
 
 		</body>
 	</div>
-
 </html>

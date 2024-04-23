@@ -42,7 +42,7 @@
 						<tbody>
 							<th:block th:each="vo : ${vos}">
 								<tr>
-									<th scope="row"><a th:href="@{|routeSelectOnex?routeNum=${vo.routeNum}|}">
+									<th scope="row"><a th:href="@{|routeSelectOne?routeNum=${vo.routeNum}|}">
 										<span th:text="${vo.routeNum}"></span></a></th>
 									<td><a th:href="@{|/route/${vo.routeName}?routeName=${vo.routeName}|}"><span
 												th:text="${vo.routeName}"></span></a></td>
