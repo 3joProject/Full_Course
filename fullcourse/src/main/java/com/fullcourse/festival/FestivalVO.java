@@ -1,8 +1,6 @@
 package com.fullcourse.festival;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fullcourse.tour.TourVO;
+import com.fullcourse.paging.PagingVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FestivalVO {
+public class FestivalVO extends PagingVO {
 	
 	private int festivalNum;
 

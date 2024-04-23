@@ -84,10 +84,10 @@ public class TourRestApiController {
 		// 서비스를 통해 데이터베이스에 저장
 		//likeService.tourLikeInsertOK(vo);
 
-		 int cpage = Integer.parseInt(requestData.get("cpage"));
-		    int pageBlock = Integer.parseInt(requestData.get("pageBlock"));
+		int cpage = Integer.parseInt(requestData.get("cpage"));
+		int pageBlock = Integer.parseInt(requestData.get("pageBlock"));
 		String searchKey = requestData.get("searchKey");
-		 String searchWord = requestData.get("searchWord");
+		String searchWord = requestData.get("searchWord");
 		List<TourVO> vos = service.searchListAddressPageBlock(searchKey,searchWord,cpage,pageBlock); 
 		return vos;
 	}

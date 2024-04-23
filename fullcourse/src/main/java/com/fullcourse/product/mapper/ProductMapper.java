@@ -20,4 +20,6 @@ public interface ProductMapper {
 	
 	public ProductVO selectProductById(int productNum);
 
+	public List<ProductVO> sellListSelectAll(String productMid);
+
 }

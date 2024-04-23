@@ -78,9 +78,7 @@ public class TourService {
 		}
 	}
 
-	public List<TourVO> tourSelectAllTop() {
-		return mapper.tourSelectAllTop();
-	}
+	
 
 	public int updateLikeCount(TourVO vo) {
 		return mapper.updateLikeCount(vo);		
@@ -109,7 +107,17 @@ public class TourService {
 	}
 
 	
+	 // 페이징처리 토탈갯수 반환
+    public int selectListTotalCount(TourVO tourVO) throws Exception{
+        return mapper.selectListTotalCount(tourVO);
+    }
+    // 페이징용 리스트 반환
+    public List<TourVO> selectTourListWithPaging(TourVO tourVO) throws Exception {
+        return mapper.selectTourListWithPaging(tourVO);
+    }
 
-
-	
+    //bestTop3
+    public List<TourVO> tourSelectAllTop(TourVO tourVO) {
+		return mapper.tourSelectAllTop(tourVO);
+	}
 }

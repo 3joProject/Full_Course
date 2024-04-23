@@ -31,9 +31,7 @@ public interface TourMapper {
 	public int search_total_rows_address(Map<String, String> map);
 
 	public int search_total_rows_tourName(Map<String, String> map);
-
-	public List<TourVO> tourSelectAllTop();
-
+	
 	public int updateLikeCount(TourVO vo);
 
 	public int updateViewCount(TourVO vo);
@@ -41,6 +39,15 @@ public interface TourMapper {
 	public List<TourVO> searchWordaddress(Map<String, String> map);
 
 	public List<TourVO> searchListAddressPageBlock(Map<String, Object> map);
+	
+	 // 리스트 토탈 갯수 (검색 포함)
+    int selectListTotalCount(TourVO tourVO);
+
+    // 리스트 (검색포함)
+    List<TourVO> selectTourListWithPaging(TourVO tourVO);
+    
+    //best Top3
+    public List<TourVO> tourSelectAllTop(TourVO vo);
 
 
 

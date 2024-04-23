@@ -92,11 +92,70 @@
 		.day-marker {
 			pointer-events: none;
 		}
+
+
+		/* 초록색 버튼 스타일 */
+		.green-button {
+			background-color: #4CAF50;
+			/* 초록색 배경색 */
+			color: white;
+			/* 텍스트 색상 */
+			padding: 10px 20px;
+			/* 내부 여백 */
+			border: none;
+			/* 테두리 없음 */
+			text-align: center;
+			/* 텍스트 가운데 정렬 */
+			text-decoration: none;
+			/* 텍스트 밑줄 없음 */
+			display: inline-block;
+			font-size: 16px;
+			/* 텍스트 크기 */
+			margin: 4px 2px;
+			/* 마진 */
+			cursor: pointer;
+			/* 커서 포인터로 변경 */
+			border-radius: 8px;
+			/* 버튼 모서리 둥글게 */
+		}
+
+		/* 파란색 버튼 스타일 */
+		.blue-button {
+			background-color: #008CBA;
+			/* 파란색 배경색 */
+			color: white;
+			/* 텍스트 색상 */
+			padding: 10px 20px;
+			/* 내부 여백 */
+			border: none;
+			/* 테두리 없음 */
+			text-align: center;
+			/* 텍스트 가운데 정렬 */
+			text-decoration: none;
+			/* 텍스트 밑줄 없음 */
+			display: inline-block;
+			font-size: 16px;
+			/* 텍스트 크기 */
+			margin: 4px 2px;
+			/* 마진 */
+			cursor: pointer;
+			/* 커서 포인터로 변경 */
+			border-radius: 8px;
+			/* 버튼 모서리 둥글게 */
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script
-		src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=##"></script>
+		src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
+
+	<script th:inline="javascript">
+		var routes = /*[[${(routes)}]]*/[];
+	</script>
+
+
 	<script type="text/javascript">
+
+
 
 		var map;
 		//자동차 경로 안
@@ -120,21 +179,6 @@
 		let itinerary = [];
 		var user1 = "user1";
 
-/*
-		$.ajax({
-			url: '/route/getroute',
-			type: 'GET',
-			dataType: 'json',
-			success: function (data) {
-				console.log(data)
-				data.forEach(function (route) {
-				  var listItem = document.createElement('li');
-            listItem.textContent = route.routeStartLocation;
-            document.getElementById('routeList').appendChild(listItem);
-				});
-			}
-		});
-*/
 
 
 		// 페이지가 로딩이 된 후 호출하는 함수입니다.
@@ -142,26 +186,109 @@
 			// map 생성
 			// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
 			map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
-				center: new Tmapv2.LatLng(35.3116461479475, 128.679897664909),
+				center: new Tmapv2.LatLng(routes[0].routeStartLatitude, routes[0].routeStartLongitude),
 				width: "800px", // 지도의 넓이
 				height: "700px", // 지도의 높이
-				zoom: 14
+				zoom: 10
 			});
 
-			/*
-						// DB에서 가져온 여행지 정보 (예시)
-						var places = [
-							{name: '주남저수지', latitude: 35.3116461479475, longitude: 128.679897664909, description: "주남저수지 설명 Lorem ipsum dolor sit amet."},
-							{name: '돌다리', latitude: 35.3302837564477, longitude: 128.696624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-							{name: '여행', latitude: 35.3402837564477, longitude: 128.676624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-							// 추가 여행지 정보 추가
-						]; */
-
-			// 새로 추가된 여행지 정보를 저장할 배열
-			var newPlaces = [];
-
+			console.log("지도 ");
 			var sidebar = document.getElementById('sidebar');
-			var smallScreen = document.getElementById('smallScreen');
+
+			displayRoutes(routes);
+			// displayRoutes 함수: 루트 데이터를 받아와서 화면에 버튼을 생성하는 함수
+			function displayRoutes(routes) {
+				const sidebar = document.getElementById('sidebar');
+				//sidebar.innerHTML = ''; // 이전에 생성된 내용 초기화
+
+				console.log(routes);
+
+				// 루트 이름을 표시할 div 요소 생성
+				const routeNameDiv = document.getElementById('routeName');
+				routeNameDiv.innerHTML = '이름 : ' + routes[0].routeName;
+
+				var totalDistance = 0;
+				routes.forEach(route => {
+					totalDistance += route.routeDistance;
+				});
+
+				// totalDistance를 표시할 새로운 div 요소 생성
+				const totalDistanceDiv = document.createElement('div');
+				totalDistanceDiv.textContent = `총 거리: ${totalDistance}`;
+				sidebar.appendChild(totalDistanceDiv); // sidebar에 추가
+
+
+				// 루트를 routeOrder의 오름차순으로 정렬
+				routes.sort((a, b) => a.routeOrder - b.routeOrder);
+
+				// 각 루트마다 버튼 생성
+				for (let i = 0; i < routes.length; i++) {
+
+					//let index = i;
+					const route = routes[i];
+					const transportButtonsDiv = document.createElement('div');
+
+					// 처음 루트에 대해서만 출발지 정보를 표시
+					if (i === 0) {
+						const startLocationDiv = document.createElement('div');
+						startLocationDiv.textContent = ` ${route.routeStartLocation}`;
+						transportButtonsDiv.appendChild(startLocationDiv);
+					}
+
+					// 자동차 버튼 생성
+					const carButton = createButton('자동차', function () {
+						// 자동차 버튼 클릭 시 처리할 동작
+						// 여기에 필요한 로직을 작성하세요
+					});
+					transportButtonsDiv.appendChild(carButton);
+
+					// 도보 버튼 생성
+					const walkButton = createButton('도보', function () {
+						// 도보 버튼 클릭 시 처리할 동작
+						// 여기에 필요한 로직을 작성하세요
+					});
+					transportButtonsDiv.appendChild(walkButton);
+
+
+					// routeTraffic가 "자동차"일 때 자동차 버튼의 색상을 파란색으로 지정
+					if (route.routeTraffic === "자동차") {
+						carButton.classList.add('blue-button'); // 예시로 'blue-button' 클래스를 추가
+						console.log("파란 자동");
+						onTransportButtonClick(route.routeTraffic, route);
+					} else if (route.routeTraffic === "도보") {
+						walkButton.classList.add('green-button'); // 예시로 'green-button' 클래스를 추가
+						onTransportButtonClick(route.routeTraffic, route);
+					}
+
+					// 도착지 정보를 생성합니다.
+					const endLocationDiv = document.createElement('div');
+					endLocationDiv.textContent = `${route.routeEndLocation}`;
+					transportButtonsDiv.appendChild(endLocationDiv);
+
+					// 생성한 버튼을 sidebar에 추가
+					sidebar.appendChild(transportButtonsDiv);
+				}
+			}
+
+			// createButton 함수: 주어진 텍스트와 클릭 이벤트 핸들러로 버튼을 생성하는 함수
+			function createButton(text, clickHandler) {
+				const button = document.createElement('button');
+				button.textContent = text;
+				button.onclick = clickHandler;
+				return button;
+			}
+
+			// 도보 또는 자동차 버튼 클릭 시 호출되는 함수
+			function onTransportButtonClick(transportMode, route) {
+				selectedTransportMode = transportMode;
+				let transportInfo;
+				if (transportMode === '자동차') {
+					console.log(transportMode);
+					transportInfo = getTransportInfoBetweenPlaces(route);
+				} else if (transportMode === '도보') {
+					transportInfo = getWalkInfoBetweenPlaces(route);
+				}
+			}
 
 			// DB에서 가져온 여행지 정보
 			$.ajax({
@@ -173,9 +300,6 @@
 					var places = data;
 
 					// places 변수를 이용하여 원하는 작업을 수행
-					console.log("place");
-					console.log(places); // 가져온 데이터 확인
-
 					//여행지 마커 생성 및 추가
 					places.forEach(function (place) {
 
@@ -193,202 +317,14 @@
 			})
 
 
-			// 작은 화면을 표시하는 함수
-			function showSmallScreen(place) {
-				// 작은 화면을 나타내는 div 요소 가져오기
-				var smallScreen = document.getElementById("smallScreen");
 
-				// 작은 화면 보이기
-				smallScreen.style.display = "block";
-
-				// 여행지 정보 표시
-				document.getElementById('placeName').textContent = place.tourName;
-				document.getElementById('placeDescription').textContent = place.tourContent;
-
-				// "추가" 버튼 클릭 시 sidebar에 여행지 정보 newPlaces 배열에 추가
-				document.getElementById('addToSidebarButton').onclick = function () {
-					newPlaces.push(place);
-					console.log(newPlaces);
-					createTransportButtons(newPlaces.length - 1);
-					addToSidebar(place.tourName);
-				};
-			}
-
-			// 이전 여행지와 현재 여행지 사이의 교통 정보 버튼 생성 함수
-			function createTransportButtons(index) {
-				if (index > 0) {
-					const transportDiv = document.createElement('div');
-					transportDiv.classList.add('transport-buttons');
-
-					// 자동차 버튼
-					const carButton = document.createElement('button');
-					carButton.textContent = '자동차';
-					carButton.classList.add('get-transport-info');
-					carButton.onclick = onTransportButtonClick('자동차', index);
-
-					/*
-					carButton.onclick = function () {
-						selectedTransportMode = '자동차';
-						 const transportInfo = getTransportInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-						updateItinerary(transportInfo);
-					} */
-
-					// 도보 버튼
-					const walkButton = document.createElement('button');
-					walkButton.textContent = '도보';
-					walkButton.classList.add('get-transport-info');
-					walkButton.onclick = onTransportButtonClick('도보', index);
-					/*
-					walkButton.onclick = function () {
-						selectedTransportMode = '도보';
-						 const transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-						updateItinerary(transportInfo);
-					}; */
-
-					transportDiv.appendChild(carButton);
-					transportDiv.appendChild(walkButton);
-
-
-					const sidebar = document.getElementById('sidebar');
-					const listItem = sidebar.lastChild;
-					listItem.appendChild(transportDiv);
-				}
-			}
-
-			// 도보 또는 자동차 버튼 클릭 시 호출되는 함수
-			function onTransportButtonClick(transportMode, index) {
-				return function () {
-					selectedTransportMode = transportMode;
-					let transportInfo;
-					if (transportMode === '자동차') {
-						transportInfo = getTransportInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-					} else if (transportMode === '도보') {
-						transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-					}
-
-					// 결과를 담을 컨테이너를 생성합니다.
-					const resultContainer = document.createElement('div');
-					resultContainer.classList.add('result-container');
-					resultContainer.textContent = "거리 : " + `${transportInfo.tDistance}` + "km, 소요 시간 : " + `${transportInfo.tTime}` + "분 "; // 예시로 tDistance와 tTime을 사용했습니다.
-
-					// 버튼과 결과 컨테이너를 감싸고 있는 div 요소를 찾습니다.
-					const containerDiv = this.parentNode;
-
-					// 이전에 추가된 결과 컨테이너가 있다면 삭제합니다.
-					const previousResultContainer = containerDiv.querySelector('.result-container');
-					if (previousResultContainer) {
-						containerDiv.removeChild(previousResultContainer);
-					}
-
-					// 자동차 또는 도보 버튼 옆에 결과 값을 추가합니다.
-					containerDiv.insertBefore(resultContainer, this.nextSibling);
-
-					// 클릭된 버튼의 배경색 변경
-					this.style.backgroundColor = 'lightblue';
-
-					// 나머지 버튼의 배경색을 초기화
-					const buttons = document.querySelectorAll('.get-transport-info');
-					buttons.forEach(button => {
-						if (button !== this) {
-							button.style.backgroundColor = ''; // 초기화
-						}
-					});
-
-					addItineraryInfo(transportInfo, index);
-					updateItinerary(transportInfo);
-				};
-			}
-
-			// 여행 정보를 itinerary 배열에 추가하는 함수
-			function addItineraryInfo(transportInfo, index) {
-				itinerary[index] = {
-					routeName: "창원1",
-					routeTraffic: selectedTransportMode,
-					routeDistance: transportInfo.tDistance,
-					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[index - 1].tourName,
-					routeEndLocation: newPlaces[index].tourName,
-					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[index - 1].lattitue,
-					routeStartLongitude: newPlaces[index - 1].longtitue,
-					routeEndLatitude: newPlaces[index].lattitue,
-					routeEndLongitude: newPlaces[index].longtitue,
-					routeOrder: index
-				};
-			}
-
-			// 여행 일정 업데이트 함수 수정
-			function updateItinerary(transportInfo) {
-				const currentIndex = newPlaces.length - 1;
-				itinerary[currentIndex] = {
-					routeName: "창원1",
-					routeTraffic: selectedTransportMode,
-					routeDistance: transportInfo.tDistance,
-					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[currentIndex - 1].tourName,
-					routeEndLocation: newPlaces[currentIndex].tourName,
-					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
-					routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
-					routeEndLatitude: newPlaces[currentIndex].lattitue,
-					routeEndLongitude: newPlaces[currentIndex].longtitue,
-					routeOrder: currentIndex
-				};
-			}
-
-			// 여행 일정 저장 함수
-			function saveItinerary() {
-
-				console.log(itinerary);
-
-				// 각 일정을 순회하면서 서버로 데이터 전송
-				itinerary.forEach(function (item) {
-					$.ajax({
-						method: "POST",
-						url: "/route/save",
-						data: JSON.stringify(item),
-						contentType: "application/json; charset=utf-8",
-						dataType: "json",
-						success: function (response) {
-							console.log(response.message);
-							console.log("여행 일정이 저장되었습니다.html");
-							window.location.href = "/route/list";
-						},
-						error: function (request, status, error) {
-							console.log("여행 일정 저장에 실패했습니다html");
-							console.log(request); // 요청 정보 확인
-							console.log(status); // 상태 코드 확인
-							console.log(error); // 오류 메시지 확인
-						}
-					});
-				});
-			}
-
-			// 여행 일정 저장 버튼 클릭 이벤트 핸들러
-			document.getElementById('saveItineraryButton').onclick = saveItinerary;
-
-			//sidebar
-			function addToSidebar(placeName) {
-
-				//sidebar에 여행지 정보 추가하는 함수
-				var listItem = document.createElement('div');
-				listItem.textContent = placeName;
-				listItem.classList.add('sidebar-item'); // sidebar-item 클래스 추가
-				sidebar.appendChild(listItem);
-
-				// 추가된 여행지 삭제 버튼
-				var deleteButton = document.createElement('button');
-				deleteButton.textContent = 'Delete';
-				deleteButton.classList.add('delete-button');
-				listItem.appendChild(deleteButton);
-			}
-
-			function getWalkInfoBetweenPlaces(place1, place2) {
+			function getWalkInfoBetweenPlaces(route) {
+				console.log("place1walk", route);
 				// 2. 시작, 도착 심볼찍기
 				// 시작
 				marker_s = new Tmapv2.Marker(
 					{
-						position: new Tmapv2.LatLng(37.564991, 126.983937),
+						position: new Tmapv2.LatLng(route.routeStartLatitude, route.routeStartLongitude),
 						icon: "/images/pin_r_m_s.png",
 						iconSize: new Tmapv2.Size(24, 38),
 						map: map
@@ -397,7 +333,7 @@
 				// 도착
 				marker_e = new Tmapv2.Marker(
 					{
-						position: new Tmapv2.LatLng(37.566158, 126.988940),
+						position: new Tmapv2.LatLng(route.routeEndLatitude, route.routeEndLongitude),
 						icon: "/images/pin_r_m_e.png",
 						iconSize: new Tmapv2.Size(24, 38),
 						map: map
@@ -405,7 +341,7 @@
 
 				// 3. 경로탐색 API 사용요청
 				var headers = {};
-				headers["appKey"] = "##";
+				headers["appKey"] = "6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1";
 
 				$.ajax({
 					method: "POST",
@@ -413,10 +349,10 @@
 					url: "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
 					async: false,
 					data: {
-						"startX": place1.longtitue,
-						"startY": place1.lattitue,
-						"endX": place2.longtitue,
-						"endY": place2.lattitue,
+						"startX": route.routeStartLongitude,
+						"startY": route.routeStartLatitude,
+						"endX": route.routeEndLongitude,
+						"endY": route.routeEndLatitude,
 						"reqCoordType": "WGS84GEO",
 						"resCoordType": "EPSG3857",
 						"startName": "출발지",
@@ -433,15 +369,6 @@
 							((resultData[0].properties.totalTime) / 60)
 								.toFixed(0);
 
-
-						//기존 그려진 라인 & 마커가 있다면 초기화
-						if (resultdrawArr.length > 0) {
-							for (var i in resultdrawArr) {
-								resultdrawArr[i]
-									.setMap(null);
-							}
-							resultdrawArr = [];
-						}
 
 						drawInfoArr = [];
 
@@ -527,21 +454,20 @@
 			}
 
 
-			function getTransportInfoBetweenPlaces(place1, place2) {
+			function getTransportInfoBetweenPlaces(route) {
+				console.log("place1 자동차 ", route);
 				// 2. 시작, 도착 심볼찍기
 				// 시작
 				marker_s = new Tmapv2.Marker({
-					position: new Tmapv2.LatLng(place1.latitude,
-						place1.longitude),
+					position: new Tmapv2.LatLng(route.routeStartLatitude, route.routeStartLongitude),
 					icon: "/images/pin_r_m_s.png",
 					iconSize: new Tmapv2.Size(24, 38),
 					map: map
 				});
 
-				//도착
+				// 도착
 				marker_e = new Tmapv2.Marker({
-					position: new Tmapv2.LatLng(place2.latitude,
-						place2.longitude),
+					position: new Tmapv2.LatLng(route.routeEndLatitude, route.routeEndLongitude),
 					icon: "/images/pin_r_m_e.png",
 					iconSize: new Tmapv2.Size(24, 38),
 					map: map
@@ -549,25 +475,25 @@
 				console.log("markere : {}", marker_e);
 
 				//기존 맵에 있던 정보들 초기화
-				resettingMap();
+				//resettingMap();
 
 				var searchOption = $("#selectLevel").val();
 
 				var trafficInfochk = $("#year").val();
 				var headers = {};
-				headers["appKey"] = "##";
+				headers["appKey"] = "6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1";
 
 				//JSON TYPE EDIT [S]
 				$.ajax({
 					type: "POST",
 					headers: headers,
-					url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result&appKey=##",
+					url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1",
 					async: false,
 					data: {
-						"startX": place1.longtitue,
-						"startY": place1.lattitue,
-						"endX": place2.longtitue,
-						"endY": place2.lattitue,
+						"startX": route.routeStartLongitude,
+						"startY": route.routeStartLatitude,
+						"endX": route.routeEndLongitude,
+						"endY": route.routeEndLatitude,
 						"reqCoordType": "WGS84GEO",
 						"resCoordType": "EPSG3857",
 						"searchOption": searchOption,
@@ -656,35 +582,8 @@
 				return transportData;
 
 			}//end getTransportInfoBetweenPlaces
+		}
 
-
-			// 추가된 여행지를 삭제하거나 이동하는 함수들
-			function handleSidebarActions(event) {
-				const target = event.target;
-				const listItem = target.parentElement;
-				if (target.classList.contains("delete-button")) {
-					newPlaces.pop();
-
-					sidebar.removeChild(listItem);
-				}
-			}
-
-			// 삭제 및 이동 버튼 클릭 이벤트를 sidebar에 등록
-			sidebar.addEventListener("click", handleSidebarActions);
-
-			// "1day" 항목 추가
-			var dayMarker = document.createElement('div');
-			dayMarker.textContent = '1day';
-			dayMarker.classList.add('sidebar-item', 'day-marker'); // day-marker 클래스 추가
-			sidebar.appendChild(dayMarker);
-
-
-			// 초기화: 작은 화면을 클릭하면 숨김
-			document.getElementById("smallScreen").addEventListener("click", function () {
-				this.style.display = "none";
-			});
-
-		} //end map
 
 		function addComma(num) {
 			var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -890,58 +789,15 @@
 		}
 
 
-		//달력 기능.
-		document.addEventListener("DOMContentLoaded", function () {
-			var showCalendarBtn = document.getElementById('showCalendarBtn');
-			var closeCalendarBtn = document.getElementById('closeCalendarBtn');
-			var calendar = document.getElementById('calendar');
-			var selectedDateInput = document.getElementById('selectedDate');
-			var selectedDateDisplay = document.getElementById('selectedDateDisplay');
-
-			// 달력 열기 버튼 클릭 이벤트
-			showCalendarBtn.addEventListener('click', function () {
-				calendar.style.display = 'block';
-			});
-
-			// 전체화면으로 보이기
-			aspectRatio: 2
-
-			// 닫기 버튼 클릭 이벤트
-			closeCalendarBtn.addEventListener('click', function () {
-				calendar.style.display = 'none';
-			});
-
-			// 날짜 선택 시 이벤트
-			selectedDateInput.addEventListener('change', function () {
-				var selectedDate = selectedDateInput.value;
-				showCalendarBtn.innerHTML = "여행 시작일 : <div id='selectedDateDisplay'>" + selectedDate + "</div>";
-				calendar.style.display = 'none'; // 달력 숨기기
-
-			});
-		});
-
 
 	</script>
 </head>
 
 <body onload="initTmap()">
+
 	<div id="sidebar">
-		<button id="showCalendarBtn">여행 시작일 : 2024-04-08</button>
-		<div id="calendar">
-			<input type="date" id="selectedDate">
-			<button id="closeCalendarBtn">닫기</button>
-		</div>
+		<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 
-		<li th:each="route : ${routes}">
-			<a th:text="${route.routeStartLocation}"></a>
-		</li>
-		<ul id="routeList"></ul>
-	</div>
-
-	<div id="smallScreen">
-		<div id="placeName"></div>
-		<div id="placeDescription"></div>
-		<button id="addToSidebarButton">Add to Sidebar</button>
 	</div>
 
 	<!-- 맵 생성 실행 -->
@@ -952,9 +808,6 @@
 	</div>
 	<br />
 
-	<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
-	
-	
 </body>
 
 </html>
