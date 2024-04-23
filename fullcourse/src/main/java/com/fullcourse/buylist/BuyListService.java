@@ -10,24 +10,16 @@ import com.fullcourse.buylist.mapper.BuyListMapper;
 @Service
 public class BuyListService {
 
-	 private final BuyListMapper buyListMapper;
+    private final BuyListMapper buyListMapper;
 
-	    @Autowired
-	    public BuyListService(BuyListMapper buyListMapper) {
-	        this.buyListMapper = buyListMapper;
-	    }
+    @Autowired
+    public BuyListService(BuyListMapper buyListMapper) {
+        this.buyListMapper = buyListMapper;
+    }
 
-	    public List<BuyListVO> findByMemberNumPaginated(int memberNum, int page) {
-	        int offset = (page - 1) * 10; // 페이지당 10개씩 보여주기
-	        return buyListMapper.findByMemberNumPaginated(memberNum, offset, 10);
-	    }
-
-	    public BuyListVO findByBuyNum(int buyNum) {
-	        return buyListMapper.findByBuyNum(buyNum);
-	    }
-
-	    public int getTotalPages(int memberNum) {
-	        int totalCount = buyListMapper.getTotalCount(memberNum);
-	        return (totalCount + 9) / 10; // 페이지 수 계산
-	    }
-	}
+    public List<BuyListVO> getBuyListByMemberNum(int memberNum) {
+        return buyListMapper.findByMemberNum(memberNum);
+    }
+    
+    
+}

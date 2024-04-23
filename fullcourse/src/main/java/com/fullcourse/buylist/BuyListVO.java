@@ -17,9 +17,5 @@ public class BuyListVO {
     private int buyInventory;
     private int buyTotalPrice;
     private Date buyDate;
-    private BuyStatus buyStatus;
-	
-    public enum BuyStatus {
-        결제완료, 결제대기, 결제취소
-    }
+
 }
