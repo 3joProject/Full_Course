@@ -150,20 +150,12 @@
 			// map 생성
 			// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
 			map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
-				center: new Tmapv2.LatLng(35.3116461479475, 128.679897664909),
+				center: new Tmapv2.LatLng(33.3225554639, 126.3454537144),
 				width: "800px", // 지도의 넓이
 				height: "700px", // 지도의 높이
-				zoom: 14
+				zoom: 12
 			});
 
-			/*
-						// DB에서 가져온 여행지 정보 (예시)
-						var places = [
-							{name: '주남저수지', latitude: 35.3116461479475, longitude: 128.679897664909, description: "주남저수지 설명 Lorem ipsum dolor sit amet."},
-							{name: '돌다리', latitude: 35.3302837564477, longitude: 128.696624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-							{name: '여행', latitude: 35.3402837564477, longitude: 128.676624997296, description: "돌다리 설명 Lorem ipsum dolor sit amet."},
-							// 추가 여행지 정보 추가
-						]; */
 
 			// 새로 추가된 여행지 정보를 저장할 배열
 			var newPlaces = [];
@@ -178,7 +170,7 @@
 				if (addTourEnabled) {
 					addTour(e.latLng);
 				}
-		});
+			});
 			// DB에서 가져온 여행지 정보
 			$.ajax({
 				url: 'route/gettour',
@@ -276,6 +268,7 @@
 			// 도보 또는 자동차 버튼 클릭 시 호출되는 함수
 			function onTransportButtonClick(transportMode, index) {
 				return function () {
+					
 					selectedTransportMode = transportMode;
 					let transportInfo;
 					if (transportMode === '자동차') {
@@ -320,7 +313,7 @@
 			// 여행 정보를 itinerary 배열에 추가하는 함수
 			function addItineraryInfo(transportInfo, index) {
 				itinerary[index] = {
-					routeName: "창원1",
+					routeName: "",
 					routeTraffic: selectedTransportMode,
 					routeDistance: transportInfo.tDistance,
 					routeTime: transportInfo.tTime,
@@ -339,7 +332,7 @@
 			function updateItinerary(transportInfo) {
 				const currentIndex = newPlaces.length - 1;
 				itinerary[currentIndex] = {
-					routeName: "창원1",
+					routeName: "",
 					routeTraffic: selectedTransportMode,
 					routeDistance: transportInfo.tDistance,
 					routeTime: transportInfo.tTime,
@@ -357,10 +350,21 @@
 			// 여행 일정 저장 함수
 			function saveItinerary() {
 
+				// 입력 필드에서 값 가져오기
+				const routeNameInput = document.getElementById('routeNameInput');
+				const routeNameValue = routeNameInput.value;
+
+				// 입력 값이 비어 있는지 확인
+				if (!routeNameValue) {
+					alert('여행 경로 이름을 입력하세요.');
+					return;
+				}
+
 				console.log(itinerary);
 
 				// 각 일정을 순회하면서 서버로 데이터 전송
 				itinerary.forEach(function (item) {
+					 item.routeName = routeNameValue; // 변수명 변경
 					$.ajax({
 						method: "POST",
 						url: "/route/save",
@@ -971,7 +975,7 @@
 
 
 		function toggleAddTour() {
-			
+
 			console.log("여행지 추가 모드: " + (addTourEnabled ? "활성화" : "비활성화")); // 여행지 추가 모드 상태를 콘솔에 출력
 			if (addTourEnabled) {
 				addTourEnabled = false;
@@ -985,36 +989,40 @@
 					addTourScreen(e.latLng); // 클릭한 위치를 전달하여 화면을 표시합니다.
 				}, {passive: true});
 			}
-			
+
 		}
 
 
 
 		// 화면을 표시하는 함수
 		function addTourScreen(latlng) {
-			var addTourScreen = document.getElementById("addTourScreen");
-			addTourScreen.style.display = "block";
+			if (addTourEnabled) {
 
-			// "추가" 버튼 클릭 시
-			document.getElementById('addToTourVO').onclick = function () {
-				// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
-				console.log("여행지가 추가되었습니다.");
-				//addTourEnabled = false; // 모드를 비활성화합니다.
-				addTourScreen.style.display = "none"; // 화면을 숨깁니다.
-				addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
+				var addTourScreen = document.getElementById("addTourScreen");
+				addTourScreen.style.display = "block";
 
-				// 모달 열기
-				var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-				modal.show();
-			};
-			document.getElementById('cancelToTourVO').onclick = function () {
-				hideAddTourScreen();
+				// "추가" 버튼 클릭 시
+				document.getElementById('addToTourVO').onclick = function () {
+					// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
+					console.log("여행지가 추가되었습니다.");
+					//addTourEnabled = false; // 모드를 비활성화합니다.
+					addTourScreen.style.display = "none"; // 화면을 숨깁니다.
+					addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
 
-			};
+					// 모달 열기
+					var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+					modal.show();
+				};
+				document.getElementById('cancelToTourVO').onclick = function () {
+					hideAddTourScreen();
 
+				};
+			} else {
+				alert("비활성화 상태입니다. ");
+			}
 		}
-		
-		
+
+
 
 		// 화면을 숨기는 함수
 		function hideAddTourScreen() {
@@ -1024,30 +1032,30 @@
 
 
 
-		
-		document.addEventListener('DOMContentLoaded', function() {
 
-		//여행지 추가 모달 start
-		var exampleModal = document.getElementById('exampleModal')
-		exampleModal.addEventListener('show.bs.modal', function (event) {
-			// Button that triggered the modal
-			var button = event.relatedTarget
-			// Extract info from data-bs-* attributes
-			var recipient = button.getAttribute('data-bs-whatever')
-			// If necessary, you could initiate an AJAX request here
-			// and then do the updating in a callback.
-			//
-			// Update the modal's content.
-			var modalTitle = exampleModal.querySelector('.modal-title')
-			var modalBodyInput = exampleModal.querySelector('.modal-body input')
+		document.addEventListener('DOMContentLoaded', function () {
 
-			modalTitle.textContent = 'New message to ' + recipient
-			modalBodyInput.value = recipient
-			//여행지 추가 모달 end
-		})
-		
+			//여행지 추가 모달 start
+			var exampleModal = document.getElementById('exampleModal')
+			exampleModal.addEventListener('show.bs.modal', function (event) {
+				// Button that triggered the modal
+				var button = event.relatedTarget
+				// Extract info from data-bs-* attributes
+				var recipient = button.getAttribute('data-bs-whatever')
+				// If necessary, you could initiate an AJAX request here
+				// and then do the updating in a callback.
+				//
+				// Update the modal's content.
+				var modalTitle = exampleModal.querySelector('.modal-title')
+				var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+				modalTitle.textContent = 'New message to ' + recipient
+				modalBodyInput.value = recipient
+				//여행지 추가 모달 end
+			})
+
 		});
-		
+
 
 	</script>
 </head>
@@ -1062,6 +1070,8 @@
 
 		<!-- 여행 기간 표시 영역 -->
 		<div id="selectedDuration"></div>
+
+		<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 
 	</div>
 
@@ -1092,7 +1102,7 @@
 		<button id="cancelToTourVO">취소</button>
 	</div>
 
-	
+
 
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1110,12 +1120,13 @@
 						</div>
 						<div class="mb-3">
 							<label for="tourAddress" class="col-form-label">여행지 주소:</label>
-							<input type="text" class="form-control" id="tourAddress" name="tourAddress" value="경남 창원시 의창구 대산면 가술리">
+							<input type="text" class="form-control" id="tourAddress" name="tourAddress"
+								value="경남 창원시 의창구 대산면 가술리">
 						</div>
 						<div class="mb-3">
 							<label for="tourContent" class="col-form-label">여행지 설명:</label>
-							<textarea class="form-control" id="tourContent" name="tourContent" 
-							value="주남돌다리도 두드려보고 건너자"></textarea>
+							<textarea class="form-control" id="tourContent" name="tourContent"
+								value="주남돌다리도 두드려보고 건너자"></textarea>
 						</div>
 						<div class="mb-3">
 							<label for="tourTel" class="col-form-label">여행지 연락처(선택):</label>
@@ -1139,7 +1150,7 @@
 	</div>
 	<!--모달: 여행지 추가 form end-->
 	<script>
-		$("#addGuideToTourBtn").click(function(){
+		$("#addGuideToTourBtn").click(function () {
 			console.log("send message click");
 			addTourForm.submit();
 		});
