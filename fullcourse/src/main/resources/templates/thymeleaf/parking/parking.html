@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>simpleMap</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
+<!--<title>우리동네 풀코스</title>-->
+<!-- 공통 CSS-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+
 <script type="text/javascript">
 	var map, myMarker, myLat, myLon, rect;
 	// 페이지가 로딩이 된 후 호출하는 함수입니다.
@@ -14,7 +21,7 @@
 		map = new Tmapv2.Map("map_div", {
 			center: new Tmapv2.LatLng(37.56520450, 126.98702028),
 			width: "100%",	// 지도의 넓이
-			height: "800px",	// 지도의 높이
+			height: "1000px",	// 지도의 높이
 			zoom: 15	// 지도 줌레벨
 		});
 
@@ -129,7 +136,7 @@
 
 					// 비율 계산
 					var ratio = vo.pkfcAvailableParkingLotsTotla / vo.pkfcParkingLotsTotal;
-					console.log("ratio",ratio);
+					console.log("ratio", ratio);
 					// 마커 아이콘 경로 설정
 					var iconPath = "";
 					if (ratio === 0) {
@@ -139,7 +146,7 @@
 					} else {
 						iconPath = "../../images/parking/blue_marker.png";
 					}
-					
+
 					//Marker 객체 생성.
 					var parking = new Tmapv2.Marker({
 						position: new Tmapv2.LatLng(vo.prkPlceEntrcLa, vo.prkPlceEntrcLo), //Marker의 중심좌표 설정.
@@ -202,9 +209,72 @@
 </head>
 
 <body onload="initTmap()"><!-- 맵 생성 실행 -->
-	<div id="map_div"></div>
-	<button onClick="Move(myLat, myLon)">현재 위치로 지도 이동</button>
-	<p id="result" />
+
+	<!-- Topbar Start -->
+	<div class="container-fluid bg-light pt-3 d-none d-lg-block">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+					<div class="d-inline-flex align-items-center">
+						<p>3조</p>
+						<p class="text-body px-3">|</p>
+						<p>3줄 코딩</p>
+					</div>
+				</div>
+				<div class="col-lg-6 text-center text-lg-right">
+					<div class="d-inline-flex align-items-center">
+						<div class="d-inline-flex align-items-center">
+							<a class="text-primary px-3" href="/login">
+								<button>로그인</button>
+							</a>
+							<a class="text-primary px-3" href="">
+								<button>로그아웃</button>
+							</a>
+							<a class="text-primary px-3" href="/cart">
+								<i class="fab fa-linkedin-in"></i>
+							</a>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Topbar End -->
+
+		<!-- Navbar Start -->
+		<div class="container-fluid position-relative nav-bar p-0">
+			<div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+				<nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+					<a href="/index" class="navbar-brand">
+						<h1 class="m-0 text-primary" style="font-size:30px;"><span class="text-dark">우리동네</span>풀코스</h1>
+					</a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+						<div class="navbar-nav ml-auto py-0">
+							<!--                        <a href="/index" class="nav-item nav-link">Home</a>-->
+							<a href="/route" class="nav-item nav-link">가이드북제작</a>
+							<a href="/mypage" class="nav-item nav-link">마이페이지</a>
+							<a href="/tour" class="nav-item nav-link">여행지정보</a>
+							<a href="/festival" class="nav-item nav-link">축제정보</a>
+							<a href="/product/selectAll" class="nav-item nav-link">여행상품쇼핑</a>
+							<a href="/board/selectAll" class="nav-item nav-link">게시판</a>
+							<a href="/chat/chatStart" class="nav-item nav-link">실시간문의</a>
+							<a href="/parking" class="nav-item nav-link">주차정보</a>
+
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!-- Navbar End -->
+
+		<div id="map_div">
+		</div>
+		<button onClick="Move(myLat, myLon)">현재 위치로 지도 이동</button>
+		<p id="result" />
 	</div>
 </body>
 

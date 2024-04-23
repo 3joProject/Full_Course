@@ -3,17 +3,12 @@
 
 <mapper namespace="com.fullcourse.parking.mapper.ParkingMapper">
 
-	<resultMap id="parkingResultMap" type="com.fullcourse.parking.ParkingVO">
-		<!-- format(prkPlceEntrcLa,6)으로 오는 값을 prkPlceEntrcLa 변수에 매핑 -->
-		<result property="prkPlceEntrcLa" column="format(prkPlceEntrcLa,6)" />
-		<!-- format(prkPlceEntrcLo,6)으로 오는 값을 prkPlceEntrcLo 변수에 매핑 -->
-		<result property="prkPlceEntrcLo" column="format(prkPlceEntrcLo,6)" />
-	</resultMap>
+
 
 	<select id="marker"
-		resultType="com.fullcourse.parking.ParkingVO" resultMap="parkingResultMap">
+		resultType="com.fullcourse.parking.ParkingVO" >
 		SELECT prkCenterId, prkPlceNm, prkPlceAdres,
-		format(prkPlceEntrcLa,6), format(prkPlceEntrcLo,6), pkfcParkingLotsTotal, pkfcAvailableParkingLotsTotla
+		prkPlceEntrcLa, prkPlceEntrcLo, pkfcParkingLotsTotal, pkfcAvailableParkingLotsTotla
         FROM prksttusinfo p, prkrealtimeinfo r
 		where p.prkCenterId = r.prkRealTimeId and
 		prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
