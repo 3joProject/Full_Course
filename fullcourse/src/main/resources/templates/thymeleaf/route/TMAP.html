@@ -17,6 +17,7 @@
 			<title>simpleMap</title>
 			<style>
 				#sidebar {
+					margin-top: 130px;
 					width: 250px;
 					height: 100%;
 					background-color: #f2f2f2;
@@ -73,7 +74,7 @@
 					height: 80vh;
 					/* Set the height to 100% of the viewport height */
 					margin-bottom: 100px;
-					  position: relative;
+					position: relative;
 				}
 
 				/* sidebar 내의 각 여행지 정보를 스타일링하기 위한 스타일 */
@@ -115,13 +116,16 @@
 					border-radius: 5px;
 					z-index: 1000;
 				}
-				
+
 				#button_container {
-    position: absolute;
-    top: 170px; /* 버튼을 지도 상단에서 20px 아래로 배치합니다. */
-    left: -220px; /* 버튼을 지도 오른쪽에서 20px 왼쪽으로 배치합니다. */
-    z-index: 1000; /* 다른 요소 위에 배치합니다. */
-}
+					position: absolute;
+					top: 170px;
+					/* 버튼을 지도 상단에서 20px 아래로 배치합니다. */
+					left: -220px;
+					/* 버튼을 지도 오른쪽에서 20px 왼쪽으로 배치합니다. */
+					z-index: 1000;
+					/* 다른 요소 위에 배치합니다. */
+				}
 			</style>
 			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 			<script
@@ -164,11 +168,11 @@
 					// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
 					map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
 						center: new Tmapv2.LatLng(35.3116461479475, 128.679897664909),
-					width: "1350px", // 지도의 넓이
-					height: "800px", // 지도의 높이
+						width: "1350px", // 지도의 넓이
+						height: "800px", // 지도의 높이
 
-					//	width: screenWidth + "px",
-					//	height: screenHeight + "px",
+						//	width: screenWidth + "px",
+						//	height: screenHeight + "px",
 						zoom: 14
 					});
 
@@ -336,83 +340,83 @@
 					}
 
 					// 여행 정보를 itinerary 배열에 추가하는 함수
-			function addItineraryInfo(transportInfo, index) {
-				itinerary[index] = {
-					routeName: "",
-					routeTraffic: selectedTransportMode,
-					routeDistance: transportInfo.tDistance,
-					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[index - 1].tourName,
-					routeEndLocation: newPlaces[index].tourName,
-					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[index - 1].lattitue,
-					routeStartLongitude: newPlaces[index - 1].longtitue,
-					routeEndLatitude: newPlaces[index].lattitue,
-					routeEndLongitude: newPlaces[index].longtitue,
-					routeOrder: index
-				};
-			}
+					function addItineraryInfo(transportInfo, index) {
+						itinerary[index] = {
+							routeName: "",
+							routeTraffic: selectedTransportMode,
+							routeDistance: transportInfo.tDistance,
+							routeTime: transportInfo.tTime,
+							routeStartLocation: newPlaces[index - 1].tourName,
+							routeEndLocation: newPlaces[index].tourName,
+							//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
+							routeStartLatitude: newPlaces[index - 1].lattitue,
+							routeStartLongitude: newPlaces[index - 1].longtitue,
+							routeEndLatitude: newPlaces[index].lattitue,
+							routeEndLongitude: newPlaces[index].longtitue,
+							routeOrder: index
+						};
+					}
 
-			// 여행 일정 업데이트 함수 수정
-			function updateItinerary(transportInfo) {
-				const currentIndex = newPlaces.length - 1;
-				itinerary[currentIndex] = {
-					routeName: "",
-					routeTraffic: selectedTransportMode,
-					routeDistance: transportInfo.tDistance,
-					routeTime: transportInfo.tTime,
-					routeStartLocation: newPlaces[currentIndex - 1].tourName,
-					routeEndLocation: newPlaces[currentIndex].tourName,
-					//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
-					routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
-					routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
-					routeEndLatitude: newPlaces[currentIndex].lattitue,
-					routeEndLongitude: newPlaces[currentIndex].longtitue,
-					routeOrder: currentIndex
-				};
-			}
+					// 여행 일정 업데이트 함수 수정
+					function updateItinerary(transportInfo) {
+						const currentIndex = newPlaces.length - 1;
+						itinerary[currentIndex] = {
+							routeName: "",
+							routeTraffic: selectedTransportMode,
+							routeDistance: transportInfo.tDistance,
+							routeTime: transportInfo.tTime,
+							routeStartLocation: newPlaces[currentIndex - 1].tourName,
+							routeEndLocation: newPlaces[currentIndex].tourName,
+							//routeUserId: user1, // 유저 아이디는 임시로 1로 설정됨
+							routeStartLatitude: newPlaces[currentIndex - 1].lattitue,
+							routeStartLongitude: newPlaces[currentIndex - 1].longtitue,
+							routeEndLatitude: newPlaces[currentIndex].lattitue,
+							routeEndLongitude: newPlaces[currentIndex].longtitue,
+							routeOrder: currentIndex
+						};
+					}
 
-			// 여행 일정 저장 함수
-			function saveItinerary() {
+					// 여행 일정 저장 함수
+					function saveItinerary() {
 
-				// 입력 필드에서 값 가져오기
-				const routeNameInput = document.getElementById('routeNameInput');
-				const routeNameValue = routeNameInput.value;
+						// 입력 필드에서 값 가져오기
+						const routeNameInput = document.getElementById('routeNameInput');
+						const routeNameValue = routeNameInput.value;
 
-				// 입력 값이 비어 있는지 확인
-				if (!routeNameValue) {
-					alert('여행 경로 이름을 입력하세요.');
-					return;
-				}
-
-				console.log(itinerary);
-
-				// 각 일정을 순회하면서 서버로 데이터 전송
-				itinerary.forEach(function (item) {
-					 item.routeName = routeNameValue; // 변수명 변경
-					$.ajax({
-						method: "POST",
-						url: "/route/save",
-						data: JSON.stringify(item),
-						contentType: "application/json; charset=utf-8",
-						dataType: "json",
-						success: function (response) {
-							console.log(response.message);
-							console.log("여행 일정이 저장되었습니다.html");
-							window.location.href = "/route/list";
-						},
-						error: function (request, status, error) {
-							console.log("여행 일정 저장에 실패했습니다html");
-							console.log(request); // 요청 정보 확인
-							console.log(status); // 상태 코드 확인
-							console.log(error); // 오류 메시지 확인
+						// 입력 값이 비어 있는지 확인
+						if (!routeNameValue) {
+							alert('여행 경로 이름을 입력하세요.');
+							return;
 						}
-					});
-				});
-			}
 
-			// 여행 일정 저장 버튼 클릭 이벤트 핸들러
-			document.getElementById('saveItineraryButton').onclick = saveItinerary;
+						console.log(itinerary);
+
+						// 각 일정을 순회하면서 서버로 데이터 전송
+						itinerary.forEach(function (item) {
+							item.routeName = routeNameValue; // 변수명 변경
+							$.ajax({
+								method: "POST",
+								url: "/route/save",
+								data: JSON.stringify(item),
+								contentType: "application/json; charset=utf-8",
+								dataType: "json",
+								success: function (response) {
+									console.log(response.message);
+									console.log("여행 일정이 저장되었습니다.html");
+									window.location.href = "/route/list";
+								},
+								error: function (request, status, error) {
+									console.log("여행 일정 저장에 실패했습니다html");
+									console.log(request); // 요청 정보 확인
+									console.log(status); // 상태 코드 확인
+									console.log(error); // 오류 메시지 확인
+								}
+							});
+						});
+					}
+
+					// 여행 일정 저장 버튼 클릭 이벤트 핸들러
+					document.getElementById('saveItineraryButton').onclick = saveItinerary;
 
 					//sidebar
 					function addToSidebar(placeName) {
@@ -1018,30 +1022,30 @@
 
 				// 화면을 표시하는 함수
 				function addTourScreen(latlng) {
-          //비활성화 기능추가
-          if (addTourEnabled) {
-					var addTourScreen = document.getElementById("addTourScreen");
-					addTourScreen.style.display = "block";
+					//비활성화 기능추가
+					if (addTourEnabled) {
+						var addTourScreen = document.getElementById("addTourScreen");
+						addTourScreen.style.display = "block";
 
-					// "추가" 버튼 클릭 시
-					document.getElementById('addToTourVO').onclick = function () {
-						// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
-						console.log("여행지가 추가되었습니다.");
-						//addTourEnabled = false; // 모드를 비활성화합니다.
-						addTourScreen.style.display = "none"; // 화면을 숨깁니다.
-						addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
+						// "추가" 버튼 클릭 시
+						document.getElementById('addToTourVO').onclick = function () {
+							// 여기에 추가 버튼을 클릭했을 때 수행할 동작을 작성합니다.
+							console.log("여행지가 추가되었습니다.");
+							//addTourEnabled = false; // 모드를 비활성화합니다.
+							addTourScreen.style.display = "none"; // 화면을 숨깁니다.
+							addTour(latlng); // 여행지를 추가하는 함수를 호출합니다.
 
-						// 모달 열기
-						var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-						modal.show();
-					};
-					document.getElementById('cancelToTourVO').onclick = function () {
-						hideAddTourScreen();
+							// 모달 열기
+							var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+							modal.show();
+						};
+						document.getElementById('cancelToTourVO').onclick = function () {
+							hideAddTourScreen();
 
-					};
-          } else {
-				alert("비활성화 상태입니다. ");
-			}
+						};
+					} else {
+						alert("비활성화 상태입니다. ");
+					}
 
 				}
 
@@ -1081,16 +1085,19 @@
 
 		<body onload="initTmap()">
 			<div id="sidebar">
+				<!--
 				<button id="showCalendarBtn">여행 시작일 : 2024-04-08</button>
 				<div id="calendar">
 					<input type="date" id="selectedDate">
 					<button id="closeCalendarBtn">닫기</button>
-				</div>
+				</div> -->
+
+				<!-- 여행 기간 표시 영역 
+				<div id="selectedDuration"></div>  -->
 
 
-				<!-- 여행 기간 표시 영역 -->
-				<div id="selectedDuration"></div>
-	<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
+
+				<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 			</div>
 
 			<div id="smallScreen">
@@ -1106,10 +1113,10 @@
 			<div class="map_result">
 			</div>
 			<br />
-<div id="button_container">
-			<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
-			<button id="addTour" onclick="toggleAddTour()">여행지 추가</button>
-</div>
+			<div id="button_container">
+				<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
+				<button id="addTour" onclick="toggleAddTour()">여행지 추가</button>
+			</div>
 			<!--마커가 찍힌곳에 여행지로 등록하기-->
 			<div id="addTourScreen">
 				<div>
@@ -1174,4 +1181,5 @@
 
 		</body>
 	</div>
+
 </html>
