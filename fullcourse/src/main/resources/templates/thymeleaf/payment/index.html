@@ -32,10 +32,86 @@
   </body>
 
   <script>
-
-    let cart = {amount: 2500, cartproduct : "trip", cartSellerId : "kim" };
-
     let tossPayments = TossPayments("test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq");
+
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] === variable) {
+          return pair[1];
+        }
+      }
+      return null;
+    }
+
+    let orderId = new Date().getTime().toString();
+    let amount = getQueryVariable("amount");
+    
+
+    let path = "/";
+    let successUrl = window.location.origin + path + "success1";
+    let failUrl = window.location.origin + path + "fail";
+    let callbackUrl = window.location.origin + path + "va_callback";
+
+    let jsons = {
+      card: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "카드 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+        customerName: "고객명", // 고객명 예시
+      },
+      vaccount: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "가상계좌 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+        validHours: 72,
+        virtualAccountCallbackUrl: callbackUrl,
+        customerName: "고객명", // 고객명 예시
+      },
+      transfer: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "계좌이체 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+        customerName: "고객명", // 고객명 예시
+      },
+      phone: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "휴대폰 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+        mobileCarrier: null,
+      },
+      certificate: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "문화상품권 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+      },
+      bookcert: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "도서문화상품권 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+      },
+      gamecert: {
+        amount: amount,
+        orderId: orderId,
+        orderName: "게임문화상품권 상품", // 상품명 예시
+        successUrl: successUrl,
+        failUrl: failUrl,
+      },
+    };
 
     function pay(method, requestJson) {
       console.log(requestJson);
@@ -47,105 +123,5 @@
         }
       });
     }
-
-    let path = "/";
-    let successUrl = window.location.origin + path + "success1";
-    let failUrl = window.location.origin + path + "fail";
-    let callbackUrl = window.location.origin + path + "va_callback";
-    let orderId = new Date().getTime();
-
-    let jsons = {
-      card: {
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-        cardCompany: null,
-        cardInstallmentPlan: null,
-        maxCardInstallmentPlan: null,
-        useCardPoint: false,
-        customerName: cart.cartSellerId,
-        customerEmail: null,
-        customerMobilePhone: null,
-        taxFreeAmount: null,
-        useInternationalCardOnly: false,
-        flowMode: "DEFAULT",
-        discountCode: null,
-        appScheme: null,
-      },
-      vaccount: {
-        //가상계좌 결제창
-
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-        validHours: 72,
-        virtualAccountCallbackUrl: callbackUrl,
-        customerName: cart.cartSellerId,
-        customerEmail: null,
-        customerMobilePhone: null,
-        taxFreeAmount: null,
-        cashReceipt: {
-          type: "소득공제",
-        },
-        useEscrow: false,
-      },
-      transfer: {
-        //계좌이체 결제창
-
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-        customerName: cart.cartSellerId,
-        customerEmail: null,
-        customerMobilePhone: null,
-        taxFreeAmount: null,
-        cashReceipt: {
-          type: "소득공제",
-        },
-        useEscrow: false,
-      },
-      phone: {
-        // 휴대폰 결제창
-
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-        mobileCarrier: null,
-      },
-
-      certificate: {
-        //상품권 결제창
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-      },
-
-      bookcert: {
-        //도서문화상품권 결제창
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-      },
-      gamecert: {
-        // 게임문화상품권 결제창
-        amount: cart.amount,
-        orderId: "sample-" + orderId,
-        orderName: cart.cartproduct,
-        successUrl: successUrl,
-        failUrl: failUrl,
-      },
-    };
   </script>
 </html>
