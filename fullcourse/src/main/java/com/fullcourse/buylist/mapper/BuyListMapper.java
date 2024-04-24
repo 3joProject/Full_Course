@@ -12,5 +12,6 @@ public interface BuyListMapper {
 
 
 	@Select("SELECT * FROM buylist WHERE buymnum = #{memberNum}")
+	 List<BuyListVO> findByMemberNum(int memberNum);
 
 }
