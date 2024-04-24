@@ -15,13 +15,17 @@
             <p>구매 내역이 없습니다.</p>
         </div>
         <!-- 구매 내역 리스트 -->
-        <div th:each="buyItem : ${buyList}" class="buylist-item">
-            <!-- 상품명, 금액, 수량, 구매일자 표시 -->
-            <div class="buylist-details">
-                <span th:text="'상품명: ' + ${buyItem.productName}"></span>
-                <span th:text="'금액: ' + ${buyItem.buyTotalPrice} + '원'"></span>
-                <span th:text="'수량: ' + ${buyItem.buyInventory} + '개'"></span>
-                <span th:text="'구매일자: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
+        <div th:unless="${buyList.empty}" class="buylist-items">
+            <div th:each="buyItem : ${buyList}" class="buylist-item">
+                <!-- 금액, 수량, 구매일자 표시 -->
+                <div class="buylist-details">
+                    <span th:text="'구매 번호: ' + ${buyItem.buyNum}"></span>
+                    <span th:text="'회원 번호: ' + ${buyItem.buyMnum}"></span>
+                    <span th:text="'제품 ID: ' + ${buyItem.buyId}"></span>
+                    <span th:text="'수량: ' + ${buyItem.buyInventory} + '개'"></span>
+                    <span th:text="'총 가격: ' + ${buyItem.buyTotalPrice} + '원'"></span>
+                    <span th:text="'구매 날짜: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
+                </div>
             </div>
         </div>
     </div>
