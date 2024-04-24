@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,22 +104,23 @@ public class MemberController {
     }
  // 판매자 상세 정보 페이지
     @GetMapping("/seller/{sellerId}")
-    public String sellerDetail(@PathVariable String sellerId, Model model) {
+    public String sellerDetail(@PathVariable String sellerId, Model model, 
+    		HttpServletRequest request) {
         log.info("판매자 상세 정보 조회: {}", sellerId);
-
+        HttpSession session = request.getSession();
+        MemberVO member = (MemberVO) session.getAttribute("member");
         // 판매자 정보 조회
         MemberVO seller = memberService.getMemberById(sellerId);
-        if (seller == null) {
-            model.addAttribute("error", "해당 판매자 정보를 찾을 수 없습니다.");
-            return "thymeleaf/member/error"; // 오류 페이지 또는 적절한 에러 메시지 페이지로 리다이렉션
+        if (member == null) {
+            return "redirect:/login";
         }
         List<SellerReviewVO> vos = memberService.reviewSelectAll(sellerId);
 		log.info("vos:{}",vos);
+	    log.info("MemberVO:{}",member);
 
 		model.addAttribute("vos",vos);
-        
-
         model.addAttribute("seller", seller);
+        model.addAttribute("member", member);
         return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동
     }
 //    @PostMapping("/followMember/{memberId}")

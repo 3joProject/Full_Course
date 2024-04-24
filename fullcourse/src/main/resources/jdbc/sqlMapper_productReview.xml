@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fullcourse.product.productReview.mapper.ProductReviewMapper">
+	
+    <insert id="insert" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
+        INSERT INTO ProductReview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevStatus, prorevPnum)
+        VALUES (#{prorevNum}, #{prorevWriter}, #{prorevContent}, #{prorevDate}, #{prorevStatus}, #{prorevPnum})
+    </insert>
+
+    <delete id="delete" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
+        DELETE FROM ProductReview WHERE prorevNum = #{prorevNum}
+    </delete>
+
+    <select id="selectAll" resultType="com.fullcourse.product.productReview.ProductReviewVO">
+        SELECT * FROM ProductReview WHERE prorevNum = #{prorevNum}
+    </select>
+
+</mapper>
