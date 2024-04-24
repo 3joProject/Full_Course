@@ -16,4 +16,9 @@ public class ParkingService {
 	public List<ParkingVO> marker(double lat, double lng) {
 		return mapper.marker(lat, lng);
 	}
+
+	public int DBinsert(ParkingVO vo) {
+		return mapper.DBinsert(vo);
+	}
+
 }

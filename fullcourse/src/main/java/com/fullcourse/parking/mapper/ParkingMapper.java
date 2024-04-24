@@ -11,4 +11,7 @@ public interface ParkingMapper {
 
 	List<ParkingVO> marker(double lat, double lng);
 
+	int DBinsert(ParkingVO vo);
+
+
 }
