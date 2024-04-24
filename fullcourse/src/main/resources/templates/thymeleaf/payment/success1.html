@@ -18,6 +18,7 @@
         <tr th:if="${#strings.equals(method, '가상계좌')}">accountNumber<td th:text="${accountNumber}"></td></tr>
         <tr th:if="${#strings.equals(method, '계좌이체')}">bank<td th:text="${bank}"></td></tr>
         <tr th:if="${#strings.equals(method, '휴대폰')}">customerMobilePhone<td th:text="${customerMobilePhone}"></td></tr>
+    	<a th:href="@{/buyList/list}">구매 내역 보기</a>
     </th:block>
     <th:block th:if="${#strings.equals(isSuccess, 'false')}">
         <h1>결제 실패</h1>

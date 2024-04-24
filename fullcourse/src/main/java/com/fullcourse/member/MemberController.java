@@ -94,7 +94,7 @@ public class MemberController {
             return "redirect:/login";  // 로그인이 되어있지 않다면 로그인 페이지로 리다이렉트
         }
 
-        model.addAttribute("member", member);
+        model.addAttribute("memberVO", member);
         return "thymeleaf/member/mypage";  // 마이페이지 뷰로 이동
     }
     @GetMapping("/logout")
@@ -123,17 +123,23 @@ public class MemberController {
         model.addAttribute("member", member);
         return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동
     }
-    @PostMapping("/followMember/{memberId}")
-    public String followMember(@PathVariable String memberId, HttpSession session, RedirectAttributes redirectAttributes) {
-        MemberVO member = (MemberVO) session.getAttribute("member");
-        if (member == null) {
-            redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
-            return "redirect:/login";
-        }
-
-        memberService.followMember(memberId, member.getMemberId());
-        redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
-        return "redirect:/member/" + memberId;
+//    @PostMapping("/followMember/{memberId}")
+//    public String followMember(@PathVariable String memberId, HttpSession session, RedirectAttributes redirectAttributes) {
+//        MemberVO member = (MemberVO) session.getAttribute("member");
+//        if (member == null) {
+//            redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
+//            return "redirect:/login";
+//        }
+//
+//        memberService.followMember(memberId, member.getMemberId());
+//        redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
+//        return "redirect:/member/" + memberId;
+//    }
+    @GetMapping("/member/{memberId}")
+    public String showMemberInfo(@PathVariable("memberId") String memberId, Model model) {
+        MemberVO member = memberService.getMemberById(memberId);
+        model.addAttribute("memberVO", member);
+        return "member/profile"; // Thymeleaf 템플릿의 위치
     }
     @GetMapping("/member/updateMemberInfo")
     public String updateMemberInfoForm(HttpSession session, Model model) {
@@ -192,8 +198,3 @@ public class MemberController {
     }
 }
 
-
-
-       
-	
-	
