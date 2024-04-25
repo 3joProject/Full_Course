@@ -152,10 +152,7 @@
 		var routes = /*[[${(routes)}]]*/[];
 	</script>
 
-
 	<script type="text/javascript">
-
-
 
 		var map;
 		//자동차 경로 안
@@ -178,8 +175,6 @@
 		// 여행 일정 저장 객체
 		let itinerary = [];
 		var user1 = "user1";
-
-
 
 		// 페이지가 로딩이 된 후 호출하는 함수입니다.
 		function initTmap() {
@@ -254,10 +249,10 @@
 					if (route.routeTraffic === "자동차") {
 						carButton.classList.add('blue-button'); // 예시로 'blue-button' 클래스를 추가
 						console.log("파란 자동");
-						onTransportButtonClick(route.routeTraffic, route);
+						onTransportButtonDisplay(route.routeTraffic, route);
 					} else if (route.routeTraffic === "도보") {
 						walkButton.classList.add('green-button'); // 예시로 'green-button' 클래스를 추가
-						onTransportButtonClick(route.routeTraffic, route);
+						onTransportButtonDisplay(route.routeTraffic, route);
 					}
 
 					// 도착지 정보를 생성합니다.
@@ -278,8 +273,8 @@
 				return button;
 			}
 
-			// 도보 또는 자동차 버튼 클릭 시 호출되는 함수
-			function onTransportButtonClick(transportMode, route) {
+			// 도보 또는 자동차 버튼 생성 시 호출되는 함수
+			function onTransportButtonDisplay(transportMode, route) {
 				selectedTransportMode = transportMode;
 				let transportInfo;
 				if (transportMode === '자동차') {
@@ -315,8 +310,6 @@
 					});
 				}
 			})
-
-
 
 			function getWalkInfoBetweenPlaces(route) {
 				console.log("place1walk", route);
@@ -787,17 +780,17 @@
 			resultMarkerArr = [];
 			resultdrawArr = [];
 		}
-
-
-
 	</script>
 </head>
 
 <body onload="initTmap()">
+	
+	
 
 	<div id="sidebar">
 		<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
-
+		
+		 
 	</div>
 
 	<!-- 맵 생성 실행 -->

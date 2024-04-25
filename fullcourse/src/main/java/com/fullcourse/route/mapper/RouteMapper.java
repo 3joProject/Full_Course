@@ -29,6 +29,16 @@ public interface RouteMapper {
 
 
 	public List<RouteVO> getRoute();
+
+	public List<RouteVO> selectAllRouteList(Map<String, Object> map);
+
+	public int getTotalRowsRouteList(String routeUserId);
+
+	public List<RouteVO> routeUpdate(String routeName);
+
+	public int deleteAllRoutes(String routeName);
+
+	public int mypageDeleteAll(RouteVO vo);
 	
 
 }
