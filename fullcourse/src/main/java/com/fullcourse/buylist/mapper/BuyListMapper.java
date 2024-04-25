@@ -12,6 +12,15 @@ public interface BuyListMapper {
 
 
 	@Select("SELECT * FROM buylist WHERE buymnum = #{memberNum}")
-	 List<BuyListVO> findByMemberNum(int memberNum);
+    List<BuyListVO> findByMemberNum(int memberNum);
+	
+	@Select("select * from member m,buylist b,product p\r\n"
+			+ "where m.memberNum = b.buyMnum\r\n"
+			+ "and b.buyId = p.productNum\r\n"
+			+ "and b.buyMnum = #{memberNum}")
+	List<BuyListVO> findByMemberNum2(int memberNum);
+
+
+
 
 }

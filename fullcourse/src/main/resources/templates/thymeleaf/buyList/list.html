@@ -21,7 +21,9 @@
                 <div class="buylist-details">
                     <span th:text="'구매 번호: ' + ${buyItem.buyNum}"></span>
                     <span th:text="'회원 번호: ' + ${buyItem.buyMnum}"></span>
+                    <span th:text="'회원 memberId: ' + ${buyItem.memberId}"></span>
                     <span th:text="'제품 ID: ' + ${buyItem.buyId}"></span>
+                    <span th:text="'제품 productTitle: ' + ${buyItem.productTitle}"></span>
                     <span th:text="'수량: ' + ${buyItem.buyInventory} + '개'"></span>
                     <span th:text="'총 가격: ' + ${buyItem.buyTotalPrice} + '원'"></span>
                     <span th:text="'구매 날짜: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
