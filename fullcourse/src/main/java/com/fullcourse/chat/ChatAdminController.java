@@ -46,9 +46,12 @@ public class ChatAdminController {
     
     
     @GetMapping("/chat/adminDashboard")
-    public String adminDashboard(Model model) {
-        model.addAttribute("chatRooms", chatAdminService.getAllChatRooms());
-        return "thymeleaf/chat/adminDashboard";
+    public String adminDashboard(HttpSession session, Model model) {
+    	if (session.getAttribute("admin") != null) {
+            model.addAttribute("chatRooms", chatAdminService.getAllChatRooms());
+            return "thymeleaf/chat/adminDashboard";
+        }
+        return "redirect:/chat/adminChatlogin";  // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
     }
 
     @GetMapping("/chat/chatRoom/{chatRoomId}")

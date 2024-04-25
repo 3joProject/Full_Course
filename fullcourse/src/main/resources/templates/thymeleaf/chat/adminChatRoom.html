@@ -12,28 +12,38 @@
         #chat-form input, #chat-form button { width: 100%; padding: 10px; margin-top: 5px; }
     </style>
     <script th:inline="javascript">
-        var roomId = /*[[${chatRoom.chatRoomId}]]*/ 'defaultRoomId';
+        var chatRoomId = /*[[${chatRoomId}]]*/ 'defaultRoomId';
         var stompClient = null;
+        var isSubscribed = false; // 구독 완료 상태를 추적하는 플래그
 
         document.addEventListener('DOMContentLoaded', function() {
             connect();
             var chatForm = document.getElementById('chat-form');
             chatForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                sendMessage();
+                if(isSubscribed) {
+                	sendMessage();
+                }else {
+					alert('서버와의 연결이 원활하지 않습니다. 잠시 후 다시 시도해주세요.');
+				}
             });
         });
 
         function connect() {
-            var socket = new SockJS('/ws');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/' + roomId, function(message) {
-                    showMessage(JSON.parse(message.body));
-                });
-            });
-        }
+    		var socket = new SockJS('/ws');
+    		stompClient = Stomp.over(socket);
+    		stompClient.connect({}, function(frame) {
+        		console.log('Connected: ' + frame);
+        		stompClient.subscribe('/topic/' + chatRoomId, function(message) {
+					isSubscribed = true; //구독 완료 플래그 설정
+            		console.log('Subscription to ' + chatRoomId + ' successful');
+            		showMessage(JSON.parse(message.body));
+        		});
+    		}, function(error) {
+        		console.log('Connection failed: ' + error);
+        		setTimeout(connect, 5000);  // 5초 후에 재시도
+    		});
+		}
 
         function showMessage(message) {
             var chatMessages = document.getElementById('chat-messages');
@@ -49,16 +59,16 @@
                 var chatMessage = {
                     sender: 'Admin',
                     message: message,
-                    chatRoomId: roomId
+                    chatRoomId: chatRoomId
                 };
-                stompClient.send("/app/chat/" + roomId, {}, JSON.stringify(chatMessage));
+                stompClient.send("/app/chat/" + chatRoomId, {}, JSON.stringify(chatMessage));
                 messageInput.value = '';
             }
         }
     </script>
 </head>
 <body>
-    <h1>관리자 채팅 룸 #<span th:text="${chatRoom.chatRoomId}"></span></h1>
+    <h1>관리자 채팅 룸 #<span th:text="${chatRoomId}"></span></h1>
     <div id="chat-messages"></div>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
