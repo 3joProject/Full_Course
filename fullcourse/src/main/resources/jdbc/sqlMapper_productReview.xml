@@ -5,17 +5,17 @@
 
 <mapper namespace="com.fullcourse.product.productReview.mapper.ProductReviewMapper">
 	
-    <insert id="insert" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
-        INSERT INTO ProductReview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevStatus, prorevPnum)
+    <insert id="prorevInsertOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
+        INSERT INTO productreview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevStatus, prorevPnum)
         VALUES (#{prorevNum}, #{prorevWriter}, #{prorevContent}, #{prorevDate}, #{prorevStatus}, #{prorevPnum})
     </insert>
 
-    <delete id="delete" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
-        DELETE FROM ProductReview WHERE prorevNum = #{prorevNum}
+    <delete id="prorevDeleteOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
+        DELETE FROM productreview WHERE prorevNum = #{prorevNum}
     </delete>
 
     <select id="selectAll" resultType="com.fullcourse.product.productReview.ProductReviewVO">
-        SELECT * FROM ProductReview WHERE prorevNum = #{prorevNum}
+        SELECT * FROM productreview WHERE prorevNum = #{prorevNum}
     </select>
 
 </mapper>
