@@ -88,28 +88,32 @@ public class FestivalController {
 //		return "thymeleaf/festival/th_festivalLayout_main";
 //	}
 
-	//상세정보 새로운 버젼 
+	// 상세정보 새로운 버젼
 	@GetMapping("/festival/festivalDetails")
 	public String festivalDetails(FestivalVO vo, Model model, HttpSession session) {
 		log.info("festivalDetails...");
 		log.info("vo:{}", vo);
-		
-	    MemberVO member = (MemberVO) session.getAttribute("member");
-	    if (member != null) {
-	    	session.setAttribute("festivalLikeMemberNum ", member.getMemberNum());
-            session.setAttribute("festivalLikeFestivalNum ", vo.getFestivalNum());
-            log.info("festivalLikeMemberNum: {}", member.getMemberNum());
-            log.info("festivalLikeFestivalNum: {}", vo.getFestivalNum());
 
-            session.setMaxInactiveInterval(3600);
-	        // 로그인된 사용자인 경우, 좋아요 상태를 확인하고 업데이트합니다.
-	        int likeCount = service.getFestivalLikeCount(member.getMemberNum(), vo.getFestivalNum()); // 회원번호와 글번호를 통해 좋아요 상태 확인
-	        log.info("좋아요 체크성공");
-	        log.info("likeCount: {}", likeCount);
-	        model.addAttribute("commentWriter", member.getMemberId());
-	        model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
-	    }
-	    log.info("Member Number: {}", member);
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+			session.setAttribute("festivalLikeMemberNum ", member.getMemberNum());
+			session.setAttribute("festivalLikeFestivalNum ", vo.getFestivalNum());
+			log.info("festivalLikeMemberNum: {}", member.getMemberNum());
+			log.info("festivalLikeFestivalNum: {}", vo.getFestivalNum());
+			// 로그인check start
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+			// 로그인check end
+			int likeCount = service.getFestivalLikeCount(member.getMemberNum(), vo.getFestivalNum()); // 회원번호와 글번호를 통해
+																										// 좋아요 상태 확인
+			log.info("좋아요 체크성공");
+			log.info("likeCount: {}", likeCount);
+			model.addAttribute("commentWriter", member.getMemberId());
+			model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
+		}
+		log.info("Member Number: {}", member);
 		service.updateviewCount(vo);
 		log.info("updateview..");
 		log.info("vo:{}", vo);
@@ -128,6 +132,7 @@ public class FestivalController {
 
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
+
 	// 축제 입력페이지로 이동
 	@GetMapping("/festival/festivalInsert")
 	public String festivalInsert(Model model) {
@@ -288,8 +293,25 @@ public class FestivalController {
 	}
 
 	@GetMapping(value = "/festival")
-	public String festivalMain(Model model, @ModelAttribute("searchVO") FestivalVO searchVO) throws Exception {
+	public String festivalMain(Model model, @ModelAttribute("searchVO") FestivalVO searchVO, HttpSession session)
+			throws Exception {
 		log.info("새로운");
+
+		// 로그인check start
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+
+		}
+		// 로그인check end
 		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -319,7 +341,7 @@ public class FestivalController {
 		model.addAttribute("festivalListVO", festivalVOList);
 //		model.addAttribute("totalCount", totalCount);
 //		log.info("축제갯수:{}", totalCount);
-		
+
 		log.info("갯수: {}", festivalVOList.size());
 		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
 		model.addAttribute("title", "축제");
@@ -330,8 +352,25 @@ public class FestivalController {
 	}
 
 	@GetMapping(value = "/festival/festivalSelectAll")
-	public String festivalSelectAll(Model model, @ModelAttribute("searchVO") FestivalVO searchVO) throws Exception {
+	public String festivalSelectAll(Model model, @ModelAttribute("searchVO") FestivalVO searchVO, HttpSession session)
+			throws Exception {
 		log.info("확인2");
+
+		// 로그인check start
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+
+		}
+		// 로그인check end
 		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -347,7 +386,6 @@ public class FestivalController {
 //		} else {
 //			searchVO.setFirstIndex(1);
 //		}
-		
 
 		// 총 갯수
 		int totalCount = service.selectListTotalCount(searchVO);

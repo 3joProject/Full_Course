@@ -15,17 +15,25 @@
 				</div>
 				<div class="col-lg-6 text-center text-lg-right">
 					<div class="d-inline-flex align-items-center">
-						<div class="d-inline-flex align-items-center">
-							<a class="text-primary px-3" href="/login">
-								<button class="btn btn-primary mt-1">로그인</button>
-							</a>
-							<a class="text-primary px-3" href="">
+						<div class="d-inline-flex align-items-center" th:if="${loggedIn}">
+							<!-- 로그인된 경우 -->
+							<span th:text="${loginId}"></span>
+							<a class="text-primary px-3" href="/logout">
 								<button class="btn btn-primary mt-1">로그아웃</button>
 							</a>
 							<a class="text-primary px-3" href="/cart">
-								<i class="fab fa-linkedin-in"></i>
-							</a>
+								<i class="fas fa-shopping-cart"></i>
 
+							</a>
+						</div>
+						<div th:unless="${loggedIn}">
+							<!-- 로그인되지 않은 경우 -->
+							<a class="text-primary px-3" href="/login">
+								<button class="btn btn-primary mt-1">로그인</button>
+							</a>
+							<a class="text-primary px-3" href="/signup">
+								<button class="btn btn-primary mt-1">회원가입</button>
+							</a>
 
 						</div>
 					</div>
@@ -39,14 +47,14 @@
 		<div class="container-fluid position-relative nav-bar p-0">
 			<div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
 				<nav class="topMenu navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
-										<a href="/index" class="navbar-brand">
-											<h1 class="m-0 text-primary" style="font-size:30px;"><span class="text-dark">우리동네</span>풀코스</h1>
-										</a>
-<!--										로고 넣고싶으면여기...-->
-<!--					<a href="/index" class="navbar-brand">-->
-<!--						<img src="img/logo.png" alt="로고" style="max-height: 60px; width: 220px;" />-->
-<!--					</a>-->
-<!--										로고 넣고싶으면...-->
+					<a href="/index" class="navbar-brand">
+						<h1 class="m-0 text-primary" style="font-size:30px;"><span class="text-dark">우리동네</span>풀코스</h1>
+					</a>
+					<!--										로고 넣고싶으면여기...-->
+					<!--					<a href="/index" class="navbar-brand">-->
+					<!--						<img src="img/logo.png" alt="로고" style="max-height: 60px; width: 220px;" />-->
+					<!--					</a>-->
+					<!--										로고 넣고싶으면...-->
 
 					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 						<span class="navbar-toggler-icon"></span>
@@ -56,8 +64,22 @@
 							<!--                        <a href="/index" class="nav-item nav-link">Home</a>-->
 							<a href="/route" class="nav-item nav-link">가이드북제작</a>
 							<a href="/mypage" class="nav-item nav-link">마이페이지</a>
-							<a href="/tour" class="nav-item nav-link">여행지정보</a>
-							<a href="/festival" class="nav-item nav-link">축제정보</a>
+							<!--<a href="/tour" class="nav-item nav-link">여행지정보</a>-->
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">여행지정보</a>
+								<div class="dropdown-menu border-0 rounded-0 m-0">
+									<a href="/tour" class="dropdown-item active">Best여행지</a>
+									<a href="/tour/tourSelectAll" class="dropdown-item">여행지목록</a>
+								</div>
+							</div>
+							<!--<a href="/festival" class="nav-item nav-link">축제정보</a>-->
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">축제정보</a>
+								<div class="dropdown-menu border-0 rounded-0 m-0">
+									<a href="/festival" class="dropdown-item active">Best축제</a>
+									<a href="/festival/festivalSelectAll" class="dropdown-item">축제목록</a>
+								</div>
+							</div>
 							<a href="/product/selectAll" class="nav-item nav-link">여행상품쇼핑</a>
 							<a href="/board/selectAll" class="nav-item nav-link">게시판</a>
 							<a href="/chat/chatStart" class="nav-item nav-link">실시간문의</a>

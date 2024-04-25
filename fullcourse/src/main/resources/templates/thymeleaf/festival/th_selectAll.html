@@ -49,8 +49,6 @@
 
 
 
-
-
 					<!-- 축제목록 start-->
 					<div class="container-fluid py-5">
 						<div class="container pt-5 pb-3">
@@ -93,13 +91,13 @@
 									<div id="pagination">
 										<ul>
 											<!-- 이전 버튼 -->
-<li>
-    <a th:href="'javascript:void(0)'"
-       th:attr="data-pageNumber=${paginationInfo.currentPageNo - 1}, data-searchCondition=${searchVO.searchCondition}"
-       th:class="${paginationInfo.currentPageNo == 1 ? 'disabled' : ''}">
-       &laquo; 이전
-    </a>
-</li>
+											<li>
+												<a th:href="'javascript:void(0)'"
+													th:attr="data-pageNumber=${paginationInfo.currentPageNo - 1}, data-searchCondition=${searchVO.searchCondition}"
+													th:class="${paginationInfo.currentPageNo == 1 ? 'disabled' : ''}">
+													&laquo; 이전
+												</a>
+											</li>
 
 
 											<!-- 페이지 링크 -->
@@ -115,14 +113,14 @@
 
 
 
-										<!-- 다음 버튼 -->
-<li>
-    <a th:href="'javascript:void(0)'"
-       th:attr="data-pageNumber=${paginationInfo.currentPageNo + 1}, data-searchCondition=${searchVO.searchCondition}"
-       th:class="${paginationInfo.currentPageNo == paginationInfo.totalPageCount ? 'disabled' : ''}">
-       다음 &raquo;
-    </a>
-</li>
+											<!-- 다음 버튼 -->
+											<li>
+												<a th:href="'javascript:void(0)'"
+													th:attr="data-pageNumber=${paginationInfo.currentPageNo + 1}, data-searchCondition=${searchVO.searchCondition}"
+													th:class="${paginationInfo.currentPageNo == paginationInfo.totalPageCount ? 'disabled' : ''}">
+													다음 &raquo;
+												</a>
+											</li>
 
 										</ul>
 									</div>

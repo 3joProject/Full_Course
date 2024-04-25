@@ -67,23 +67,27 @@ public class TourController {
 	public String tourDetails(TourVO vo, Model model, HttpSession session) {
 		log.info("tourDetails...");
 		log.info("vo:{}", vo);
-		
-	    MemberVO member = (MemberVO) session.getAttribute("member");
-	    if (member != null) {
-	    	session.setAttribute("tourLikeMemberNum ", member.getMemberNum());
-            session.setAttribute("tourLikeTourNum ", vo.getTourNum());
-            log.info("tourLikeMemberNum: {}", member.getMemberNum());
-            log.info("tourLikeTourNum: {}", vo.getTourNum());
 
-            session.setMaxInactiveInterval(3600);
-	        // 로그인된 사용자인 경우, 좋아요 상태를 확인하고 업데이트합니다.
-	        int likeCount = service.getTourLikeCount(member.getMemberNum(), vo.getTourNum()); // 회원번호와 글번호를 통해 좋아요 상태 확인
-	        log.info("좋아요 체크성공");
-	        log.info("likeCount: {}", likeCount);
-	        model.addAttribute("commentWriter", member.getMemberId());
-	        model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
-	    }
-	    log.info("Member Number: {}", member);
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+			session.setAttribute("tourLikeMemberNum ", member.getMemberNum());
+			session.setAttribute("tourLikeTourNum ", vo.getTourNum());
+			log.info("tourLikeMemberNum: {}", member.getMemberNum());
+			log.info("tourLikeTourNum: {}", vo.getTourNum());
+			// 로그인check start
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+			// 로그인check end
+			// 로그인된 사용자인 경우, 좋아요 상태를 확인하고 업데이트합니다.
+			int likeCount = service.getTourLikeCount(member.getMemberNum(), vo.getTourNum()); // 회원번호와 글번호를 통해 좋아요 상태 확인
+			log.info("좋아요 체크성공");
+			log.info("likeCount: {}", likeCount);
+			model.addAttribute("commentWriter", member.getMemberId());
+			model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
+		}
+		log.info("Member Number: {}", member);
 		service.updateviewCount(vo);
 		log.info("updateview..");
 		log.info("vo:{}", vo);
@@ -308,8 +312,25 @@ public class TourController {
 //	}
 
 	@GetMapping(value = "/tour")
-	public String tourMain(Model model, @ModelAttribute("searchVO") TourVO searchVO) throws Exception {
+	public String tourMain(Model model, @ModelAttribute("searchVO") TourVO searchVO, HttpSession session)
+			throws Exception {
 		log.info("새로운");
+		// 로그인check start
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+
+		}
+		// 로그인check end
+
 		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -341,7 +362,6 @@ public class TourController {
 //		log.info("갯수:{}", tourVOList);
 		log.info("갯수: {}", tourVOList.size());
 
-
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
 		model.addAttribute("title", "여행지");
 
@@ -351,8 +371,25 @@ public class TourController {
 	}
 
 	@GetMapping(value = "/tour/tourSelectAll")
-	public String tourSelectAll(Model model, @ModelAttribute("searchVO") TourVO searchVO) throws Exception {
+	public String tourSelectAll(Model model, @ModelAttribute("searchVO") TourVO searchVO, HttpSession session)
+			throws Exception {
 		log.info("확인");
+
+		// 로그인check start
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+
+		}
+		// 로그인check end
 ////		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -361,7 +398,7 @@ public class TourController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
+
 //		if (paginationInfo.getFirstRecordIndex() > 0) {
 //			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 //
