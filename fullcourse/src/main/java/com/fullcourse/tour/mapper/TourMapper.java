@@ -49,6 +49,11 @@ public interface TourMapper {
     //best Top3
     public List<TourVO> tourSelectAllTop(TourVO vo);
 
+    //좋아요 확인
+	public int getTourLikeCount(int memberNum, int tourNum);
+
+	public List<TourVO> selectTourViewTopListWithPaging(TourVO tourVO);
+
 
 
 	

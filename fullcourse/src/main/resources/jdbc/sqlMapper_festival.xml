@@ -1,87 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fullcourse.festival.mapper.FestivalMapper">
-	
-	<insert id="festivalInsertOK" parameterType="com.fullcourse.festival.FestivalVO">
-    INSERT INTO festival (festivalName, festivalAddress, festivalContent, festivalStart, festivalFinal, festivalTel, festivalViews, festivalThumbUp, festivalImg)
-    VALUES (#{festivalName}, #{festivalAddress}, #{festivalContent}, #{festivalStart}, #{festivalFinal}, #{festivalTel}, #{festivalViews}, #{festivalThumbUp}, #{festivalImg})
-</insert>
 
-	
-	<update id="festivalUpdateOK" parameterType="com.fullcourse.festival.FestivalVO">
-		update festival set festivalName=#{festivalName},festivalAddress=#{festivalAddress},festivalContent=#{festivalContent},festivalStart=#{festivalStart},festivalFinal=#{festivalFinal},festivalTel=#{festivalTel},festivalImg=#{festivalImg}
+	<insert id="festivalInsertOK"
+		parameterType="com.fullcourse.festival.FestivalVO">
+		INSERT INTO festival (festivalName, festivalAddress, festivalContent,
+		festivalStart, festivalFinal, festivalTel, festivalViews,
+		festivalThumbUp, festivalImg)
+		VALUES (#{festivalName}, #{festivalAddress}, #{festivalContent},
+		#{festivalStart}, #{festivalFinal}, #{festivalTel}, #{festivalViews},
+		#{festivalThumbUp}, #{festivalImg})
+	</insert>
+
+
+	<update id="festivalUpdateOK"
+		parameterType="com.fullcourse.festival.FestivalVO">
+		update festival set
+		festivalName=#{festivalName},festivalAddress=#{festivalAddress},festivalContent=#{festivalContent},festivalStart=#{festivalStart},festivalFinal=#{festivalFinal},festivalTel=#{festivalTel},festivalImg=#{festivalImg}
 		where festivalNum=#{festivalNum}
 	</update>
-	
-	<delete id="festivalDeleteOK" parameterType="com.fullcourse.festival.FestivalVO">
+
+	<delete id="festivalDeleteOK"
+		parameterType="com.fullcourse.festival.FestivalVO">
 		delete from festival where festivalNum=#{festivalNum}
 	</delete>
-	
-	<select id="festivalSelectAll" resultType="com.fullcourse.festival.FestivalVO">
+
+	<select id="festivalSelectAll"
+		resultType="com.fullcourse.festival.FestivalVO">
 		select * from festival order by
 		festivalNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
-	<select id="festivalSelectAllTop" resultType="com.fullcourse.festival.FestivalVO">
-		SELECT * FROM Festival ORDER BY festivalThumbUp DESC LIMIT 3;
-	</select>
-	
-	
-	<select id="festivalSelectOne" resultType="com.fullcourse.festival.FestivalVO">
+
+	<!--	<select id="festivalSelectAllTop"-->
+	<!--		resultType="com.fullcourse.festival.FestivalVO">-->
+	<!--		SELECT * FROM Festival ORDER BY festivalThumbUp DESC LIMIT 3;-->
+	<!--	</select>-->
+
+
+	<select id="festivalSelectOne"
+		resultType="com.fullcourse.festival.FestivalVO">
 		select * from Festival where
 		festivalNum=#{festivalNum}
 	</select>
-				
+
 	<select id="searchListADDRESS_PAGE"
 		resultType="com.fullcourse.festival.FestivalVO">
 		select * from festival
-		where festivalAddress like #{searchWord} 
+		where festivalAddress like #{searchWord}
 		order by festivalNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
+
 	<select id="searchListNAME_PAGE"
 		resultType="com.fullcourse.festival.FestivalVO">
 		select * from festival
-		where festivalName like #{searchWord} 
+		where festivalName like #{searchWord}
 		order by festivalNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
-	<select id="getTotalRows"	resultType="int">
+
+	<select id="getTotalRows" resultType="int">
 		select count(*) total_rows from festival
 	</select>
-	
-	<select id="search_total_rows_address"	resultType="int">
-		select count(*) total_rows from festival where festivalAddress like #{searchWord}
+
+	<select id="search_total_rows_address" resultType="int">
+		select count(*) total_rows from festival where festivalAddress like
+		#{searchWord}
 	</select>
 
-	<select id="search_total_rows_festivalName"	resultType="int">
-		select count(*) total_rows from festival where festivalName like #{searchWord}
+	<select id="search_total_rows_festivalName" resultType="int">
+		select count(*) total_rows from festival where festivalName like
+		#{searchWord}
 	</select>
-	
-<!--	방법1-->
-<!--	<update id="updateLikeCount" parameterType="com.fullcourse.festival.FestivalVO">-->
-<!--		update Festival set festivalThumbUp=#{festivalThumbUp} where festivalNum=#{festivalNum}-->
-<!--	</update>-->
+
+	<!--	방법1-->
+	<update id="updateLikeCount"
+		parameterType="com.fullcourse.festival.FestivalVO">
+		update Festival set festivalThumbUp=#{festivalThumbUp} where
+		festivalNum=#{festivalNum}
+	</update>
 
 
-<!--방법2	-->
-	<update id="updateLikeCount" parameterType="com.fullcourse.festival.FestivalVO">
-		update Festival set festivalThumbUp= festivalThumbUp+1 where festivalNum=#{festivalNum}
+	<!--방법2	-->
+	<!--	<update id="updateLikeCount"-->
+	<!--		parameterType="com.fullcourse.festival.FestivalVO">-->
+	<!--		update Festival set festivalThumbUp= festivalThumbUp+1 where-->
+	<!--		festivalNum=#{festivalNum}-->
+	<!--	</update>-->
+
+	<update id="updateViewCount"
+		parameterType="com.fullcourse.festival.FestivalVO">
+		update Festival set festivalViews= festivalViews+1 where
+		festivalNum=#{festivalNum}
 	</update>
-	
-	<update id="updateViewCount" parameterType="com.fullcourse.festival.FestivalVO">
-		update Festival set festivalViews= festivalViews+1 where festivalNum=#{festivalNum}
-	</update>
-	
+
 	<select id="searchListAddressPageBlock"
 		resultType="com.fullcourse.festival.FestivalVO">
-		
+
 		select * from Festival
-		where FestivalAddress like #{searchWord} 
+		where FestivalAddress like #{searchWord}
 		order by festivalNum desc limit #{startRow},#{pageBlock}
 	</select>
+
+
+	<!--새로운 페이징-->
+
+	<!--검색 조건 설정 위한 쿼리-->
+	<sql id="whereQuery">
+		<where>
+
+			<if
+				test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
+				<if test="searchCondition == 'FESTIVAL_NAME'">
+					AND festivalName LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test="searchCondition == 'FESTIVAL_ADDRESS'">
+					AND festivalAddress LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<!--리스트 총 갯수-->
+	<select id="selectListTotalCount"
+		parameterType="com.fullcourse.festival.FestivalVO"
+		resultType="int"> SELECT count(festivalNum) FROM festival <include
+			refid="whereQuery" />
+	</select>
+
+	<!--리스트 불러오기 (나중에 등록한 순)-->
+	<select id="selectFestivalListWithPaging"
+		parameterType="com.fullcourse.festival.FestivalVO"
+		resultType="com.fullcourse.festival.FestivalVO"> SELECT * FROM festival <include
+			refid="whereQuery" /> ORDER BY festivalNum DESC LIMIT #{firstIndex},
+		#{recordCountPerPage} </select>
+
+	<!--best3불러오기 (좋아요 많은순)-->
+	<select id="festivalSelectAllTop"
+		parameterType="com.fullcourse.festival.FestivalVO"
+		resultType="com.fullcourse.festival.FestivalVO"> SELECT * FROM festival <include
+			refid="whereQuery" /> ORDER BY festivalThumbUp DESC LIMIT 3 </select>
+
+	<!--    좋아요 여부 확인-->
+	<select id="getFestivalLikeCount" resultType="int">
+		SELECT COUNT(*) AS like_count
+		FROM festivallike
+		WHERE festivalLikeMemberNum = #{memberNum}
+		AND festivalLikeFestivalNum = #{festivalNum}
+	</select>
+
+	<!--	조회수 많은순 불러오기 -->
+	<select id="selectFestivalViewTopListWithPaging"
+		parameterType="com.fullcourse.festival.FestivalVO"
+		resultType="com.fullcourse.festival.FestivalVO"> SELECT * FROM festival <include
+			refid="whereQuery" /> ORDER BY festivalViews DESC LIMIT 9 </select>
+
 
 </mapper>

@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fullcourse.tour.mapper.TourMapper">
-	
-	<insert id="tourInsertOK" parameterType="com.fullcourse.tour.TourVO">
-    INSERT INTO tour (tourName, tourAddress, tourContent, tourTel, tourViews, tourThumbUp,longtitue, lattitue, tourImg)
-    VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourTel}, #{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
-</insert>
 
-	
+	<insert id="tourInsertOK" parameterType="com.fullcourse.tour.TourVO">
+		INSERT INTO tour (tourName, tourAddress, tourContent, tourTel,
+		tourViews, tourThumbUp,longtitue, lattitue, tourImg)
+		VALUES (#{tourName}, #{tourAddress}, #{tourContent}, #{tourTel},
+		#{tourViews}, #{tourThumbUp}, #{longtitue},#{lattitue},#{tourImg})
+	</insert>
+
+
 	<update id="tourUpdateOK" parameterType="com.fullcourse.tour.TourVO">
-		update tour set tourName=#{tourName},tourAddress=#{tourAddress},tourContent=#{tourContent},tourTel=#{tourTel},tourImg=#{tourImg}
+		update tour set
+		tourName=#{tourName},tourAddress=#{tourAddress},tourContent=#{tourContent},tourTel=#{tourTel},tourImg=#{tourImg}
 		where tourNum=#{tourNum}
 	</update>
-	
-<!--	<update id="tourIncreaseThumbUp" parameterType="com.fullcourse.tour.TourVO">-->
-<!--		update tour set tourThumbUp=#{tourThumbUp} -->
-<!--		where tourNum=#{tourNum}-->
-<!--	</update>-->
-	
+
+	<!--	<update id="tourIncreaseThumbUp"
+	parameterType="com.fullcourse.tour.TourVO">-->
+	<!--		update tour set tourThumbUp=#{tourThumbUp} -->
+	<!--		where tourNum=#{tourNum}-->
+	<!--	</update>-->
+
 	<delete id="tourDeleteOK" parameterType="com.fullcourse.tour.TourVO">
 		delete from tour where tourNum=#{tourNum}
 	</delete>
-	
+
 	<select id="tourSelectAll" resultType="com.fullcourse.tour.TourVO">
 		select * from tour order by
 		tourNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
-<!--	<select id="tourSelectAllTop" resultType="com.fullcourse.tour.TourVO">-->
-<!--		SELECT * FROM tour ORDER BY tourThumbUp DESC LIMIT 3;-->
-<!--	</select>-->
-	
+
+	<!--	<select id="tourSelectAllTop"
+	resultType="com.fullcourse.tour.TourVO">-->
+	<!--		SELECT * FROM tour ORDER BY tourThumbUp DESC LIMIT 3;-->
+	<!--	</select>-->
+
 	<select id="tourSelectOne" resultType="com.fullcourse.tour.TourVO">
 		select * from tour where
 		tourNum=#{tourNum}
 	</select>
-				
+
 	<select id="searchListADDRESS_PAGE"
 		resultType="com.fullcourse.tour.TourVO">
 		select * from tour
-		where tourAddress like #{searchWord} 
+		where tourAddress like #{searchWord}
 		order by tourNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
+
 	<select id="searchListNAME_PAGE"
 		resultType="com.fullcourse.tour.TourVO">
 		select * from tour
-		where tourName like #{searchWord} 
+		where tourName like #{searchWord}
 		order by tourNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
-	<select id="getTotalRows"	resultType="int">
+
+	<select id="getTotalRows" resultType="int">
 		select count(*) total_rows from tour
 	</select>
-	
-	<select id="search_total_rows_address"	resultType="int">
-		select count(*) total_rows from tour where tourAddress like #{searchWord}
+
+	<select id="search_total_rows_address" resultType="int">
+		select count(*) total_rows from tour where tourAddress like
+		#{searchWord}
 	</select>
 
-	<select id="search_total_rows_tourName"	resultType="int">
+	<select id="search_total_rows_tourName" resultType="int">
 		select count(*) total_rows from tour where tourName like #{searchWord}
 	</select>
 
@@ -69,76 +73,82 @@
 	<update id="updateLikeCount" parameterType="com.fullcourse.tour.TourVO">
 		update tour set tourThumbUp=#{tourThumbUp} where tourNum=#{tourNum}
 	</update>
-	
-<!--	<update id="updateLikeCount" parameterType="com.fullcourse.tour.TourVO">-->
-<!--       <selectKey keyProperty="tourThumbUp" order="AFTER" resultType="int">-->
-<!--        SELECT tourThumbUp from tour where tourNum=#{tourNum}-->
-<!--    </selectKey>-->
-<!--      update tour set tourThumbUp=#{tourThumbUp} where tourNum=#{tourNum}-->
-<!--   </update>-->
+
+	<!--	<update id="updateLikeCount"
+	parameterType="com.fullcourse.tour.TourVO">-->
+	<!--       <selectKey keyProperty="tourThumbUp" order="AFTER" resultType="int">-->
+	<!--        SELECT tourThumbUp from tour where tourNum=#{tourNum}-->
+	<!--    </selectKey>-->
+	<!--      update tour set tourThumbUp=#{tourThumbUp} where tourNum=#{tourNum}-->
+	<!--   </update>-->
 
 
 	<update id="updateViewCount" parameterType="com.fullcourse.tour.TourVO">
 		update tour set tourViews= tourViews+1 where tourNum=#{tourNum}
 	</update>
-	
+
 	<select id="searchWordaddress"
 		resultType="com.fullcourse.tour.TourVO">
 		select * from tour
-		where tourAddress like #{searchWord} 
-		order by tourNum desc 
+		where tourAddress like #{searchWord}
+		order by tourNum desc
 	</select>
-	
+
 	<select id="searchListAddressPageBlock"
 		resultType="com.fullcourse.tour.TourVO">
-		
+
 		select * from tour
-		where tourAddress like #{searchWord} 
+		where tourAddress like #{searchWord}
 		order by tourNum desc limit #{startRow},#{pageBlock}
 	</select>
-	
+
 	<!--검색 조건 설정 위한 쿼리-->
-    <sql id="whereQuery">
-        <where>
-		
-            <if test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
-                <if test="searchCondition == 'TOUR_NAME'">
-                    AND tourName LIKE CONCAT('%', #{searchKeyword}, '%')
-                </if>
-                <if test="searchCondition == 'TOUR_ADDRESS'">
-                    AND tourAddress LIKE CONCAT('%', #{searchKeyword}, '%')
-                </if>
-            </if>
-        </where>
-    </sql>
+	<sql id="whereQuery">
+		<where>
 
-    <!--리스트 총 갯수-->
-    <select id="selectListTotalCount" parameterType="com.fullcourse.tour.TourVO" resultType="int">
-        SELECT count(tourNum)
-        FROM tour
-        <include refid="whereQuery"/>
-    </select>
+			<if
+				test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
+				<if test="searchCondition == 'TOUR_NAME'">
+					AND tourName LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test="searchCondition == 'TOUR_ADDRESS'">
+					AND tourAddress LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+			</if>
+		</where>
+	</sql>
 
-    <!--리스트 불러오기 (나중에 등록한 순)-->
-    <select id="selectTourListWithPaging" parameterType="com.fullcourse.tour.TourVO" resultType="com.fullcourse.tour.TourVO">
-        SELECT *
-        FROM tour
-        <include refid="whereQuery"/>
-        ORDER BY
-        tourNum DESC
-        LIMIT
-        #{firstIndex}, #{recordCountPerPage}
-    </select>
-    
-     <!--best3불러오기 (좋아요 많은순)-->
-    <select id="tourSelectAllTop" parameterType="com.fullcourse.tour.TourVO" resultType="com.fullcourse.tour.TourVO">
-        SELECT *
-        FROM tour
-        <include refid="whereQuery"/>
-        ORDER BY
-        tourThumbUp DESC
-        LIMIT
-        3
-    </select>
+	<!--리스트 총 갯수-->
+	<select id="selectListTotalCount" parameterType="com.fullcourse.tour.TourVO"
+		resultType="int"> SELECT count(tourNum) FROM tour <include
+			refid="whereQuery" />
+	</select>
+
+	<!--리스트 불러오기 (나중에 등록한 순)-->
+	<select id="selectTourListWithPaging"
+		parameterType="com.fullcourse.tour.TourVO"
+		resultType="com.fullcourse.tour.TourVO"> SELECT * FROM tour <include
+			refid="whereQuery" /> ORDER BY tourNum DESC LIMIT #{firstIndex},
+		#{recordCountPerPage} </select>
+
+	<!--best3불러오기 (좋아요 많은순)-->
+	<select id="tourSelectAllTop" parameterType="com.fullcourse.tour.TourVO"
+		resultType="com.fullcourse.tour.TourVO"> SELECT * FROM tour <include
+			refid="whereQuery" /> ORDER BY tourThumbUp DESC LIMIT 3 </select>
+
+	<!--    좋아요 여부 확인-->
+	<select id="getTourLikeCount" resultType="int">
+		SELECT COUNT(*) AS like_count
+		FROM tourlike
+		WHERE tourLikeMemberNum = #{memberNum}
+		AND tourLikeTourNum = #{tourNum}
+	</select>
+
+	<!--	조회수 많은순 불러오기 -->
+	<select id="selectTourViewTopListWithPaging"
+		parameterType="com.fullcourse.tour.TourVO"
+		resultType="com.fullcourse.tour.TourVO"> SELECT * FROM tour <include
+			refid="whereQuery" /> ORDER BY tourViews DESC LIMIT 9 </select>
+
 
 </mapper>

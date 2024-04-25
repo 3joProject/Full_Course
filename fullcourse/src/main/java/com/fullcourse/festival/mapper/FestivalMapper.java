@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.fullcourse.festival.FestivalVO;
-import com.fullcourse.tour.TourVO;
+import com.fullcourse.festival.FestivalVO;
 
 @Mapper
 public interface FestivalMapper {
@@ -38,6 +38,21 @@ public interface FestivalMapper {
 	public int updateLikeCount(FestivalVO vo);
 
 	public List<FestivalVO> searchListAddressPageBlock(Map<String, Object> map);
+
+	 // 리스트 토탈 갯수 (검색 포함)
+    int selectListTotalCount(FestivalVO festivalVO);
+
+    // 리스트 (검색포함)
+    List<FestivalVO> selectFestivalListWithPaging(FestivalVO festivalVO);
+    
+    //best Top3
+    public List<FestivalVO> festivalSelectAllTop(FestivalVO vo);
+
+    //좋아요 확인
+	public int getFestivalLikeCount(int memberNum, int festivalNum);
+
+	public List<FestivalVO> selectFestivalViewTopListWithPaging(FestivalVO festivalVO);
+
 
 
 }

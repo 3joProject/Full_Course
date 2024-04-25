@@ -79,11 +79,11 @@
 							<h6 class="text-primary text-uppercase tourDestination" style="letter-spacing: 5px;"
 								th:text="${param.searchKeyword != null ? param.searchKeyword : '전국'}">전국
 							</h6>
-							<h1>여행지 목록</h1>
+							<h1>조회수 Best 여행지</h1>
 							<!-- 여행지목록 end-->
 
 							<!--							누르지 마시오..-->
-							<button id="apiBtn">test</button>
+<!--							<button id="apiBtn">test</button>-->
 
 							<!--</form>-->
 						</div>
@@ -91,7 +91,6 @@
 							<th:block th:each="vo : ${tourListVO}">
 								<div class="col-lg-4 col-md-6 mb-4">
 									<div class="destination-item position-relative overflow-hidden mb-2">
-										<!--										<img class="img-fluid" src="img/destination-1.jpg" alt="">-->
 										<img class="img-fluid" style="max-width: 100%; height: auto;"
 											th:if="${vo.tourImg == null or vo.tourImg == ''}"
 											src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
@@ -99,12 +98,11 @@
 										<img class="img-fluid" style="max-width: 100%; height: auto;"
 											th:if="${vo.tourImg != null and vo.tourImg != ''}" th:src="${vo.tourImg}"
 											alt="이미지대체텍스트" />
-										<!--<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
 
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|tour/tourDetails?tourNum=${vo.tourNum}|}">
-											<h5 class="text-white"><span th:text="${vo.tourAddress}"></span></h5>
-											<span th:text="${vo.tourName}"></span>
+											<h5 class="text-white"><span th:text="${vo.tourName}"></span></h5>
+											<span th:text="${vo.tourAddress}"></span>
 										</a>
 									</div>
 								</div>
@@ -158,16 +156,25 @@
 
 					$("#apiBtn").click(function () {
 						console.log('여행api호출');
-						//배열을 루프 돌려서 '서울', '대전'..등등
 						//5)	[지역기반관광정보조회] 오퍼레이션명세
-						callAPI();
+						//한개씩돌리기
+					//	callAPI('1');  
+						// 1부터 8까지의 areaCode를 순회하며 API 호출
+						//배열을 루프 돌려서 '서울', '대전'..등등
+						//for (let i = 1; i <= 8; i++) {
+						//	callAPI(i);
+			//		}
+						// 31부터 39까지의 areaCode를 순회하며 API 호출
+						//for (let i = 31; i <= 39; i++) {
+					//		callAPI(i);
+						//}
 					});
 					//console.log('클릭');
 					// JavaScript 코드
-					function callAPI(keyword) {
+					function callAPI(areaCode) {
 						const apiKey = "CJE9zLAYFCFIq%2BtV%2BN3i4jrz3a4iOReS264F9RkE8ZibRrVIhLRgEshj4jchWX4ntU0St0uA5p2LPt%2FStMMQJg%3D%3D"; // 여기에 실제 API 키를 넣어주세요
 						//	const url = `http://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${apiKey}&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=2&listYN=Y&arrange=A&contentTypeId=12&keyword=${keyword}&_type=json`;
-						const url = `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=${apiKey}&pageNo=1&numOfRows=20&MobileApp=AppTest&MobileOS=ETC&arrange=A&contentTypeId=12&areaCode=39&_type=json`;
+						const url = `http://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=${apiKey}&pageNo=3&numOfRows=20&MobileApp=AppTest&MobileOS=ETC&arrange=A&contentTypeId=12&areaCode=${areaCode}&_type=json`;
 						return fetch(url)
 							.then(response => response.json())
 							.then(data => {

@@ -120,4 +120,13 @@ public class TourService {
     public List<TourVO> tourSelectAllTop(TourVO tourVO) {
 		return mapper.tourSelectAllTop(tourVO);
 	}
+
+    //좋아요 여부확인
+	public int getTourLikeCount(int memberNum, int tourNum) {
+		return mapper.getTourLikeCount(memberNum,tourNum);
+	}
+
+	public List<TourVO> selectTourViewTopListWithPaging(TourVO tourVO) {
+		return mapper.selectTourViewTopListWithPaging(tourVO);
+	}
 }
