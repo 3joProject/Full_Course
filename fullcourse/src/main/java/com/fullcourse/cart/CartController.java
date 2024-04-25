@@ -47,6 +47,11 @@ public class CartController {
 			model.addAttribute("content","thymeleaf/cart/th_cartMain");
 			model.addAttribute("title","장바구니");
 			
+			boolean loggedIn = true;
+            log.info("로그인한사람 아이디:" + member.getMemberId());
+            model.addAttribute("loginId", member.getMemberId());
+            model.addAttribute("loggedIn", loggedIn);
+			
 			return "thymeleaf/cart/th_cartLayout_main";
 	    }
 	    
