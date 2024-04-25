@@ -10,13 +10,13 @@ import com.fullcourse.product.productReview.ProductReviewVO;
 @Mapper
 public interface ProductReviewMapper {
 	
-	List<ProductReviewVO> prorevSelectAll();
+	public List<ProductReviewVO> prorevSelectAll(int productNum);
 
-	int insertOK(ProductReviewVO vo);
+	public int prorevInsertOK(ProductReviewVO vo);
 
-	int deleteOK(ProductReviewVO vo);
+	public int prorevDeleteOK(ProductReviewVO vo);
 
-	int updateOK(ProductReviewVO vo);
+	public int prorevUpdateOK(ProductReviewVO vo);
 
 	int report(ReportVO vo);
 	

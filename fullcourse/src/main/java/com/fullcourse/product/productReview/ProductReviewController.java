@@ -1,19 +1,17 @@
 package com.fullcourse.product.productReview;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fullcourse.board.BoardVO;
 import com.fullcourse.member.MemberVO;
-import com.fullcourse.tour.tourComment.TourCommentController;
-import com.fullcourse.tour.tourComment.TourCommentVO;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -21,52 +19,44 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProductReviewController {
 	
-	 @Autowired
-	 private ProductReviewService productReviewService;
+	@Autowired
+	private ProductReviewService service;
 	
-	 // 로그인 상태 확인 메소드
-	 private boolean isLoggedIn(HttpSession session) {
-		 return session.getAttribute("member") != null;
-	 	}
-	 
-	 //댓글 작성
-	 @PostMapping("/product/prorevInsert")
-		public String prorevInsert(ProductReviewVO vo) {
-		
-		 log.info("prorevInsert...");
-		 log.info("vo:{}",vo);
-			
-		 int result = productReviewService.prorevInsertOK(vo);
-		 log.info("result:{}",result);
+	@PostMapping("/product/prorevInsert")
+	public String prorevInsert(HttpSession session, ProductReviewVO vo) {
+		MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+		 log.info("Session Member: {}", member); // 세션 정보 로깅
 
-		 return "redirect:prorevDetails?productNum="+vo.getProrevPnum();
-	}
+		    if (member == null) {
+		        log.info("Redirecting to login page");
+		        return "redirect:/login"; // 로그인 페이지로 리디렉션
+		    }
 	    
-	@PostMapping("/insertOK")
-	public String insertOK(ProductReviewVO vo, HttpSession session) {
-			
-		MemberVO loggedInMember = (MemberVO) session.getAttribute("member");
-		if (loggedInMember == null) {
-			return "redirect:/login"; // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트
-		}
-		    
-		vo.setProrevWriter(loggedInMember.getMemberId());
-			
-		int result = productReviewService.prorevInsertOK(vo);
-		log.info("result:{}", result);
+		log.info("prorevInsert...");
+		log.info("vo:{}",vo);
 
-		if (result == 1) {
-			return "redirect:selectAll";
-		} else {
-			return "redirect:insert";
-		}
+		int result = service.prorevInsertOK(vo);
+		log.info("result:{}",result);
+
+		return "redirect:th_selectOne?productNum="+vo.getProrevPnum();
 	}
 	
-	@PostMapping("/prorevSelectAll")
-    public String addReview(ProductReviewVO vo) {
-        productReviewService.prorevInsertOK(vo);
-        return "redirect:/products/" + vo.getProrevPnum();
-    }
+	@PostMapping("/product/prorevUpdateOK")
+	public String prorevUpdateOK(ProductReviewVO vo) {
+		log.info("prorevUpdateOK...");
+		log.info("vo:{}",vo);
 
+		int result = service.prorevUpdateOK(vo);
+		log.info("result:{}",result);
+
+		return "redirect:th_selectOne?productNum="+vo.getProrevPnum();
+	}
+	
+	@GetMapping("/product/{productNum}/reviews")
+	public String getProductReviews(@PathVariable int productNum, Model model) {
+	    List<ProductReviewVO> reviews = service.prorevSelectAll(productNum);
+	    model.addAttribute("reviews", reviews);
+	    return "productDetail"; // 상품 상세 페이지 뷰 이름, 리뷰 목록 포함하여 반환
+	}
 	 
 }	
