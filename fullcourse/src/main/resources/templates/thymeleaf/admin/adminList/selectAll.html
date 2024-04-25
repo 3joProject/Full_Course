@@ -13,22 +13,12 @@
 
 	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>
 	<div class="container">
-		<div class="sidebar">
-			<div class="sidebar-box">
-			<!--	<div class="sidebar-header">공지사항</div> -->
-				<ul class="sidebar-menu">
-					<li><a href="/admin/notice/selectAll">공지사항</a></li>
-					<li><a href="/admin/members">회원 목록</a></li>
-					<li><a href="/admin/travelers">여행자 목록</a></li>
-					<li><a href="/admin/festivals">축제 목록</a></li>
-					<li><a href="/admin/travel-products">여행상품 목록</a></li>
-					<li><a href="/admin/reports">신고 목록</a></li>
-					<li><a href="/chat/adminDashboard">실시간 문의 관리</a></li>
-					<li><a href="/admin/adminlist/selectAll">관리자 명단</a></li>
 
-				</ul>
-			</div>
-		</div>
+
+		
+		<div th:insert="thymeleaf/admin/sidebar :: sidebar"></div>
+		
+	
 
 		<div class="content">
 			<div class="admin-info">
