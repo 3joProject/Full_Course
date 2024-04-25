@@ -7,118 +7,63 @@
 				<!--				<h4 class="mb-3">[[${title}]]</h4>-->
 				<h4 class="mb-3"></h4>
 
-				<!--지역 버튼 시작 -->
-				<div id="regionSelection">
-					<button class="btn-sm btn-outline-primary AllRegionBtn" id="AllRegionBtn" value="축제">전국</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="seoulBtn" value="서울">서울</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="busanBtn" value="부산">부산</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="daeguBtn" value="대구">대구</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="incheonBtn" value="인천">인천</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="gwangjuBtn" value="광주">광주</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="daejeonBtn" value="대전">대전</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="ulsanBtn" value="울산">울산</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="sejongBtn" value="세종">세종</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="gyeonggiBtn" value="경기">경기</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="gangwonBtn" value="강원">강원</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="chungbukBtn" value="충청북도">충북</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="chungnamBtn" value="충청남도">충남</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongbukBtn" value="경상북도">경북</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="gyeongnamBtn" value="경상남도">경남</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="jeonbukBtn" value="전라북도">전북</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="jeonnamBtn" value="전라남도">전남</button>
-					<button class="btn-sm btn-outline-primary regionBtn" id="jejuBtn" value="제주">제주</button>
-				</div>
-				<!--									지역 버튼 끝-->
+				<form method="get" id="searchForm" action="/festival/festivalSelectAll">
+					<input type="hidden" name="pageIndex"
+						th:value="${searchVO != null and searchVO.pageIndex != null ? searchVO.pageIndex : 1}" />
+					<!--지역 버튼 시작 -->
+					<div id="regionSelection">
+						<label for="searchCondition" hidden>지역선택</label>
+						<input type="hidden" name="searchCondition" value="FESTIVAL_ADDRESS" />
+						<button type="button" class="btn-sm btn-outline-primary" id="AllRegionBtn">전국</button>
+						<th:block th:each="region : ${regions}">
+							<button type="button" class="btn-sm btn-outline-primary regionBtn"
+								th:value="${region.label}">[[${region.code}]]</button>
+						</th:block>
+					</div>
+					<label for="searchKeyword" hidden>검색어</label>
+					<input type="hidden" name="searchKeyword"
+						th:value="${searchVO != null ? searchVO.searchKeyword : ''}" />
+				</form>
+				<!--지역 버튼 끝-->
 
 				<!-- Search Form start-->
 				<div class="mb-5">
 					<div class="bg-white" style="padding: 30px;">
 						<div class="input-group" style="justify-content: flex-end;">
-							<form class="form-inline my-2 my-lg-0 justify-content-end" action="festivalSearchList">
-								<select class="selectpicker" name="searchKey">
-									<option value="festivalName">축제이름</option>
-									<option value="address">주소</option>
+							<form class="form-inline my-2 my-lg-0 justify-content-end"
+								action="/festival/festivalSelectAll">
+								<input type="hidden" name="pageIndex" th:value="1" />
+								<select class="selectpicker" name="searchCondition" id="searchCondition"
+									title="검색항목을 선택해주십시오.">
+									<option value="FESTIVAL_NAME"
+										th:selected="${searchVO.searchCondition == 'FESTIVAL_NAME'}">축제이름</option>
+									<option value="FESTIVAL_ADDRESS"
+										th:selected="${searchVO.searchCondition == 'FESTIVAL_ADDRESS'}">주소</option>
 								</select>
-
 								<input class="form-control mr-sm-2" type="search" placeholder="Search"
-									aria-label="Search" name="searchWord" value="">
+									aria-label="Search" name="searchKeyword">
 								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 							</form>
 						</div>
 					</div>
-					<!-- Search Form end-->
 
-					<!--					테이블 시작-->
-					<!--					<table class="table">-->
-					<!--						<thead>-->
-					<!--							<tr>-->
-					<!--								<th scope="col">festivalNum</th>-->
-					<!--								<th scope="col">festivalName</th>-->
-					<!--								<th scope="col">festivalAddress</th>-->
-					<!--								<th scope="col">festivalContent</th>-->
-					<!--								<th scope="col">festivalStart</th>-->
-					<!--								<th scope="col">festivalFinal</th>-->
-					<!--								<th scope="col">festivalViews</th>-->
-					<!--								<th scope="col">festivalThumbUp</th>-->
-					<!--								<th scope="col">festivalImg</th>-->
-					<!--								<th scope="col"></th>-->
 
-					<!--							</tr>-->
-					<!--						</thead>-->
-					<!--						<tbody>-->
-					<!--							<th:block th:each="vo : ${vos}">-->
-					<!--								<tr>-->
-					<!--									<th scope="row"><a th:href="@{|festivalSelectOne?festivalNum=${vo.festivalNum}|}">-->
-					<!--										<span th:text="${vo.festivalNum}"></span></a></th>-->
-					<!--									<td><a th:href="@{|festivalSelectOne?festivalNum=${vo.festivalNum}|}"><span-->
-					<!--												th:text="${vo.festivalName}"></span></a></td>-->
-					<!--									<td><span th:text="${vo.festivalAddress}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalContent}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalStart}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalFinal}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalUsetime}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalViews}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalThumbUp}"></span></td>-->
-					<!--									<td><span th:text="${vo.festivalImg}"></span></td>-->
-					<!--									<td><a th:href="@{|festivalDelete?festivalNum=${vo.festivalNum}|}"><span>delete</span></a></td>-->
-					<!--								</tr>-->
 
-					<!--							</th:block>-->
-					<!--						</tbody>-->
-					<!--						<tfoot>-->
-					<!--							<tr>-->
-					<!--								<td colspan="6">-->
-					<!--									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">-->
-					<!--										<th:block th:if="${param.searchKey}== null">-->
-					<!--											<a th:href="|festivalSelectAll?cpage=${i}|">[[${i}]] &nbsp;</a>-->
-					<!--										</th:block>-->
-					<!--										<th:block th:if="${param.searchKey}!= null">-->
-					<!--											<a-->
-					<!--												th:href="@{festivalSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]-->
-					<!--												&nbsp;</a>-->
-					<!--										</th:block>-->
-					<!--									</th:block>-->
-					<!--								</td>-->
-					<!--							</tr>-->
-					<!--						</tfoot>-->
-					<!--					</table>-->
-					<!--테이블끝-->
+
+
 					<!-- 축제목록 start-->
-
 					<div class="container-fluid py-5">
 						<div class="container pt-5 pb-3">
 							<div class="text-center mb-3 pb-3">
-								<h6 class="text-primary text-uppercase" id="festivalDestination"
-									style="letter-spacing: 5px;">전국</h6>
+								<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;"
+									th:text="${param.searchKeyword != null ? param.searchKeyword : '전국'}">전국
+								</h6>
 								<h1>축제 목록</h1>
-
-
-
-
+								<!-- 축제목록 end-->
 								<!--</form>-->
 							</div>
 							<div class="row" id="destinationList">
-								<th:block th:each="vo : ${vos}">
+								<th:block th:each="vo : ${festivalListVO}">
 									<div class="col-lg-4 col-md-6 mb-4">
 										<div class="destination-item position-relative overflow-hidden mb-2">
 											<!--										<img class="img-fluid" src="/img/destination-1.jpg" alt="">-->
@@ -141,109 +86,122 @@
 									</div>
 
 								</th:block>
-								<div class="col-12" id="" pagination>
-									<nav aria-label="Page navigation">
-										<ul class="pagination pagination-lg justify-content-center bg-white mb-0"
-											style="padding: 30px;">
 
-											<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-												<th:block th:if="${param.searchKey}== null">
-													<li class="page-item"><a class="page-link"
-															th:href="@{/festival/festivalSelectAll(cpage=${i})}">[[${i}]]</a>
-													</li>
-												</th:block>
-												<th:block th:if="${param.searchKey}!= null">
-													<li class="page-item"><a class="page-link"
-															th:href="@{/festival/festivalSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]</a>
-													</li>
-												</th:block>
+
+								<!--페이징 시작-->
+								<div th:if="${searchVO.pageIndex != null}">
+									<div id="pagination">
+										<ul>
+											<!-- 이전 버튼 -->
+<li>
+    <a th:href="'javascript:void(0)'"
+       th:attr="data-pageNumber=${paginationInfo.currentPageNo - 1}, data-searchCondition=${searchVO.searchCondition}"
+       th:class="${paginationInfo.currentPageNo == 1 ? 'disabled' : ''}">
+       &laquo; 이전
+    </a>
+</li>
+
+
+											<!-- 페이지 링크 -->
+											<th:block
+												th:each="pageNumber : ${#numbers.sequence(paginationInfo.firstPageNoOnPageList, paginationInfo.lastPageNoOnPageList)}">
+												<li>
+													<a th:href="'javascript:void(0)'" th:text="${pageNumber}"
+														th:attr="data-pageNumber=${pageNumber}, data-searchCondition=${searchVO.searchCondition}"
+														th:class="${pageNumber == paginationInfo.currentPageNo ? 'active' : ''}">
+													</a>
+												</li>
 											</th:block>
 
-										</ul>
-									</nav>
-								</div>
 
+
+										<!-- 다음 버튼 -->
+<li>
+    <a th:href="'javascript:void(0)'"
+       th:attr="data-pageNumber=${paginationInfo.currentPageNo + 1}, data-searchCondition=${searchVO.searchCondition}"
+       th:class="${paginationInfo.currentPageNo == paginationInfo.totalPageCount ? 'disabled' : ''}">
+       다음 &raquo;
+    </a>
+</li>
+
+										</ul>
+									</div>
+								</div>
+								<!--페이징 끝-->
 
 								<script th:inline="javascript">
+									$(document).ready(function () {
+										updatePagination();
+										// 페이지 링크 및 이전/다음 버튼 클릭 시
+										$('#pagination a').on('click', function (e) {
+											e.preventDefault();
+											var pageNumber = $(this).attr('data-pageNumber');
+											var searchCondition = $(this).attr('data-searchCondition'); // 새로운 줄 추가
 
+											if (pageNumber) {
+												searchForm.pageIndex.value = pageNumber;
+												searchForm.searchCondition.value = searchCondition; // 수정된 부분
+												searchForm.submit();
+											}
+
+
+										});
+
+
+										function updatePagination() {
+											// 현재 페이지 번호
+											var currentPage = parseInt(/*[[${paginationInfo.currentPageNo}]]*/);
+											// 전체 페이지 수
+											var totalPages = parseInt(/*[[${paginationInfo.totalPageCount}]]*/);
+
+											// 이전 버튼 비활성화
+											if (currentPage === 1) {
+												$('#pagination li:first-child').addClass('disabled');
+											} else {
+												$('#pagination li:first-child').removeClass('disabled');
+											}
+
+
+											// 다음 버튼 비활성화
+											if (currentPage >= totalPages) {
+												$('#pagination li:last-child').addClass('disabled');
+											} else {
+												$('#pagination li:last-child').removeClass('disabled');
+											}
+
+											// 페이지 링크 비활성화
+											$('#pagination li').each(function () {
+												var pageNumber = parseInt($(this).find('a').attr('data-pageNumber'));
+												if (pageNumber === currentPage) {
+													$(this).find('a').addClass('active');
+												} else {
+													$(this).find('a').removeClass('active');
+												}
+											});
+
+
+										}
+									});
 									//지역목록 시작
 									$(".regionBtn").click(function () {
-										let region = $(this).val();
+
+										//		var region = $(this).text();
+										var region = $(this).val();
 										console.log(region);
 
-										sendToControllerForUpdate(region);
-										changeRegionText(region);
+
+
+
+										$("input[name='pageIndex']").val(1);
+										$("input[name='searchKeyword']").val(region);
+										searchForm.submit();
+
 									});
-									function changeRegionText(region) {
-										// 선택한 지역으로 "축제" 텍스트를 변경합니다.
-										document.getElementById('festivalDestination').innerHTML = region;
-									}
-									function sendToControllerForUpdate(region) {
 
-										let data = {searchKey: "festivalAddress", searchWord: region, cpage: "1", pageBlock: "6"};
-										$.ajax({
-											url: '/festival/searchRegion',
-											type: 'POST',
-											contentType: 'application/json',
-											data: JSON.stringify(data),
-											success: function (response) {
-												console.log('서버 응답:', response);
-
-												//vos = response;
-												updateHTMLWithVos(response);
-
-
-
-											},
-											error: function (xhr, status, error) {
-												console.error('서버 요청 오류:', error);
-											}
-										});
-									}
-
-									function updateHTMLWithVos(vos) {
-										// vos를 이용하여 HTML을 업데이트
-										let destinationHTML = '';
-										for (let i = 0; i < vos.length; i++) {
-											let vo = vos[i];
-											if (!vo.festivalImg) {
-												// 이미지가 비어 있는 경우 기본 이미지로 대체하여 표시
-												destinationHTML += `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="/img/destination-1.jpg" style="max-width: 100%; height: auto;" alt="기본이미지 대체 텍스트">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
-                            <h5 class="text-white">${vo.festivalName}</h5>
-                            <span>${vo.festivalAddress}</span>
-                        </a>
-                    </div>
-                </div>`;
-											} else {
-												// 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용
-												destinationHTML += `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="${vo.festivalImg}" style="max-width: 100%; height: auto;" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="/festival/festivalDetails?festivalNum=${vo.festivalNum}">
-                            <h5 class="text-white">${vo.festivalName}</h5>
-                            <span>${vo.festivalAddress}</span>
-                        </a>
-                    </div>
-                </div>`;
-											}
-										}
-										// vos를 반영할 HTML 요소에 할당
-										document.getElementById('destinationList').innerHTML = destinationHTML;
-									}
-
-									// 전국 버튼에 클릭 이벤트 핸들러 추가
+									//전국버튼클릭시 /festival리로드 
 									$("#AllRegionBtn").click(function () {
-										// 전체 페이지 새로고침
-										window.location.reload();
-										// 또는 다른 URL로 이동
-										// window.location.href = "/festival/festivalSelectAll";
+										// '/festival' 페이지로 이동합니다.
+										window.location.href = '/festival/festivalSelectAll';
 									});
 
 								</script>

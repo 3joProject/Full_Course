@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fullcourse.festival.festivalComment.FestivalCommentService;
 import com.fullcourse.festival.festivalComment.FestivalCommentVO;
+import com.fullcourse.member.MemberVO;
+import com.fullcourse.paging.PaginationInfo;
+import com.fullcourse.tour.TourRegionTypeEnum;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,70 +25,109 @@ public class FestivalController {
 
 	@Autowired
 	private FestivalService service;
-	
+
 	@Autowired
 	private FestivalCommentService comService;
 
 	// 축제 페이지 메인
-	@GetMapping("/festival")
-	public String festivalMain(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
-		log.info("/festivalMain...");
-
-		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
-		
-		//best 축제
-		List<FestivalVO> vos2 = service.festivalSelectAllTop();
-		model.addAttribute("vos2", vos2);
-		model.addAttribute("vos", vos);
-		
-		// 축제테이블에 들어있는 모든 축제는 몇개?
-		int total_rows = service.getTotalRows();
-		log.info("total_rows:" + total_rows);
-
-		int totalPageCount = 1;
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
-		} else {
-			totalPageCount = total_rows / pageBlock + 1;
-		}
-		// 페이지 링크 몇개?
-		log.info("totalPageCount:" + totalPageCount);
-		model.addAttribute("totalPageCount", totalPageCount);
-		
-		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
-		model.addAttribute("title", "축제");
-		return "thymeleaf/festival/th_festivalLayout_main";
-	}
+//	@GetMapping("/festival")
+//	public String festivalMain(@RequestParam(defaultValue = "1") int cpage,
+//			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
+//		log.info("/festivalMain...");
+//
+//		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
+//		
+//		//best 축제
+//		List<FestivalVO> vos2 = service.festivalSelectAllTop();
+//		model.addAttribute("vos2", vos2);
+//		model.addAttribute("vos", vos);
+//		
+//		// 축제테이블에 들어있는 모든 축제는 몇개?
+//		int total_rows = service.getTotalRows();
+//		log.info("total_rows:" + total_rows);
+//
+//		int totalPageCount = 1;
+//		if (total_rows / pageBlock == 0) {
+//			totalPageCount = 1;
+//		} else if (total_rows % pageBlock == 0) {
+//			totalPageCount = total_rows / pageBlock;
+//		} else {
+//			totalPageCount = total_rows / pageBlock + 1;
+//		}
+//		// 페이지 링크 몇개?
+//		log.info("totalPageCount:" + totalPageCount);
+//		model.addAttribute("totalPageCount", totalPageCount);
+//		
+//		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
+//		model.addAttribute("title", "축제");
+//		return "thymeleaf/festival/th_festivalLayout_main";
+//	}
 
 	// 상세정보로 이동
+//	@GetMapping("/festival/festivalDetails")
+//	public String festivalDetails(FestivalVO vo, Model model) {
+//		log.info("festivalDetails...");
+//		log.info("vo:{}", vo);
+//
+//		service.updateviewCount(vo);
+//		log.info("updateview..");
+//
+//		FestivalVO vo2 = service.festivalSelectOne(vo);
+//		model.addAttribute("vo2", vo2);
+//
+//		model.addAttribute("content", "thymeleaf/festival/th_festivalDetails");
+//		model.addAttribute("title", "축제상세페이지");
+//
+//		// 댓글목록 처리로직
+//		FestivalCommentVO cvo = new FestivalCommentVO();
+//		cvo.setFestivalcoFnum(vo.getFestivalNum());
+//		List<FestivalCommentVO> cvos = comService.festivalCommentSelectAll(cvo);
+//
+//		model.addAttribute("cvos", cvos);
+//
+//		return "thymeleaf/festival/th_festivalLayout_main";
+//	}
+
+	//상세정보 새로운 버젼 
 	@GetMapping("/festival/festivalDetails")
-	public String festivalDetails(FestivalVO vo, Model model) {
+	public String festivalDetails(FestivalVO vo, Model model, HttpSession session) {
 		log.info("festivalDetails...");
 		log.info("vo:{}", vo);
-	
+		
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    if (member != null) {
+	    	session.setAttribute("festivalLikeMemberNum ", member.getMemberNum());
+            session.setAttribute("festivalLikeFestivalNum ", vo.getFestivalNum());
+            log.info("festivalLikeMemberNum: {}", member.getMemberNum());
+            log.info("festivalLikeFestivalNum: {}", vo.getFestivalNum());
+
+            session.setMaxInactiveInterval(3600);
+	        // 로그인된 사용자인 경우, 좋아요 상태를 확인하고 업데이트합니다.
+	        int likeCount = service.getFestivalLikeCount(member.getMemberNum(), vo.getFestivalNum()); // 회원번호와 글번호를 통해 좋아요 상태 확인
+	        log.info("좋아요 체크성공");
+	        log.info("likeCount: {}", likeCount);
+	        model.addAttribute("commentWriter", member.getMemberId());
+	        model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
+	    }
+	    log.info("Member Number: {}", member);
 		service.updateviewCount(vo);
 		log.info("updateview..");
-		
+		log.info("vo:{}", vo);
 		FestivalVO vo2 = service.festivalSelectOne(vo);
 		model.addAttribute("vo2", vo2);
 
 		model.addAttribute("content", "thymeleaf/festival/th_festivalDetails");
-		model.addAttribute("title", "축제상세페이지");
-		
-		//댓글목록 처리로직
+		model.addAttribute("title", "여행상세페이지");
+
+		// 댓글목록 처리로직
 		FestivalCommentVO cvo = new FestivalCommentVO();
 		cvo.setFestivalcoFnum(vo.getFestivalNum());
 		List<FestivalCommentVO> cvos = comService.festivalCommentSelectAll(cvo);
-		
-		model.addAttribute("cvos", cvos);
 
+		model.addAttribute("cvos", cvos);
 
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
-
 	// 축제 입력페이지로 이동
 	@GetMapping("/festival/festivalInsert")
 	public String festivalInsert(Model model) {
@@ -124,7 +168,7 @@ public class FestivalController {
 		model.addAttribute("title", "축제 정보수정");
 		return "thymeleaf/th_festivalLayout_main";
 	}
-	
+
 //	// 축제 정보 검색 ?details랑 겹치나 확인
 //		@GetMapping("/festival/festivalSelectOne")
 //		public String festivalSelectOne(FestivalVO vo, Model model) {
@@ -144,7 +188,7 @@ public class FestivalController {
 	@PostMapping("/festival/festivalUpdateOK")
 	public String festivalUpdateOK(FestivalVO vo) {
 		log.info("festivalUpdateOK ...");
-		
+
 		log.info("vo:{}", vo);
 
 		int result = service.festivalUpdateOK(vo);
@@ -176,39 +220,37 @@ public class FestivalController {
 		return "redirect:festivalSelectAll";
 	}
 
-	
-
-	// 축제 목록
-	@GetMapping("/festival/festivalSelectAll")
-	public String festivalSelectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
-		log.info("festivalSelectAll ...");
-		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
-
-		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
-		model.addAttribute("vos", vos);
-
-		// festival테이블에 들어있는 모든축제수는 몇개?
-		int total_rows = service.getTotalRows();
-		log.info("total_rows:" + total_rows);
-
-		int totalPageCount = 1;
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
-		} else {
-			totalPageCount = total_rows / pageBlock + 1;
-		}
-		// 페이지 링크 몇개?
-		log.info("totalPageCount:" + totalPageCount);
-		model.addAttribute("totalPageCount", totalPageCount);
-//		model.addAttribute("totalPageCount", 10);//테스트용
-
-		model.addAttribute("content", "thymeleaf/festival/th_selectAll");
-		model.addAttribute("title", "축제목록");
-		return "thymeleaf/festival/th_festivalLayout_main";
-	}
+//	// 축제 목록
+//	@GetMapping("/festival/festivalSelectAll")
+//	public String festivalSelectAll(@RequestParam(defaultValue = "1") int cpage,
+//			@RequestParam(defaultValue = "9") int pageBlock, Model model) {
+//		log.info("festivalSelectAll ...");
+//		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
+//
+//		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
+//		model.addAttribute("vos", vos);
+//
+//		// festival테이블에 들어있는 모든축제수는 몇개?
+//		int total_rows = service.getTotalRows();
+//		log.info("total_rows:" + total_rows);
+//
+//		int totalPageCount = 1;
+//		if (total_rows / pageBlock == 0) {
+//			totalPageCount = 1;
+//		} else if (total_rows % pageBlock == 0) {
+//			totalPageCount = total_rows / pageBlock;
+//		} else {
+//			totalPageCount = total_rows / pageBlock + 1;
+//		}
+//		// 페이지 링크 몇개?
+//		log.info("totalPageCount:" + totalPageCount);
+//		model.addAttribute("totalPageCount", totalPageCount);
+////		model.addAttribute("totalPageCount", 10);//테스트용
+//
+//		model.addAttribute("content", "thymeleaf/festival/th_selectAll");
+//		model.addAttribute("title", "축제목록");
+//		return "thymeleaf/festival/th_festivalLayout_main";
+//	}
 
 	// 축제 목록 검색
 	@GetMapping("/festival/festivalSearchList")
@@ -221,8 +263,6 @@ public class FestivalController {
 
 //		List<MemberVO> vos = service.searchList(searchKey,searchWord);
 		List<FestivalVO> vos = service.searchListPageBlock(searchKey, searchWord, cpage, pageBlock);
-
-	
 
 		// 키워드검색 모든축제는 몇개?
 		int total_rows = service.getSearchTotalRows(searchKey, searchWord);
@@ -245,5 +285,85 @@ public class FestivalController {
 		model.addAttribute("title", "회원목록");
 		return "thymeleaf/festival/th_festivalLayout_main";
 
+	}
+
+	@GetMapping(value = "/festival")
+	public String festivalMain(Model model, @ModelAttribute("searchVO") FestivalVO searchVO) throws Exception {
+		log.info("새로운");
+		// 페이지 설정
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
+		paginationInfo.setPageSize(searchVO.getPageSize());
+
+//		if (paginationInfo.getFirstRecordIndex() > 0) {
+//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//
+//		} else {
+//			searchVO.setFirstIndex(1);
+//		}
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		// 총 갯수
+//		int totalCount = service.selectListTotalCount(searchVO);
+//		paginationInfo.setTotalRecordCount(totalCount);
+		// 투어리스트
+//		List<FestivalVO> festivalVOList = service.selectFestivalListWithPaging(searchVO);
+		List<FestivalVO> festivalVOList = service.selectFestivalViewTopListWithPaging(searchVO);
+
+		// best 여행지
+		List<FestivalVO> vos2 = service.festivalSelectAllTop(searchVO);
+		model.addAttribute("vos2", vos2);
+		model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("festivalListVO", festivalVOList);
+//		model.addAttribute("totalCount", totalCount);
+//		log.info("축제갯수:{}", totalCount);
+		
+		log.info("갯수: {}", festivalVOList.size());
+		model.addAttribute("content", "thymeleaf/festival/th_festivalMain");
+		model.addAttribute("title", "축제");
+
+		// 여행지 주소 ENUM
+		model.addAttribute("regions", TourRegionTypeEnum.values());
+		return "thymeleaf/festival/th_festivalLayout_main";
+	}
+
+	@GetMapping(value = "/festival/festivalSelectAll")
+	public String festivalSelectAll(Model model, @ModelAttribute("searchVO") FestivalVO searchVO) throws Exception {
+		log.info("확인2");
+		// 페이지 설정
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+//		if (paginationInfo.getFirstRecordIndex() > 0) {
+//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//
+//		} else {
+//			searchVO.setFirstIndex(1);
+//		}
+		
+
+		// 총 갯수
+		int totalCount = service.selectListTotalCount(searchVO);
+		paginationInfo.setTotalRecordCount(totalCount);
+		// 투어리스트
+		List<FestivalVO> festivalVOList = service.selectFestivalListWithPaging(searchVO);
+
+		model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("festivalListVO", festivalVOList);
+		model.addAttribute("totalCount", totalCount);
+		log.info("축제갯수:{}", totalCount);
+		model.addAttribute("content", "thymeleaf/festival/th_selectAll");
+		model.addAttribute("title", "축제");
+
+		// 여행지 주소 ENUM
+		model.addAttribute("regions", TourRegionTypeEnum.values());
+		return "thymeleaf/festival/th_festivalLayout_main";
 	}
 }

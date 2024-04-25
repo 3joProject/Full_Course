@@ -20,5 +20,5 @@ public class ParkingController {
 		
 		return "thymeleaf/parking/parking";
 	}
-	
+
 }

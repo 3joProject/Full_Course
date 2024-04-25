@@ -1,38 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fullcourse.route.mapper.RouteMapper">
-	
-	
-	 <insert id="save" parameterType="com.fullcourse.route.RouteVO">
-        INSERT INTO route ( routeName, routeTraffic, routeStartLocation, routeEndLocation, routeStartLatitude, routeStartLongitude, 
-        routeEndLatitude, routeEndLongitude,routeTime, routeDistance, routeOrder)
-        VALUES ( #{routeName}, #{routeTraffic}, #{routeStartLocation}, #{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude}, 
-        	#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime}, #{routeDistance}, #{routeOrder})
-    </insert>
-    
-    <select id="routeSelectAll" parameterType="com.fullcourse.route.RouteVO">
-		SELECT DISTINCT routeName FROM route 
-		
+
+
+	<insert id="save" parameterType="com.fullcourse.route.RouteVO">
+		INSERT INTO route ( routeName, routeUserId, routeTraffic, routeStartLocation,
+		routeEndLocation, routeStartLatitude, routeStartLongitude,
+		routeEndLatitude, routeEndLongitude,routeTime, routeDistance,
+		routeOrder)
+		VALUES ( #{routeName},#{routeUserId}, #{routeTraffic}, #{routeStartLocation},
+		#{routeEndLocation}, #{routeStartLatitude}, #{routeStartLongitude},
+		#{routeEndLatitude}, #{routeEndLongitude}, #{routeTime},
+		#{routeDistance}, #{routeOrder})
+	</insert>
+
+	<select id="routeSelectAll" resultType="com.fullcourse.route.RouteVO">
+		SELECT DISTINCT routeName FROM route
+
 	</select>
-	
+
 	<select id="getTotalRows" resultType="int">
 		select count(*) total_rows from route
 	</select>
-	
-	
-	<select id="routeSelectOne" parameterType="com.fullcourse.route.RouteVO">
+
+
+	<select id="routeSelectOne" resultType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName=#{routeName}
+	</select>
+
+	<select id="getTours" resultType="com.fullcourse.route.TourVO">
+		SELECT * FROM tour
+	</select>
+
+	<select id="getRoute" resultType="com.fullcourse.route.RouteVO">
+		SELECT * FROM route WHERE routeName= #{routeName}
+	</select>
+
+	<select id="selectAllRouteList" resultType="com.fullcourse.route.RouteVO">
+		SELECT *
+		FROM (
+		SELECT *, ROW_NUMBER() OVER(PARTITION BY routeName ORDER BY routeName)
+		AS rn
+		FROM route
+		WHERE routeUserId=#{routeUserId}
+		)AS subquery
+		WHERE rn = 1;
+	</select>
+
+	<select id="getTotalRowsRouteList" resultType="int">
+		SELECT count(*) totalRowsRoute from route where
+		routeUserId=#{routeUserId};
+	</select>
+
+	<select id="routeUpdate" resultType="com.fullcourse.route.RouteVO">
 		SELECT * FROM route WHERE routeName=#{routeName}
 	</select>
 	
-	<select id="getTours" parameterType="com.fullcourse.route.TourVO">
-		SELECT * FROM tour
-	</select>
+	<delete id="deleteAllRoutes" parameterType="com.fullcourse.route.RouteVO">
+		DELETE from route where routeName=#{routeName}
+	</delete>
 	
-	<select id="getRoute" parameterType="com.fullcourse.route.RouteVO">
-		SELECT * FROM route WHERE routeName= #{routeName}
-	</select>
-	
+	<delete id="mypageDeleteAll" parameterType="com.fullcourse.route.RouteVO">
+		DELETE from route where routeName=#{routeName}
+	</delete>
+
+
 </mapper>

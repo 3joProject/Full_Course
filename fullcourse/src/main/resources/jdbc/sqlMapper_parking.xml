@@ -3,44 +3,22 @@
 
 <mapper namespace="com.fullcourse.parking.mapper.ParkingMapper">
 
-	<resultMap id="parkingResultMap" type="com.fullcourse.parking.ParkingVO">
-		<!-- format(prkPlceEntrcLa,6)으로 오는 값을 prkPlceEntrcLa 변수에 매핑 -->
-		<result property="prkPlceEntrcLa" column="format(prkPlceEntrcLa,6)" />
-		<!-- format(prkPlceEntrcLo,6)으로 오는 값을 prkPlceEntrcLo 변수에 매핑 -->
-		<result property="prkPlceEntrcLo" column="format(prkPlceEntrcLo,6)" />
-	</resultMap>
+
 
 	<select id="marker"
-		resultType="com.fullcourse.parking.ParkingVO" resultMap="parkingResultMap">
-		SELECT prkCenterId, prkPlceNm, prkPlceAdres,
-		format(prkPlceEntrcLa,6), format(prkPlceEntrcLo,6), pkfcParkingLotsTotal, pkfcAvailableParkingLotsTotla
-        FROM prksttusinfo p, prkrealtimeinfo r
-		where p.prkCenterId = r.prkRealTimeId and
-		prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
+		resultType="com.fullcourse.parking.ParkingVO" >
+		SELECT * FROM prksttusinfo
+		where prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
 		AND prkPlceEntrcLo BETWEEN #{lng} - 0.008 AND #{lng} + 0.008
 	</select>
 
-
-	<insert id="insertOK" parameterType="com.fullcourse.cart.CartVO">
+	<insert id="DBinsert" parameterType="com.fullcourse.parking.ParkingVO">
 		insert into
-		cart(cartMid, cartProduct, cartSellerId, cartTitle,
-		cartPrice, cartImage, cartContent, cartInventory, cartCount)
-		values('user1', #{cartProduct}, #{cartSellerId}, #{cartTitle},
-		#{cartPrice}, #{cartImage}, #{cartContent},
-		#{cartInventory}, #{cartCount})
+		prksttusinfo(prkCenterId, prkPlceNm, prkPlceAdres, prkPlceEntrcLa, prkPlceEntrcLo, prkCmprtCo)
+		values(#{prkCenterId}, #{prkPlceNm}, #{prkPlceAdres}, #{prkPlceEntrcLa}, #{prkPlceEntrcLo}, #{prkCmprtCo})
 	</insert>
 
-	<update id="updateOK" parameterType="com.fullcourse.cart.CartVO">
-		update cart set cartCount=#{cartCount} where cartNum=#{cartNum}
-	</update>
-
-	<delete id="deleteOK" parameterType="com.fullcourse.cart.CartVO">
-		delete from cart where cartNum=#{cartNum}
-	</delete>
-
-	<select id="chkWDuplCart" resultType="int">
-		select count(*) from cart where cartMid='user1' and
-		cartProduct=#{cartProduct};
-	</select>
+	
+	
 
 </mapper>

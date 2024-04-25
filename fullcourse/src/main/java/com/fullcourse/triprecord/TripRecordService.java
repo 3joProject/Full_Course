@@ -15,18 +15,19 @@ public class TripRecordService {
 	@Autowired
 	private TripRecordMapper mapper;
 
-	public List<TripRecordVO> selectAll(int cpage, int pageBlock) {
+	public List<TripRecordVO> selectAll(int cpage, int pageBlock, int tripRecMnum) {
 		int startRow = (cpage - 1) * pageBlock + 1;
 
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("startRow", startRow-1);
 		map.put("pageBlock", pageBlock);
+		map.put("tripRecMnum", tripRecMnum);
 		
 		return mapper.selectAll(map);
 	}
 
-	public int getTotalRows() {
-		return mapper.getTotalRows();
+	public int getTotalRows(int tripRecMnum) {
+		return mapper.getTotalRows(tripRecMnum);
 	}
 
 	public int insertOK(TripRecordVO vo) {
@@ -43,5 +44,9 @@ public class TripRecordService {
 
 	public int deleteOK(TripRecordVO vo) {
 		return mapper.deleteOK(vo);
+	}
+
+	public List<TripRecordVO> marker(int triprecMnum) {
+		return mapper.marker(triprecMnum);
 	}
 }

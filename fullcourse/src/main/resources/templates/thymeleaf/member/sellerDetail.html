@@ -185,7 +185,7 @@
 				<input type="hidden" name="selrevId" th:value=${seller.memberId}>
 				<p><label>리뷰내용 : <input type="text" name="selrevContent"></label></p>
 				<p><label>작성일시 : <input type="text" name="selrevDate" id="selrevDate2"></label></p>
-				<p><label>작성자 : <input type="text" name="selrevWriter" value="user1" readonly></label></p>
+				<p><label>작성자 : <input type="text" name="selrevWriter" th:value="${member.memberId}" readonly></label></p>
 				<p><input type="submit" value="리뷰 추가 버튼"></p>
 			</form>
 

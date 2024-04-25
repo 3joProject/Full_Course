@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullcourse.member.MemberVO;
 import com.fullcourse.paging.PaginationInfo;
 import com.fullcourse.tour.tourComment.TourCommentService;
 import com.fullcourse.tour.tourComment.TourCommentVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -60,12 +62,28 @@ public class TourController {
 //		return "thymeleaf/tour/th_tourLayout_main";
 //	}
 
-	// 상세정보로 이동
+	// 상세정보로 이동 새로운버젼
 	@GetMapping("/tour/tourDetails")
-	public String tourDetails(TourVO vo, Model model) {
+	public String tourDetails(TourVO vo, Model model, HttpSession session) {
 		log.info("tourDetails...");
 		log.info("vo:{}", vo);
+		
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    if (member != null) {
+	    	session.setAttribute("tourLikeMemberNum ", member.getMemberNum());
+            session.setAttribute("tourLikeTourNum ", vo.getTourNum());
+            log.info("tourLikeMemberNum: {}", member.getMemberNum());
+            log.info("tourLikeTourNum: {}", vo.getTourNum());
 
+            session.setMaxInactiveInterval(3600);
+	        // 로그인된 사용자인 경우, 좋아요 상태를 확인하고 업데이트합니다.
+	        int likeCount = service.getTourLikeCount(member.getMemberNum(), vo.getTourNum()); // 회원번호와 글번호를 통해 좋아요 상태 확인
+	        log.info("좋아요 체크성공");
+	        log.info("likeCount: {}", likeCount);
+	        model.addAttribute("commentWriter", member.getMemberId());
+	        model.addAttribute("likeCount", likeCount); // 좋아요 상태를 View로 전달
+	    }
+	    log.info("Member Number: {}", member);
 		service.updateviewCount(vo);
 		log.info("updateview..");
 		log.info("vo:{}", vo);
@@ -84,6 +102,50 @@ public class TourController {
 
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
+//	@GetMapping("/tour/tourDetails")
+//	public String tourDetails(TourVO vo, Model model, HttpSession session) {
+//	    log.info("tourDetails...");
+//	    log.info("vo:{}", vo);
+//	    
+//	    // 세션에서 로그인 여부를 확인합니다.
+//	    boolean isLoggedIn = session.getAttribute("member") != null;
+//	    if (isLoggedIn) {
+//	        // 로그인한 경우의 처리
+//	        MemberVO member = (MemberVO) session.getAttribute("member");
+//	        session.setAttribute("tourLikeMemberNum ", member.getMemberNum());
+//	        session.setAttribute("tourLikeTourNum ", vo.getTourNum());
+//	        log.info("tourLikeMemberNum: {}", member.getMemberNum());
+//	        log.info("tourLikeTourNum: {}", vo.getTourNum());
+//
+//	        session.setMaxInactiveInterval(3600);
+//	        
+//	        int likeCount = service.getTourLikeCount(member.getMemberNum(), vo.getTourNum());
+//	        log.info("좋아요 체크성공");
+//	        log.info("likeCount: {}", likeCount);
+//
+//	        model.addAttribute("likeCount", likeCount);
+//	    } else {
+//	        // 비로그인인 경우의 처리
+//	        log.info("로그인되지 않았습니다.");
+//	    }
+//
+//	    
+//	    service.updateviewCount(vo);
+//	    log.info("updateview..");
+//	    log.info("vo:{}", vo);
+//	    TourVO vo2 = service.tourSelectOne(vo);
+//	    model.addAttribute("vo2", vo2);
+//
+//	    model.addAttribute("content", "thymeleaf/tour/th_tourDetails");
+//	    model.addAttribute("title", "여행상세페이지");
+//
+//	    TourCommentVO cvo = new TourCommentVO();
+//	    cvo.setTourcoTnum(vo.getTourNum());
+//	    List<TourCommentVO> cvos = comService.tourCommentSelectAll(cvo);
+//	    model.addAttribute("cvos", cvos);
+//
+//	    return "thymeleaf/tour/th_tourLayout_main";
+//	}
 
 	// 여행지 입력페이지로 이동
 	@GetMapping("/tour/tourInsert")
@@ -247,80 +309,83 @@ public class TourController {
 
 	@GetMapping(value = "/tour")
 	public String tourMain(Model model, @ModelAttribute("searchVO") TourVO searchVO) throws Exception {
-log.info("새로운");
+		log.info("새로운");
 		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
 		paginationInfo.setPageSize(searchVO.getPageSize());
 
-		if (paginationInfo.getFirstRecordIndex() > 0) {
-			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-
-		} else {
-			searchVO.setFirstIndex(1);
-		}
+//		if (paginationInfo.getFirstRecordIndex() > 0) {
+//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//
+//		} else {
+//			searchVO.setFirstIndex(1);
+//		}
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		// 총 갯수
-		int totalCount = service.selectListTotalCount(searchVO);
-		paginationInfo.setTotalRecordCount(totalCount);
+//		int totalCount = service.selectListTotalCount(searchVO);
+//		paginationInfo.setTotalRecordCount(totalCount);
 		// 투어리스트
-		List<TourVO> tourVOList = service.selectTourListWithPaging(searchVO);
-		
+//		List<TourVO> tourVOList = service.selectTourListWithPaging(searchVO);
+		List<TourVO> tourVOList = service.selectTourViewTopListWithPaging(searchVO);
+
 		// best 여행지
 		List<TourVO> vos2 = service.tourSelectAllTop(searchVO);
 		model.addAttribute("vos2", vos2);
 		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("tourListVO", tourVOList);
-		model.addAttribute("totalCount", totalCount);
+//		model.addAttribute("totalCount", totalCount);
+//		log.info("갯수:{}", tourVOList);
+		log.info("갯수: {}", tourVOList.size());
+
 
 		model.addAttribute("content", "thymeleaf/tour/th_tourMain");
 		model.addAttribute("title", "여행지");
-		
+
 		// 여행지 주소 ENUM
 		model.addAttribute("regions", TourRegionTypeEnum.values());
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
-	
+
 	@GetMapping(value = "/tour/tourSelectAll")
 	public String tourSelectAll(Model model, @ModelAttribute("searchVO") TourVO searchVO) throws Exception {
- log.info("확인");
-		// 페이지 설정
+		log.info("확인");
+////		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
 		paginationInfo.setPageSize(searchVO.getPageSize());
-		
-
-		if (paginationInfo.getFirstRecordIndex() > 0) {
-			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-
-		} else {
-			searchVO.setFirstIndex(1);
-		}
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+//		if (paginationInfo.getFirstRecordIndex() > 0) {
+//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//
+//		} else {
+//			searchVO.setFirstIndex(1);
+//		}
 
 		// 총 갯수
 		int totalCount = service.selectListTotalCount(searchVO);
 		paginationInfo.setTotalRecordCount(totalCount);
 		// 투어리스트
 		List<TourVO> tourVOList = service.selectTourListWithPaging(searchVO);
-		// best 여행지
-		//List<TourVO> vos2 = service.tourSelectAllTop();
-	//	model.addAttribute("vos2", vos2);
+		log.info("tourListVO: " + tourVOList);
+
 		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("tourListVO", tourVOList);
 		model.addAttribute("totalCount", totalCount);
-
+		log.info("갯수:{}", totalCount);
 		model.addAttribute("content", "thymeleaf/tour/th_selectAll");
 		model.addAttribute("title", "여행지");
-		
+
 		// 여행지 주소 ENUM
 		model.addAttribute("regions", TourRegionTypeEnum.values());
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
-	
+
 }

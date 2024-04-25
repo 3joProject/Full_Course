@@ -10,6 +10,7 @@ import com.fullcourse.buylist.BuyListVO;
 @Mapper
 public interface BuyListMapper {
 
+
 	@Select("SELECT * FROM buylist WHERE buymnum = #{memberNum}")
     List<BuyListVO> findByMemberNum(int memberNum);
 	
@@ -19,6 +20,7 @@ public interface BuyListMapper {
 			+ "and b.buyMnum = #{memberNum}")
 	List<BuyListVO> findByMemberNum2(int memberNum);
 
-	
+
+
 
 }

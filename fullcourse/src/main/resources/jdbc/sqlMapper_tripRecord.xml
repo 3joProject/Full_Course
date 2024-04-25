@@ -4,19 +4,20 @@
 <mapper namespace="com.fullcourse.triprecord.mapper.TripRecordMapper">
 
 	<select id="selectAll" resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from tripRecord where triprecMnum=1 order by triprecNum desc
+		select * from tripRecord where triprecMnum=#{tripRecMnum} order by triprecNum desc
 		limit #{startRow}, #{pageBlock}
 	</select>
 
 	<select id="getTotalRows" resultType="int">
-		select count(*) total_rows from tripRecord where triprecMnum=1
+		select count(*) total_rows from tripRecord where triprecMnum=#{tripRecMnum}
 	</select>
 
 	<insert id="insertOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
 		insert into tripRecord(triprecMnum, triprecTripdate,
-		triprecContent,triprecImage, triprecDate, triprecAddress)
-		values(1,#{triprecTripdate}, #{triprecContent}, #{triprecImage},
-		#{triprecDate}, #{triprecAddress})
+		triprecContent,triprecImage, triprecDate, triprecAddress, triprecLat,
+		triprecLon)
+		values(#{triprecMnum}, #{triprecTripdate}, #{triprecContent}, #{triprecImage},
+		#{triprecDate}, #{triprecAddress}, #{triprecLat}, #{triprecLon})
 	</insert>
 
 	<select id="selectOne" resultType="com.fullcourse.triprecord.TripRecordVO">
@@ -24,7 +25,8 @@
 	</select>
 
 	<update id="updateOK" parameterType="com.fullcourse.triprecord.TripRecordVO">
-		update tripRecord set triprecTripdate=#{triprecTripdate},triprecContent=#{triprecContent},triprecImage=#{triprecImage},
+		update tripRecord set
+		triprecTripdate=#{triprecTripdate},triprecContent=#{triprecContent},triprecImage=#{triprecImage},
 		triprecDate=#{triprecDate}, triprecAddress=#{triprecAddress}
 		where triprecNum=#{triprecNum}
 	</update>
@@ -33,47 +35,8 @@
 		delete from tripRecord where triprecNum=#{triprecNum}
 	</delete>
 
-
-
-
-
-	<select id="searchListID"
-		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member where id like #{searchWord}
-	</select>
-
-	<select id="searchListNAME"
-		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member where name like #{searchWord}
-	</select>
-
-	<select id="selectAllPageBlock"
-		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-	<select id="searchListID_PAGE"
-		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member
-		where id like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-	<select id="searchListNAME_PAGE"
-		resultType="com.fullcourse.triprecord.TripRecordVO">
-		select * from member
-		where name like #{searchWord}
-		order by num desc limit #{startRow},#{pageBlock}
-	</select>
-
-
-	<select id="search_total_rows_id" resultType="int">
-		select count(*) total_rows from member where id like #{searchWord}
-	</select>
-
-	<select id="search_total_rows_name" resultType="int">
-		select count(*) total_rows from member where name like #{searchWord}
+	<select id="marker" resultType="com.fullcourse.triprecord.TripRecordVO">
+		select * from tripRecord where triprecMnum=#{triprecNum}
 	</select>
 
 </mapper>
