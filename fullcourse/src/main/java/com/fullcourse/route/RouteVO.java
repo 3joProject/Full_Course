@@ -11,6 +11,7 @@ public class RouteVO {
 	
 	private int routeNum;
 	private String routeName;
+	private String routeUserId;
 	private String routeTraffic;
 	private String routeTime;
 	private String routeStartLocation;
