@@ -29,5 +29,11 @@
 		select count(*) from cart where cartMid=#{cartMid} and
 		cartProduct=#{cartProduct};
 	</select>
+	
+	<insert id="insertBuy" parameterType="int">
+		insert into
+		buylist(cartNum)
+		values(#{cartNum})
+	</insert>
 
 </mapper>
