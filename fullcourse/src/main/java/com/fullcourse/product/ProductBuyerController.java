@@ -27,7 +27,7 @@ public class ProductBuyerController {
 
 	@GetMapping("/selectAll")
 	public String selectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "9") int pageBlock, Model model, 
+			@RequestParam(defaultValue = "6") int pageBlock, Model model, 
 			HttpServletRequest request) {
 		
 	    HttpSession session = request.getSession();
@@ -61,7 +61,7 @@ public class ProductBuyerController {
 //		model.addAttribute("title", "상품목록");
 		
 		model.addAttribute("content","thymeleaf/product/th_selectAll");
-		model.addAttribute("title","여행상품쇼핑");
+		//model.addAttribute("title","여행상품쇼핑");
 		
 		return "thymeleaf/product/th_layout_main";
 	}
