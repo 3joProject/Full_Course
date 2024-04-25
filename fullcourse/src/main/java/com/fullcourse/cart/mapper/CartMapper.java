@@ -19,5 +19,7 @@ public interface CartMapper {
 	public int updateOK(CartVO vo);
 
 	public int chkWDuplCart(CartVO vo);
+
+	public int insertBuy(int cartNum);
 	
 }
