@@ -135,12 +135,7 @@ public class MemberController {
 //        redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
 //        return "redirect:/member/" + memberId;
 //    }
-    @GetMapping("/member/{memberId}")
-    public String showMemberInfo(@PathVariable("memberId") String memberId, Model model) {
-        MemberVO member = memberService.getMemberById(memberId);
-        model.addAttribute("memberVO", member);
-        return "member/profile"; // Thymeleaf 템플릿의 위치
-    }
+
     @GetMapping("/member/updateMemberInfo")
     public String updateMemberInfoForm(HttpSession session, Model model) {
         Integer memberNum = (Integer) session.getAttribute("memberNum");

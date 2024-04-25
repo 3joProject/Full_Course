@@ -21,10 +21,7 @@
 		<p>이메일: <span th:text="${seller.memberEmail}"></span></p>
 		<p>전화번호: <span th:text="${seller.memberTel}"></span></p>
 		<!-- 기타 필요한 정보 추가 -->
-		<!-- 팔로우 버튼 -->
-		<form action="/followMember/{memberId}" method="post">
-			<button type="submit">팔로우</button>
-		</form>
+
 	</div>
 	<a th:href="@{/}">홈으로</a>
 

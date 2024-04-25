@@ -4,10 +4,6 @@
 <mapper namespace="com.fullcourse.buylist.mapper.BuyListMapper">
 <!-- 결과 매핑 설정 -->
 
-<insert id="addOrder" parameterType="com.fullcourse.buylist.BuyListVO">
-        INSERT INTO buylist (buyNum, buyMnum, buyId, buyInventory, buyTotalPrice, buyDate)
-        VALUES (#{buyNum}, #{buyMnum}, #{buyId}, #{buyInventory}, #{buyTotalPrice}, #{buyDate})
-    </insert>
     <resultMap id="buyListResultMap" type="com.fullcourse.buylist.BuyListVO">
         <id property="buyNum" column="buy_num"/>
         <result property="buyMnum" column="buy_mnum"/>
