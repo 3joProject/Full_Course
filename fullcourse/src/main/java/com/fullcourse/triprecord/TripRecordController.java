@@ -33,57 +33,63 @@ public class TripRecordController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		log.info("MemberVO:{}", member);
 
-		if(member == null) {
-	        return "redirect:/login";
-	    }else {
-		int tripRecMnum = member.getMemberNum();
-		log.info("tripRecMnum:{}", tripRecMnum);
-
-		List<TripRecordVO> vos = service.selectAll(cpage, pageBlock, tripRecMnum);
-		log.info("vos:{}", vos);
-
-		model.addAttribute("vos", vos);
-
-		int total_rows = service.getTotalRows(tripRecMnum);
-		log.info("total_rows:{} ", total_rows);
-
-		int totalPageCount = 1;
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
+		if (member == null) {
+			log.info("로그인한사람이 없습니다");
+			return "redirect:/login";
 		} else {
-			totalPageCount = total_rows / pageBlock + 1;
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+			int tripRecMnum = member.getMemberNum();
+			log.info("tripRecMnum:{}", tripRecMnum);
+
+			List<TripRecordVO> vos = service.selectAll(cpage, pageBlock, tripRecMnum);
+			log.info("vos:{}", vos);
+
+			model.addAttribute("vos", vos);
+
+			int total_rows = service.getTotalRows(tripRecMnum);
+			log.info("total_rows:{} ", total_rows);
+
+			int totalPageCount = 1;
+			if (total_rows / pageBlock == 0) {
+				totalPageCount = 1;
+			} else if (total_rows % pageBlock == 0) {
+				totalPageCount = total_rows / pageBlock;
+			} else {
+				totalPageCount = total_rows / pageBlock + 1;
+			}
+			log.info("totalPageCount:{} ", totalPageCount);
+
+			model.addAttribute("totalPageCount", totalPageCount);
+			model.addAttribute("content", "thymeleaf/tripRecord/th_tripRecordMain");
+			model.addAttribute("title", "여행기록");
+
+			return "thymeleaf/tripRecord/th_tripRecordLayout_main";
 		}
-		log.info("totalPageCount:{} ", totalPageCount);
-
-		model.addAttribute("totalPageCount", totalPageCount);
-		model.addAttribute("content", "thymeleaf/tripRecord/th_tripRecordMain");
-		model.addAttribute("title", "여행기록");
-
-		return "thymeleaf/tripRecord/th_tripRecordLayout_main";
-	    }
 	}
 
 	@PostMapping("/tripRecord/insertOK")
 	public RedirectView tripRecordInsertOK(TripRecordVO vo, HttpServletRequest request) {
 		log.info("tripRecordinsertOK");
 		log.info("vo:{}", vo);
-		
+
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		log.info("MemberVO:{}", member);
 
-		if(member == null) {
-	        return new RedirectView("/login");
-	    }else {
-	    vo.setTriprecMnum(member.getMemberNum());
-	    log.info("vo:{}", vo);
-		int result = service.insertOK(vo);
-		log.info("result:{}", result);
+		if (member == null) {
+			return new RedirectView("/login");
+		} else {
+			vo.setTriprecMnum(member.getMemberNum());
+			log.info("vo:{}", vo);
+			int result = service.insertOK(vo);
+			log.info("result:{}", result);
 
-		return new RedirectView("/tripRecord");
-	    }
+			return new RedirectView("/tripRecord");
+		}
 
 	}
 
