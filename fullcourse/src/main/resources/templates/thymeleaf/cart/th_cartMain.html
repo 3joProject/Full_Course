@@ -226,7 +226,8 @@
 				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
 				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
 				var totalPrice = productPrice * productQuantity; // 상품가격과 수량을 곱하여 총 가격 계산
-				selectedProducts.push({name: productName, price: totalPrice});
+				var productNum = $row.find('td:eq(0) input[type="hidden"]').val()
+				selectedProducts.push({name: productName, price: totalPrice, num: productNum});
 				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가
 
 			});
@@ -238,6 +239,7 @@
 
 			selectedProducts.forEach(function (product) {
 				var html = `<tr>
+                        <td>${product.num}</td>
                         <td>${product.name}</td>
                         <td>${product.price}</td>
                     </tr>`;
@@ -257,7 +259,8 @@
 			// 선택된 상품들을 <form>에 추가
 			selectedProducts.forEach(function (product) {
 				var html = `<input type="hidden" name="orderId" value="${product.name}">
-                    <input type="hidden" name="amount" value="${product.price}">`;
+                    <input type="hidden" name="amount" value="${product.price}">
+                    <input type="hidden" name="productNum" value="${product.num}">`;
 				$form.append(html);
 			});
 		});
@@ -284,7 +287,8 @@
 				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
 				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
 				var totalPrice = productPrice * productQuantity; // 가격과 수량을 곱하여 총 가격 계산
-				selectedProducts.push({name: productName, price: totalPrice});
+				var productNum = $row.find('td:eq(0) input[type="hidden"]').val()
+				selectedProducts.push({name: productName, price: totalPrice, num: productNum});
 				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가            
 			});
 
@@ -294,7 +298,11 @@
 
 			// 선택된 상품들을 테이블에 추가
 			selectedProducts.forEach(function (product) {
-				var html = `<tr><td>${product.name}</td><td>${product.price}</td></tr>`;
+				var html = `<tr>
+					<td>${product.num}</td>
+					<td>${product.name}</td>
+					<td>${product.price}</td>
+					</tr>`;
 				$tableBody.append(html);
 
 			});
@@ -332,17 +340,21 @@
 			// 선택된 상품 정보를 가져와서 URL에 추가하여 페이지 이동
 			var selectedProducts = [];
 			var totalAmount = 0;
+			var selectedProductNums = [];
 			$('#selectedProductsTable tbody tr').each(function () {
-				var productName = $(this).find('td:eq(0)').text();
-				var productPrice = parseFloat($(this).find('td:eq(1)').text()); // 가격을 숫자로 변환하여 계산
+				var productName = $(this).find('td:eq(1)').text();
+				var productPrice = parseFloat($(this).find('td:eq(2)').text()); // 가격을 숫자로 변환하여 계산
 				selectedProducts.push(productName);
 				totalAmount += productPrice; // 가격을 누적하여 합계 계산
+				var productNum = $(this).find('td:eq(0)').text();
+				selectedProductNums.push(productNum);
 			});
 
 			// URL 파라미터로 선택된 상품 정보 추가
 			var url = '/payment?';
-			url += 'orderId=' + encodeURIComponent(selectedProducts.join(', ')); // 상품명들을 쉼표로 구분하여 합침
+			url += 'orderId=' + encodeURIComponent(selectedProducts.join('_')); // 상품명들을 쉼표로 구분하여 합침
 			url += '&amount=' + encodeURIComponent(totalAmount.toFixed(2)); // 합계를 소수점 2자리까지 표시하여 전달
+			url += '&productNum=' + encodeURIComponent(selectedProductNums.join('_')); // 상품명들을 쉼표로 구분하여 합침
 
 			// 결제 페이지로 이동
 			window.location.href = url;

@@ -16,7 +16,7 @@ public class ProductReviewVO {
     private String prorevWriter;    // 리뷰 작성자 (Member의 memberId)
     private String prorevContent;   // 리뷰 내용
     private LocalDateTime prorevDate; // 리뷰 작성 일시
-    private Boolean prorevStatus;   // 리뷰 신고 상태 (true면 신고됨, false면 정상)
+    private String prorevStatus;   // 리뷰 신고 상태 (true면 신고됨, false면 정상)
     private int prorevPnum;
 	
 }

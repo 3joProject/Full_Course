@@ -7,93 +7,114 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
+				<!-- 상품리스트 Start -->
+				<div class="container-fluid py-5">
+					<div class="container pt-5 pb-3">
 
-				<!--	검색-->
-				<form action="searchList">
-					<select class="selectpicker" name="searchKey">
-						<option value="productTitle">상품명</option>
-						<option value="productMid">판매자명</option>
-					</select>
-
-					<input type="search" placeholder="Search" aria-label="Search" name="searchWord" value="ad">
-					<button type="submit">Search</button>
-				</form>
-
-				<!--	정렬하기-->
-				<form action="orderBy">
-					<select class="selectpicker" name="orderBy">
-						<option value="productPrice">가격순</option>
-						<option value="productInventory">재고순</option>
-					</select>
-					<button type="submit">정렬</button>
-				</form>
-				
-				<!-- 상품등록-->
-				<a href="insert">상품 등록하기</a>
-				
-
-				<!-- 상품목록 테이블 -->
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">상품명</th>
-							<th scope="col">판매자아이디</th>
-							<th scope="col">상품내용</th>
-							<th scope="col">상품가격</th>
-							<th scope="col">상품이미지</th>
-							<th scope="col">상품재고</th>
-						
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="vo : ${productList}">
-							<tr>
-
-								<td><a th:href="@{'selectOne?productNum=' + ${vo.productNum}}"><span scope="row"
-											th:text="${vo.productTitle}"></span></a></td>
-								<td><span scope="row" th:text="${vo.productMid}"></span></td>
-								<td><span scope="row" th:text="${vo.productContent}"></span></td>
-								<td><span scope="row" th:text="${vo.productPrice}"></span></td>
-								<td><span scope="row" th:text="${vo.productImage}"></span></td>
-								<td><span scope="row" th:text="${vo.productInventory}"></span></td>
-								
-							</tr>
-						</th:block>
-					</tbody>
-
-					<tfoot>
-						<tr>
-							<td colspan="8">
-								<center>
-									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-										<th:block th:if="${param.searchKey}== null and ${param.orderBy}== null">
-											<a th:href="|selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
-										</th:block>
-										<th:block th:if="${param.searchKey}!= null">
-											<a
-												th:href="@{searchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
-												&nbsp;</a>
-										</th:block>
-										<th:block th:if="${param.orderBy}!= null">
-											<a th:href="@{orderBy(cpage=${i},orderBy=${param.orderBy})}">[[${i}]]
-												&nbsp;</a>
-										</th:block>
-									</th:block>
-								</center>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+						<div class="text-center mb-3 pb-3">
+							<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">여행 상품</h6>
+							<h1>Pefect Tour Packages</h1>
+						</div>
 
 
-				<!-- JavaScript Libraries -->
-				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+						<!--	정렬하기-->
+						<form action="orderBy">
+							<select class="custom-select px-4" name="orderBy" style="width: 100px;">
+								<option value="productPrice">가격순</option>
+								<option value="productInventory">재고순</option>
+							</select>
+							<button type="submit" class="btn btn-primary mt-1">정렬</button>
+						</form>
+
+						<!--	검색-->
+						<div style="margin-top: 10px;">
+							<form action="searchList" style="display: flex; align-items: center;">
+								<select class="custom-select px-4" name="searchKey"
+									style="width: 100px; margin-right: 10px;">
+									<option value="productTitle">상품명</option>
+									<option value="productMid">판매자명</option>
+								</select>
+
+								<input type="search" placeholder="검색어" aria-label="Search" name="searchWord"
+									class="form-control" style="width: 200px; height: 38px; margin-right: 10px;">
+								<button type="submit" class="btn btn-primary mt-1">검색</button>
+							</form>
+						</div>
+						<!-- 상품등록-->
+						<div style="margin-top: 10px;">
+							<a href="insert" class="btn btn-primary mt-1">상품 등록하기</a>
+						</div>
+
+						<div class="row">
+							<!-- 각 상품 정보를 동적으로 생성 -->
+							<th:block th:each="product : ${productList}">
+								<div class="col-lg-4 col-md-6 mb-4">
+									<div class="package-item bg-white mb-2">
+										<a th:href="@{'selectOne?productNum=' + ${product.productNum}}">
+											<img class="img-fluid" src="/img/package-1.jpg" alt="">
+										</a>
+										<div class="p-4">
+											<div class="d-flex justify-content-between mb-3">
+												<small class="m-0"><i
+														class="fa fa-map-marker-alt text-primary mr-2">판매자</i>
+													<p></p>
+													<span th:text="${product.productMid}"></span>
+												</small>
+												<small class="m-0"><i
+														class="fa fa-calendar-alt text-primary mr-2">상품명</i>
+													<p></p>
+													<span th:text="${product.productTitle}"></span>
+												</small>
+												<small class="m-0"><i class="fa fa-user text-primary mr-2">모집인원</i>
+													<p></p>
+													<span th:text="${product.productInventory}"></span> 명
+												</small>
+											</div>
+											<p></p>
+											<a class="h5 text-decoration-none"
+												th:href="@{'selectOne?productNum=' + ${product.productNum}}"
+												th:text="${product.productContent}">Discover amazing places of the world
+												with us</a>
+											<div class="border-top mt-4 pt-4">
+												<div class="d-flex justify-content-between">
+<!--													<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i><span-->
+<!--															th:text="${product.productInventory}"></span> <small>-->
+<!--														</small></h6>-->
+													<h5 class="m-0">￦<span th:text="${product.productPrice}"></span>
+													</h5>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</th:block>
+							<!-- 각 상품 정보 생성 끝 -->
+						</div>
+						<center>
+							<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+								<th:block th:if="${param.searchKey}== null and ${param.orderBy}== null">
+									<a th:href="|selectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
+								</th:block>
+								<th:block th:if="${param.searchKey}!= null">
+									<a
+										th:href="@{searchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
+										&nbsp;</a>
+								</th:block>
+								<th:block th:if="${param.orderBy}!= null">
+									<a th:href="@{orderBy(cpage=${i},orderBy=${param.orderBy})}">[[${i}]]
+										&nbsp;</a>
+								</th:block>
+							</th:block>
+						</center>
+					</div>
+				</div>
+				<!-- Packages End -->
 
 
 
-			</div>
-		</div>
-	</div>
-</div>
+
+
+
 
 </html>
