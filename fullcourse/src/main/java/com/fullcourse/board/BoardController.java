@@ -34,6 +34,21 @@ public class BoardController {
     //게시글 작성
     @GetMapping("/insert")
     public String insert(Model model, HttpSession session) {
+    	
+    	MemberVO member = (MemberVO) session.getAttribute("member");
+        if (member != null) {
+
+            boolean loggedIn = true;
+            log.info("로그인한사람 아이디:" + member.getMemberId());
+            model.addAttribute("loginId", member.getMemberId());
+            model.addAttribute("loggedIn", loggedIn);
+
+        } else {
+
+            log.info("로그인한사람이 없습니다");
+
+        }
+    	
     	if (!isLoggedIn(session)) {
             return "redirect:/login";  // 로그인 페이지 경로를 확인하고 적절히 수정하세요.
         }
@@ -66,8 +81,22 @@ public class BoardController {
     
     
 	@GetMapping("/selectAll")
-	public String selectAllBoards(@RequestParam(defaultValue = "1") int cpage, @RequestParam(defaultValue = "9") int pageBlock, Model model) {
+	public String selectAllBoards(@RequestParam(defaultValue = "1") int cpage, @RequestParam(defaultValue = "9") int pageBlock, Model model, HttpSession session) {
 		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+        if (member != null) {
+
+            boolean loggedIn = true;
+            log.info("로그인한사람 아이디:" + member.getMemberId());
+            model.addAttribute("loginId", member.getMemberId());
+            model.addAttribute("loggedIn", loggedIn);
+
+        } else {
+
+            log.info("로그인한사람이 없습니다");
+
+        }
+        
 		log.info("/selectAll");
 		
 		List<BoardVO> boards = boardService.selectAllBoardsPageBlock(cpage, pageBlock);

@@ -120,26 +120,24 @@
     	<!-- 리뷰 목록 끝 -->
 
     	<!-- 리뷰 작성 폼 시작 -->	
-    	<div class="bg-white mb-3" style="padding: 30px;">
-        	<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">리뷰 작성</h4>
-        		<form action="/product/prorevInsert" method="POST">
-            		<div class="form-group">
-                		<label for="prorevWriter">이름 *</label>
-                		<input type="text" class="form-control" id="prorevWriter" name="prorevWriter">
-            		</div>
-
-            		<div class="form-group">
-                		<label for="prorevContent">메시지 *</label>
-                		<textarea id="prorevContent" cols="30" rows="5" class="form-control" name="prorevContent"></textarea>
-            		</div>
-
-            		<input type="hidden" name="prorevPnum" th:value="${param.productNum}">
-
-            		<div class="form-group mb-0">
-                		<input type="submit" value="리뷰 작성" class="btn btn-primary font-weight-semi-bold py-2 px-3">
-            		</div>
-        		</form>
-    		</div>
+    	<div>
+        <h2>Write a Review</h2>
+        <div th:if="${session.loggedInUser != null}">
+        <form th:action="@{/product/prorevInsert}" th:method="post">
+            <div class="form-group">
+                <label for="prorevWriter">Name:</label>
+                <input type="text" th:value="${session.loggedInUser.memberId}" class="form-control" id="prorevWriter" name="prorevWriter" readonly>
+            </div>
+            <div class="form-group">
+                <label for="prorevContent">Review:</label>
+                <textarea id="prorevContent" name="prorevContent" rows="5" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div th:unless="${session.loggedInUser}">
+        <p>로그인이 필요합니다. <a href="/login">로그인</a></p>
+    </div>
     	<!-- 리뷰 작성 폼 끝 -->
 	</div>
 
@@ -275,6 +273,8 @@
     			});
     			// 리뷰 기능 끝
 				</script>
+				
+				
 
 
 			</div>
