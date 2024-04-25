@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
-
 public class BuyListController {
 
 	private final BuyListService buyListService;
@@ -30,6 +31,8 @@ public class BuyListController {
 		}
 
 		List<BuyListVO> buyList = buyListService.getBuyListByMemberNum(memberNum);
+		log.info("{}",buyList);
+		
 		model.addAttribute("buyList", buyList);
 		return "thymeleaf/buyList/list"; // 구매 내역을 보여주는 Thymeleaf 뷰의 경로
 	}

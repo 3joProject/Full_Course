@@ -18,7 +18,8 @@ public class BuyListService {
     }
 
     public List<BuyListVO> getBuyListByMemberNum(int memberNum) {
-        return buyListMapper.findByMemberNum(memberNum);
+//        return buyListMapper.findByMemberNum(memberNum);
+        return buyListMapper.findByMemberNum2(memberNum);
     }
     
     
