@@ -11,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@GetMapping({"/index"})
-	public String index() {
+	public String index(Model model) {
 		log.info("main...");
 
-		return "thymeleaf/index";
+		model.addAttribute("content", "thymeleaf/main/main_banner");
+		
+		return "thymeleaf/main/th_IndexLayout";
 	}
 }
