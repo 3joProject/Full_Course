@@ -1,6 +1,6 @@
 package com.fullcourse.buylist;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

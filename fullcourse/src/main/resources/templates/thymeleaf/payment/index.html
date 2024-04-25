@@ -49,9 +49,9 @@
     let orderId = new Date().getTime().toString();
     let amount = getQueryVariable("amount");
     
-
+	console.log('[[${param.cartNum}]]');
     let path = "/";
-    let successUrl = window.location.origin + path + "success1";
+    let successUrl = window.location.origin + path + "success1?cartNum="+'[[${param.cartNum}]]';
     let failUrl = window.location.origin + path + "fail";
     let callbackUrl = window.location.origin + path + "va_callback";
 

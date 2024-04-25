@@ -1,13 +1,14 @@
 package com.fullcourse.payment;
 
+import com.fullcourse.buylist.BuyListVO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fullcourse.buylist.BuyListService;
 
@@ -22,15 +23,18 @@ import java.util.Date;
 @RequestMapping(value="/")
 public class PaymentController {
 
-	@GetMapping("/payment")
-	public String index() {
-	    return "thymeleaf/payment/index";
-	}
-	
-	
+    @Autowired
+    private PaymentService service;
+
+    @GetMapping("/payment")
+    public String index() {
+        return "thymeleaf/payment/index";
+    }
+
     @GetMapping(value = "success1")
     public String paymentResult(
             Model model,
+            @RequestParam(value = "cartNum") String cartNum,
             @RequestParam(value = "orderId") String orderId,
             @RequestParam(value = "amount") Integer amount,
             @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
@@ -85,12 +89,13 @@ public class PaymentController {
             model.addAttribute("code", (String) jsonObject.get("code"));
             model.addAttribute("message", (String) jsonObject.get("message"));
         }
+
+        service.insertBuy(cartNum);//4_3
+
         
-
-
-        
-
         return "thymeleaf/payment/success1";
+
+
     }
 
     @GetMapping(value = "fail")

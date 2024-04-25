@@ -21,6 +21,8 @@ public class BuyListService {
 //        return buyListMapper.findByMemberNum(memberNum);
         return buyListMapper.findByMemberNum2(memberNum);
     }
+
+
     
     
 }
