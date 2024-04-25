@@ -19,7 +19,6 @@ import com.fullcourse.tour.TourVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Controller
 public class RouteController {
@@ -40,6 +39,8 @@ public class RouteController {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		log.info("MemberVO:{}", member);
+		
+		
 		
 		String routeUserId = member.getMemberId();
 		log.info("routeUserId:{}", routeUserId);
