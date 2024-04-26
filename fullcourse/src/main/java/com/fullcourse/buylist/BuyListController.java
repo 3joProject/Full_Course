@@ -41,7 +41,7 @@ public class BuyListController {
 
 		}
 
-		List<BuyListVO> buyList = buyListService.getBuyListByMemberNum(memberNum);
+		List<BuyListVO> buyList = buyListService.getBuyListByMemberNum(member.getMemberId());
 		log.info("{}",buyList);
 		
 		model.addAttribute("buyList", buyList);

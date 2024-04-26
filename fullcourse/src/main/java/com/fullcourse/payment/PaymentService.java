@@ -18,10 +18,10 @@ public class PaymentService {
 	private CartMapper mapper;
 	
 
-	public int insertBuy(String cartNum) {
+	public int insertBuy(String cartNum, int memberNum) {
 		log.info("cartNum:{}",cartNum);
 		for (String x : cartNum.split("_")) {
-			mapper.insertBuy(Integer.parseInt(x));
+			mapper.insertBuy(Integer.parseInt(x),memberNum);
 		}
 		
 		

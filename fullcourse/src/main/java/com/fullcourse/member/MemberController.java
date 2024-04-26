@@ -83,7 +83,7 @@ public class MemberController {
             return "redirect:/index";
         } else {
             log.error("로그인 실패: {}", memberId);
-            redirectAttributes.addFlashAttribute("message", "Invalid ID or Password");
+            redirectAttributes.addFlashAttribute("message", "아이디 또는 비밀번호가 옳지 않습니다");
             return "redirect:/login";
         }
     }
