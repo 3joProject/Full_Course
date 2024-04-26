@@ -354,7 +354,7 @@
 			var url = '/payment?';
 			url += 'orderId=' + encodeURIComponent(selectedProducts.join('_')); // 상품명들을 쉼표로 구분하여 합침
 			url += '&amount=' + encodeURIComponent(totalAmount.toFixed(2)); // 합계를 소수점 2자리까지 표시하여 전달
-			url += '&productNum=' + encodeURIComponent(selectedProductNums.join('_')); // 상품명들을 쉼표로 구분하여 합침
+			url += '&cartNum=' + encodeURIComponent(selectedProductNums.join('_')); // 상품명들을 쉼표로 구분하여 합침
 
 			// 결제 페이지로 이동
 			window.location.href = url;
