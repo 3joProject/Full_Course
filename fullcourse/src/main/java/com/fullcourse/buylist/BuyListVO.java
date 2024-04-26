@@ -18,25 +18,15 @@ public class BuyListVO {
     private int buyTotalPrice;
     private Date buyDate;
     
-    private int memberNum;
-    private String memberId;
-    private String memberPw;
-    private String memberName;
-    private String memberAddress;
-    private String memberTel;
-    private String memberEmail;
-    private Date memberDate;
-    private String memberImg;
-    private String memberSns;
-    private int sellerFollow;
-    
-	private int productNum;
-	private String productMid;
-	private String productTitle;
-	private int productPrice;
-	private String productImage;
-	private String productContent;
-	private int productInventory;
-	private int productGuideNum;
+	private int cartNum;
+	private String cartMid;
+	private int cartProduct;
+	private int cartCount;
+	private String cartSellerId;
+	private String cartTitle;
+	private int cartPrice;
+	private String cartImage;
+	private String cartContent;
+	private int cartInventory;
 
 }

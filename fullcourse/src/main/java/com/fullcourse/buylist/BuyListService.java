@@ -17,9 +17,9 @@ public class BuyListService {
         this.buyListMapper = buyListMapper;
     }
 
-    public List<BuyListVO> getBuyListByMemberNum(int memberNum) {
+    public List<BuyListVO> getBuyListByMemberNum(String cartMid) {
 //        return buyListMapper.findByMemberNum(memberNum);
-        return buyListMapper.findByMemberNum2(memberNum);
+        return buyListMapper.findByMemberNum2(cartMid);
     }
 
 

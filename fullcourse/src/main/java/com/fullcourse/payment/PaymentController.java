@@ -1,6 +1,10 @@
 package com.fullcourse.payment;
 
 import com.fullcourse.buylist.BuyListVO;
+import com.fullcourse.member.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,9 @@ public class PaymentController {
             @RequestParam(value = "cartNum") String cartNum,
             @RequestParam(value = "orderId") String orderId,
             @RequestParam(value = "amount") Integer amount,
-            @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
+            @RequestParam(value = "paymentKey") String paymentKey,
+            HttpSession session
+    		)throws Exception {
 
         String secretKey = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R:";
 
@@ -89,8 +95,10 @@ public class PaymentController {
             model.addAttribute("code", (String) jsonObject.get("code"));
             model.addAttribute("message", (String) jsonObject.get("message"));
         }
-
-        service.insertBuy(cartNum);//4_3
+        
+        MemberVO membervo = (MemberVO) session.getAttribute("member");
+        int memberNum = membervo.getMemberNum();
+        service.insertBuy(cartNum,memberNum);//4_3
 
         
         return "thymeleaf/payment/success1";

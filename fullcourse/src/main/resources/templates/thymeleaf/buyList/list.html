@@ -21,13 +21,10 @@
             <div th:each="buyItem : ${buyList}" class="buylist-item">
                 <!-- 금액, 수량, 구매일자 표시 -->
                 <div class="buylist-details">
-                    <span th:text="'구매 번호: ' + ${buyItem.buyNum}"></span>
-                    <span th:text="'회원 번호: ' + ${buyItem.buyMnum}"></span>
-                    <span th:text="'회원 memberId: ' + ${buyItem.memberId}"></span>
-                    <span th:text="'제품 ID: ' + ${buyItem.buyId}"></span>
-                    <span th:text="'제품 productTitle: ' + ${buyItem.productTitle}"></span>
-                    <span th:text="'수량: ' + ${buyItem.buyInventory} + '개'"></span>
-                    <span th:text="'총 가격: ' + ${buyItem.buyTotalPrice} + '원'"></span>
+                    <span th:text="'판매자Id: ' + ${buyItem.cartSellerId}"></span>
+                    <span th:text="'상품명: ' + ${buyItem.cartTitle}"></span>
+                    <span th:text="'수량: ' + ${buyItem.cartCount} + '개'"></span>
+                    <span th:text="'총 가격: ' + ${buyItem.cartPrice} + '원'"></span>
                     <span th:text="'구매 날짜: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
                 </div>
             </div>
