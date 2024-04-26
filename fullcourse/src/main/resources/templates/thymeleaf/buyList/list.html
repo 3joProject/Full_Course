@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>구매 내역</title>
-    <!-- 여기에 필요한 CSS와 JS를 포함하세요 -->
+    <title th:replace="~{thymeleaf/header :: common_header(${title})}"></title>
+    
 </head>
 <body>
+	   <div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
+	   <div class="container">
     <div class="buylist-container">
         <div class="buylist-header">
             <h1>구매 내역</h1>
@@ -31,5 +33,7 @@
             </div>
         </div>
     </div>
+    </div>
 </body>
+<div th:replace="~{thymeleaf/footer :: test_copy}"></div>
 </html>

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullcourse.member.MemberVO;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +30,15 @@ public class BuyListController {
 		Integer memberNum = (Integer) session.getAttribute("memberNum");
 		if (memberNum == null) {
 			return "redirect:/login"; // 로그인 페이지로 리디렉션
+		}
+		  MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
 		}
 
 		List<BuyListVO> buyList = buyListService.getBuyListByMemberNum(memberNum);
