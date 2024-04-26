@@ -86,7 +86,7 @@
             <div class="button-group" th:if="${session?.member != null and vo.boardWriter == session.member.memberId}">
                 
                 <!-- 글 수정 폼 -->
-				<form th:action="@{/board/updateOK}" method="post">
+				<form th:action="@{/board/update(boardNum=${vo.boardNum})}" method="get" enctype="multipart/form-data">
     				<input type="hidden" name="boardNum" th:value="${vo.boardNum}" />
     				<input type="hidden" name="boardTitle" th:value="${vo.boardTitle}" />
     				<input type="hidden" name="boardContent" th:value="${vo.boardContent}" />

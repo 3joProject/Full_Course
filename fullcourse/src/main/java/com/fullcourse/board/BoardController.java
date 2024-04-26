@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fullcourse.member.MemberVO;
@@ -128,7 +129,21 @@ public class BoardController {
 	
 	
 	@GetMapping("/selectOne")
-	public String selectOne(@RequestParam("boardNum") int boardNum, Model model) {
+	public String selectOne(@RequestParam("boardNum") int boardNum, Model model, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("member");
+        if (member != null) {
+
+            boolean loggedIn = true;
+            log.info("로그인한사람 아이디:" + member.getMemberId());
+            model.addAttribute("loginId", member.getMemberId());
+            model.addAttribute("loggedIn", loggedIn);
+
+        } else {
+
+            log.info("로그인한사람이 없습니다");
+
+        }
+        
 		log.info("Select board with boardNum: {}", boardNum);
 	    BoardVO board = boardService.getBoardById(boardNum);
 	    if (board != null) {
@@ -171,7 +186,8 @@ public class BoardController {
 	            return "redirect:/login"; // Redirect to login if no user session
 	        }
 	    }
-
+	   
+	    
 	    int result = boardService.updateOK(vo);
 	    log.info("result:{}", result);
 
