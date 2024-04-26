@@ -154,5 +154,17 @@
 		resultType="com.fullcourse.festival.FestivalVO"> SELECT * FROM festival <include
 			refid="whereQuery" /> ORDER BY festivalViews DESC LIMIT 9 </select>
 
+	<!--월별 축제 목록 불러오기 -->
+	<select id="selectFestivalListWithPagingByMonth"
+		parameterType="com.fullcourse.festival.FestivalVO"
+		resultType="com.fullcourse.festival.FestivalVO">
+		SELECT *
+		FROM festival
+		WHERE festivalStart LIKE CONCAT(#{festivalStart}, '%') OR festivalFinal LIKE
+		CONCAT(#{festivalStart}, '%')
+		ORDER BY festivalNum DESC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+	</select>
+
 
 </mapper>

@@ -34,7 +34,9 @@ public class HomeController {
 
 		}
 
-		model.addAttribute("content", "thymeleaf/main/main_banner");
+		model.addAttribute("content1", "thymeleaf/main/main_banner");
+//		model.addAttribute("content", "thymeleaf/product/th_selectAll");
+		
 
 		return "thymeleaf/main/th_IndexLayout";
 	}

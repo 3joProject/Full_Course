@@ -366,9 +366,7 @@ public class FestivalController {
 			model.addAttribute("loggedIn", loggedIn);
 
 		} else {
-
 			log.info("로그인한사람이 없습니다");
-
 		}
 		// 로그인check end
 		// 페이지 설정
@@ -404,4 +402,105 @@ public class FestivalController {
 		model.addAttribute("regions", TourRegionTypeEnum.values());
 		return "thymeleaf/festival/th_festivalLayout_main";
 	}
+
+//	@GetMapping(value = "/festival/festivalSelectMonth")
+//	public String festivalSelectMonth(Model model, @ModelAttribute("searchVO") FestivalVO searchVO, HttpSession session)
+//			throws Exception {
+//		log.info("확인2");
+//
+//		// 로그인check start
+//		MemberVO member = (MemberVO) session.getAttribute("member");
+//		if (member != null) {
+//
+//			boolean loggedIn = true;
+//			log.info("로그인한사람 아이디:" + member.getMemberId());
+//			model.addAttribute("loginId", member.getMemberId());
+//			model.addAttribute("loggedIn", loggedIn);
+//
+//		} else {
+//			log.info("로그인한사람이 없습니다");
+//		}
+//		// 로그인check end
+//		
+//		FestivalVO fvo = new FestivalVO();
+//		fvo.setFestivalStart(searchVO.getFestivalStart());
+//		
+//		 // month 값 확인
+////	    log.info("클라이언트로부터 전달된 월: {}", month);
+//
+//	    // festivalStart 필드에 month 값을 할당
+////	    searchVO.setFestivalStart(month);		
+//		// 페이지 설정
+//		PaginationInfo paginationInfo = new PaginationInfo();
+//		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+//		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
+//		paginationInfo.setPageSize(searchVO.getPageSize());
+//		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+//		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+//
+////		if (paginationInfo.getFirstRecordIndex() > 0) {
+////			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+////
+////		} else {
+////			searchVO.setFirstIndex(1);
+////		}
+//
+//		// 총 갯수
+//		int totalCount = service.selectListTotalCount(searchVO);
+//		paginationInfo.setTotalRecordCount(totalCount);
+//		// 투어리스트
+////		List<FestivalVO> festivalVOList = service.selectFestivalListWithPagingByMonth(searchVO);
+//
+//		model.addAttribute("paginationInfo", paginationInfo);
+////		model.addAttribute("festivalListVO", festivalVOList);
+//		model.addAttribute("totalCount", totalCount);
+//		log.info("축제갯수:{}", totalCount);
+//		model.addAttribute("content", "thymeleaf/festival/th_selectAllbyMonth");
+//		model.addAttribute("title", "축제");
+//
+//		// 여행지 주소 ENUM
+//		return "thymeleaf/festival/th_festivalLayout_main";
+//	}
+
+	@GetMapping(value = "/festival/festivalSelectMonth")
+	public String festivalSelectMonth(Model model,
+			@ModelAttribute("searchVO") FestivalVO searchVO, HttpSession session) throws Exception {
+		// 세션에서 로그인한 사용자 확인
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member != null) {
+			boolean loggedIn = true;
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+		}
+
+		// 클라이언트로부터 받은 월 값을 FestivalVO 객체의 festivalStart 속성으로 설정
+//		searchVO.setFestivalStart(festivalStart);
+
+		// 월별 축제 목록 가져오기
+		List<FestivalVO> festivalList = service.selectFestivalListWithPagingByMonth(searchVO);
+		log.info("festivalList:{}",festivalList);
+
+		// 페이지 설정
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(9); // 한 페이지에 몇개까지 나타날지 설정
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		// 총 갯수
+		int totalCount = service.selectListTotalCount(searchVO);
+		paginationInfo.setTotalRecordCount(totalCount);
+
+		model.addAttribute("festivalList", festivalList);
+		model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("content", "thymeleaf/festival/th_selectAllbyMonth");
+		model.addAttribute("title", "축제");
+
+		return "thymeleaf/festival/th_festivalLayout_main";
+	}
+
 }

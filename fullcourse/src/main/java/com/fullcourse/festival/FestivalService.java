@@ -117,4 +117,9 @@ public class FestivalService {
 	public List<FestivalVO> selectFestivalViewTopListWithPaging(FestivalVO festivalVO) {
 		return mapper.selectFestivalViewTopListWithPaging(festivalVO);
 	}
+
+	public List<FestivalVO> selectFestivalListWithPagingByMonth(FestivalVO festivalVO) {
+		return mapper.selectFestivalListWithPagingByMonth(festivalVO);
+	}
+
 }

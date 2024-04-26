@@ -53,6 +53,9 @@ public interface FestivalMapper {
 
 	public List<FestivalVO> selectFestivalViewTopListWithPaging(FestivalVO festivalVO);
 
+	public List<FestivalVO> selectFestivalListWithPagingByMonth(FestivalVO festivalVO);
+
+
 
 
 }

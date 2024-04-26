@@ -17,22 +17,24 @@
 					<div class="d-inline-flex align-items-center">
 						<div class="d-inline-flex align-items-center" th:if="${loggedIn}">
 							<!-- 로그인된 경우 -->
-							<span th:text="${loginId}"></span>
-							<a class="text-primary px-3" href="/logout">
-								<button class="btn btn-primary mt-1">로그아웃</button>
+							<span class="px-4" th:text="${loginId}"></span>
+							<a class="text-primary px-2" href="/mypage">
+								<i class="fas fa-user-circle"></i>
 							</a>
-							<a class="text-primary px-3" href="/cart">
+							<a class="text-primary px-2" href="/cart">
 								<i class="fas fa-shopping-cart"></i>
-
+							</a>
+							<a class="text-primary px-3" href="/logout">
+								<button class="btn btn-primary mt-1 loginBtn">로그아웃<i class="fas fa-sign-out-alt"></i></button>
 							</a>
 						</div>
 						<div th:unless="${loggedIn}">
 							<!-- 로그인되지 않은 경우 -->
-							<a class="text-primary px-3" href="/login">
-								<button class="btn btn-primary mt-1">로그인</button>
+							<a class="text-primary px-1" href="/login">
+								<button class="btn btn-primary mt-1 loginBtn">로그인</button>
 							</a>
-							<a class="text-primary px-3" href="/signup">
-								<button class="btn btn-primary mt-1">회원가입</button>
+							<a class="text-primary px-1" href="/signup">
+								<button class="btn btn-primary mt-1 loginBtn">회원가입</button>
 							</a>
 
 						</div>
@@ -63,24 +65,17 @@
 						<div class="navbar-nav ml-auto py-0">
 							<!--                        <a href="/index" class="nav-item nav-link">Home</a>-->
 							<a href="/route" class="nav-item nav-link">가이드북제작</a>
-							<a href="/mypage" class="nav-item nav-link">마이페이지</a>
-							<!--<a href="/tour" class="nav-item nav-link">여행지정보</a>-->
-							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">여행지정보</a>
-								<div class="dropdown-menu border-0 rounded-0 m-0">
-									<a href="/tour" class="dropdown-item active">Best여행지</a>
-									<a href="/tour/tourSelectAll" class="dropdown-item">여행지목록</a>
-								</div>
-							</div>
-							<!--<a href="/festival" class="nav-item nav-link">축제정보</a>-->
-							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">축제정보</a>
-								<div class="dropdown-menu border-0 rounded-0 m-0">
-									<a href="/festival" class="dropdown-item active">Best축제</a>
-									<a href="/festival/festivalSelectAll" class="dropdown-item">축제목록</a>
-								</div>
-							</div>
 							<a href="/product/selectAll" class="nav-item nav-link">여행상품쇼핑</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">여행&축제 정보</a>
+								<div class="dropdown-menu border-0 rounded-0 m-0">
+									<a href="/tour" class="dropdown-item">Best여행지</a>
+									<a href="/tour/tourSelectAll" class="dropdown-item">여행지목록</a>
+									<a href="/festival" class="dropdown-item">Best축제</a>
+									<a href="/festival/festivalSelectAll" class="dropdown-item">축제목록</a>
+									<a href="/festival/festivalSelectMonth" class="dropdown-item">월별축제목록</a>
+								</div>
+							</div>
 							<a href="/board/selectAll" class="nav-item nav-link">게시판</a>
 							<a href="/chat/chatStart" class="nav-item nav-link">실시간문의</a>
 							<a href="/parking" class="nav-item nav-link">주차정보</a>
