@@ -18,7 +18,7 @@
 			<style>
 				#sidebar {
 					margin-top: 150px;
-					width: 250px;
+					width: 350px;
 					height: 100%;
 					background-color: #f2f2f2;
 					padding: 20px;
@@ -65,22 +65,104 @@
 					z-index: 1000;
 				}
 
-				#map_wrap {
-					margin-left: 250px;
+				#map_div {
+					margin-left: 300px;
 					/* Adjust the margin to leave space for the sidebar */
-					width: calc(100% - 320px);
+					width: calc(100% - 120px);
 					/* Adjust the width to fit the remaining space */
-					height: 80vh;
+					height: 100%;
 					/* Set the height to 100% of the viewport height */
 					margin-bottom: 100px;
 					position: relative;
 				}
 
 				/* sidebar 내의 각 여행지 정보를 스타일링하기 위한 스타일 */
+
 				.sidebar-item {
-					margin-bottom: 10px;
+					margin: 16px;
 					cursor: pointer;
+					font-size: 18px;
+					/* 텍스트 크기 */
+					z-index: 1001;
 				}
+
+				#closeButton {
+					padding: 5px 10px;
+					/* 버튼의 패딩 */
+					margin-left: 10px;
+					/* 왼쪽 여백 */
+					font-size: 14px;
+					/* 폰트 크기 */
+					color: #fff;
+					/* 텍스트 색상 */
+					background-color: #ff6347;
+					/* 배경 색상 */
+					border: none;
+					/* 경계선 없음 */
+					border-radius: 3px;
+					/* 경계선 둥글게 */
+					cursor: pointer;
+					/* 커서 스타일 */
+				}
+
+
+				.delete-button {
+					padding: 5px 10px;
+					/* 버튼의 패딩 */
+					margin-left: 10px;
+					/* 왼쪽 여백 */
+					font-size: 14px;
+					/* 폰트 크기 */
+					color: #fff;
+					/* 텍스트 색상 */
+					background-color: #ff6347;
+					/* 배경 색상 */
+					border: none;
+					/* 경계선 없음 */
+					border-radius: 3px;
+					/* 경계선 둥글게 */
+					cursor: pointer;
+					/* 커서 스타일 */
+				}
+
+				.delete-button:hover {
+					background-color: #e53e30;
+					/* 호버 시 배경 색상 변경 */
+				}
+
+				.delete-button::before {
+					content: "×";
+				}
+
+				.place-name {
+					font-size: 18px;
+					/* 텍스트 크기 */
+					color: #333;
+					/* 텍스트 색상 */
+					background-color: #f0f0f0;
+					/* 배경색 */
+					padding: 5px 10px;
+					/* 내부 여백 */
+					margin-right: 10px;
+					/* 오른쪽 여백 */
+					border-radius: 5px;
+					/* 경계선 둥글게 */
+					box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+					/* 그림자 효과 */
+				}
+
+				.place-name:hover {
+					background-color: #e2e2e2;
+					/* 호버 시 배경색 변경 */
+				}
+
+				.transport-buttons {
+					position: relative;
+					margin-left: 5px;
+				}
+
+
+
 
 				/* 작은 화면을 나타내는 div 요소의 스타일 */
 				#smallScreen {
@@ -117,13 +199,43 @@
 				}
 
 				#button_container {
+
 					position: absolute;
 					top: 170px;
 					/* 버튼을 지도 상단에서 20px 아래로 배치합니다. */
-					left: -220px;
+					left: -180px;
 					/* 버튼을 지도 오른쪽에서 20px 왼쪽으로 배치합니다. */
 					z-index: 1000;
 					/* 다른 요소 위에 배치합니다. */
+				}
+
+
+				#button_container button {
+					padding: 10px 20px;
+					background-color: #007BFF;
+					/* 밝은 파란색 */
+					color: white;
+					border: none;
+					border-radius: 5px;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					transition: all 0.3s ease;
+					/* 부드러운 전환 효과 */
+					font-size: 16px;
+					cursor: pointer;
+				}
+
+				#addToSidebarButton {
+					padding: 10px 20px;
+					background-color: #007BFF;
+					/* 밝은 파란색 */
+					color: white;
+					border: none;
+					border-radius: 5px;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					transition: all 0.3s ease;
+					/* 부드러운 전환 효과 */
+					font-size: 16px;
+					cursor: pointer;
 				}
 
 				#routeName {
@@ -141,6 +253,7 @@
 					/* 내부 여백을 추가합니다. */
 					width: 210px;
 					/* 너비를 지정합니다. */
+					margin-top: 20px;
 				}
 
 				#routeNameInput {
@@ -160,6 +273,56 @@
 					color: #adb5bd;
 					/* 플레이스홀더 텍스트의 색상을 설정합니다. */
 				}
+
+				.transport-buttons button {
+					/* 일반 버튼 스타일 */
+					background-color: rgb(232, 255, 223);
+					color: rgb(0, 0, 0);
+					/* 텍스트 색상 */
+					padding: 10px 20px;
+					/* 내부 여백 */
+					border: none;
+					/* 테두리 없음 */
+					text-align: center;
+					/* 텍스트 가운데 정렬 */
+					text-decoration: none;
+					/* 텍스트 밑줄 없음 */
+					display: inline-block;
+					font-size: 16px;
+					/* 텍스트 크기 */
+					margin: 4px 2px;
+					/* 마진 */
+					cursor: pointer;
+					/* 커서 포인터로 변경 */
+					border-radius: 8px;
+					/* 버튼 모서리 둥글게 */
+				}
+
+				.transport-buttons button.active {
+					/* 활성화된 버튼에 대한 스타일 */
+					background-color: #4CAF50;
+					/* 초록색 배경색 */
+					color: white;
+					/* 텍스트 색상 */
+					padding: 10px 20px;
+					/* 내부 여백 */
+					border: none;
+					/* 테두리 없음 */
+					text-align: center;
+					/* 텍스트 가운데 정렬 */
+					text-decoration: none;
+					/* 텍스트 밑줄 없음 */
+					display: inline-block;
+					font-size: 16px;
+					/* 텍스트 크기 */
+					margin: 4px 2px;
+					/* 마진 */
+					cursor: pointer;
+					/* 커서 포인터로 변경 */
+					border-radius: 8px;
+					/* 버튼 모서리 둥글게 */
+				}
+
 
 				/* 초록색 버튼 스타일 */
 				.green-button {
@@ -259,7 +422,7 @@
 					map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
 						center: new Tmapv2.LatLng(33.4949185817, 126.6227951824),
 						width: "1350px", // 지도의 넓이
-						height: "800px", // 지도의 높이
+						height: "1500px", // 지도의 높이
 
 						//	width: screenWidth + "px",
 						//	height: screenHeight + "px",
@@ -342,13 +505,19 @@
 						};
 					}
 
+					// X 버튼 클릭 시 작은 화면 숨기기
+					document.getElementById('closeButton').addEventListener('click', function () {
+						document.getElementById('smallScreen').style.display = 'none';
+					});
+
+
 
 					// 이전 여행지와 현재 여행지 사이의 교통 정보 버튼 생성 함수
 					function createTransportButtons(index) {
 						if (index > 0) {
 							const transportDiv = document.createElement('div');
 							transportDiv.classList.add('transport-buttons');
-							transportDiv.classList.add('transport-buttondeco');
+							//transportDiv.classList.add('transport-buttondeco');
 
 							// 자동차 버튼
 							const carButton = document.createElement('button');
@@ -356,28 +525,14 @@
 							carButton.classList.add('get-transport-info');
 							carButton.onclick = onTransportButtonClick('자동차', index);
 
-							/*
-							carButton.onclick = function () {
-								selectedTransportMode = '자동차';
-								 const transportInfo = getTransportInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-								updateItinerary(transportInfo);
-							} */
-
 							// 도보 버튼
 							const walkButton = document.createElement('button');
 							walkButton.textContent = '도보';
 							walkButton.classList.add('get-transport-info');
 							walkButton.onclick = onTransportButtonClick('도보', index);
-							/*
-							walkButton.onclick = function () {
-								selectedTransportMode = '도보';
-								 const transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-								updateItinerary(transportInfo);
-							}; */
 
 							transportDiv.appendChild(carButton);
 							transportDiv.appendChild(walkButton);
-
 
 							const sidebar = document.getElementById('sidebar');
 							const listItem = sidebar.lastChild;
@@ -393,33 +548,31 @@
 							if (transportMode === '자동차') {
 
 								transportInfo = getTransportInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-								this.classList.add('blue-button');
-								
-								
-								// 나머지 버튼의 배경색을 초기화
-								const buttons = document.querySelectorAll('.get-transport-info');
+
+								// 선택된 버튼에 active 클래스 추가
+								this.classList.add('active');
+
+								// 다른 버튼에 active 클래스 제거
+								const buttons = this.parentNode.querySelectorAll('.get-transport-info');
 								buttons.forEach(button => {
 									if (button !== this) {
-										//button.style.backgroundColor = ''; // 초기화
-										button.classList.remove('blue-button');
-										button.classList.remove('green-button');
+										button.classList.remove('active');
 									}
 								});
-								
+
+
 							} else if (transportMode === '도보') {
 								transportInfo = getWalkInfoBetweenPlaces(newPlaces[index - 1], newPlaces[index]);
-								this.classList.add('green-button');
-								
-								// 나머지 버튼의 배경색을 초기화
-								const buttons = document.querySelectorAll('.get-transport-info');
+								// 선택된 버튼에 active 클래스 추가
+								this.classList.add('active');
+
+								// 다른 버튼에 active 클래스 제거
+								const buttons = this.parentNode.querySelectorAll('.get-transport-info');
 								buttons.forEach(button => {
 									if (button !== this) {
-										//button.style.backgroundColor = ''; // 초기화
-										button.classList.remove('blue-button');
-										button.classList.remove('green-button');
+										button.classList.remove('active');
 									}
 								});
-								
 
 							}
 							// 결과를 담을 컨테이너를 생성합니다.
@@ -443,11 +596,6 @@
 							//this.style.backgroundColor = 'lightblue';
 
 							//this.classList.add('blue-button');
-
-
-
-
-
 							addItineraryInfo(transportInfo, index);
 							updateItinerary(transportInfo);
 						};
@@ -475,8 +623,6 @@
 					function updateItinerary(transportInfo) {
 						const currentIndex = newPlaces.length - 1;
 						itinerary[currentIndex] = {
-
-
 							routeName: "",
 							routeTraffic: selectedTransportMode,
 							routeDistance: transportInfo.tDistance,
@@ -536,22 +682,45 @@
 
 					// 여행 일정 저장 버튼 클릭 이벤트 핸들러
 					document.getElementById('saveItineraryButton').onclick = saveItinerary;
+					/*
+										//sidebar
+										function addToSidebar(placeName) {
+					
+											//sidebar에 여행지 정보 추가하는 함수
+											var listItem = document.createElement('div');
+											listItem.textContent = placeName;
+											listItem.classList.add('sidebar-item'); // sidebar-item 클래스 추가
+											sidebar.appendChild(listItem);
+					
+											// 추가된 여행지 삭제 버튼
+											var deleteButton = document.createElement('button');
+											deleteButton.textContent = 'Delete';
+											deleteButton.classList.add('delete-button');
+											listItem.appendChild(deleteButton);
+										} */
 
-					//sidebar
 					function addToSidebar(placeName) {
-
-						//sidebar에 여행지 정보 추가하는 함수
 						var listItem = document.createElement('div');
-						listItem.textContent = placeName;
 						listItem.classList.add('sidebar-item'); // sidebar-item 클래스 추가
-						sidebar.appendChild(listItem);
+
+						// placeName을 감싸는 span 요소 생성
+						var nameSpan = document.createElement('span');
+						nameSpan.textContent = placeName;
+						nameSpan.classList.add('place-name'); // 새로운 클래스 추가
+
+						listItem.appendChild(nameSpan);
 
 						// 추가된 여행지 삭제 버튼
 						var deleteButton = document.createElement('button');
-						deleteButton.textContent = 'Delete';
+						deleteButton.textContent = '';
 						deleteButton.classList.add('delete-button');
 						listItem.appendChild(deleteButton);
+
+						// sidebar에 아이템 추가
+						var sidebar = document.getElementById('sidebar');
+						sidebar.appendChild(listItem);
 					}
+
 
 					function getWalkInfoBetweenPlaces(place1, place2) {
 						// 2. 시작, 도착 심볼찍기
@@ -834,21 +1003,40 @@
 						const listItem = target.parentElement;
 						if (target.classList.contains("delete-button")) {
 							newPlaces.pop();
-							//listItem.remove();
+							//sidebar.removeChild(listItem);
 
+							const previousListItem = listItem.previousElementSibling;
+							if (previousListItem) {
+								const transportButtons = previousListItem.querySelector('.transport-buttons');
+								if (transportButtons) {
+									// previousListItem의 transport-buttons를 삭제
+									transportButtons.remove();
+								}
+							}
+
+							// listItem의 모든 자식 요소를 삭제
+							while (listItem.firstChild) {
+								listItem.removeChild(listItem.firstChild);
+							}
+
+							// sidebar에서 listItem을 삭제
 							sidebar.removeChild(listItem);
+
+							resettingMap();
+
+
 						}
 					}
 
 					// 삭제 및 이동 버튼 클릭 이벤트를 sidebar에 등록
 					sidebar.addEventListener("click", handleSidebarActions);
-
-					// "1day" 항목 추가
-					var dayMarker = document.createElement('div');
-					dayMarker.textContent = '1day';
-					dayMarker.classList.add('sidebar-item', 'day-marker'); // day-marker 클래스 추가
-					sidebar.appendChild(dayMarker);
-
+					/*
+										// "1day" 항목 추가
+										var dayMarker = document.createElement('div');
+										dayMarker.textContent = '1day';
+										dayMarker.classList.add('sidebar-item', 'day-marker'); // day-marker 클래스 추가
+										sidebar.appendChild(dayMarker);
+					*/
 
 					// 초기화: 작은 화면을 클릭하면 숨김
 					document.getElementById("smallScreen").addEventListener("click", function () {
@@ -1205,25 +1393,15 @@
 
 		<body onload="initTmap()">
 			<div id="sidebar">
-				<!--
-				<button id="showCalendarBtn">여행 시작일 : 2024-04-08</button>
-				<div id="calendar">
-					<input type="date" id="selectedDate">
-					<button id="closeCalendarBtn">닫기</button>
-				</div> -->
-
-				<!-- 여행 기간 표시 영역 
-				<div id="selectedDuration"></div>  -->
-
-
 
 				<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 			</div>
 
 			<div id="smallScreen">
+				<button id="closeButton">X</button>
 				<div id="placeName"></div>
 				<div id="placeDescription"></div>
-				<button id="addToSidebarButton">Add to Sidebar</button>
+				<button id="addToSidebarButton">여행지 추가하기</button>
 			</div>
 
 			<!-- 맵 생성 실행 -->
