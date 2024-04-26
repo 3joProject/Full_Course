@@ -8,47 +8,68 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
-				<!-- 상품 상세조회 테이블 -->
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">상품명</th>
-							<th scope="col">판매자아이디</th>
-							<th scope="col">상품내용</th>
-							<th scope="col">상품가격</th>
-							<th scope="col">상품수량</th>
-							<th scope="col">상품재고</th>
-							<th scope="col">상품이미지</th>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block>
-							<tr>
-								<td><span scope="row" th:text="${vo2.productTitle}"></span></td>
-								<td><a th:href="|/seller/${vo2.productMid}|" scope="row"
-										th:text="${vo2.productMid}"></a></td>
-								<td><span scope="row" th:text="${vo2.productContent}"></span></td>
-								<td><span scope="row" th:text="${vo2.productPrice}"></span></td>
-								<td><input scope="row" type="number" value="1" min="1" th:max="${vo2.productInventory}">
-								</td>
-								<td><span scope="row" th:text="${vo2.productInventory}"></span></td>
-								<td><span scope="row" th:text="${vo2.productImage}"></span></td>
-								<td><input scope="row" type="hidden" th:value="${vo2.productNum}"></td>
-								<td><button class="purchase_btn">구매하기</button></td>
-								<td><button class="cart_btn">장바구니</button></td>
+				<!-- About Start -->
+				<div class="container-fluid py-5">
+					<div class="container pt-5">
+						<div class="row">
+							<div class="col-lg-6" style="min-height: 500px;">
+								<div class="position-relative h-100">
+									<img class="position-absolute w-100 h-100" src="/img/about.jpg"
+										style="object-fit: cover;">
+								</div>
+							</div>
+							<div class="col-lg-6 pt-5 pb-lg-5">
+								<div class="about-text bg-white p-4 p-lg-5 my-lg-5">
+									판매자 : <a id="productMid" h6 class="text-primary" style="letter-spacing: 5px;"
+										th:href="|/seller/${vo2.productMid}|" th:text="${vo2.productMid}"></h6></a>
+									<p></p>
+									<h1 class="mb-3" id="productTitle" th:text="${vo2.productTitle}"></h1>
+									<p id="productContent" th:text="${vo2.productContent}"></p>
+									<div class="row mb-4">
+										<div class="col-6">
+											<img class="img-fluid" src="/img/about-1.jpg" alt="">
+										</div>
+										<div class="col-6">
+											<img class="img-fluid" src="/img/about-2.jpg" alt="">
+										</div>
+									</div>
 
-							</tr>
-						</th:block>
-					</tbody>
-				</table>
+									<div class="row mb-4">
+										<div class="col-12 d-flex align-items-center">
+											<div class="d-flex align-items-center mr-3">
+												<i class="fa fa-angle-right text-primary mr-2">가격</i>
+												<div class="text-dark" id="productPrice" th:text="${vo2.productPrice}">
+												</div>
+											</div>
+											<div class="d-flex align-items-center mr-3">
+												<i class="fa fa-angle-right text-primary mr-2">구매수량</i>
+												<input scope="row" type="number" value="1" min="1" id="purchaseQuantity"
+													th:max="${vo2.productInventory}">
+											</div>
+											<div class="d-flex align-items-center">
+												<i class="fa fa-angle-right text-primary mr-2">상품재고</i>
+												<div class="text-dark" id="productInventory"
+													th:text="${vo2.productInventory}"></div>
+											</div>
+											<input hidden id="productImage" th:value="${vo2.productImage}">
+											<input hidden id="productNum" th:value="${vo2.productNum}">
+										</div>
+									</div>
+
+									<button class="btn btn-primary mt-1" id="buy_btn">구매하기</button>
+									<button class="btn btn-primary mt-1" id="cart_btn" >장바구니</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- About End -->
 
 				<!-- 구매하기 form-->
 				<form id="payment_form" action="/payment" method="get">
 					<input type="hidden" name="orderId" id="orderId">
 					<input type="hidden" name="amount" id="amount">
+					<input type="hidden" name="cartNum" id="cartNum">
 				</form>
 				<!-- 장바구니 form-->
 				<form id="cart_form" action="/cart/insertOK" method="post">
@@ -62,46 +83,30 @@
 					<input type="hidden" name="cartProduct" id="cartProduct">
 				</form>
 
-				<!-- 라디오 버튼 -->
-				<input type="radio" id="productDetailRadio" name="tableRadio" checked>
-				<label for="productDetailRadio">상품 상세</label>
+				
 
-				<input type="radio" id="productReviewRadio" name="tableRadio">
-				<label for="productReviewRadio">상품 리뷰</label>
+					<!-- 리뷰 목록 시작 -->
+					<div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+						<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">상품 리뷰</h4>
 
-				<input type="radio" id="productInquiryRadio" name="tableRadio">
-				<label for="productInquiryRadio">상품 문의</label>
+						<!-- 반복문을 통해 각 리뷰를 출력 -->
+						<div th:each="review : ${reviews}" class="media mb-4">
+							<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+							<div class="media-body">
+								<span style="display: none;" th:text="${review.prorevNum}"></span>
+								<h6 th:text="${review.prorevWriter}"></h6>
+								<span>작성일: <small><i th:text="${review.prorevDate}"
+											style="color: aqua;"></i></small></span>
 
-				<!-- 테이블들 -->
-				<div id="productDetailTable" class="table-container">
-					<!-- 상품 상세 테이블 -->
-					<table class="table">
-						<td><span th:text="${vo2.productContent}"></span></td>
-					</table>
-				</div>
+								<!-- 리뷰 내용 출력 -->
+								<div>리뷰 내용:</div>
+								<p th:text="${review.prorevContent}" class="showComments"
+									th:id="'showComments'+${review.prorevNum}"></p>
+								<form class="showModifyForm" th:id="'showModifyForm'+${review.prorevNum}">
+									<input type="text" th:value="${review.prorevContent}" />
+								</form>
 
-				<div id="productReviewTable" class="table-container" style="display: none;">
-   
-   				<!-- 리뷰 목록 시작 -->
-    				<div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-        				<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">상품 리뷰</h4>
-
-        		<!-- 반복문을 통해 각 리뷰를 출력 -->
-        					<div th:each="review : ${reviews}" class="media mb-4">
-            					<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-            					<div class="media-body">
-                					<span style="display: none;" th:text="${review.prorevNum}"></span>
-                					<h6 th:text="${review.prorevWriter}"></h6>
-                					<span>작성일: <small><i th:text="${review.prorevDate}" style="color: aqua;"></i></small></span>
-
-	            <!-- 리뷰 내용 출력 -->
-    					            <div>리뷰 내용:</div>
-                					<p th:text="${review.prorevContent}" class="showComments" th:id="'showComments'+${review.prorevNum}"></p>
-                						<form class="showModifyForm" th:id="'showModifyForm'+${review.prorevNum}">
-                    						<input type="text" th:value="${review.prorevContent}" />
-                						</form>
-
-                <!-- 리뷰 수정 버튼
+								<!-- 리뷰 수정 버튼
                 <a href="#nolink" class="commentModifyBtn" th:id="'commentModifyBtn'+${review.prorevNum}">리뷰 수정</a>
                 <div class="commentModifyBtns" th:id="'commentModifyBtns'+${review.prorevNum}">
                     <form action="/product/prorevUpdateOK" method="POST">
@@ -114,172 +119,172 @@
                 </div>
                 <a th:href="@{'/product/prorevDeleteOK(prorevNum='+${review.prorevNum}+',prorevPnum='+${review.prorevPnum}+')}"
                    class="deleteComment btn btn-sm btn-outline-primary" th:id="'deleteComment'+${review.prorevNum}">리뷰 삭제</a>-->
-            </div>
-        </div>
-    </div>
-    	<!-- 리뷰 목록 끝 -->
+							</div>
+						</div>
+					</div>
+					<!-- 리뷰 목록 끝 -->
 
-    	<!-- 리뷰 작성 폼 시작 -->	
-    	<div>
-        <h2>Write a Review</h2>
-        <div th:if="${session.loggedInUser != null}">
-        <form th:action="@{/product/prorevInsert}" th:method="post">
-            <div class="form-group">
-                <label for="prorevWriter">Name:</label>
-                <input type="text" th:value="${session.loggedInUser.memberId}" class="form-control" id="prorevWriter" name="prorevWriter" readonly>
-            </div>
-            <div class="form-group">
-                <label for="prorevContent">Review:</label>
-                <textarea id="prorevContent" name="prorevContent" rows="5" class="form-control"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <div th:unless="${session.loggedInUser}">
-        <p>로그인이 필요합니다. <a href="/login">로그인</a></p>
-    </div>
-    	<!-- 리뷰 작성 폼 끝 -->
-	</div>
+					<!-- 리뷰 작성 폼 시작 -->
+					<div>
+						<h2>Write a Review</h2>
+						<div th:if="${session.loggedInUser != null}">
+							<form th:action="@{/product/prorevInsert}" th:method="post">
+								<div class="form-group">
+									<label for="prorevWriter">Name:</label>
+									<input type="text" th:value="${session.loggedInUser.memberId}" class="form-control"
+										id="prorevWriter" name="prorevWriter" readonly>
+								</div>
+								<div class="form-group">
+									<label for="prorevContent">Review:</label>
+									<textarea id="prorevContent" name="prorevContent" rows="5"
+										class="form-control"></textarea>
+								</div>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+						<div th:unless="${session.loggedInUser}">
+							<p>로그인이 필요합니다. <a href="/login">로그인</a></p>
+						</div>
+						<!-- 리뷰 작성 폼 끝 -->
+					</div>
 
-				<div id="productInquiryTable" class="table-container" style="display: none;">
-					<!-- 상품 문의 테이블 -->
-					<table class="table">
-						<!-- 상품 문의 테이블 내용 -->
-					</table>
+				
+
+
+					<!-- JavaScript Libraries -->
+					<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+					<script
+						src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+
+					<!-- 구매버튼 클릭-->
+					<script>
+						$(document).ready(function () {
+							// 구매하기 버튼 클릭 이벤트 처리
+							$('#buy_btn').click(function () {
+								// 클릭된 버튼이 속한 행에서 상품 정보 추출
+								var productName = document.getElementById('productTitle').innerText;
+								var productPrice = parseFloat(document.getElementById('productPrice').innerText); // 상품가격
+								var productQuantity = parseFloat(document.querySelector("input[type='number']").value); // 상품수량
+								var totalPrice = productPrice * productQuantity; // 상품 가격과 수량을 곱한 총 가격
+								var cartNum = document.getElementById('productNum').value;
+
+								console.log("productName", productName);
+								console.log("totalPrice", totalPrice);
+								console.log("cartNum", cartNum);
+
+								// 폼에 상품 정보 설정
+								$('#orderId').val(productName); // 상품명 설정
+								$('#amount').val(totalPrice.toFixed(2)); // 상품가격과 수량을 곱한 총 가격 설정
+								$('#cartNum').val(cartNum);
+
+								// 폼 제출
+								$('#payment_form').submit();
+							});
+						});
+
+					</script>
+
+					<script>
+						$(document).ready(function () {
+							// 장바구니 버튼 클릭 이벤트 처리
+							$('#cart_btn').click(function () {
+								// 클릭된 버튼이 속한 행에서 상품 정보 추출
+								var cartSellerId = document.getElementById('productMid').innerText;
+								var cartTitle = document.getElementById('productTitle').innerText;
+								var cartContent = document.getElementById('productContent').innerText;
+								var cartPrice = document.getElementById('productPrice').innerText;
+								var cartCount = document.querySelector("input[type='number']").value;
+								var cartInventory = document.getElementById('productInventory').innerText;
+								var cartImage = document.getElementById('productImage').value;
+								var cartProduct = document.getElementById('productNum').value;
+
+								console.log("cartTitle", cartTitle);
+								console.log("cartSellerId", cartSellerId);
+								console.log("cartContent", cartContent);
+								console.log("cartPrice", cartPrice);
+								console.log("cartCount", cartCount);
+								console.log("cartInventory", cartInventory);
+								console.log("cartImage", cartImage);
+								console.log("cartProduct", cartProduct);
+
+								// 폼에 상품 정보 설정
+								$('#cartTitle').val(cartTitle);
+								$('#cartSellerId').val(cartSellerId);
+								$('#cartContent').val(cartContent);
+								$('#cartPrice').val(cartPrice);
+								$('#cartCount').val(cartCount);
+								$('#cartInventory').val(cartInventory);
+								$('#cartImage').val(cartImage);
+								$('#cartProduct').val(cartProduct);
+
+								// 폼 제출
+								$('#cart_form').submit();
+							});
+						});
+
+					</script>
+
+					<script>
+						$(document).ready(function () {
+							// 라디오 버튼 클릭 이벤트 처리
+							$('input[type="radio"][name="tableRadio"]').change(function () {
+								// 모든 테이블 숨기기
+								$('.table-container').hide();
+
+								// 선택된 라디오 버튼에 해당하는 테이블 보이기
+								var targetId = $(this).attr('id').replace('Radio', 'Table');
+								$('#' + targetId).show();
+							});
+						});
+					</script>
+
+					<script th:inline="javascript">
+						// 리뷰 기능 시작
+						$(document).ready(function () {
+							$(".showModifyForm").hide();
+							$(".commentModifyBtns").hide();
+						});
+
+						$(".commentModifyBtn").click(function () {
+							var id = $(this).attr('id');
+							var reviewNum = id.replace('commentModifyBtn', '');
+							var showComments = 'showComments' + reviewNum;
+							var showModifyForm = 'showModifyForm' + reviewNum;
+							var commentModifyBtns = 'commentModifyBtns' + reviewNum;
+							var commentModifyBtn = 'commentModifyBtn' + reviewNum;
+							var deleteComment = 'deleteComment' + reviewNum;
+							$("#" + showComments).hide();
+							$("#" + showModifyForm).show();
+							$("#" + commentModifyBtns).show();
+							$("#" + commentModifyBtn).hide();
+							$("#" + deleteComment).hide();
+						});
+
+						$(".commentModifiyCancelBtn").click(function () {
+							var id = $(this).attr('id');
+							var reviewNum = id.replace('commentModifiyCancelBtn', '');
+							var showComments = 'showComments' + reviewNum;
+							var showModifyForm = 'showModifyForm' + reviewNum;
+							var commentModifyBtns = 'commentModifyBtns' + reviewNum;
+							var commentModifyBtn = 'commentModifyBtn' + reviewNum;
+							var deleteComment = 'deleteComment' + reviewNum;
+							$("#" + showComments).show();
+							$("#" + showModifyForm).hide();
+							$("#" + commentModifyBtns).hide();
+							$("#" + commentModifyBtn).show();
+							$("#" + deleteComment).show();
+						});
+						// 리뷰 기능 끝
+					</script>
+
+					
+
+
+
 				</div>
-
-
-				<!-- JavaScript Libraries -->
-				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-
-
-				<!-- 구매버튼 클릭-->
-				<script>
-					$(document).ready(function () {
-						// 구매하기 버튼 클릭 이벤트 처리
-						$('.purchase_btn').click(function () {
-							// 클릭된 버튼이 속한 행에서 상품 정보 추출
-							var $row = $(this).closest('tr');
-							var productName = $row.find('td:eq(0)').text(); // 상품명
-							var productPrice = parseFloat($row.find('td:eq(3)').text()); // 상품가격
-							var productQuantity = parseFloat($row.find('input[type="number"]').val()); // 상품수량
-							var totalPrice = productPrice * productQuantity; // 상품 가격과 수량을 곱한 총 가격
-
-							console.log("productName", productName);
-							console.log("totalPrice", totalPrice);
-
-							// 폼에 상품 정보 설정
-							$('#orderId').val(productName); // 상품명 설정
-							$('#amount').val(totalPrice.toFixed(2)); // 상품가격과 수량을 곱한 총 가격 설정
-
-							// 폼 제출
-							$('#payment_form').submit();
-						});
-					});
-
-				</script>
-
-				<script>
-					$(document).ready(function () {
-						// 구매하기 버튼 클릭 이벤트 처리
-						$('.cart_btn').click(function () {
-							// 클릭된 버튼이 속한 행에서 상품 정보 추출
-							var $row = $(this).closest('tr');
-							var cartTitle = $row.find('td:eq(0)').text();
-							var cartSellerId = $row.find('td:eq(1)').text();
-							var cartContent = $row.find('td:eq(2)').text();
-							var cartPrice = $row.find('td:eq(3)').text();
-							var cartCount = $row.find('input[type="number"]').val();
-							var cartInventory = $row.find('td:eq(5)').text();
-							var cartImage = $row.find('td:eq(6)').text();
-							var cartProduct = $row.find('td:eq(7)').find('input').val();
-
-							console.log("cartTitle", cartTitle);
-							console.log("cartSellerId", cartSellerId);
-							console.log("cartContent", cartContent);
-							console.log("cartPrice", cartPrice);
-							console.log("cartCount", cartCount);
-							console.log("cartInventory", cartInventory);
-							console.log("cartImage", cartImage);
-							console.log("cartProduct", cartProduct);
-
-							// 폼에 상품 정보 설정
-							$('#cartTitle').val(cartTitle);
-							$('#cartSellerId').val(cartSellerId);
-							$('#cartContent').val(cartContent);
-							$('#cartPrice').val(cartPrice);
-							$('#cartCount').val(cartCount);
-							$('#cartInventory').val(cartInventory);
-							$('#cartImage').val(cartImage);
-							$('#cartProduct').val(cartProduct);
-
-							// 폼 제출
-							$('#cart_form').submit();
-						});
-					});
-
-				</script>
-
-				<script>
-					$(document).ready(function () {
-						// 라디오 버튼 클릭 이벤트 처리
-						$('input[type="radio"][name="tableRadio"]').change(function () {
-							// 모든 테이블 숨기기
-							$('.table-container').hide();
-
-							// 선택된 라디오 버튼에 해당하는 테이블 보이기
-							var targetId = $(this).attr('id').replace('Radio', 'Table');
-							$('#' + targetId).show();
-						});
-					});
-				</script>
-				
-				<script th:inline="javascript">
-    			// 리뷰 기능 시작
-    			$(document).ready(function () {
-        			$(".showModifyForm").hide();
-        			$(".commentModifyBtns").hide();
-    			});
-
-    			$(".commentModifyBtn").click(function () {
-        			var id = $(this).attr('id');
-        			var reviewNum = id.replace('commentModifyBtn', '');
-        			var showComments = 'showComments' + reviewNum;
-        			var showModifyForm = 'showModifyForm' + reviewNum;
-        			var commentModifyBtns = 'commentModifyBtns' + reviewNum;
-        			var commentModifyBtn = 'commentModifyBtn' + reviewNum;
-        			var deleteComment = 'deleteComment' + reviewNum;
-        			$("#" + showComments).hide();
-        			$("#" + showModifyForm).show();
-        			$("#" + commentModifyBtns).show();
-        			$("#" + commentModifyBtn).hide();
-        			$("#" + deleteComment).hide();
-    			});
-
-    			$(".commentModifiyCancelBtn").click(function () {
-        			var id = $(this).attr('id');
-        			var reviewNum = id.replace('commentModifiyCancelBtn', '');
-        			var showComments = 'showComments' + reviewNum;
-        			var showModifyForm = 'showModifyForm' + reviewNum;
-        			var commentModifyBtns = 'commentModifyBtns' + reviewNum;
-        			var commentModifyBtn = 'commentModifyBtn' + reviewNum;
-        			var deleteComment = 'deleteComment' + reviewNum;
-        			$("#" + showComments).show();
-        			$("#" + showModifyForm).hide();
-        			$("#" + commentModifyBtns).hide();
-        			$("#" + commentModifyBtn).show();
-        			$("#" + deleteComment).show();
-    			});
-    			// 리뷰 기능 끝
-				</script>
-				
-				
-
-
 			</div>
 		</div>
 	</div>
-</div>
 
 </html>
