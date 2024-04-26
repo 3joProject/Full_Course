@@ -54,7 +54,7 @@ public class AdminNoticeController {
 
 		model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
 		model.addAttribute("title", "관리자 목록");
-		return "thymeleaf/admin/notice/th_selectAll";
+		return "thymeleaf/admin/th_adminLayout_main";
 	}
 
 	@GetMapping("admin/notice/insert")
