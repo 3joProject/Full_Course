@@ -2,10 +2,10 @@ package com.fullcourse.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +40,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin")
-	public String admin() {
-		return "thymeleaf/admin/notice/th_selectAll";
+	public String admin(Model model) {
+		log.info("이건가");
+		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
+		model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
+		return "thymeleaf/admin/th_adminLayout_main";
 	}
 	
 	

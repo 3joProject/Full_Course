@@ -32,7 +32,7 @@
 
 			<div class="content">
 				<div class="admin-info">
-					<span>공지사항</span>
+					<span>여행목록</span>
 				</div>
 
 				<div class="page-content">
@@ -40,10 +40,8 @@
 						<thead>
 							<tr>
 								<th scope="col">#</th>
-								<th scope="col">제목</th>
-								<th scope="col">내용 </th>
-								<th scope="col">작성자</th>
-								<th scope="col">작성일</th>
+								<th scope="col">여행지명</th>
+								<th scope="col">주소 </th>
 								<th scope="col">삭제</th>
 							</tr>
 						</thead>
@@ -51,18 +49,16 @@
 							<th:block th:each="vos : ${vos}">
 								<tr>
 									<th scope="row"><a
-											th:href="|selectOne?noticeNum=${vos.noticeNum}|"><span>[[${vos.noticeNum}]]</span></a>
+											th:href="|selectOne?tourNum=${vos.tourNum}|"><span>[[${vos.tourNum}]]</span></a>
 									</th>
-									<td><a th:href="|selectOne?noticeTitle=${vos.noticeTitle}|"><span
-												th:text="${vos.noticeTitle}"></span></a></td>
-									<td><span th:text="${vos.noticeContent}"></span></td>
-									<td><span th:text="${vos.noticeWriter}"></span></td>
-									<td><span th:text="${vos.noticeDate}"></span></td>
+									<td><a th:href="|selectOne?tourNum=${vos.tourNum}|"><span
+												th:text="${vos.tourName}"></span></a></td>
+									<td><span th:text="${vos.tourAddress}"></span></td>
 
 
 									<td>
-										<form th:action="@{/admin/notice/deleteOK}" method="post">
-											<input type="hidden" name="noticeNum" th:value="${vos.noticeNum}" />
+										<form th:action="@{/admin/tour/deleteOK}" method="post">
+											<input type="hidden" name="tourNum" th:value="${vos.tourNum}" />
 											<button class="btn" type="submit">삭제</button>
 										</form>
 									</td>
@@ -74,7 +70,7 @@
 					</table>
 				</div>
 
-				<button class="btn" onclick="location.href='/admin/notice/insert'">글쓰기</button>
+				<button class="btn" onclick="location.href='/admin/tour/insert'">글쓰기</button>
 
 
 				<div class="pagination">

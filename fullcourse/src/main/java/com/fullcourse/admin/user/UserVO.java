@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserVO {
 	
-	private int member_num;
-	private String member_id;
-	private String member_pw;
-	private String member_name;
-	private String member_address;
-	private String member_tel;
-	private String member_email;
-	private LocalDateTime member_date;
-	private String member_img;
-	private String member_sns;
+	private int memberNum;
+	private String memberId;
+	private String memberPw;
+	private String memberName;
+	private String memberAddress;
+	private String memberTel;
+	private String memberEmail;
+	private LocalDateTime memberDate;
+	private String memberImg;
+	private String memberSns;
 
 }

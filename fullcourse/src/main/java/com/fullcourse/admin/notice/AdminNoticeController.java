@@ -51,7 +51,7 @@ public class AdminNoticeController {
 		// 페이지 링크 몇개?
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
-
+		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
 		model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
 		model.addAttribute("title", "관리자 목록");
 		return "thymeleaf/admin/th_adminLayout_main";

@@ -51,10 +51,12 @@ public class AdminListController {
 		// 페이지 링크 몇개?
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
-
-		model.addAttribute("content", "thymeleaf/admin/adminList/selectAll");
+		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
+		model.addAttribute("content", "thymeleaf/admin/adminList/th_selectAll");
+	//	model.addAttribute("content", "thymeleaf/admin/adminList/selectAll");
 		model.addAttribute("title", "관리자 목록");
-		return "thymeleaf/admin/adminList/selectAll";
+//		return "thymeleaf/admin/adminList/selectAll";
+		return "thymeleaf/admin/th_adminLayout_main";
 	}
 
 

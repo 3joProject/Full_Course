@@ -1,4 +1,4 @@
-package com.fullcourse.admin.festival;
+package com.fullcourse.admin.member;
 
 import java.util.List;
 
@@ -8,29 +8,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fullcourse.festival.FestivalService;
-import com.fullcourse.festival.FestivalVO;
+import com.fullcourse.member.MemberService;
+import com.fullcourse.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminFestivalController {
+public class AdminMemberController {
 	
 	@Autowired
-	private FestivalService service;
+	private MemberService service;
 	
-	@GetMapping("/admin/festival/selectAll")
+	@GetMapping("/admin/member/selectAll")
 	public String selectAll(@RequestParam(defaultValue = "1") int cpage,
 			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
 		log.info("/selectAll...");
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 
-		List<FestivalVO> vos = service.festivalSelectAll(cpage, pageBlock);
+		List<MemberVO> vos = service.selectAllPageBlock(cpage, pageBlock);
 
 		model.addAttribute("vos", vos);
 
-		// 테이블에 들어있는 모든회원수는 몇명?
 		int total_rows = service.getTotalRows();
 		log.info("total_rows:" + total_rows);
 
@@ -47,8 +46,8 @@ public class AdminFestivalController {
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
-		model.addAttribute("content", "thymeleaf/admin/festival/th_selectAll");
-		model.addAttribute("title", "관리자 축제 목록");
+		model.addAttribute("content", "thymeleaf/admin/member/th_selectAll");
+		model.addAttribute("title", "관리자 멤버 목록");
 		return "thymeleaf/admin/th_adminLayout_main";
 	}
 
