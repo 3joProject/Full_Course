@@ -474,12 +474,15 @@ public class FestivalController {
 			model.addAttribute("loggedIn", loggedIn);
 		}
 
-		// 클라이언트로부터 받은 월 값을 FestivalVO 객체의 festivalStart 속성으로 설정
-//		searchVO.setFestivalStart(festivalStart);
+		  // 클라이언트로부터 받은 월 값을 FestivalVO 객체의 festivalStart 속성으로 설정
+	    if (searchVO.getFestivalStart() == null || searchVO.getFestivalStart().isEmpty()) {
+	        String defaultMonth = "202401"; // 기본으로 선택할 월 (예: 1월)
+	        searchVO.setFestivalStart(defaultMonth);
+	    }
 
 		// 월별 축제 목록 가져오기
 		List<FestivalVO> festivalList = service.selectFestivalListWithPagingByMonth(searchVO);
-		log.info("festivalList:{}",festivalList);
+//		log.info("festivalList:{}",festivalList);
 
 		// 페이지 설정
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -493,7 +496,7 @@ public class FestivalController {
 		// 총 갯수
 		int totalCount = service.selectListTotalCount(searchVO);
 		paginationInfo.setTotalRecordCount(totalCount);
-
+		log.info("festivalList:{}",festivalList.size());
 		model.addAttribute("festivalList", festivalList);
 		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("totalCount", totalCount);

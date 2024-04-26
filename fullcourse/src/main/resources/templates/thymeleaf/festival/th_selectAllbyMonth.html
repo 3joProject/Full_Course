@@ -10,24 +10,23 @@
 
 				<!--월별버튼start-->
 
-				<form method="get" id="monthForm" action="/festival/festivalSelectMonth">
-					<label for="searchCondition" hidden>지역선택</label>
+				<form method="get" id="monthForm" action="/festival/festivalSelectMonth" style="text-align: center; padding-top: 30px;">
 					<input type="hidden" name="pageIndex"
 						th:value="${searchVO != null and searchVO.pageIndex != null ? searchVO.pageIndex : 1}" />
 					<input type="hidden" name="festivalStart" id="festivalStart" />
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="">전체</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202401">1월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202402">2월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202403">3월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202404">4월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202405">5월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202406">6월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202407">7월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202408">8월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202409">9월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202410">10월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202411">11월</button>
-					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="202412">12월</button>
+<!--					<button type="button" class="btn-sm btn-outline-primary monthBtn" value="">전체</button>-->
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202401">1월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202402">2월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202403">3월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202404">4월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202405">5월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202406">6월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202407">7월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202408">8월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202409">9월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202410">10월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202411">11월</button>
+					<button type="button" class="btn-lg btn-outline-primary mr-3 monthBtn" value="202412">12월</button>
 					<label for="searchKeyword" hidden>검색어</label>
 					<input type="hidden" name="searchKeyword"
 						th:value="${searchVO != null ? searchVO.searchKeyword : ''}" />
@@ -75,42 +74,42 @@
 
 
 						<!--페이징 시작-->
-						<div th:if="${searchVO.pageIndex != null}">
-							<div id="pagination">
-								<ul>
-									<!-- 이전 버튼 -->
-									<li>
-										<a th:href="'javascript:void(0)'"
-											th:attr="data-pageNumber=${paginationInfo.currentPageNo - 1}, data-searchCondition=${searchVO.searchCondition}"
-											th:class="${paginationInfo.currentPageNo == 1 ? 'disabled' : ''}">
-											&laquo; 이전
-										</a>
-									</li>
+<!--						<div th:if="${searchVO.pageIndex != null}">-->
+<!--							<div id="pagination">-->
+<!--								<ul>-->
+<!--									 이전 버튼 -->
+<!--									<li>-->
+<!--										<a th:href="'javascript:void(0)'"-->
+<!--											th:attr="data-pageNumber=${paginationInfo.currentPageNo - 1}, data-searchCondition=${searchVO.searchCondition}"-->
+<!--											th:class="${paginationInfo.currentPageNo == 1 ? 'disabled' : ''}">-->
+<!--											&laquo; 이전-->
+<!--										</a>-->
+<!--									</li>-->
 
 
-									<!-- 페이지 링크 -->
-									<th:block
-										th:each="pageNumber : ${#numbers.sequence(paginationInfo.firstPageNoOnPageList, paginationInfo.lastPageNoOnPageList)}">
-										<li>
-											<a th:href="'javascript:void(0)'" th:text="${pageNumber}"
-												th:attr="data-pageNumber=${pageNumber}, data-searchCondition=${searchVO.searchCondition}"
-												th:class="${pageNumber == paginationInfo.currentPageNo ? 'active' : ''}">
-											</a>
-										</li>
-									</th:block>
+<!--									 페이지 링크 -->
+<!--									<th:block-->
+<!--										th:each="pageNumber : ${#numbers.sequence(paginationInfo.firstPageNoOnPageList, paginationInfo.lastPageNoOnPageList)}">-->
+<!--										<li>-->
+<!--											<a th:href="'javascript:void(0)'" th:text="${pageNumber}"-->
+<!--												th:attr="data-pageNumber=${pageNumber}, data-searchCondition=${searchVO.searchCondition}"-->
+<!--												th:class="${pageNumber == paginationInfo.currentPageNo ? 'active' : ''}">-->
+<!--											</a>-->
+<!--										</li>-->
+<!--									</th:block>-->
 
-									<!-- 다음 버튼 -->
-									<li>
-										<a th:href="'javascript:void(0)'"
-											th:attr="data-pageNumber=${paginationInfo.currentPageNo + 1}, data-searchCondition=${searchVO.searchCondition}"
-											th:class="${paginationInfo.currentPageNo == paginationInfo.totalPageCount ? 'disabled' : ''}">
-											다음 &raquo;
-										</a>
-									</li>
+<!--									 다음 버튼 -->
+<!--									<li>-->
+<!--										<a th:href="'javascript:void(0)'"-->
+<!--											th:attr="data-pageNumber=${paginationInfo.currentPageNo + 1}, data-searchCondition=${searchVO.searchCondition}"-->
+<!--											th:class="${paginationInfo.currentPageNo == paginationInfo.totalPageCount ? 'disabled' : ''}">-->
+<!--											다음 &raquo;-->
+<!--										</a>-->
+<!--									</li>-->
 
-								</ul>
-							</div>
-						</div>
+<!--								</ul>-->
+<!--							</div>-->
+<!--						</div>-->
 						<!--페이징 끝-->
 
 
@@ -123,7 +122,8 @@
 								$('#pagination a').on('click', function (e) {
 									e.preventDefault();
 									var pageNumber = $(this).attr('data-pageNumber');
-									var searchCondition = $(this).attr('data-searchCondition'); // 새로운 줄 추가
+								//	var searchCondition = $(this).attr('data-searchCondition'); // 새로운 줄 추가
+									var searchCondition = ''; // 새로운 줄 추가
 
 
 									if (pageNumber) {
