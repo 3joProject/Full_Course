@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" noticeContent="width=device-width, initial-scale=1.0">
+	<title>공지사항 글쓰기</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin/selectOne.css">
+</head>
+
+
+<body>
+	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>
+	<div class="container">
+		<h1>공지사항 상세 보기</h1>
+
+		<div class="notice-details">
+			<!-- 제목을 크게 보이도록 수정 -->
+			<h2 class="notice-title" th:text="${vo2.noticeTitle}"></h2>
+
+			<!-- 내용을 틀 안에서 보이도록 수정 -->
+			<div class="notice-content">
+				<p th:text="${vo2.noticeContent}"></p>
+			</div>
+
+			<!-- 작성자와 날짜는 제목과 내용 사이에 위치하도록 수정 -->
+			<div class="notice-info">
+				<p><strong>작성자: </strong><span th:text="${vo2.noticeWriter}"></span></p>
+				<p><strong>작성일: </strong><span th:text="${vo2.noticeDate}"></span></p>
+			</div>
+		</div>
+
+		<button class="btn" th:onclick="'location.href=\'/admin/notice/update?noticeNum=' + ${vo2.noticeNum} + '\''">수정</button>
+		
+		<form th:action="@{/admin/notice/deleteOK}" method="post">
+			<input type="hidden" name="noticeNum" th:value="${vo2.noticeNum}" />
+			<button class="btn" type="submit">삭제</button>
+		</form>
+
+
+
+
+		</form>
+	</div>
+
+</body>
+
+</html>

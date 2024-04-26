@@ -27,12 +27,12 @@
 			<!--	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>-->
 			<!--	<div class="container">-->
 
-<!--			<div th:insert="thymeleaf/admin/sidebar :: sidebar"></div>-->
+			<!--			<div th:insert="thymeleaf/admin/sidebar :: sidebar"></div>-->
 
 
 			<div class="content">
 				<div class="admin-info">
-					<span>공지사항</span>
+					<span>관리자목록</span>
 				</div>
 
 				<div class="page-content">
@@ -40,10 +40,9 @@
 						<thead>
 							<tr>
 								<th scope="col">#</th>
-								<th scope="col">제목</th>
-								<th scope="col">내용 </th>
-								<th scope="col">작성자</th>
-								<th scope="col">작성일</th>
+								<th scope="col">ID</th>
+								<th scope="col">NAME</th>
+								<th scope="col">Email</th>
 								<th scope="col">삭제</th>
 							</tr>
 						</thead>
@@ -51,18 +50,17 @@
 							<th:block th:each="vos : ${vos}">
 								<tr>
 									<th scope="row"><a
-											th:href="|selectOne?noticeNum=${vos.noticeNum}|"><span>[[${vos.noticeNum}]]</span></a>
+											th:href="|selectOne?adminNum=${vos.adminNum}|"><span>[[${vos.adminNum}]]</span></a>
 									</th>
-									<td><a th:href="|selectOne?noticeTitle=${vos.noticeTitle}|"><span
-												th:text="${vos.noticeTitle}"></span></a></td>
-									<td><span th:text="${vos.noticeContent}"></span></td>
-									<td><span th:text="${vos.noticeWriter}"></span></td>
-									<td><span th:text="${vos.noticeDate}"></span></td>
+									<td><a th:href="|selectOne?adminNum=${vos.adminNum}|"><span
+												th:text="${vos.adminId}"></span></a></td>
+									<td><span th:text="${vos.adminName}"></span></td>
+									<td><span th:text="${vos.adminEmail}"></span></td>
 
 
 									<td>
-										<form th:action="@{/admin/notice/deleteOK}" method="post">
-											<input type="hidden" name="noticeNum" th:value="${vos.noticeNum}" />
+										<form th:action="@{/admin/admin/deleteOK}" method="post">
+											<input type="hidden" name="adminNum" th:value="${vos.adminNum}" />
 											<button class="btn" type="submit">삭제</button>
 										</form>
 									</td>
@@ -74,7 +72,7 @@
 					</table>
 				</div>
 
-				<button class="btn" onclick="location.href='/admin/notice/insert'">글쓰기</button>
+				<button class="btn" onclick="location.href='/admin/admin/insert'">글쓰기</button>
 
 
 				<div class="pagination">
@@ -86,7 +84,7 @@
 				</div>
 			</div>
 	</div>
-	</div>
-	</body>
+</div>
+</body>
 
 </html>

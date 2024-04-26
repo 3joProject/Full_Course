@@ -1,28 +1,32 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<div th:fragment="common_content(sidebar)">
+	<div class="container">
 
-<head>
-	<nav th:fragment="sidebar">
-	<link rel="stylesheet" type="text/css" href="/css/admin/admin.css">
-</head>
+<!--<head>-->
+<!--	<nav th:fragment="sidebar">-->
+<!--	<link rel="stylesheet" type="text/css" href="/css/admin/admin.css">-->
+<!--</head>-->
 
-<body>
+<div>
 		<div class="sidebar">
 			<div class="sidebar-box">
 				<ul class="sidebar-menu">
 					<li><a href="/admin/notice/selectAll">공지사항</a></li>
-					<li><a href="/admin/members">회원 목록</a></li>
-					<li><a href="/admin/travelers">여행 목록</a></li>
-					<li><a href="/admin/festivals">축제 목록</a></li>
-					<li><a href="/admin/travel-products">여행상품 목록</a></li>
+					<li><a href="/admin/member/selectAll">회원 목록</a></li>
+					<li><a href="/admin/tour/selectAll">여행 목록</a></li>
+					<li><a href="/admin/festival/selectAll">축제 목록</a></li>
+					<li><a href="/admin/product/selectAll">여행상품 목록</a></li>
 					<li><a href="/admin/reports">신고 목록</a></li>
-					<li><a href="/admin/qna">Q&A 관리</a></li>
+<!--					<li><a href="/admin/qna">Q&A 관리</a></li>-->
 					<li><a href="/admin/adminlist/selectAll">관리자 명단</a></li>
 					<li><a href="/chat/adminDashboard">실시간 문의 관리</a></li>
 					
 				</ul>
 			</div>
 		</div>
+		</div></div>
+		</div>
+		
+		
 </body>
 </html>
