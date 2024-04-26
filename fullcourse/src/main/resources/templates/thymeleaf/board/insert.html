@@ -1,50 +1,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="common_content(title)">
-	<div class="container">
-		
-		<div class="text-center mb-3 pb-3">
-        	<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">게시판</h6>
+    <div class="container">
+
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">게시판</h6>
             <h1>게시글 작성</h1>
         </div>
-            
-		<div class="input-form-backgroud row">
-			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3">[[${title}]]</h4>
-				<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-				<form class="validation-form" novalidate action="insertOK"method="post">
-	
-	
-					<div class="mb-4">
-                 		<label for="boardTitle" class="block text-gray-700 text-sm font-bold mb-2">제목</label>
-                   		<input type="text" class="form-control p-4" name="boardTitle" placeholder="제목"
-                                        required="required" data-validation-required-message="제목을 입력해주세요." />
-                                        
-                       
-                	</div>
-                
-                	<div class="mb-4">
-                    	<label for="boardContent" class="block text-gray-700 text-sm font-bold mb-2">내용</label>
-                    	<input type="text" class="form-control p-4" name="boardContent" id="subject" placeholder="내용"
-                                    required="required" data-validation-required-message="Please enter a subject" />
-                	</div>
-                            
-                	<div class="mb-4">
-                    	<label for="boardImage" class="block text-gray-700 text-sm font-bold mb-2">이미지 첨부</label>
-                    	<input type="text" class="form-control" name="boardImage" id="boardImage" placeholder="" value="default.png" required>
-                	</div>
-					
-					
-					<div>
-					<form class="validation-form" novalidate action="/board/insertOK" method="post" enctype="multipart/form-data">
-    				<!-- input fields here -->
-    					<div class="text-center">
-                                <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">글쓰기 완료</button>
-                        </div>
-					</form>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+
+        <div class="input-form-background row">
+            <div class="input-form col-md-12 mx-auto">
+                <h4 class="mb-3">[[${title}]]</h4>
+
+                <form id="boardForm" class="validation-form" novalidate action="/board/insertOK" method="post" enctype="multipart/form-data">
+
+                    <div class="mb-4">
+                        <label for="boardTitle" class="block text-gray-700 text-sm font-bold mb-2">제목</label>
+                        <input type="text" class="form-control" name="boardTitle" id="boardTitle" placeholder="제목" required="required" data-validation-required-message="제목을 입력해주세요." />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="boardContent" class="block text-gray-700 text-sm font-bold mb-2">내용</label>
+                        <textarea type="text" class="form-control" cols="30" rows="5" name="boardContent" id="boardContent"
+                        placeholder="내용" required="required" data-validation-required-message="내용을 입력해주세요." /></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="boardImage" class="block text-gray-700 text-sm font-bold mb-2">이미지 첨부</label>
+                        <input type="text" class="form-control" name="boardImage" id="boardImage" placeholder="default.png" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">글쓰기 완료</button>
+                    </div>
+
+                </form>
+
+                <script>
+                    document.getElementById('boardForm').addEventListener('submit', function(event) {
+                        var title = document.getElementById('boardTitle').value.trim();
+                        var content = document.getElementById('boardContent').value.trim();
+
+                        if (title === '') {
+                            alert('제목을 입력해주세요.');
+                            event.preventDefault();  // 폼 제출 중단
+                        } else if (content === '') {
+                            alert('내용을 입력해주세요.');
+                            event.preventDefault();  // 폼 제출 중단
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
 </div>
+
 </html>

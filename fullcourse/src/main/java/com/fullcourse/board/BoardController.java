@@ -164,12 +164,17 @@ public class BoardController {
 	    }
 
 	    BoardVO board = boardService.getBoardById(boardNum);
+	    model.addAttribute("content", "thymeleaf/board/update");
+		model.addAttribute("title", "게시글 수정");
+		
 	    if (board != null) {
 	        model.addAttribute("vo", board);
-	        return "thymeleaf/board/update"; // 해당 뷰 파일 이름 확인
+	        return "thymeleaf/board/layout_main"; // 해당 뷰 파일 이름 확인
 	    } else {
 	        return "redirect:/board/selectAll";
 	    }
+	    
+	    
 	}
 	
 	@PostMapping("/updateOK")

@@ -1,108 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<div th:fragment="common_content(title)">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">게시판 상세</title>
     <link rel="stylesheet" href="/css/main.css">
-    <style>
-        body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .board-details {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .board-info h2 {
-            color: #333;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .board-info p {
-            color: #666;
-            margin: 5px 0;
-        }
-        .board-content {
-            margin-top: 20px;
-        }
-        .board-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-        .navigation a, .button {
-            display: inline-block;
-            padding: 10px 15px;
-            color: white;
-            background-color: #007bff;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 20px;
-        }
-        .navigation a:hover, .button:hover {
-            background-color: #0056b3;
-        }
-        .button-group {
-            display: flex;
-            justify-content: flex-end;
-        }
-        .button.delete {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-    </style>
 </head>
 <body>
+<div th:fragment="common_content(title)">
     <div class="container">
         <div class="board-details">
+            <!-- 상단 정보 표시 영역 -->
             <div class="board-info">
-                <h2 th:text="${vo.boardTitle}">게시글 제목</h2>
-                <p><strong>작성자:</strong> <span th:text="${vo.boardWriter}">작성자명</span></p>
-                <p><strong>작성일:</strong> <span th:text="${#temporals.format(vo.boardDate, 'yyyy-MM-dd HH:mm:ss')}">작성일자</span></p>
+                <h2 class="mb-3" th:text="${vo.boardTitle}" style="margin-top: 30px;">게시글 제목</h2>
+                <div class="mb-3">
+                    <strong>작성자:</strong> <span th:text="${vo.boardWriter}">작성자명</span><br>
+                    <strong>작성일:</strong> <span th:text="${#temporals.format(vo.boardDate, 'yyyy-MM-dd HH:mm:ss')}">작성일자</span>
+                </div>
             </div>
-            <div class="board-content">
+            <!-- 본문 내용 표시 영역 -->
+            <div class="board-content bg-light p-4">
                 <p th:text="${vo.boardContent}">게시글 내용</p>
             </div>
-            <div class="board-image">
-                <img th:if="${vo.boardImage}" th:src="@{'/images/' + ${vo.boardImage}}" alt="게시글 이미지">
+            <!-- 이미지 표시 영역 -->
+            <div class="board-image my-4">
+                <img th:if="${vo.boardImage}" th:src="@{'/images/' + ${vo.boardImage}}" alt="게시글 이미지" class="img-fluid">
             </div>
-            <div class="navigation">
-                <a href="/board/selectAll">목록으로 돌아가기</a>
+            <!-- 내비게이션 링크 -->
+            <div class="navigation mb-4">
+                <a href="/board/selectAll" class="btn btn-secondary">목록으로 돌아가기</a>
             </div>
-            
-            <!-- 글 수정 및 삭제 버튼, 로그인한 사용자가 작성자와 동일한 경우에만 표시 -->
-            <div class="button-group" th:if="${session?.member != null and vo.boardWriter == session.member.memberId}">
-                
-                <!-- 글 수정 폼 -->
-				<form th:action="@{/board/update(boardNum=${vo.boardNum})}" method="get" enctype="multipart/form-data">
-    				<input type="hidden" name="boardNum" th:value="${vo.boardNum}" />
-    				<input type="hidden" name="boardTitle" th:value="${vo.boardTitle}" />
-    				<input type="hidden" name="boardContent" th:value="${vo.boardContent}" />
-    				<input type="hidden" name="boardWriter" th:value="${vo.boardWriter}" />
-    				<input type="hidden" name="boardDate" th:value="${vo.boardDate}" />
-    				<input type="hidden" name="boardImage" th:value="${vo.boardImage}" />
-    				<button type="submit" class="button">수정하기</button>
-				</form>
-				<!-- 삭제 폼 -->
-				<form th:action="@{/board/deleteOK}" method="post">
-    				<input type="hidden" name="boardNum" th:value="${vo.boardNum}" />
-    				<button type="submit" class="button delete">삭제하기</button>
-				</form>
+            <!-- 글 수정 및 삭제 버튼 -->
+            <div class="button-group mb-4" th:if="${session?.member != null and vo.boardWriter == session.member.memberId}">
+                <form th:action="@{/board/update(boardNum=${vo.boardNum})}" method="get" class="d-inline">
+                    <input type="hidden" name="boardNum" th:value="${vo.boardNum}">
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                </form>
+                <form th:action="@{/board/deleteOK}" method="post" class="d-inline">
+                    <input type="hidden" name="boardNum" th:value="${vo.boardNum}">
+                    <button type="submit" class="btn btn-danger">삭제하기</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
-	</div>
 </html>
