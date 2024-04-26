@@ -93,9 +93,20 @@ public class MemberController {
         if (member == null) {
             return "redirect:/login";  // 로그인이 되어있지 않다면 로그인 페이지로 리다이렉트
         }
+        
+        if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		}
 
         model.addAttribute("memberVO", member);
-        return "thymeleaf/member/mypage";  // 마이페이지 뷰로 이동
+        model.addAttribute("content", "thymeleaf/member/mypage");
+//        return "thymeleaf/member/mypage";  // 마이페이지 뷰로 이동
+        return "thymeleaf/member/th_myPageLayout_main";
     }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -114,6 +125,15 @@ public class MemberController {
         if (member == null) {
             return "redirect:/login";
         }
+        
+    	if (member != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + member.getMemberId());
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		}
         List<SellerReviewVO> vos = memberService.reviewSelectAll(sellerId);
 		log.info("vos:{}",vos);
 	    log.info("MemberVO:{}",member);

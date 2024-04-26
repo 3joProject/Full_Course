@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title th:text="${title}">로그인</title>
+	<!--    <title th:text="${title}">로그인</title>-->
+	<title th:replace="~{thymeleaf/header :: common_header(${title})}"></title>
+
 </head>
+
 <body>
-    <h1 th:text="${title}">회원 로그인</h1>
-    <form action="#" th:action="@{/login}" method="post">
-        <div>
-            <label for="memberId">사용자 ID:</label>
-            <input type="text" id="memberId" name="memberId" required>
-        </div>
-        <div>
-            <label for="memberPw">비밀번호:</label>
-            <input type="password" id="memberPw" name="memberPw" required>
-        </div>
-        <div>
-            <button type="submit">로그인</button>
-        </div>
-        <p th:if="${error}" th:text="${error}">로그인 정보가 올바르지 않습니다.</p>
-    </form>
+	
+	<!--	<h1 th:text="${title}">회원 로그인</h1>-->
+	<div id="loginContainer">
+	<div id="inputBox">
+	<h1 id="loginTitle": class="m-0 text-primary" ><span class="text-dark">우리동네</span>풀코스</h1>
+	<form  action="#" th:action="@{/login}" method="post">
+		<div>
+			<label for="memberId">사용자 ID:</label>
+			<input class="form-control" type="text" id="memberId" name="memberId" required>
+		</div>
+		<div>
+			<label for="memberPw">비밀번호:</label>
+			<input class="form-control" type="password" id="memberPw" name="memberPw" required>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary button-login-box" style="width:100%">로그인</button>
+		</div>
+		<p id="loginError" th:if="${message}" th:text="${message}">로그인 정보가 올바르지 않습니다.</p>
+	</form>
+	</div>
+	</div>
+
+	
+
+
 </body>
+<div th:replace="~{thymeleaf/footer :: test_copy}"></div>
+
 </html>
