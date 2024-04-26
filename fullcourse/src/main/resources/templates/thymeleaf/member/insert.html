@@ -1,54 +1,133 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="common_content(title)">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: #fff;
+            width: 350px; /* 조금 더 넓게 조정 */
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-form-backgroud {
+            background-color: #fff; /* 배경색을 하얀색으로 설정 */
+            padding: 15px;
+        }
+        .input-form {
+            padding: 0;
+        }
+        h4 {
+            color: #7CB833;
+            font-size: 1.5em; /* 크기를 h1에 맞게 조정 */
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #7CB833;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 15px; /* 버튼 위 여백 추가 */
+        }
+        .btn:hover {
+            background-color: #57b384;
+        }
+        .custom-checkbox {
+            text-align: left;
+            margin-top: 15px;
+        }
+        .custom-control-label {
+            margin-left: 5px; /* 체크박스와 레이블 사이 여백 조정 */
+            vertical-align: middle; /* 레이블 수직 정렬 */
+            display: inline-block; /* 인라인 블록 요소로 변경 */
+        }
+        .invalid-feedback {
+            display: none; /* 기본적으로 숨김 */
+            color: red;
+            text-align: left;
+            font-size: 0.875em;
+        }
+        input:invalid ~ .invalid-feedback {
+            display: block; /* 유효성 검사 실패 시 표시 */
+        }
+    </style>
+</head>
+<body>
     <div class="container">
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto">
-                <h4 class="mb-3">[[${title}]]</h4>
-                <form class="validation-form" novalidate action="memberinsertOK" method="post">
+                <h4 class="mb-3">회원가입</h4>
+                <form class="validation-form" action="memberinsertOK" method="post">
                     <div class="mb-3">
                         <label for="memberId">ID</label>
-                        <input type="text" class="form-control" name="memberId" id="memberId" placeholder="" value="" required>
+                        <input type="text" class="form-control" name="memberId" id="memberId" placeholder="" required>
                         <div class="invalid-feedback">ID를 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberPw">PW</label>
-                        <input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="" value="" required>
+                        <input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="" required>
                         <div class="invalid-feedback">PW를 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberName">NAME</label>
-                        <input type="text" class="form-control" name="memberName" id="memberName" placeholder="" value="" required>
+                        <input type="text" class="form-control" name="memberName" id="memberName" placeholder="" required>
                         <div class="invalid-feedback">NAME을 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberAddress">ADDRESS</label>
-                        <input type="text" class="form-control" name="memberAddress" id="memberAddress" placeholder="" value="" required>
+                        <input type="text" class="form-control" name="memberAddress" id="memberAddress" placeholder="" required>
                         <div class="invalid-feedback">ADDRESS를 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberTel">TEL</label>
-                        <input type="text" class="form-control" name="memberTel" id="memberTel" placeholder="" value="" required>
+                        <input type="text" class="form-control" name="memberTel" id="memberTel" placeholder="" required>
                         <div class="invalid-feedback">TEL을 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberEmail">EMAIL</label>
-                        <input type="email" class="form-control" name="memberEmail" id="memberEmail" placeholder="" value="" required>
+                        <input type="email" class="form-control" name="memberEmail" id="memberEmail" placeholder="" required>
                         <div class="invalid-feedback">EMAIL을 입력해주세요.</div>
                     </div>
                     <div class="mb-3">
                         <label for="memberSns">SNS</label>
-                        <input type="text" class="form-control" name="memberSns" id="memberSns" placeholder="" value="">
+                        <input type="text" class="form-control" name="memberSns" id="memberSns" placeholder="">
                     </div>
                     <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="aggrement" checked required>
+                        <input type="checkbox" class="custom-control-input" id="aggrement" required>
                         <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+                        <div class="invalid-feedback">약관에 동의해주세요.</div>
                     </div>
-                    <div class="mb-4"></div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                    <button class="btn btn-primary" type="submit">가입 완료</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
+</body>
 </html>
