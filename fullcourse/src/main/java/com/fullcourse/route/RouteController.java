@@ -32,25 +32,36 @@ public class RouteController {
 	private RouteService service;
 
 	@GetMapping("/route")
-	public String map(Model model,  HttpServletRequest request) {
+	public String map(Model model, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    Integer memberNum = (Integer) session.getAttribute("memberNum");
+	    
+	    if (memberNum == null) {
+	        return "redirect:/login"; // 로그인 페이지로 리디렉션
+	    }
+	    
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    if (member != null) {
+	        boolean loggedIn = true;
+	        log.info("로그인한사람 아이디:" + member.getMemberId());
+	        model.addAttribute("loginId", member.getMemberId());
+	        model.addAttribute("loggedIn", loggedIn);
+	        
+	        log.info("map..");
+	        
+	        String routeUserId = member.getMemberId();
+	        log.info("routeUserId:{}", routeUserId);
 
-		log.info("map..");
-		
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("member");
-		log.info("MemberVO:{}", member);
-		
-		
-		
-		String routeUserId = member.getMemberId();
-		log.info("routeUserId:{}", routeUserId);
-
-		model.addAttribute("content", "thymeleaf/route/TMAP");
-		model.addAttribute("routeUserId", routeUserId);
-		
-//		return "thymeleaf/route/TMAP"; // index.html 파일을 반환
-		return "thymeleaf/route/th_routeLayout_main"; // index.html 파일을 반환
+	        model.addAttribute("content", "thymeleaf/route/TMAP");
+	        model.addAttribute("routeUserId", routeUserId);
+	        
+	        // index.html 파일을 반환
+	        return "thymeleaf/route/th_routeLayout_main"; 
+	    }
+	    
+	    return "redirect:/login"; // 로그인 페이지로 리디렉션
 	}
+
 
 	@GetMapping("/route/list")
 	public String tourlist(@RequestParam(defaultValue = "1") int cpage, @RequestParam(defaultValue = "5") int pageBlock,
