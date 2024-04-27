@@ -49,15 +49,15 @@
 							<th:block th:each="vos : ${vos}">
 								<tr>
 									<th scope="row"><a
-											th:href="|selectOne?festivalNum=${vos.festivalNum}|"><span>[[${vos.festivalNum}]]</span></a>
+											th:href="|/festival/festivalDetails?festivalNum=${vos.festivalNum}|"><span>[[${vos.festivalNum}]]</span></a>
 									</th>
-									<td><a th:href="|selectOne?festivalNum=${vos.festivalNum}|"><span
+									<td><a th:href="|/festival/festivalDetails?festivalNum=${vos.festivalNum}|"><span
 												th:text="${vos.festivalName}"></span></a></td>
 									<td><span th:text="${vos.festivalAddress}"></span></td>
 
 
 									<td>
-										<form th:action="@{/admin/festival/deleteOK}" method="post">
+										<form th:action="@{/festival/festivalDelete}" method="get">
 											<input type="hidden" name="festivalNum" th:value="${vos.festivalNum}" />
 											<button class="btn" type="submit">삭제</button>
 										</form>
@@ -70,7 +70,7 @@
 					</table>
 				</div>
 
-				<button class="btn" onclick="location.href='/admin/festival/insert'">글쓰기</button>
+				<button class="btn" onclick="location.href='/festival/festivalInsert'">글쓰기</button>
 
 
 				<div class="pagination">

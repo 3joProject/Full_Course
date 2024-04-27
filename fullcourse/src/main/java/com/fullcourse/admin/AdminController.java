@@ -40,11 +40,28 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin")
-	public String admin(Model model) {
-		log.info("이건가");
-		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
-		model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
-		return "thymeleaf/admin/th_adminLayout_main";
+	public String admin(Model model,HttpSession session) {
+		
+		AdminVO admin = (AdminVO) session.getAttribute("admin");
+		if (admin != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + admin.getAdminId());
+			model.addAttribute("loginId", admin.getAdminId());
+			model.addAttribute("loggedIn", loggedIn);
+			model.addAttribute("sidebar","thymeleaf/admin/sidebar");
+			model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
+			return "thymeleaf/admin/th_adminLayout_main";
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+			 return "redirect:/admin/login";
+			
+		}
+		
+		
+	
 	}
 	
 	

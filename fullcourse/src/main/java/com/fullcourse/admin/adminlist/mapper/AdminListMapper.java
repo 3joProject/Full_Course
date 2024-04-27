@@ -14,6 +14,8 @@ public interface AdminListMapper {
 
 	int getTotalRows();
 
+	public int adminDeleteOK();
+
 
 
 }

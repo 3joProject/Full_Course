@@ -107,15 +107,17 @@
 	<!--검색 조건 설정 위한 쿼리-->
 	<sql id="whereQuery">
 		<where>
-
-			<if
-				test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
+			<if test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
 				<if test="searchCondition == 'FESTIVAL_NAME'">
 					AND festivalName LIKE CONCAT('%', #{searchKeyword}, '%')
 				</if>
 				<if test="searchCondition == 'FESTIVAL_ADDRESS'">
 					AND festivalAddress LIKE CONCAT('%', #{searchKeyword}, '%')
 				</if>
+			</if>
+			<if test="!@org.springframework.util.StringUtils@isEmpty(festivalStart)">
+				festivalStart LIKE CONCAT(#{festivalStart}, '%') 
+				OR festivalFinal LIKE CONCAT(#{festivalStart}, '%')
 			</if>
 		</where>
 	</sql>
@@ -162,9 +164,11 @@
 		FROM festival
 		WHERE festivalStart LIKE CONCAT(#{festivalStart}, '%') OR festivalFinal LIKE
 		CONCAT(#{festivalStart}, '%')
-		ORDER BY festivalNum DESC
-		LIMIT #{firstIndex}, #{recordCountPerPage}
+		ORDER BY festivalViews DESC
+		LIMIT #{pageIndex}, #{recordCountPerPage}
 	</select>
+	
+	
 
 
 </mapper>

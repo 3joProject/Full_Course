@@ -9,9 +9,19 @@
 	text-align: center;
 }
 
+#AllRegionBtn{
+	margin: 25px 5px;
+	border-radius: 20px;
+	font-size: 20px;
+}
 .regionBtn {
 	margin: 25px 5px;
 	border-radius: 20px;
+	font-size: 20px;
+}
+
+.tourDestination, .festivalDestination,.inDetailsBtn{
+	font-size: 25px;
 }
 
 .heart {
@@ -57,7 +67,6 @@
 /* 버튼 스타일 */
 .btn-outline-primary {
 	border-color: transparent;
-	color: #007bff;
 }
 
 #thumbUpCount {
@@ -200,7 +209,11 @@
 
 /*mypage관련css*/
 body {
-	font-family: 'Arial', sans-serif;
+/*	font-family: 'Arial', sans-serif;*/
+font-family: "Nanum Pen Script", cursive;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 25px;
 }
 
 .mypage-wrapper {
