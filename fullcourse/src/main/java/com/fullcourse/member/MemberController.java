@@ -147,15 +147,6 @@ public class MemberController {
         return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동
     }
 
-		List<SellerReviewVO> vos = memberService.reviewSelectAll(sellerId);
-		log.info("vos:{}", vos);
-		log.info("MemberVO:{}", member);
-
-		model.addAttribute("vos", vos);
-		model.addAttribute("seller", seller);
-		model.addAttribute("member", member);
-		return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동
-	}
 
 
 	@GetMapping("/member/updateMemberInfo")
