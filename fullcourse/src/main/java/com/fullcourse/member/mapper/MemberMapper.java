@@ -60,6 +60,8 @@ public interface MemberMapper {
 
 	MemberVO getMemberByNum(int memberNum);
 
+	public int memberDeleteOK(MemberVO vo);
+
 	 
 	
 

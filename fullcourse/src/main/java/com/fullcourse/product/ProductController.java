@@ -89,6 +89,9 @@ public class ProductController {
 	}
 	
 	
+	
+	
+	
 	@PostMapping("/deleteOK")
     public String deleteOK(ProductVO productVO, HttpSession session) {
         if (!isOwner(productVO.getProductNum(), session)) {
@@ -100,6 +103,17 @@ public class ProductController {
 
         return "redirect:selectAll";
     }
+	
+	//admin용
+	@PostMapping("/admin/deleteOK")
+    public String admindeleteOK(ProductVO productVO, HttpSession session) {
+      
+        int result = productService.deleteOK(productVO);
+        log.info("Delete result: {}", result);
+
+        return "redirect:/admin/product/selectAll";
+    }
+	
 	
     @GetMapping("/sellList")
     public String sellList(Model model, HttpServletRequest request) {

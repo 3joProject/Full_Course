@@ -50,18 +50,22 @@
 						<tbody>
 							<th:block th:each="vos : ${vos}">
 								<tr>
-									<th scope="row"><a
-											th:href="|selectOne?memberNum=${vos.memberNum}|"><span>[[${vos.memberNum}]]</span></a>
-									</th>
-									<td><a th:href="|selectOne?memberNum=${vos.memberNum}|"><span
-												th:text="${vos.memberId}"></span></a></td>
+<!--									<th scope="row">-->
+<!--										<td><span th:text="${vos.memberNum}"></span></td>-->
+<!--										<a-->
+<!--											th:href="|/seller/${vos.memberNum}|"><span>[[${vos.memberNum}]]</span></a>-->
+<!--									</th>-->
+<!--									<td><a th:href="|/seller?memberNum=${vos.memberNum}|"><span-->
+<!--												th:text="${vos.memberId}"></span></a></td>-->
+									<td><span th:text="${vos.memberNum}"></span></td>
+									<td><span th:text="${vos.memberId}"></span></td>
 									<td><span th:text="${vos.memberPw}"></span></td>
 									<td><span th:text="${vos.memberName}"></span></td>
 									<td><span th:text="${vos.memberTel}"></span></td>
 
 
 									<td>
-										<form th:action="@{/admin/member/deleteOK}" method="post">
+										<form th:action="@{/member/memberDelete}" method="get">
 											<input type="hidden" name="memberNum" th:value="${vos.memberNum}" />
 											<button class="btn" type="submit">삭제</button>
 										</form>
@@ -74,7 +78,7 @@
 					</table>
 				</div>
 
-				<button class="btn" onclick="location.href='/admin/member/insert'">글쓰기</button>
+<!--				<button class="btn" onclick="location.href='/admin/member/insert'">글쓰기</button>-->
 
 
 				<div class="pagination">

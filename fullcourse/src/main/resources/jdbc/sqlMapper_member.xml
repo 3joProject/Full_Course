@@ -99,5 +99,9 @@
 		selrevDate
 		desc
 	</select>
+	
+	<delete id="memberDeleteOK" parameterType="com.fullcourse.member.MemberVO">
+		delete from member where memberNum=#{memberNum}
+	</delete>
 
 </mapper>
