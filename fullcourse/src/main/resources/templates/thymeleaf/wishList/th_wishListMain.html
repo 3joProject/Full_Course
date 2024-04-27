@@ -25,7 +25,7 @@
 					<tbody>
 						<th:block th:each="vo : ${vosTour}">
 							<tr>
-								<td><span scope="row" th:text="${vo.tourImg}"></span></td>
+								<td><img scope="row" th:src="${vo.tourImg}"></img></td>
 								<td><span scope="row" th:text="${vo.tourName}"></span></td>
 								<td><span scope="row" th:text="${vo.tourAddress}"></span></td>
 								<td><span scope="row" th:text="${vo.tourContent}"></span></td>
