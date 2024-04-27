@@ -8,81 +8,103 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
-				<!-- 장바구니 테이블 -->
-				<table class="table">
-					<thead>
-						<tr>
-							<th></th>
-							<th><input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()"></th>
-							<th scope="col">상품이미지</th>
-							<th scope="col">상품명</th>
-							<th scope="col">판매자아이디</th>
-							<th scope="col">상품내용</th>
-							<th scope="col">상품가격</th>
-							<th scope="col">구매수량</th>
-							<th scope="col">상품재고</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="vo, rowStat : ${vos}">
-							<tr>
-								<td><input scope="row" type="hidden" th:value="${vo.cartNum}"></td>
-								<td><input type="checkbox" class="item-checkbox" onclick="updateChkRowAll()"></td>
-								<td><span scope="row" th:text="${vo.cartImage}"></span></td>
-								<td><span scope="row" th:text="${vo.cartTitle}"></span></td>
-								<td><span scope="row" th:text="${vo.cartSellerId}"></span></td>
-								<td><span scope="row" th:text="${vo.cartContent}"></span></td>
-								<td><span scope="row" th:text="${vo.cartPrice}"></span></td>
-								<td>
-									<div>
-										<input id="cartCount" type="number" name="cartCount" th:value="${vo.cartCount}"
-											min="1" th:max="${vo.cartInventory}">
+				<div class="container-fluid py-5">
+					<div class="container py-5">
+						<div class="row">
+							<!-- 장바구니 테이블을 블로그 형식으로 변환 -->
+							<div class="col-lg-8">
+								<label for="chkRowAll">전체선택</label>
+								<input type="checkbox" id="chkRowAll" onclick="toggleAllCheckboxes()">
+								<div class="row pb-3">
+									<div class="col-md-6 mb-4 pb-2" th:each="vo : ${vos}"
+										th:id="'product_' + ${vo.cartNum}">
+										<div class="blog-item">
+											<div class="position-relative">
+												<img class="img-fluid w-100" src="/img/blog-1.jpg" alt="Product Image">
+												<div class="blog-date">
+													<input type="checkbox" class="item-checkbox"
+														onclick="updateChkRowAll()">
+												</div>
+											</div>
+											<div class="bg-white p-4">
+												<div class="d-flex mb-2">
+													<!--  판매자 아이디와 상품명 -->
+													<input type="hidden" th:value="${vo.cartNum}" id="listCartNum">
+													<span class="text-primary text-uppercase text-decoration-none"
+														th:text="${vo.cartTitle}" id="listCartTitle"></span>
+													<span class="text-primary px-2">|</span>
+													<span class="text-primary text-uppercase text-decoration-none"
+														th:text="${vo.cartSellerId}" id="listCartSellerId"></span>
+												</div>
+												<!-- 상품 내용 및 가격 표시 -->
+												<span class="h5 m-0 text-decoration-none" th:text="${vo.cartContent}"
+													id="listCartContent"></span>
+												<!-- 수량 및 변경 버튼 -->
+												<div>
+
+													<label for="cartCount">수량 :</label>
+													<input id="listCartCount" type="number" name="cartCount"
+														th:value="${vo.cartCount}" min="1" th:max="${vo.cartInventory}">
+													<a class="cartCount_modify_btn">변경</a>
+												</div>
+												상품재고 : <span class="h6 m-0 text-decoration-none"
+													th:text="${vo.cartInventory}" id="listCartInventory"></span>
+												<br>
+												상품가격 : <span class="h6 m-0 text-decoration-none"
+													th:text="${vo.cartPrice}" id="listCartPrice"></span>
+												<br>
+												<a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a>
+											</div>
+										</div>
 									</div>
-									<a class="cartCount_modify_btn">변경</a>
-								</td>
-								<td><span scope="row" th:text="${vo.cartInventory}"></span></td>
-								<td><a th:href="|cart/deleteOK?cartNum=${vo.cartNum}|">삭제</a></td>
+								</div>
+							</div>
 
-						</th:block>
-					</tbody>
-				</table>
+							<!-- 카테고리 리스트 -->
+							<div class="col-lg-4 mt-5 mt-lg-0">
+								<div class="mb-5">
+									<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">선택된 상품 정보</h4>
+									<div class="bg-white" style="padding: 30px;">
 
-				<div id="selectedProductsForm">
-					<h2>선택된 상품 정보</h2>
-					<form id="checkoutForm" action="/payment" method="get">
-						<!-- 선택된 상품 정보들이 여기에 동적으로 추가될 것입니다 -->
+										<div id="selectedProductsForm">
+											<form id="checkoutForm" action="/payment" method="get">
+												<!-- 선택된 상품 정보들이 여기에 동적으로 추가될 것입니다 -->
+											</form>
+										</div>
 
-					</form>
+										<table id="selectedProductsTable">
+											<thead>
+												<tr>
+													<th>상품번호</th>
+													<th>상품명</th>
+													<th>가격</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 선택된 상품들의 정보가 여기에 추가될 것입니다 -->
+											</tbody>
+
+										</table>
+										<table id="totalPriceTable">
+											<thead>
+												<tr>
+													<th>결제할 총 금액</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 선택된 상품들의 총 가격 정보가 여기에 추가-->
+											</tbody>
+
+										</table>
+
+										<button id="checkoutButton">결제하기</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-
-				<table id="selectedProductsTable">
-					<thead>
-						<tr>
-							<th>상품명</th>
-							<th>가격</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- 선택된 상품들의 정보가 여기에 추가될 것입니다 -->
-					</tbody>
-
-				</table>
-				<table id="totalPriceTable">
-					<thead>
-						<tr>
-							<th>결제할 총 금액</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- 선택된 상품들의 총 가격 정보가 여기에 추가-->
-					</tbody>
-
-				</table>
-
-				<button id="checkoutButton">결제하기</button>
-
 
 
 				<!--수량 조정 form -->
@@ -94,36 +116,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- Service End -->
-
-
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
-
-	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
-
-	<!--	<script>-->
-	<!--		// 모든 체크박스 선택 혹은 해제-->
-	<!--		function toggleAllCheckboxes() {-->
-	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
-	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
-	<!--			var isChecked = chkRowAll.checked;-->
-
-	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
-	<!--				checkboxes[i].checked = isChecked;-->
-	<!--			}-->
-	<!--		};-->
 
 	<script>
 		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택
@@ -144,46 +136,6 @@
 
 	</script>
 
-	<!--		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트-->
-	<!--		document.addEventListener('DOMContentLoaded', function () {-->
-	<!--			updateChkRowAll();-->
-	<!--		});-->
-	<!--	</script>-->
-
-	<!--	<script>-->
-	<!--		// 모든 체크박스 선택 혹은 해제-->
-	<!--		function toggleAllCheckboxes() {-->
-	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
-	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
-	<!--			var isChecked = chkRowAll.checked;-->
-
-	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
-	<!--				checkboxes[i].checked = isChecked;-->
-	<!--			}-->
-	<!--		};-->
-
-	<!--		// 테이블의 모든 체크박스가 선택되었을 때 chkRowAll도 선택-->
-	<!--		function updateChkRowAll() {-->
-	<!--			var checkboxes = document.querySelectorAll('.item-checkbox');-->
-	<!--			var chkRowAll = document.getElementById('chkRowAll');-->
-	<!--			var allChecked = true;-->
-
-	<!--			for (var i = 0; i < checkboxes.length; i++) {-->
-	<!--				if (!checkboxes[i].checked) {-->
-	<!--					allChecked = false;-->
-	<!--					break;-->
-	<!--				}-->
-	<!--			}-->
-
-	<!--			chkRowAll.checked = allChecked;-->
-	<!--		};-->
-
-	<!--		// 페이지 로드 시에도 chkRowAll의 상태를 업데이트-->
-	<!--		document.addEventListener('DOMContentLoaded', function () {-->
-	<!--			updateChkRowAll();-->
-	<!--		});-->
-	<!--	</script>-->
-
 	<script>
 
 		$(document).ready(function () {
@@ -195,10 +147,10 @@
 
 				// 클릭 이벤트 핸들러 함수 내용
 				// 클릭된 버튼에 대한 데이터를 가져옴
-				let cartNum = $(this).closest('tr').find('td:eq(0)').find('input').val();
+				let cartNum = document.getElementById("listCartNum").value;
 				console.log("cartNum", cartNum);
 				// 해당 td 요소 내의 input 값을 가져옴
-				let cartCount = $(this).closest('td').find('input').val();
+				let cartCount = document.getElementById("listCartCount").value;
 				console.log("cartCount", cartCount);
 				// 각각의 hidden input 필드에 값을 설정
 				$('#update_cartNum').val(cartNum);
@@ -221,14 +173,15 @@
 
 			// 체크된 상품들을 식별하여 배열에 추가
 			$('.item-checkbox:checked').each(function () {
-				var $row = $(this).closest('tr'); // 체크된 상품의 행을 찾음
-				var productName = $row.find('td:eq(3)').text().trim(); // 상품명 가져오기
-				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
-				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
+				var $productDiv = $(this).closest('.col-md-6'); // 해당 체크박스가 속한 상품 요소 선택
+				var productName = $productDiv.find("#listCartTitle").text(); // 상품명 가져오기
+				var productPrice = $productDiv.find("#listCartPrice").text(); // 상품가격 가져오기
+				var productQuantity = parseFloat($productDiv.find("#listCartCount").val()); // 상품수량 가져오기
 				var totalPrice = productPrice * productQuantity; // 상품가격과 수량을 곱하여 총 가격 계산
-				var productNum = $row.find('td:eq(0) input[type="hidden"]').val()
+				var productNum = $productDiv.find("#listCartNum").val();
 				selectedProducts.push({name: productName, price: totalPrice, num: productNum});
 				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가
+
 
 			});
 			// 아래 테이블에 선택된 상품 정보를 표시
@@ -282,14 +235,14 @@
 			var totalAmount = 0; // 선택된 상품들의 총 결제 금액 초기화
 			// 모든 상품 행을 순회하며 정보를 수집
 			$('.item-checkbox:checked').each(function () {
-				var $row = $(this).closest('tr'); // 체크된 상품의 행을 찾음
-				var productName = $row.find('td:eq(3)').text().trim(); // 상품명 가져오기
-				var productPrice = parseFloat($row.find('td:eq(6)').text().trim()); // 상품가격 가져오기
-				var productQuantity = parseFloat($row.find('td:eq(7) input').val()); // 상품수량 가져오기
-				var totalPrice = productPrice * productQuantity; // 가격과 수량을 곱하여 총 가격 계산
-				var productNum = $row.find('td:eq(0) input[type="hidden"]').val()
+				var $productDiv = $(this).closest('.col-md-6'); // 해당 체크박스가 속한 상품 요소 선택
+				var productName = $productDiv.find("#listCartTitle").text(); // 상품명 가져오기
+				var productPrice = $productDiv.find("#listCartPrice").text(); // 상품가격 가져오기
+				var productQuantity = parseFloat($productDiv.find("#listCartCount").val()); // 상품수량 가져오기
+				var totalPrice = productPrice * productQuantity; // 상품가격과 수량을 곱하여 총 가격 계산
+				var productNum = $productDiv.find("#listCartNum").val();
 				selectedProducts.push({name: productName, price: totalPrice, num: productNum});
-				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가            
+				totalAmount += totalPrice; // 총 결제 금액에 상품 가격 추가
 			});
 
 			// 선택된 상품 정보를 표시하는 테이블 업데이트
