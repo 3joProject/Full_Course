@@ -143,18 +143,6 @@ public class MemberController {
         model.addAttribute("member", member);
         return "thymeleaf/member/sellerDetail"; // 판매자 상세 정보 페이지로 이동
     }
-//    @PostMapping("/followMember/{memberId}")
-//    public String followMember(@PathVariable String memberId, HttpSession session, RedirectAttributes redirectAttributes) {
-//        MemberVO member = (MemberVO) session.getAttribute("member");
-//        if (member == null) {
-//            redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
-//            return "redirect:/login";
-//        }
-//
-//        memberService.followMember(memberId, member.getMemberId());
-//        redirectAttributes.addFlashAttribute("message", "판매자를 팔로우 했습니다.");
-//        return "redirect:/member/" + memberId;
-//    }
 
     @GetMapping("/member/updateMemberInfo")
     public String updateMemberInfoForm(HttpSession session, Model model) {

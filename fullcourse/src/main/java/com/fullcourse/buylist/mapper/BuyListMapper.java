@@ -22,6 +22,4 @@ public interface BuyListMapper {
 	List<BuyListVO> findByMemberNum2(String cartMid);
 
 
-
-
 }

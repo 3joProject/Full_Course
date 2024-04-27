@@ -2,35 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:replace="~{thymeleaf/header :: common_header(${title})}"></title>
-    
+	<title th:replace="~{thymeleaf/header :: common_header(${title})}"></title>
+
 </head>
+
 <body>
-	   <div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
-	   <div class="container">
-    <div class="buylist-container">
-        <div class="buylist-header">
-            <h1>구매 내역</h1>
-        </div>
-        <!-- 구매 내역이 없을 경우 메시지 표시 -->
-        <div th:if="${buyList.empty}" class="buylist-empty">
-            <p>구매 내역이 없습니다.</p>
-        </div>
-        <!-- 구매 내역 리스트 -->
-        <div th:unless="${buyList.empty}" class="buylist-items">
-            <div th:each="buyItem : ${buyList}" class="buylist-item">
-                <!-- 금액, 수량, 구매일자 표시 -->
-                <div class="buylist-details">
-                    <span th:text="'판매자Id: ' + ${buyItem.cartSellerId}"></span>
-                    <span th:text="'상품명: ' + ${buyItem.cartTitle}"></span>
-                    <span th:text="'수량: ' + ${buyItem.cartCount} + '개'"></span>
-                    <span th:text="'총 가격: ' + ${buyItem.cartPrice} + '원'"></span>
-                    <span th:text="'구매 날짜: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+	<div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
+	<div class="container">
+		<div class="buylist-container">
+			<div class="buylist-header">
+				<h1>구매 내역</h1>
+			</div>
+			
+				<!-- 구매 내역이 없을 경우 메시지 표시 -->
+				<div th:if="${buyList.empty}" class="buylist-empty">
+					<p>구매 내역이 없습니다.</p>
+				</div>
+				<!-- 구매 내역 리스트 -->
+				<div th:unless="${buyList.empty}" class="buylist-items">
+					<div th:each="buyItem : ${buyList}" class="buylist-item">
+						<!-- 금액, 수량, 구매일자 표시 -->
+						<div class="buylist-details"
+							style="background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+							<span style="display: block; color: #333; margin-bottom: 5px;"
+								th:text="'판매자Id: ' + ${buyItem.cartSellerId}"></span>
+							<span style="display: block; color: #333; margin-bottom: 5px;"
+								th:text="'상품명: ' + ${buyItem.cartTitle}"></span>
+							<span style="display: block; color: #333; margin-bottom: 5px;"
+								th:text="'수량: ' + ${buyItem.cartCount} + '개'"></span>
+							<span style="display: block; color: #333; margin-bottom: 5px;"
+								th:text="'총 가격: ' + ${buyItem.cartPrice} + '원'"></span>
+							<span style="display: block; color: #333;"
+								th:text="'구매 날짜: ' + ${#dates.format(buyItem.buyDate, 'yyyy/MM/dd')}"></span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
 </body>
 <div th:replace="~{thymeleaf/footer :: test_copy}"></div>
+
 </html>
