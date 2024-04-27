@@ -9,5 +9,7 @@
 		SELECT * FROM admin
 		WHERE adminId = #{adminId} AND adminPw = #{adminPw}
 	</select>
+	
+	
 
 </mapper>

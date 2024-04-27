@@ -50,16 +50,16 @@
 							<th:block th:each="vos : ${vos}">
 								<tr>
 									<th scope="row"><a
-											th:href="|selectOne?productNum=${vos.productNum}|"><span>[[${vos.productNum}]]</span></a>
+											th:href="|/product/selectOne?productNum=${vos.productNum}|"><span>[[${vos.productNum}]]</span></a>
 									</th>
 									<td><span th:text="${vos.productMid}"></span></td>
-									<td><a th:href="|selectOne?productNum=${vos.productNum}|"><span
+									<td><a th:href="|/product/selectOne?productNum=${vos.productNum}|"><span
 												th:text="${vos.productTitle}"></span></a></td>
 									<td><span th:text="${vos.productPrice}"></span></td>
 
 
 									<td>
-										<form th:action="@{/admin/product/deleteOK}" method="post">
+										<form th:action="@{/product/admin/deleteOK}" method="post">
 											<input type="hidden" name="productNum" th:value="${vos.productNum}" />
 											<button class="btn" type="submit">삭제</button>
 										</form>
@@ -72,7 +72,7 @@
 					</table>
 				</div>
 
-				<button class="btn" onclick="location.href='/admin/product/insert'">글쓰기</button>
+				<button class="btn" onclick="location.href='/product/insert'">글쓰기</button>
 
 
 				<div class="pagination">

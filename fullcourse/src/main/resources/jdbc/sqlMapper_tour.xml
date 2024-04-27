@@ -106,8 +106,7 @@
 	<sql id="whereQuery">
 		<where>
 
-			<if
-				test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
+			<if test="!@org.springframework.util.StringUtils@isEmpty(searchKeyword)">
 				<if test="searchCondition == 'TOUR_NAME'">
 					AND tourName LIKE CONCAT('%', #{searchKeyword}, '%')
 				</if>

@@ -171,9 +171,9 @@ public class TourController {
 		log.info("result:{}", result);
 
 		if (result == 1) {
-			return "redirect:tourInsert";
+			return "redirect:/admin/tour/selectAll";
 		} else {
-			return "redirect:tourInsert";
+			return "redirect:/admin/tour/selectAll";
 		}
 	}
 
@@ -227,7 +227,7 @@ public class TourController {
 		log.info("tourDelete...");
 
 		model.addAttribute("content", "thymeleaf/tour/th_delete");
-		model.addAttribute("title", "회원삭제");
+		model.addAttribute("title", "여행지삭제");
 		return "thymeleaf/tour/th_tourLayout_main";
 	}
 
@@ -240,7 +240,7 @@ public class TourController {
 		int result = service.tourDeleteOK(vo);
 		log.info("result:{}", result);
 
-		return "redirect:tourSelectAll";
+		return "redirect:/admin/tour/selectAll";
 	}
 
 	// 여행지 목록
@@ -399,12 +399,12 @@ public class TourController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-//		if (paginationInfo.getFirstRecordIndex() > 0) {
-//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-//
-//		} else {
-//			searchVO.setFirstIndex(1);
-//		}
+		if (paginationInfo.getFirstRecordIndex() > 0) {
+			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+
+		} else {
+			searchVO.setFirstIndex(0);
+		}
 
 		// 총 갯수
 		int totalCount = service.selectListTotalCount(searchVO);

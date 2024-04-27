@@ -153,9 +153,9 @@ public class FestivalController {
 		log.info("result:{}", result);
 
 		if (result == 1) {
-			return "redirect:festivalInsert";
+			return "redirect:/admin/festival/selectAll";
 		} else {
-			return "redirect:festivalInsert";
+			return "redirect:/admin/festival/selectAll";
 		}
 	}
 
@@ -222,7 +222,7 @@ public class FestivalController {
 		int result = service.festivalDeleteOK(vo);
 		log.info("result:{}", result);
 
-		return "redirect:festivalSelectAll";
+		return "redirect:/admin/festival/selectAll";
 	}
 
 //	// 축제 목록
@@ -493,6 +493,13 @@ public class FestivalController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
+//
+//		if (paginationInfo.getFirstRecordIndex() > 0) {
+//			searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//
+//		} else {
+//			searchVO.setFirstIndex(0);
+//		}
 		// 총 갯수
 		int totalCount = service.selectListTotalCount(searchVO);
 		paginationInfo.setTotalRecordCount(totalCount);

@@ -13,5 +13,10 @@
 	<select id="getTotalRows"	resultType="int">
 		select count(*) total_rows from admin
 	</select>
+	
+	<delete id="adminDeleteOK" parameterType="com.fullcourse.admin.AdminVO">
+		delete from admin where adminNum= #{adminNum}
+	</delete>
+		
 
 </mapper>
