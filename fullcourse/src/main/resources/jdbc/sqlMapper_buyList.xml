@@ -12,5 +12,5 @@
         <result property="buyTotalPrice" column="buy_total_price"/>
         <result property="buyDate" column="buy_date"/>
     </resultMap>
-    
+
 </mapper>

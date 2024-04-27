@@ -44,6 +44,8 @@ public class BuyListController {
 		List<BuyListVO> buyList = buyListService.getBuyListByMemberNum(member.getMemberId());
 		log.info("{}",buyList);
 		
+		
+		
 		model.addAttribute("buyList", buyList);
 		return "thymeleaf/buyList/list"; // 구매 내역을 보여주는 Thymeleaf 뷰의 경로
 	}
