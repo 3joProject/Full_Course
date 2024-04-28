@@ -54,7 +54,7 @@
 									<div class="destination-item position-relative overflow-hidden mb-2">
 										<img class="img-fluid" th:src="${vo.festivalImg}" alt="">
 										<a class="destination-overlay text-white text-decoration-none"
-											th:href="@{|/tour/tourDetails?tourNum=${vo.festivalNum}|}">
+											th:href="@{|/festival/festivalDetails?festivalNum=${vo.festivalNum}|}">
 											<h5 class="text-white" th:text="${vo.festivalAddress}">United States</h5>
 											<span th:text="${vo.festivalName}">100 Cities</span>
 										</a>
