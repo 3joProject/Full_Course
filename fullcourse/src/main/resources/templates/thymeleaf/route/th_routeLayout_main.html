@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="thymeleaf/header :: common_header(~{::title})">
-
+<head>
 <!--<title>우리동네 풀코스</title>-->
 <!-- 공통 CSS-->
- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-
+ <title th:replace="~{thymeleaf/header :: common_header(${title})}"></title>
+    
 </head>
 <body>
-	<div th:replace="thymeleaf/top_menu2 :: test_top_menu"></div>
+	<div th:replace="~{thymeleaf/top_menu2 :: test_top_menu}"></div>
 
 	<div th:replace="${content} :: common_content(${title})"></div>
 
