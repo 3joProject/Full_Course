@@ -32,8 +32,8 @@
 	
 	<insert id="insertBuy" parameterType="int">
 		insert into
-		buylist(cartNum)
-		values(#{cartNum})
+		buylist(cartNum,buyMnum)
+		values(#{cartNum}, #{memberNum})
 	</insert>
 
 </mapper>

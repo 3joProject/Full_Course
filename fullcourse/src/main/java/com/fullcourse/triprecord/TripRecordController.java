@@ -1,13 +1,17 @@
 package com.fullcourse.triprecord;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fullcourse.member.MemberVO;
@@ -22,6 +26,9 @@ public class TripRecordController {
 
 	@Autowired
 	private TripRecordService service;
+
+	@Value("${file.dir}")
+	String realPath;
 
 	@GetMapping("/tripRecord")
 	public String tripRecord(@RequestParam(name = "cpage", defaultValue = "1") int cpage,
@@ -72,7 +79,8 @@ public class TripRecordController {
 	}
 
 	@PostMapping("/tripRecord/insertOK")
-	public RedirectView tripRecordInsertOK(TripRecordVO vo, HttpServletRequest request) {
+	public RedirectView tripRecordInsertOK(TripRecordVO vo, HttpServletRequest request, @RequestParam("file") MultipartFile file)
+			throws IllegalStateException, IOException {
 		log.info("tripRecordinsertOK");
 		log.info("vo:{}", vo);
 
@@ -83,6 +91,21 @@ public class TripRecordController {
 		if (member == null) {
 			return new RedirectView("/login");
 		} else {
+			log.info(realPath);
+
+			String originName = vo.getFile().getOriginalFilename();
+			log.info(originName);
+			if (originName.length() == 0) {
+				vo.setTriprecImage("default.png"); // 이미지선택없이 처리할때
+			} else {
+				String saveName = "img_" + System.currentTimeMillis()
+						+ originName.substring(originName.lastIndexOf("."));
+
+				vo.setTriprecImage(saveName);
+				log.info(saveName);
+				File uploadFile = new File(realPath, saveName);
+				vo.getFile().transferTo(uploadFile);// 원본 이미지저장
+			}
 			vo.setTriprecMnum(member.getMemberNum());
 			log.info("vo:{}", vo);
 			int result = service.insertOK(vo);

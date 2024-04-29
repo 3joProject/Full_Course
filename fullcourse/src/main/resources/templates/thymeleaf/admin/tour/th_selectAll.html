@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_content(title)">
+	<div class="container">
+
+		<!--<head>-->
+		<!--	<meta charset="UTF-8">-->
+		<!--	<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+		<!--	<title>우리 동네 풀코스 admin</title>-->
+		<!--	<link rel="stylesheet" type="text/css" href="/css/admin/admin.css">-->
+		<!--</head>-->
+
+		<body>
+			<script th:inline="javascript">
+				var success = /*[[${param.success}]]*/ '';
+				//console.log("Success parameter:", success);
+				if (success.includes('true')) {
+					alert('삭제되었습니다.');
+					var currentURL = new URL(window.location.href);
+					currentURL.searchParams.delete("success");
+					window.history.replaceState({}, document.title, currentURL);
+				} else if (success === 'false') {
+					alert('삭제에 실패했습니다.');
+				}
+			</script>
+
+
+			<!--	<div th:insert="thymeleaf/admin/th_admintop :: admintop"></div>-->
+			<!--	<div class="container">-->
+
+<!--			<div th:insert="thymeleaf/admin/sidebar :: sidebar"></div>-->
+
+
+			<div class="content">
+				<div class="admin-info">
+					<span>여행목록</span>
+				</div>
+
+				<div class="page-content">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">여행지명</th>
+								<th scope="col">주소 </th>
+								<th scope="col">삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="vos : ${vos}">
+								<tr>
+									<th scope="row"><a
+											th:href="|/tour/tourDetails?tourNum=${vos.tourNum}|"><span>[[${vos.tourNum}]]</span></a>
+									</th>
+									<td><a th:href="|/tour/tourDetails?tourNum=${vos.tourNum}|"><span
+												th:text="${vos.tourName}"></span></a></td>
+									<td><span th:text="${vos.tourAddress}"></span></td>
+
+
+									<td>
+										<form th:action="@{/tour/tourDelete}" method="get">
+											<input type="hidden" name="tourNum" th:value="${vos.tourNum}" />
+											<button class="btn" type="submit">삭제</button>
+										</form>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+						<tfoot>
+						</tfoot>
+					</table>
+				</div>
+
+				<button class="btn" onclick="location.href='/tour/tourInsert'">글쓰기</button>
+
+
+<!--				<div class="pagination">-->
+<!--					<span class="page-btn">1</span>-->
+<!--					<span class="page-btn">2</span>-->
+<!--					<span class="page-btn">3</span>-->
+<!--					<span class="page-btn">4</span>-->
+<!--					<span class="page-btn">5</span>-->
+<!--				</div>-->
+			</div>
+	</div>
+	</div>
+	</body>
+
+</html>

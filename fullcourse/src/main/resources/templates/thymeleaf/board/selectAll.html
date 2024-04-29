@@ -49,11 +49,12 @@
     		</table>
     		
     		 <!-- 페이지네이션 링크 -->
-                    <div style="text-align: center;">
-                        <th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-                            <a th:href="|selectAll?cpage=${i}|" th:text="${i}" class="page-link">[[${i}]]</a>
-                        </th:block>
-                    </div>
+					<div style="overflow-x:auto; white-space: nowrap; text-align: center;">
+						<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+							<a th:href="|selectAll?cpage=${i}|" th:text="${i}"
+								style="display: inline-block; margin-right: 5px;">[[${i}]]</a>
+						</th:block>
+					</div>
                     
                     <!-- 글 작성 버튼 -->
                     <div class="text-right mt-4">

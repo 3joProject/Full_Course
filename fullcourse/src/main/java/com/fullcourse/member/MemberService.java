@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fullcourse.member.mapper.MemberMapper;
 import com.fullcourse.seller.sellerReview.SellerReviewVO;
+import com.fullcourse.tour.TourVO;
 
 @Service
 public class MemberService {
@@ -121,6 +122,10 @@ public class MemberService {
 
 	public List<SellerReviewVO> reviewSelectAll(String sellerId) {
 		return mapper.reviewSelectAll(sellerId);
+	}
+
+	public int memberDeleteOK(MemberVO vo) {
+		return mapper.memberDeleteOK(vo);
 	}
 
 }

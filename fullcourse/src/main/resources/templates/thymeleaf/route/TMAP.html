@@ -10,14 +10,11 @@
 	<!-- 부트스트랩 5 자바스크립트 및 의존성 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
 
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>simpleMap</title>
 		<style>
 			
-
-		
 			#sidebar {
 				margin-top: 155px;
 				width: 350px;
@@ -1301,8 +1298,6 @@
 				});
 			});
 
-
-
 			//여행지 추가하기(마커추가) start
 			function addTour(lonlat) {
 				removeMarkers();
@@ -1392,8 +1387,6 @@
 				addTourScreen.style.display = "none";
 			}
 			
-			
-
 			// 화면을 숨기는 함수
 			function hideAddTourScreen() {
 				var addTourScreen = document.getElementById("addTourScreen");
@@ -1415,15 +1408,12 @@
 					var modalTitle = exampleModal.querySelector('.modal-title')
 					var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-
 					modalTitle.textContent = 'New message to ' + recipient
 					modalBodyInput.value = recipient
 					//여행지 추가 모달 end
 				})
 
 			});
-
-
 
 		</script>
 	</head>
@@ -1437,9 +1427,6 @@
 
 						<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 					</div>
-
-
-
 						<div id="smallScreen">
 							<button id="closeButton">X</button>
 							<div id="placeName"></div>
@@ -1452,6 +1439,7 @@
 							<div id="map_div"></div>
 						</div>
 						<div class="map_result">
+
 						</div>
 						<br />
 						<div id="button_container">
@@ -1528,6 +1516,4 @@
 			</div>
 		</div>
 	</div>
-
-
 </html>

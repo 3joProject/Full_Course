@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.fullcourse.admin.AdminVO;
 import com.fullcourse.admin.adminlist.mapper.AdminListMapper;
-import com.fullcourse.admin.notice.mapper.AdminNoticeMapper;
 
 @Service
 public class AdminListService {
@@ -30,8 +29,11 @@ public class AdminListService {
 	}
 
 	public int getTotalRows() {
-		// TODO Auto-generated method stub
 		return mapper.getTotalRows();
+	}
+
+	public int adminDeleteOK(AdminVO vo) {
+		return mapper.adminDeleteOK();
 	}
 
 }

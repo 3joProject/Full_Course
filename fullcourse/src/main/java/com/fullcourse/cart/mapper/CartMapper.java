@@ -20,6 +20,6 @@ public interface CartMapper {
 
 	public int chkWDuplCart(CartVO vo);
 
-	public int insertBuy(int cartNum);
+	public int insertBuy(int cartNum, int memberNum);
 	
 }

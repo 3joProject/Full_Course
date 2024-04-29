@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fullcourse.admin.AdminVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,9 +29,23 @@ public class AdminNoticeController {
 
 	@GetMapping("/admin/notice/selectAll")
 	public String selectAll(@RequestParam(defaultValue = "1") int cpage,
-			@RequestParam(defaultValue = "5") int pageBlock, Model model) {
+			@RequestParam(defaultValue = "5") int pageBlock, Model model,HttpSession session) {
 		log.info("/selectAll...");
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
+		
+		AdminVO admin = (AdminVO) session.getAttribute("admin");
+		if (admin != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + admin.getAdminId());
+			model.addAttribute("loginId", admin.getAdminId());
+			model.addAttribute("loggedIn", loggedIn);
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+			 return "redirect:/admin/login";
+		}
 
 		List<NoticeVO> vos = service.selectAllPageBlock(cpage, pageBlock);
 
@@ -51,7 +67,7 @@ public class AdminNoticeController {
 		// 페이지 링크 몇개?
 		log.info("totalPageCount:" + totalPageCount);
 		model.addAttribute("totalPageCount", totalPageCount);
-
+		model.addAttribute("sidebar","thymeleaf/admin/sidebar");
 		model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
 		model.addAttribute("title", "관리자 목록");
 		return "thymeleaf/admin/th_adminLayout_main";

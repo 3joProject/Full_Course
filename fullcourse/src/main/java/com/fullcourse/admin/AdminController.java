@@ -2,10 +2,10 @@ package com.fullcourse.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +40,28 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin")
-	public String admin() {
-		return "thymeleaf/admin/notice/th_selectAll";
+	public String admin(Model model,HttpSession session) {
+		
+		AdminVO admin = (AdminVO) session.getAttribute("admin");
+		if (admin != null) {
+
+			boolean loggedIn = true;
+			log.info("로그인한사람 아이디:" + admin.getAdminId());
+			model.addAttribute("loginId", admin.getAdminId());
+			model.addAttribute("loggedIn", loggedIn);
+			model.addAttribute("sidebar","thymeleaf/admin/sidebar");
+			model.addAttribute("content", "thymeleaf/admin/notice/th_selectAll");
+			return "thymeleaf/admin/th_adminLayout_main";
+
+		} else {
+
+			log.info("로그인한사람이 없습니다");
+			 return "redirect:/admin/login";
+			
+		}
+		
+		
+	
 	}
 	
 	

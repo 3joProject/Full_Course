@@ -1,5 +1,7 @@
 package com.fullcourse.triprecord;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,6 @@ public class TripRecordVO {
 	private String triprecAddress;
 	private float triprecLat;
 	private float triprecLon;
+	private MultipartFile file;
 
 }

@@ -33,7 +33,7 @@
 							<form class="form-inline my-2 my-lg-0 justify-content-end"
 								action="/festival/festivalSelectAll">
 								<input type="hidden" name="pageIndex" th:value="1" />
-								<select class="selectpicker" name="searchCondition" id="searchCondition"
+								<select class="selectpicker" name="searchCondition" id="searchCondition" style="border: 1px solid #ced4da; margin-right: 5px;"
 									title="검색항목을 선택해주십시오.">
 									<option value="FESTIVAL_NAME"
 										th:selected="${searchVO.searchCondition == 'FESTIVAL_NAME'}">축제이름</option>
@@ -53,7 +53,7 @@
 					<div class="container-fluid py-5">
 						<div class="container pt-5 pb-3">
 							<div class="text-center mb-3 pb-3">
-								<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;"
+								<h6 class="text-primary text-uppercase festivalDestination" style="letter-spacing: 5px;"
 									th:text="${param.searchKeyword != null ? param.searchKeyword : '전국'}">전국
 								</h6>
 								<h1>축제 목록</h1>
