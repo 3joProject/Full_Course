@@ -74,7 +74,7 @@
 											<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 											<img class="img-fluid" style="max-width: 100%; height: auto;"
 												th:if="${vo.tourImg != null and vo.tourImg != ''}"
-												th:src="${vo.tourImg}" alt="이미지대체텍스트" />
+												th:src="@{|$file.dir+${vo.tourImg}|}" alt="이미지대체텍스트" />
 											<!--										<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
 
 											<a class="destination-overlay text-white text-decoration-none"

@@ -4,7 +4,7 @@
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3">[[${title}]]</h4>
-				<form class="validation-form" novalidate action="tourInsertOK" method="post">
+				<form class="validation-form" novalidate action="tourInsertOK" method="post" enctype="multipart/form-data">
 
 					<!--					<div class="mb-3">-->
 					<!--						<label for="id">NUM</label> : <span th:text="${vo2.tourNum}"></span> <input type="hidden"-->
@@ -61,7 +61,7 @@
 						<div class="invalid-feedback">좋아요 입력해주세요.</div>
 					</div>
 					<div class="mb-3">
-						<label for="img">이미지</label> <input type="text" class="form-control" name="tourImg" id="tourImg"
+						<label for="file">이미지</label> <input type="file" class="form-control" name="file" id="file"
 							placeholder="" value="default.png" required>
 						<div class="invalid-feedback">이미지 입력해주세요.</div>
 					</div>

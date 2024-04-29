@@ -173,13 +173,12 @@
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	/* 최소 높이를 화면 전체 높이로 설정합니다. */
-	/*	background-color: #f5f5f5;*/
-	/* 배경색을 추가하여 컨테이너의 크기를 확인할 수 있습니다. */
 	padding: 20px;
-	/* 여백을 추가하여 내용이 화면에 너무 가깝게 나오지 않도록 합니다. */
 }
 
+#inputBox{
+	width: 250px;
+}
 #loginBox {
 	width: 300px;
 	text-align: center;
