@@ -377,16 +377,22 @@
 
 		<div class="container">
 			<div class="input-form-backgroud row">
-				<div class="input-form col-md-12 mx-auto">
+				<div class="input-form col-md-12 mx-auto ">
 					<div id="map_div">
 					</div>
-					<button onClick="Move(myLat, myLon)">현재 위치로 지도 이동</button>
+					<div class="col text-center">
+						<button class="btn btn-primary mt-1" onClick="Move(myLat, myLon)">현재 위치로 지도 이동</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!--		<p id="result" />-->
 		<!--		<button onClick="insertParkingDB()">DB추가</button>-->
 	</div>
+		<footer class="my-3 text-center text-small">
+		<p class="mb-1">&copy; 3줄코딩</p>
+	</footer>
+	
 </body>
 
 </html>
