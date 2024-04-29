@@ -6,6 +6,12 @@
 				<div class="input-form col-md-12 mx-auto">
 
 					<h4 class="mb-3">[[${title}]]</h4>
+					<style>
+						.custom-font {
+							font-family: 'Nanum Pen Script', cursive;
+							/* Nanum Pen Script 폰트를 사용합니다. */
+						}
+					</style>
 
 					<!-- Header Start -->
 					<div class="container-fluid page-header">
@@ -72,16 +78,19 @@
 											<div class="p-4">
 												<div class="d-flex justify-content-between mb-3">
 													<small class="m-0"><i
-															class="fa fa-map-marker-alt text-primary mr-2">판매자</i>
+															class="fa fa-map-marker-alt text-primary mr-2"><span
+																class="custom-font">판매자</span></i>
 														<p></p>
 														<span th:text="${product.productMid}"></span>
 													</small>
 													<small class="m-0"><i
-															class="fa fa-calendar-alt text-primary mr-2">상품명</i>
+															class="fa fa-calendar-alt text-primary mr-2"><span
+																class="custom-font">상품명</span></i>
 														<p></p>
 														<span th:text="${product.productTitle}"></span>
 													</small>
-													<small class="m-0"><i class="fa fa-user text-primary mr-2">모집인원</i>
+													<small class="m-0"><i class="fa fa-user text-primary mr-2"><span
+																class="custom-font">모집인원</span></i>
 														<p></p>
 														<span th:text="${product.productInventory}"></span> 명
 													</small>
