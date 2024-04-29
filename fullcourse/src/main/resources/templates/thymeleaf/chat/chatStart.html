@@ -1,34 +1,54 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head
 	th:replace="thymeleaf/header :: common_header(title)">
 <title>우리동네풀코스</title>
-<!-- 공통 CSS-->
-<link href="/css/main.css" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- 추가된 인라인 CSS -->
+<style>
+    .centered-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Viewport Height를 기준으로 100%로 설정하여 전체 화면을 채움 */
+    }
+
+    .button-primary {
+        background-color: #7CB833; /* 버튼 배경색 */
+        color: white; /* 버튼 텍스트 색상 */
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px; /* 버튼 둥근 모서리 */
+        transition: background-color 0.3s; /* 호버 효과 */
+    }
+
+    .button-primary:hover {
+        background-color: #6aa629; /* 버튼 호버 시 색상 변화 */
+    }
+</style>
 </head>
 <body>
 	<div th:replace="thymeleaf/top_menu2 :: test_top_menu"></div>
 
-	<nav class="container-fluid">
-        
-    </nav>
-    <main class="container">
-        <div class="grid">
+	<div class="container" style="text-align: center; margin-top: 200px;">
+        <div class="centered-section">
             <section>
-                <hgroup>
-                    <h2>Welcome!</h2>
-                    <h3>아래 버튼을 클릭하여 사이트 관리자와 채팅을 시작하세요.</h3>
-                </hgroup>
-                <form th:action="@{/chat/new}" method="post" class="grid">
-                    <button type="submit" class="button-primary">문의하기 채팅 시작!</button>
+                <div>
+                    <h1>Welcome!</h1>
+                    <h2>아래 버튼을 클릭하여 사이트 관리자와 채팅을 시작하세요.</h2>
+                </div>
+                <form th:action="@{/chat/new}" method="post" class="centered-section">
+                    <button type="submit" class="button-primary" style="background-color: #7CB833; color: white; font-size: 30px; 
+                    border-radius: 10px; border-style: none; margin-top: 30px;">문의하기 채팅 시작!</button>
                 </form>
             </section>
         </div>
-    </main>
+    </div>
 		
 	<div th:replace="thymeleaf/footer :: test_copy"></div>
 </body>

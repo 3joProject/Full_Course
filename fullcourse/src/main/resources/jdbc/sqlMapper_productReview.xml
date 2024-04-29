@@ -6,16 +6,22 @@
 <mapper namespace="com.fullcourse.product.productReview.mapper.ProductReviewMapper">
 	
     <insert id="prorevInsertOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
-        INSERT INTO productreview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevStatus, prorevPnum)
-        VALUES (#{prorevNum}, #{prorevWriter}, #{prorevContent}, #{prorevDate}, #{prorevStatus}, #{prorevPnum})
+        INSERT INTO productreview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevPnum)
+        VALUES (#{prorevNum}, #{prorevWriter}, #{prorevContent}, #{prorevDate}, #{prorevPnum})
     </insert>
 
     <delete id="prorevDeleteOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
         DELETE FROM productreview WHERE prorevNum = #{prorevNum}
     </delete>
+    
+    <update id="prorevUpdateOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
+        UPDATE productreview
+        SET prorevContent = #{prorevContent}, prorevDate = #{prorevDate}
+        WHERE prorevNum = #{prorevNum}
+    </update>
 
-    <select id="selectAll" resultType="com.fullcourse.product.productReview.ProductReviewVO">
-        SELECT * FROM productreview WHERE prorevNum = #{prorevNum}
-    </select>
+    <select id="prorevSelectAll" resultType="com.fullcourse.product.productReview.ProductReviewVO">
+    	SELECT * FROM productreview WHERE prorevPnum = #{productNum}
+	</select>
 
 </mapper>

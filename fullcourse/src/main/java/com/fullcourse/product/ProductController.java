@@ -95,7 +95,7 @@ public class ProductController {
 	@PostMapping("/deleteOK")
     public String deleteOK(ProductVO productVO, HttpSession session) {
         if (!isOwner(productVO.getProductNum(), session)) {
-            return "redirect:/login";  // Not the owner or not logged in
+            return "redirect:/login";  
         }
 
         int result = productService.deleteOK(productVO);
