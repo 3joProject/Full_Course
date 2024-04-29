@@ -60,15 +60,7 @@
 				z-index: 1000;
 			}
 
-			#map_wrap {
-				margin-left: 420px;
-				/* Adjust the margin to leave space for the sidebar */
-				width: calc(100% - 320px);
-				/* Adjust the width to fit the remaining space */
-				height: 80vh;
-				/* Set the height to 100% of the viewport height */
-				margin-bottom: 100px;
-			}
+			
 
 			/* sidebar 내의 각 여행지 정보를 스타일링하기 위한 스타일 */
 			.sidebar-item {
@@ -207,9 +199,9 @@
 				// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
 				map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
 					center: new Tmapv2.LatLng(routes[0].routeStartLatitude, routes[0].routeStartLongitude),
-					width: "800px", // 지도의 넓이
-					height: "700px", // 지도의 높이
-					zoom: 10
+					width: "1350px", // 지도의 넓이
+					height: "1500px", // 지도의 높이
+					zoom: 13
 				});
 
 				console.log("지도 ");
@@ -808,13 +800,10 @@
 		</script>
 	</head>
 
+<div class="container">
 	<body onload="initTmap()">
-
-
-
 		<div id="sidebar">
 			<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
-
 
 		</div>
 
@@ -827,5 +816,6 @@
 		<br />
 
 	</body>
-
+	
+</div>
 	</html>
