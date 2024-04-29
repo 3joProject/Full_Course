@@ -59,15 +59,6 @@
 				z-index: 1000;
 			}
 
-			#map_wrap {
-				margin-left: 420px;
-				/* Adjust the margin to leave space for the sidebar */
-				width: calc(100% - 320px);
-				/* Adjust the width to fit the remaining space */
-				height: 80vh;
-				/* Set the height to 100% of the viewport height */
-				margin-bottom: 100px;
-			}
 
 			/* sidebar 내의 각 여행지 정보를 스타일링하기 위한 스타일 */
 			.sidebar-item {
@@ -308,9 +299,9 @@
 			#button_container {
 
 				position: absolute;
-				top: 170px;
+				top: 20px;
 				/* 버튼을 지도 상단에서 20px 아래로 배치합니다. */
-				left: -180px;
+				left: -460px;
 				/* 버튼을 지도 오른쪽에서 20px 왼쪽으로 배치합니다. */
 				z-index: 1000;
 				/* 다른 요소 위에 배치합니다. */
@@ -398,7 +389,7 @@
 				map = new Tmapv2.Map("map_div", { // 지도가 생성될 div
 					center: new Tmapv2.LatLng(routes[0].routeStartLatitude, routes[0].routeStartLongitude),
 					width: "1350px", // 지도의 넓이
-					height: "800px", // 지도의 높이
+					height: "1500px", // 지도의 높이
 					zoom: 10
 				});
 
@@ -574,7 +565,7 @@
 						let transportInfo;
 						if (transportMode === '자동차') {
 							this.classList.add('blue-button');
-							const buttons = document.querySelectorAll('.onebutton');
+							const buttons = this.parentNode.querySelectorAll('.onebutton');
 							buttons.forEach(button => {
 								if (button !== this) {
 									button.classList.remove('green-button'); // 초기화
@@ -584,7 +575,7 @@
 							transportInfo = getOneTransportInfoBetweenPlaces(newPlaces[newPlaces.length - 1], addnewPlaces[index2]);
 						} else if (transportMode === '도보') {
 							this.classList.add('green-button');
-							const buttons = document.querySelectorAll('.onebutton');
+							const buttons = this.parentNode.querySelectorAll('.onebutton');
 							buttons.forEach(button => {
 								if (button !== this) {
 									button.classList.remove('blue-button'); // 초기화
@@ -616,7 +607,7 @@
 
 						//this.classList.add('blue-button');
 
-
+/*
 						// 나머지 버튼의 배경색을 초기화
 						const buttons = document.querySelectorAll('.onebutton');
 						buttons.forEach(button => {
@@ -624,7 +615,7 @@
 								button.classList.remove('green-button'); // 초기화
 
 							}
-						});
+						});*/
 
 						addNewOldItineraryInfo(transportInfo, index1, index2);
 						//updateNewItinerary(transportInfo);
@@ -660,7 +651,7 @@
 						routeStartLongitude: newPlaces[index1].routeEndLongitude,
 						routeEndLatitude: addnewPlaces[index2].lattitue,
 						routeEndLongitude: addnewPlaces[index2].longtitue,
-						routeOrder: index1 + index2
+						routeOrder: newIndex+1
 					};
 					console.log("addNewOldItineraryInfo", itinerary);
 				}
@@ -970,7 +961,7 @@
 						let transportInfo;
 						if (transportMode === '자동차') {
 							this.classList.add('blue-button');
-							const buttons = document.querySelectorAll('.onebutton');
+							const buttons = this.parentNode.querySelectorAll('.onebutton');
 							buttons.forEach(button => {
 								if (button !== this) {
 									button.classList.remove('green-button'); // 초기화
@@ -980,7 +971,7 @@
 							transportInfo = getTwoTransportInfoBetweenPlaces(addnewPlaces[index - 1], addnewPlaces[index]);
 						} else if (transportMode === '도보') {
 							this.classList.add('green-button');
-							const buttons = document.querySelectorAll('.onebutton');
+							const buttons = this.parentNode.querySelectorAll('.onebutton');
 							buttons.forEach(button => {
 								if (button !== this) {
 									button.classList.remove('blue-button'); // 초기화
@@ -1009,14 +1000,14 @@
 
 						// 클릭된 버튼의 배경색 변경
 						//this.style.backgroundColor = 'lightblue';
-
+/*
 						// 나머지 버튼의 배경색을 초기화
 						const buttons = document.querySelectorAll('.get-transport-info');
 						buttons.forEach(button => {
 							if (button !== this) {
 								button.style.backgroundColor = ''; // 초기화
 							}
-						});
+						});*/
 
 						addNewItineraryInfo(transportInfo, index);
 						//updateNewItinerary(transportInfo);
@@ -1126,7 +1117,7 @@
 							});
 							console.log(response.message);
 							console.log("여행 일정이 저장되었습니다.html");
-							window.location.href = "/route/list";
+							window.location.href = "/routeList";
 						}
 					} catch (error) {
 						console.error("오류 발생:", error);
@@ -2138,7 +2129,9 @@
 			}
 		</script>
 	</head>
-
+<div class="container">
+	<div class="input-form-backgroud row">
+			<div class="input-form col-md-12 mx-auto">
 	<body onload="initTmap()">
 		<div id="sidebar">
 			<!--
@@ -2174,7 +2167,7 @@
 		</div>
 		<br />
 		<div id="button_container">
-			<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
+			<button id="saveItineraryButton" class="savebutton">여행 일정 수정</button>
 			<button id="addTour" onclick="toggleAddTour()">여행지 추가</button>
 		</div>
 		<!--마커가 찍힌곳에 여행지로 등록하기-->
@@ -2239,6 +2232,9 @@
 		</script>
 
 	</body>
+	</div>
+	</div>
+		</div>
 </div>
 
 </html>

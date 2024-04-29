@@ -125,7 +125,26 @@ public class RouteController {
 	}
 
 	@GetMapping("/route/{routeName}")
-	public String selectOne(@PathVariable String routeName, Model model) {
+	public String selectOne(@PathVariable String routeName, Model model , HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		Integer memberNum = (Integer) session.getAttribute("memberNum");
+		
+		if (memberNum == null) {
+			return "redirect:/login"; // 로그인 페이지로 리디렉션
+		}
+
+		else {
+		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+
+		boolean loggedIn = true;
+		model.addAttribute("loginId", member.getMemberId());
+		model.addAttribute("loggedIn", loggedIn);
+		String routeUserId = member.getMemberId();
+		model.addAttribute("routeUserId", routeUserId);
+		
+		
 		log.info("routename : {}", routeName);
 		List<RouteVO> routes = service.routeSelectOne(routeName);
 
@@ -133,7 +152,7 @@ public class RouteController {
 		model.addAttribute("content", "thymeleaf/route/selectOne");
 
 		return "thymeleaf/route/th_selectOne";
-
+		}
 	}
 
 	// 여행지입력 완료 처리 -> tourDeails페이지로 이동?
@@ -187,6 +206,8 @@ public class RouteController {
 	public String routeList(@RequestParam(defaultValue = "1") int cpage,
 			@RequestParam(defaultValue = "5") int pageBlock, Model model, HttpServletRequest request) {
 		log.info("routeList");
+		
+		
 
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
@@ -195,8 +216,14 @@ public class RouteController {
 		if (member == null) {
 			return "redirect:/login";
 		} else {
+			
 
+			boolean loggedIn = true;
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
 			String routeUserId = member.getMemberId();
+			model.addAttribute("routeUserId", routeUserId);
+
 			log.info("routeUserId:{}", routeUserId);
 
 			List<RouteVO> routes = service.selectAllRouteList(cpage, pageBlock, routeUserId);
@@ -231,27 +258,33 @@ public class RouteController {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		log.info("MemberVO:{}", member);
+		if (member == null) {
+			return "redirect:/login";
+		} else {
+			boolean loggedIn = true;
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+			String routeUserId = member.getMemberId();
+			model.addAttribute("routeUserId", routeUserId);
+			
 
-		String routeUserId = member.getMemberId();
-		log.info("routeUserId:{}", routeUserId);
+			// routeName을 이용하여 필요한 데이터를 가져오거나 처리하는 작업 수행
 
-		// routeName을 이용하여 필요한 데이터를 가져오거나 처리하는 작업 수행
+			log.info("routename : {}", routeName);
+			List<RouteVO> routes = service.routeUpdate(routeName);
 
-		log.info("routename : {}", routeName);
-		List<RouteVO> routes = service.routeUpdate(routeName);
+			log.info("routes : {}", routes);
+			// 가져온 데이터를 모델에 추가
+			model.addAttribute("routes", routes);
 
-		log.info("routes : {}", routes);
-		// 가져온 데이터를 모델에 추가
-		model.addAttribute("routes", routes);
+			model.addAttribute("content", "thymeleaf/route/update");
 
-		model.addAttribute("routeUserId", routeUserId);
+			// 수정 페이지의 경로를 반환
+			return "thymeleaf/route/th_update";
 
-
+		}
 		
-		model.addAttribute("content", "thymeleaf/route/update");
 
-		// 수정 페이지의 경로를 반환
-		return "thymeleaf/route/th_update";
 	}
 
 	@PostMapping("route/mypageDelete")
