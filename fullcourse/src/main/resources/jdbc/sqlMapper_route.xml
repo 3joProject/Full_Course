@@ -21,7 +21,7 @@
 	</select>
 
 	<select id="getTotalRows" resultType="int">
-		select count(*) total_rows from route
+		SELECT COUNT(DISTINCT routeName) AS total_rows FROM route
 	</select>
 
 
@@ -49,7 +49,7 @@
 	</select>
 
 	<select id="getTotalRowsRouteList" resultType="int">
-		SELECT count(*) totalRowsRoute from route where
+		SELECT COUNT(DISTINCT routeName) AS totalRowsRoute from route where
 		routeUserId=#{routeUserId};
 	</select>
 
