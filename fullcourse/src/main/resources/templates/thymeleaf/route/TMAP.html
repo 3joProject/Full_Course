@@ -1434,7 +1434,7 @@
 
 						</div>
 						<div class="modal-body">
-							<form class="validation-form" id="addTourForm" action="/route/tourInsertOK" method="post">
+							<form class="validation-form" id="addTourForm" action="/route/tourInsertOK" method="post" enctype="multipart/form-data">
 								<div class="mb-3">
 									<label for="tourName" class="col-form-label">여행지 이름:</label>
 									<input type="text" class="form-control" id="tourName" name="tourName">
@@ -1454,8 +1454,8 @@
 									<input type="text" class="form-control" id="tourTel" name="tourTel">
 								</div>
 								<div class="mb-3">
-									<label for="tourImg" class="col-form-label">이미지 URL:</label>
-									<input type="file" class="form-control" id="tourImg" name="tourImg">
+									<label for="file" class="col-form-label">이미지 URL:</label>
+									<input type="file" class="form-control" id="tourImg" name="file">
 								</div>
 								<!-- 경도와 위도는 숨겨진 필드로 자동으로 설정됩니다 -->
 								<input type="hidden" id="longtitue" name="longtitue">
