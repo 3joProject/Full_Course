@@ -6,7 +6,7 @@
 
 				<h4 class="mb-3">[[${title}]]</h4>
 
-				<!-- Search Form start-->
+				<!-- Search Form start
 				<div class="mb-5">
 					<div class="bg-white" style="padding: 30px;">
 						<div class="input-group">
@@ -21,59 +21,51 @@
 								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 							</form>
 						</div>
-					</div>
-					<!-- Search Form end-->
-					
-					
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">routeNum</th>
-								<th scope="col">routeName</th>
-								<th scope="col"></th>
-								<th scope="col"></th>
-								<th scope="col"></th>
-								<th scope="col"></th>
-								<th scope="col"></th>
-								<th scope="col"></th>
+					</div> -->
+				<!-- Search Form end-->
 
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col">가이드북 이름</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="vo, iterStat : ${vos}">
+							<tr>
+								<th scope="row">
+										<span th:text="${iterStat.index + 1}"></span></a></th>
+								<td><a th:href="@{|/route/${vo.routeName}?routeName=${vo.routeName}|}">
+										<span th:text="${vo.routeName}"></span></a></td>
 							</tr>
-						</thead>
-						<tbody>
-							<th:block th:each="vo : ${vos}">
-								<tr>
-									<th scope="row"><a th:href="@{|routeSelectOne?routeNum=${vo.routeNum}|}">
-										<span th:text="${vo.routeNum}"></span></a></th>
-									<td><a th:href="@{|/route/${vo.routeName}?routeName=${vo.routeName}|}"><span
-												th:text="${vo.routeName}"></span></a></td>
-									<td><span th:text="${vo.routeName}"></span></td>
-									<td><span th:text="${vo.routeName}"></span></td>
-									<td><a th:href="@{|routeDelete?routeNum=${vo.routeNum}|}"><span>delete</span></a></td>
-								</tr>
+						</th:block>
 
-							</th:block>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="6">
-									<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
-										<th:block th:if="${param.searchKey}== null">
-											<a th:href="|routeSelectAll?cpage=${i}|">[[${i}]] &nbsp;</a>
-										</th:block>
-										<th:block th:if="${param.searchKey}!= null">
-											<a
-												th:href="@{routeSearchList(cpage=${i},searchKey=${param.searchKey},searchWord=${param.searchWord})}">[[${i}]]
-												&nbsp;</a>
-										</th:block>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<th:block th:each="i : ${#numbers.sequence(1,totalPageCount)}">
+									<th:block th:if="${param.searchKey}== null">
+										<a th:href="|/route/list?cpage=${i}|">[[${i}]] &nbsp;</a>
 									</th:block>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
+								</th:block>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
 
-				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 </html>

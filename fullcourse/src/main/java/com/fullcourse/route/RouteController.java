@@ -73,32 +73,55 @@ public class RouteController {
 			return "thymeleaf/route/th_routeLayout_main";
 		}
 
+
 		return "redirect:/login"; // 로그인 페이지로 리디렉션
 	}
 
 	@GetMapping("/route/list")
-	public String tourlist(@RequestParam(defaultValue = "1") int cpage, @RequestParam(defaultValue = "5") int pageBlock,
-			Model model) {
-		List<RouteVO> routes = service.routeSelectAll(cpage, pageBlock);
+	public String tourlist(@RequestParam(defaultValue = "1") int cpage,
+			@RequestParam(defaultValue = "10") int pageBlock, Model model, HttpServletRequest request) {
 
-		int total_rows = service.getTotalRows();
-		log.info("total_rows:" + total_rows);
+		HttpSession session = request.getSession();
+		Integer memberNum = (Integer) session.getAttribute("memberNum");
 
-		int totalPageCount = 1;
-		if (total_rows / pageBlock == 0) {
-			totalPageCount = 1;
-		} else if (total_rows % pageBlock == 0) {
-			totalPageCount = total_rows / pageBlock;
-		} else {
-			totalPageCount = total_rows / pageBlock + 1;
+		if (memberNum == null) {
+			return "redirect:/login"; // 로그인 페이지로 리디렉션
 		}
-		// 페이지 링크 몇개?
-		log.info("totalPageCount:" + totalPageCount);
-		model.addAttribute("totalPageCount", totalPageCount);
 
-		model.addAttribute("vos", routes);
+		else {
 
-		return "thymeleaf/route/list";
+			MemberVO member = (MemberVO) session.getAttribute("member");
+
+			boolean loggedIn = true;
+			model.addAttribute("loginId", member.getMemberId());
+			model.addAttribute("loggedIn", loggedIn);
+			String routeUserId = member.getMemberId();
+			model.addAttribute("routeUserId", routeUserId);
+
+			List<RouteVO> routes = service.routeSelectAll(cpage, pageBlock);
+
+			int total_rows = service.getTotalRows();
+			log.info("total_rows:" + total_rows);
+
+			int totalPageCount = 1;
+			if (total_rows / pageBlock == 0) {
+				totalPageCount = 1;
+			} else if (total_rows % pageBlock == 0) {
+				totalPageCount = total_rows / pageBlock;
+			} else {
+				totalPageCount = total_rows / pageBlock + 1;
+			}
+			// 페이지 링크 몇개?
+			log.info("totalPageCount:" + totalPageCount);
+			model.addAttribute("totalPageCount", totalPageCount);
+
+			model.addAttribute("vos", routes);
+
+			model.addAttribute("content", "thymeleaf/route/list");
+
+			// index.html 파일을 반환
+			return "thymeleaf/route/th_list";
+		}
 	}
 
 	@GetMapping("/route/{routeName}")
@@ -107,8 +130,9 @@ public class RouteController {
 		List<RouteVO> routes = service.routeSelectOne(routeName);
 
 		model.addAttribute("routes", routes);
+		model.addAttribute("content", "thymeleaf/route/selectOne");
 
-		return "thymeleaf/route/selectOne";
+		return "thymeleaf/route/th_selectOne";
 
 	}
 
@@ -192,9 +216,12 @@ public class RouteController {
 			log.info("totalPageCount:" + totalPageCount);
 			model.addAttribute("vos", routes);
 			model.addAttribute("totalPageCount", totalPageCount);
-			model.addAttribute("title", "가이드북리스트");
+			//model.addAttribute("title", "가이드북리스트");
+			model.addAttribute("content", "thymeleaf/route/mypageRouteList");
 
-			return "thymeleaf/route/mypageRouteList";
+			return "thymeleaf/route/th_mypageRouteList";
+			
+			
 		}
 	}
 
@@ -219,8 +246,12 @@ public class RouteController {
 
 		model.addAttribute("routeUserId", routeUserId);
 
+
+		
+		model.addAttribute("content", "thymeleaf/route/update");
+
 		// 수정 페이지의 경로를 반환
-		return "thymeleaf/route/update";
+		return "thymeleaf/route/th_update";
 	}
 
 	@PostMapping("route/mypageDelete")
