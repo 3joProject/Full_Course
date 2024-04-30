@@ -3,10 +3,13 @@
 	<div class="container" style="padding-top: 30px; padding-bottom: 200px;">
 	<div class="mypage-wrapper">
 		<div class="profile-section" >
-			<!-- 프로필 이미지 -->
+<!--			 프로필 이미지 
 			<div class="profile-picture" th:if="${memberVO.memberImg != null}"
-				th:style="'background-image:url(' + @{/images/} + ${memberVO.memberImg} + ');'"></div>
-
+     th:style="'background-image:url(/resources/img/' + ${memberVO.memberImg} + ');'"></div>-->
+			<div class="profile-picture">
+				<img class="img-fluid" th:if="${memberVO.memberImg != null}"
+            th:src="@{'/uploadimgPath/' + ${memberVO.memberImg}}" alt="이미지대체텍스트" />
+			</div>
 			<!-- 회원 이름 표시 -->
 			<div class="profile-info">
 				<div class="user-name" th:text="${memberVO.memberName} + '님'">이름이 없는 회원님</div>

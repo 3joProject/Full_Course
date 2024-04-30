@@ -127,5 +127,6 @@ public class MemberService {
 	public int memberDeleteOK(MemberVO vo) {
 		return mapper.memberDeleteOK(vo);
 	}
+	
 
 }
