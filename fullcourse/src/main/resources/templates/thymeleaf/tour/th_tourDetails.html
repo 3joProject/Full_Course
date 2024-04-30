@@ -32,8 +32,19 @@
 								<div class="pb-3">
 									<div class="blog-item">
 										<div class="position-relative">
+<!--											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"-->
+<!--												th:src="${vo2.tourImg}" alt="">-->
+												
+												<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
+												th:if="${vo2.tourImg == null or vo2.tourImg == ''}"
+												src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
+<!--													 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
-												th:src="${vo2.tourImg}" alt="">
+												th:if="${vo2.tourImg != null and vo2.tourImg.startsWith('http')}"
+												th:src="@{|${vo.tourImg}|}" alt="" />
+											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
+												th:if="${vo2.tourImg != null and !vo2.tourImg.startsWith('http')}"
+												th:src="@{'/img/' + ${vo2.tourImg}}" alt="" />
 
 										</div>
 									</div>
