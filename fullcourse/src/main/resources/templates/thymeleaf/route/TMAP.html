@@ -14,7 +14,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>simpleMap</title>
 		<style>
-			
 			#sidebar {
 				margin-top: 175px;
 				width: 350px;
@@ -1364,12 +1363,12 @@
 						var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
 						modal.show();
 						document.getElementById('modalclosebutton').onclick = function () {
-						hideAddModalScreen();
-						modal.hide();
+							hideAddModalScreen();
+							modal.hide();
 						};
 						document.getElementById('modalclosebutton2').onclick = function () {
-						hideAddModalScreen();
-						modal.hide();
+							hideAddModalScreen();
+							modal.hide();
 						};
 					};
 					document.getElementById('cancelToTourVO').onclick = function () {
@@ -1380,13 +1379,13 @@
 					alert("비활성화 상태입니다. ");
 				}
 			}
-			
+
 			// 화면을 숨기는 함수
 			function hideAddModalScreen() {
 				var addTourScreen = document.getElementById("exampleModal");
 				addTourScreen.style.display = "none";
 			}
-			
+
 			// 화면을 숨기는 함수
 			function hideAddTourScreen() {
 				var addTourScreen = document.getElementById("addTourScreen");
@@ -1422,98 +1421,99 @@
 			<div class="input-form col-md-12 mx-auto">
 
 				<body onload="initTmap()">
-				
+
 					<div id="sidebar">
 
 						<div id="routeName"> <input type="text" id="routeNameInput" placeholder="여행 경로 이름 입력"></div>
 					</div>
-						<div id="smallScreen">
-							<button id="closeButton">X</button>
-							<div id="placeName"></div>
-							<div id="placeDescription"></div>
-							<button id="addToSidebarButton">여행지 추가하기</button>
-						</div>
+					<div id="smallScreen">
+						<button id="closeButton">X</button>
+						<div id="placeName"></div>
+						<div id="placeDescription"></div>
+						<button id="addToSidebarButton">여행지 추가하기</button>
+					</div>
 
-						<!-- 맵 생성 실행 -->
-						<div id="map_wrap" class="map_wrap">
-							<div id="map_div"></div>
-						</div>
-						<div class="map_result">
+					<!-- 맵 생성 실행 -->
+					<div id="map_wrap" class="map_wrap">
+						<div id="map_div"></div>
+					</div>
+					<div class="map_result">
 
+					</div>
+					<br />
+					<div id="button_container">
+						<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
+						<button id="addTour" onclick="toggleAddTour()">여행지 추가</button>
+					</div>
+					<!--마커가 찍힌곳에 여행지로 등록하기-->
+					<div id="addTourScreen">
+						<div>
+							<h1>여행지 목록에 추가 하시겠습니까?</h1>
 						</div>
-						<br />
-						<div id="button_container">
-							<button id="saveItineraryButton" class="savebutton">여행 일정 저장</button>
-							<button id="addTour" onclick="toggleAddTour()">여행지 추가</button>
-						</div>
-						<!--마커가 찍힌곳에 여행지로 등록하기-->
-						<div id="addTourScreen">
-							<div>
-								<h1>여행지 목록에 추가 하시겠습니까?</h1>
-							</div>
-							<button id="addToTourVO">추가</button>
-							<button id="cancelToTourVO">취소</button>
-						</div>
+						<button id="addToTourVO">추가</button>
+						<button id="cancelToTourVO">취소</button>
+					</div>
 
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-							aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">New message</h5>
-										<button type="button" id="modalclosebutton" class="btn-close" data-bs-dismiss="modal"
-											aria-label="Close"></button>
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">New message</h5>
+									<button type="button" id="modalclosebutton" class="btn-close"
+										data-bs-dismiss="modal" aria-label="Close"></button>
 
-									</div>
-									<div class="modal-body">
-										<form class="validation-form" id="addTourForm" action="/route/tourInsertOK"
-											method="post">
-											<div class="mb-3">
-												<label for="tourName" class="col-form-label">여행지 이름:</label>
-												<input type="text" class="form-control" id="tourName" name="tourName">
-											</div>
-											<div class="mb-3">
-												<label for="tourAddress" class="col-form-label">여행지 주소:</label>
-												<input type="text" class="form-control" id="tourAddress"
-													name="tourAddress" value="경남 창원시 의창구 대산면 가술리">
-											</div>
-											<div class="mb-3">
-												<label for="tourContent" class="col-form-label">여행지 설명:</label>
-												<textarea class="form-control" id="tourContent" name="tourContent"
-													value="주남돌다리도 두드려보고 건너자"></textarea>
-											</div>
-											<div class="mb-3">
-												<label for="tourTel" class="col-form-label">여행지 연락처(선택):</label>
-												<input type="text" class="form-control" id="tourTel" name="tourTel">
-											</div>
-											<div class="mb-3">
-												<label for="tourImg" class="col-form-label">이미지 URL:</label>
-												<input type="file" class="form-control" id="tourImg" name="tourImg">
-											</div>
-											<!-- 경도와 위도는 숨겨진 필드로 자동으로 설정됩니다 -->
-											<input type="hidden" id="longtitue" name="longtitue">
-											<input type="hidden" id="lattitue" name="lattitue">
-										</form>
-									</div>
-									<div class="modal-footer">
-										<button type="button" id="modalclosebutton2" class="btn btn-secondary"
-											data-bs-dismiss="modal">Close</button>
-										<button id="addGuideToTourBtn" type="submit" class="btn btn-primary">Send
-											message</button>
-									</div>
+								</div>
+								<div class="modal-body">
+									<form class="validation-form" id="addTourForm" action="/route/tourInsertOK"
+										method="post" enctype="multipart/form-data">
+										<div class="mb-3">
+											<label for="tourName" class="col-form-label">여행지 이름:</label>
+											<input type="text" class="form-control" id="tourName" name="tourName">
+										</div>
+										<div class="mb-3">
+											<label for="tourAddress" class="col-form-label">여행지 주소:</label>
+											<input type="text" class="form-control" id="tourAddress" name="tourAddress"
+												value="경남 창원시 의창구 대산면 가술리">
+										</div>
+										<div class="mb-3">
+											<label for="tourContent" class="col-form-label">여행지 설명:</label>
+											<textarea class="form-control" id="tourContent" name="tourContent"
+												value="주남돌다리도 두드려보고 건너자"></textarea>
+										</div>
+										<div class="mb-3">
+											<label for="tourTel" class="col-form-label">여행지 연락처(선택):</label>
+											<input type="text" class="form-control" id="tourTel" name="tourTel">
+										</div>
+										<div class="mb-3">
+											<label for="file" class="col-form-label">이미지 URL:</label>
+											<input type="file" class="form-control" id="tourImg" name="file">
+										</div>
+										<!-- 경도와 위도는 숨겨진 필드로 자동으로 설정됩니다 -->
+										<input type="hidden" id="longtitue" name="longtitue">
+										<input type="hidden" id="lattitue" name="lattitue">
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id="modalclosebutton2" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button id="addGuideToTourBtn" type="submit" class="btn btn-primary">Send
+										message</button>
 								</div>
 							</div>
 						</div>
-						<!--모달: 여행지 추가 form end-->
-						<script>
-							$("#addGuideToTourBtn").click(function () {
-								console.log("send message click");
-								addTourForm.submit();
-							});
-						</script>
-				
+					</div>
+					<!--모달: 여행지 추가 form end-->
+					<script>
+						$("#addGuideToTourBtn").click(function () {
+							console.log("send message click");
+							addTourForm.submit();
+						});
+					</script>
+
 				</body>
 			</div>
 		</div>
 	</div>
+
 </html>
