@@ -33,8 +33,8 @@
 						<div class="input-group" style="justify-content: flex-end;">
 							<form class="form-inline my-2 my-lg-0 justify-content-end" action="/tour/tourSelectAll">
 								<input type="hidden" name="pageIndex" th:value="1" />
-								<select class="selectpicke" name="searchCondition" id="searchCondition" style="border: 1px solid #ced4da; margin-right: 5px;"
-									title="검색항목을 선택해주십시오.">
+								<select class="selectpicke" name="searchCondition" id="searchCondition"
+									style="border: 1px solid #ced4da; margin-right: 5px;" title="검색항목을 선택해주십시오.">
 									<option value="TOUR_NAME" th:selected="${searchVO.searchCondition == 'TOUR_NAME'}">
 										여행지이름</option>
 									<option value="TOUR_ADDRESS"
@@ -73,9 +73,14 @@
 												src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
 											<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 											<img class="img-fluid" style="max-width: 100%; height: auto;"
-												th:if="${vo.tourImg != null and vo.tourImg != ''}"
-												th:src="@{|$file.dir+${vo.tourImg}|}" alt="이미지대체텍스트" />
-											<!--										<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
+												th:if="${vo.tourImg != null and vo.tourImg.startsWith('http')}"
+												th:src="@{|${vo.tourImg}|}" alt="이미지대체텍스트" />
+											<img class="img-fluid" style="max-width: 100%; height: auto;"
+												th:if="${vo.tourImg != null and !vo.tourImg.startsWith('http')}"
+												th:src="@{'/img/' + ${vo.tourImg}}" alt="이미지대체텍스트" />
+
+
+											<!--<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
 
 											<a class="destination-overlay text-white text-decoration-none"
 												th:href="@{|/tour/tourDetails?tourNum=${vo.tourNum}|}">
