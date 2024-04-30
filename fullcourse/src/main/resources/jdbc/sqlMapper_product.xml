@@ -6,31 +6,33 @@
 	<insert id="insertOK" parameterType="com.fullcourse.product.ProductVO">
 		insert into
 		product(
-			productMid,
-			productTitle,
-			productPrice,
-			productImage,			
-			productContent,
-			productInventory,
-			productGuideNum)
+		productMid,
+		productTitle,
+		productPrice,
+		productImage,
+		productContent,
+		productInventory,
+		productGuideNum)
 		values(
-		    #{productMid},
-			#{productTitle},
-			#{productPrice},
-			#{productImage},
-			#{productContent},
-			#{productInventory},
-			#{productGuideNum})
+		#{productMid},
+		#{productTitle},
+		#{productPrice},
+		#{productImage},
+		#{productContent},
+		#{productInventory},
+		#{productGuideNum})
 	</insert>
 
 	<update id="updateOK" parameterType="com.fullcourse.product.ProductVO">
 		update product set
-		productTitle=#{productTitle},productPrice=#{productPrice},productImage=#{productImage},productContent=#{productContent},productInventory=#{productInventory}, productGuideNum=#{productGuideNum}
+		productTitle=#{productTitle},productPrice=#{productPrice},productImage=#{productImage},productContent=#{productContent},productInventory=#{productInventory},
+		productGuideNum=#{productGuideNum}
 		where productNum=#{productNum}
 	</update>
-	
-	<select id="selectProductById" parameterType="int" resultType="com.fullcourse.product.ProductVO">
-    	SELECT * FROM product WHERE productNum = #{productNum}
+
+	<select id="selectProductById" parameterType="int"
+		resultType="com.fullcourse.product.ProductVO">
+		SELECT * FROM product WHERE productNum = #{productNum}
 	</select>
 
 	<delete id="deleteOK" parameterType="com.fullcourse.product.ProductVO">
@@ -40,10 +42,13 @@
 	<select id="selectAll" resultType="com.fullcourse.product.ProductVO">
 		select * from product order by productNum desc
 	</select>
-	
+
 	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
-        SELECT DISTINCT routeName FROM route
-    </select>
+		SELECT MIN(routeNum) as routeNum, routeName
+		FROM route
+		GROUP BY routeName;
+
+	</select>
 
 	<select id="sellListSelectAll" resultType="com.fullcourse.product.ProductVO">
 		select * from product where productMid=#{productMid}
