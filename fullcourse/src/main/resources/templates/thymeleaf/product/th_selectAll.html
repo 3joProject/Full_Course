@@ -68,7 +68,7 @@
 									<div class="col-lg-4 col-md-6 mb-4">
 										<div class="package-item bg-white mb-2">
 											<a th:href="@{'selectOne?productNum=' + ${product.productNum}}">
-												<img class="img-fluid" src="/img/package-1.jpg" alt="">
+												<img class="img-fluid" th:src="${product.productImage}" alt="">
 											</a>
 											<div class="p-4">
 												<div class="d-flex justify-content-between mb-3">

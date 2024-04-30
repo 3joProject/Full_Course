@@ -1,5 +1,7 @@
 package com.fullcourse.product;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +18,6 @@ public class ProductVO {
 	private String productContent;
 	private int productInventory;
 	private int productGuideNum;
+	private MultipartFile file;
 	
 }
