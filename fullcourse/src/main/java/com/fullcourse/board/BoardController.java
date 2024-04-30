@@ -1,8 +1,15 @@
 package com.fullcourse.board;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fullcourse.member.MemberVO;
+import com.fullcourse.WebConfig;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+	
+	@Value("${file.dir}")
+	String realPath;
 	
 	@Autowired
 	private BoardService boardService;
@@ -61,7 +72,7 @@ public class BoardController {
 	}
     
     @PostMapping("/insertOK")
-	public String insertOK(BoardVO boardVO, HttpSession session) {
+	public String insertOK(BoardVO boardVO, HttpSession session) throws IllegalStateException, IOException {
 		
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("member");
 	    if (loggedInMember == null) {
@@ -69,6 +80,33 @@ public class BoardController {
 	    }
 	    
 		boardVO.setBoardWriter(loggedInMember.getMemberId());
+		
+		log.info(realPath);
+
+		String originName = boardVO.getFile().getOriginalFilename();
+
+		log.info("getOriginalFilename:{}", originName);
+
+		if (originName.length() == 0) {
+			boardVO.setBoardImage("default.png");// 이미지선택없이 처리할때
+		} else {
+			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+
+			boardVO.setBoardImage(save_name);
+
+			File uploadFile = new File(realPath, save_name);
+			boardVO.getFile().transferTo(uploadFile);// 원본 이미지저장
+
+			BufferedImage original_buffer_img = ImageIO.read(uploadFile);
+			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphic = thumb_buffer_img.createGraphics();
+			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+
+			File thumb_file = new File(realPath, "thumb_" + save_name);
+
+			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
+
+		}
 		
 		int result = boardService.insertOK(boardVO);
 		log.info("result:{}", result);

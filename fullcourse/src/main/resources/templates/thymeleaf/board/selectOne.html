@@ -17,18 +17,22 @@
                     <strong>작성일:</strong> <span th:text="${#temporals.format(vo.boardDate, 'yyyy-MM-dd HH:mm:ss')}">작성일자</span>
                 </div>
             </div>
+            
             <!-- 본문 내용 표시 영역 -->
             <div class="board-content bg-light p-4">
                 <p th:text="${vo.boardContent}">게시글 내용</p>
             </div>
+            
             <!-- 이미지 표시 영역 -->
             <div class="board-image my-4">
-                <img th:if="${vo.boardImage}" th:src="@{'/images/' + ${vo.boardImage}}" alt="게시글 이미지" class="img-fluid">
+                <img th:if="${vo.boardImage}" th:src="@{'/uploadimgPath/' + ${vo.boardImage}}" alt="게시글 이미지" class="img-fluid">
             </div>
+            
             <!-- 내비게이션 링크 -->
             <div class="navigation mb-4">
                 <a href="/board/selectAll" class="btn btn-secondary">목록으로 돌아가기</a>
             </div>
+            
             <!-- 글 수정 및 삭제 버튼 -->
             <div class="button-group mb-4" th:if="${session?.member != null and vo.boardWriter == session.member.memberId}">
                 <form th:action="@{/board/update(boardNum=${vo.boardNum})}" method="get" class="d-inline">

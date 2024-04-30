@@ -96,6 +96,7 @@ public class ProductController {
 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
 
 		}
+		
 		int result = productService.insertOK(productVO);
 		log.info("result:{}", result);
 
