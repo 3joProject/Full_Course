@@ -40,7 +40,7 @@ public class ParkingRestController {
 		log.info("parkingDB...");
 		log.info("vo:{}",vo);
 		
-		if(vo.getPrkPlceEntrcLa()=="" & vo.getPrkPlceEntrcLo()=="") {
+		if(vo.getPrkPlceEntrcLa()=="" | vo.getPrkPlceEntrcLo()=="" | vo.getPrkPlceNm()=="" | vo.getPrkPlceAdres()=="" ) {
 			return "좌표없음"; 
 		}else {
 			int result = service.DBinsert(vo);
