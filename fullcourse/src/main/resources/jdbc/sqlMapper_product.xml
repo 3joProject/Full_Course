@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
-        SELECT routeNum, routeName FROM route
+        SELECT DISTINCT routeName FROM route
     </select>
 
 	<select id="sellListSelectAll" resultType="com.fullcourse.product.ProductVO">

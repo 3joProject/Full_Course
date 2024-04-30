@@ -92,7 +92,7 @@
 										<select class="form-control" id="productGuideNum" name="productGuideNum">
 											<option>경로를 선택해주세요</option>
 											<!-- Thymeleaf를 사용하여 서버로부터 받은 경로 목록을 반복 -->
-											<option th:each="route : ${routes}" th:text="${route.routeNum}"></option>
+											<option th:each="route : ${routes}" th:text="${route.routeName}"></option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-primary">수정 완료</button>
