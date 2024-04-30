@@ -8,7 +8,7 @@
      th:style="'background-image:url(/resources/img/' + ${memberVO.memberImg} + ');'"></div>-->
 			<div class="profile-picture">
 				<img class="img-fluid" th:if="${memberVO.memberImg != null}"
-            th:src="@{'/uploadimgPath/' + ${memberVO.memberImg}}" alt="이미지대체텍스트" />
+            th:src="@{'/uploadimgPath/' + ${member2.memberImg}}" alt="이미지대체텍스트" />
 			</div>
 			<!-- 회원 이름 표시 -->
 			<div class="profile-info">

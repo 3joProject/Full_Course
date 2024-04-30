@@ -110,7 +110,9 @@ public class MemberController {
 			model.addAttribute("loggedIn", loggedIn);
 
 		}
-
+		MemberVO member2 = memberService.selectOne(member);
+		
+		model.addAttribute("member2", member2);
 		model.addAttribute("memberVO", member);
 		model.addAttribute("content", "thymeleaf/member/mypage");
 //        return "thymeleaf/member/mypage";  // 마이페이지 뷰로 이동
