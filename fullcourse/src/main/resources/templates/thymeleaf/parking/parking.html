@@ -182,10 +182,10 @@
 									"<span class='tit' style=' font-size: 16px; font-weight: bold;'>" + vo.prkPlceNm + "</span>" +
 									"</p>" +
 									"<p>" +
-									"<span class='new-addr'>총 주차 구획 수 : " + /*vo.pkfcParkingLotsTotal + */"</span>" +
+									"<span class='tit' style=' font-size: 16px; font-weight: bold;'>주소 : " + vo.prkPlceAdres + "</span>" +
 									"</p>" +
 									"<p>" +
-									"<span class='new-addr'>이용 가능한 구획 수 : " + /*vo.pkfcAvailableParkingLotsTotla + */"</span>" +
+									"<span class='tit' style=' font-size: 16px; font-weight: bold;'>주차 구획 수 : " + vo.prkCmprtCo + "</span>" +
 									"</p>" +
 									"</div>" +
 									"</div>";
@@ -220,7 +220,7 @@
 			var url = 'http://apis.data.go.kr/B553881/Parking/PrkSttusInfo'; /*URL*/
 			var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + '7VcEa9jRUffIb00KTV6iVveXa06rnkWHWIuG9to8WjaXV7bWmw7OfhoctVNHokVfQgjZmDkNekrYnIE334zjzg%3D%3D'; /*Service Key*/
 			queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('2'); /**/
-			queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('5000'); /**/
+			queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('9000'); /**/
 			queryParams += '&' + encodeURIComponent('format') + '=' + encodeURIComponent('2'); /**/
 			xhr.open('GET', url + queryParams);
 			xhr.onreadystatechange = function () {
@@ -388,7 +388,7 @@
 			</div>
 		</div>
 		<!--		<p id="result" />-->
-		<!--		<button onClick="insertParkingDB()">DB추가</button>-->
+<!--				<button onClick="insertParkingDB()">DB추가</button>-->
 	</div>
 	<footer class="my-3 text-center text-small">
 		<p class="mb-1">&copy; 3줄코딩</p>
