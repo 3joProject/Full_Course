@@ -41,7 +41,7 @@
 <!--													 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
 												th:if="${vo2.tourImg != null and vo2.tourImg.startsWith('http')}"
-												th:src="@{|${vo.tourImg}|}" alt="" />
+												th:src="@{|${vo2.tourImg}|}" alt="" />
 											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
 												th:if="${vo2.tourImg != null and !vo2.tourImg.startsWith('http')}"
 												th:src="@{'/uploadimgPath/' + ${vo2.tourImg}}" alt="" />
@@ -127,8 +127,8 @@
 
 									<!-- 반복문을 통해 각 댓글을 출력 -->
 									<div th:each="comment : ${cvos}" class="media mb-4">
-										<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-											style="width: 45px;">
+<!--										<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"-->
+<!--											style="width: 45px;">-->
 										<div class="media-body">
 											<span style="display: none;" th:text="${comment.tourcoNum}"></span>
 											<h6 style="font-size: 20px;" th:text="${comment.tourcoWriter}"></h6>
