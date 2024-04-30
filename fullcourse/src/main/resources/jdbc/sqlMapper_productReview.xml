@@ -6,8 +6,17 @@
 <mapper namespace="com.fullcourse.product.productReview.mapper.ProductReviewMapper">
 	
     <insert id="prorevInsertOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
-        INSERT INTO productreview (prorevNum, prorevWriter, prorevContent, prorevDate, prorevPnum)
-        VALUES (#{prorevNum}, #{prorevWriter}, #{prorevContent}, #{prorevDate}, #{prorevPnum})
+        INSERT INTO
+        productReview(
+        	prorevWriter,
+        	prorevContent,
+        	prorevDate,
+        	prorevPnum)
+        VALUES(
+        	#{prorevWriter},
+        	#{prorevContent},
+        	NOW(),
+        	#{prorevPnum})
     </insert>
 
     <delete id="prorevDeleteOK" parameterType="com.fullcourse.product.productReview.ProductReviewVO">
@@ -21,7 +30,17 @@
     </update>
 
     <select id="prorevSelectAll" resultType="com.fullcourse.product.productReview.ProductReviewVO">
-    	SELECT * FROM productreview WHERE prorevPnum = #{productNum}
+    	SELECT * FROM productreview WHERE prorevPnum = #{prorevNum}
+	</select>
+	
+	<select id="getTotalRows"	resultType="int">
+		select count(*) total_rows from productReview
+	</select>
+	
+	<select id="selectAllPageBlock"
+		resultType="com.fullcourse.product.productReview.ProductReviewVO">
+		select * from productReview 
+		order by prorevNum desc limit #{startRow},#{pageBlock}
 	</select>
 
 </mapper>

@@ -91,51 +91,33 @@
 				<!-- 리뷰 목록 시작 -->
 				<div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
 					<h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">상품 리뷰</h4>
-
+				
 					<!-- 반복문을 통해 각 리뷰를 출력 -->
-					<div th:each="review : ${reviews}" class="media mb-4">
+					<div th:each="review : ${vos}" class="media mb-4">
 						<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
 						<div class="media-body">
 							<span style="display: none;" th:text="${review.prorevNum}"></span>
 							<h6 th:text="${review.prorevWriter}"></h6>
-							<span>작성일: <small><i th:text="${review.prorevDate}"
-										style="color: rgb(128, 255, 128);"></i></small></span>
-
+							<span>작성일: <small><i th:text="${review.prorevDate}" style="color: rgb(0, 0, 0);"></i></small></span>
+				
 							<!-- 리뷰 내용 출력 -->
-							<div>리뷰 내용:</div>
-							<p th:text="${review.prorevContent}" class="showComments"
-								th:id="'showComments'+${review.prorevNum}"></p>
-							<form class="showModifyForm" th:id="'showModifyForm'+${review.prorevNum}"
-								style="display:none;">
+							<p th:text="${review.prorevContent}" class="showComments" th:id="'showComments'+${review.prorevNum}"></p>
+							<form class="showModifyForm" th:id="'showModifyForm'+${review.prorevNum}" style="display:none;">
 								<input type="text" th:value="${review.prorevContent}" />
 							</form>
-
-							<!-- 리뷰 수정 버튼 -->
-							<a href="#nolink" class="commentModifyBtn" th:id="'commentModifyBtn'+${review.prorevNum}">리뷰
-								수정</a>
-
-							<!-- 리뷰 수정 취소 버튼 -->
-							<div class="commentModifyBtns" th:id="'commentModifyBtns'+${review.prorevNum}"
-								style="display:none;">
-								<form action="/product/prorevUpdateOK" method="POST">
-									<input type="hidden" name="prorevNum" th:value="${review.prorevNum}">
-									<input type="hidden" name="prorevPnum" th:value="${review.prorevPnum}">
-									<input type="text" name="prorevContent" placeholder="수정할 내용을 입력하세요">
-									<input class="btn-sm btn-outline-primary" type="submit" value="저장"
-										style="margin-top: 10px;">
-								</form>
-								<a href="#nolink" class="commentModifiyCancelBtn"
-									th:id="'commentModifiyCancelBtn'+${review.prorevNum}">취소</a>
-							</div>
-
+				
+							
+				
 							<!-- 리뷰 삭제 버튼 -->
-							<a th:href="@{'/product/prorevDeleteOK(prorevNum='+${review.prorevNum}+',prorevPnum='+${review.prorevPnum}+')'}"
-								class="deleteComment btn btn-sm btn-outline-primary"
-								th:id="'deleteComment'+${review.prorevNum}">리뷰
-								삭제</a>
+							<a th:if="${session.member != null and session.member.memberId == review.prorevWriter}"
+								th:href="@{/product/prorevDeleteOK(prorevNum=${review.prorevNum}, prorevPnum=${review.prorevPnum})}"
+								class="deleteComment btn btn-sm btn-outline-primary" th:id="'deleteComment' + ${review.prorevNum}">
+								리뷰 삭제
+							</a>
 						</div>
 					</div>
 				</div>
+
 				<!-- 리뷰 목록 끝 -->
 
 				<!-- 리뷰 작성 폼 시작 -->
@@ -153,6 +135,11 @@
 								<textarea id="prorevContent" name="prorevContent" rows="5"
 									class="form-control"></textarea>
 							</div>
+							
+							<div>
+								<input type="hidden" name="prorevPnum" th:value="${vo2.productNum}">
+							</div>
+							
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
 					</div>

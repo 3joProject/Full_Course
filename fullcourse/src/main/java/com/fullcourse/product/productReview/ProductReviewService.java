@@ -1,10 +1,13 @@
 package com.fullcourse.product.productReview;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fullcourse.product.ProductVO;
 import com.fullcourse.product.productReview.mapper.ProductReviewMapper;
 import com.fullcourse.tour.tourComment.TourCommentService;
 import com.fullcourse.tour.tourComment.TourCommentVO;
@@ -32,8 +35,9 @@ public class ProductReviewService {
 		return mapper.prorevUpdateOK(vo);
 	}
 	
-	public List<ProductReviewVO> prorevSelectAll(int productNum) {
+	public List<ProductReviewVO> prorevSelectAll() {
 
-		return mapper.prorevSelectAll(productNum);
+		return mapper.prorevSelectAll();
 	}
+	
 }
