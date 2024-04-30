@@ -7,14 +7,14 @@
 
 	<select id="marker"
 		resultType="com.fullcourse.parking.ParkingVO" >
-		SELECT * FROM prksttusinfo
+		SELECT * FROM prkSttusInfo
 		where prkPlceEntrcLa BETWEEN #{lat} - 0.008 AND #{lat} + 0.008
 		AND prkPlceEntrcLo BETWEEN #{lng} - 0.008 AND #{lng} + 0.008
 	</select>
 
 	<insert id="DBinsert" parameterType="com.fullcourse.parking.ParkingVO">
 		insert into
-		prksttusinfo(prkCenterId, prkPlceNm, prkPlceAdres, prkPlceEntrcLa, prkPlceEntrcLo, prkCmprtCo)
+		prkSttusInfo(prkCenterId, prkPlceNm, prkPlceAdres, prkPlceEntrcLa, prkPlceEntrcLo, prkCmprtCo)
 		values(#{prkCenterId}, #{prkPlceNm}, #{prkPlceAdres}, #{prkPlceEntrcLa}, #{prkPlceEntrcLo}, #{prkCmprtCo})
 	</insert>
 

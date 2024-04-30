@@ -44,7 +44,7 @@
 												th:src="@{|${vo.tourImg}|}" alt="" />
 											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
 												th:if="${vo2.tourImg != null and !vo2.tourImg.startsWith('http')}"
-												th:src="@{'/img/' + ${vo2.tourImg}}" alt="" />
+												th:src="@{'/uploadimgPath/' + ${vo2.tourImg}}" alt="" />
 
 										</div>
 									</div>
