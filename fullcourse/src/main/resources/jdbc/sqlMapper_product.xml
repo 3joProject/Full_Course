@@ -44,11 +44,13 @@
 	</select>
 
 	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
+
 		SELECT MIN(routeNum) as routeNum, routeName
 		FROM route
 		GROUP BY routeName;
 
 	</select>
+
 
 	<select id="sellListSelectAll" resultType="com.fullcourse.product.ProductVO">
 		select * from product where productMid=#{productMid}
