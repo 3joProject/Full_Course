@@ -1,12 +1,15 @@
 package com.fullcourse.member;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,10 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	// application.properties 변수를 DI
+		@Value("${file.dir}")
+		String realPath;
+	
 	@GetMapping("/memberinsert")
 	public String insert(Model model) {
 
@@ -169,41 +176,74 @@ public class MemberController {
 	}
 
 	@PostMapping("/updateMemberInfo")
-	public String updateMemberInfo(@ModelAttribute MemberVO memberVO, @RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
-		if (!file.isEmpty()) {
-			// 파일을 저장할 경로
-			Path uploadPath = Paths.get(
-					"C:\\Users\\moon\\AppData\\Local\\Temp\\tomcat.8805.10212324049996384096\\work\\Tomcat\\localhost\\ROOT\\path\\to\\upload");
+	public String updateMemberInfo(@ModelAttribute MemberVO memberVO,
+	                               @RequestParam("file") MultipartFile file,
+	                               RedirectAttributes redirectAttributes) throws IOException {
 
-			// 경로가 존재하지 않는 경우, 경로를 포함한 모든 디렉토리 생성
-			if (!Files.exists(uploadPath)) {
-				try {
-					Files.createDirectories(uploadPath);
-				} catch (IOException e) {
-					e.printStackTrace();
-					redirectAttributes.addFlashAttribute("message", "디렉토리를 생성할 수 없습니다.");
-					return "redirect:/member/updateMemberInfoForm";
-				}
-			}
+//	    // 이미지 파일 저장 로직
+//	    if (!file.isEmpty()) {
+//	        try {
+//	            // 이미지 파일 저장 경로 설정 (예: /resources/images/profile/)
+//	            Path uploadPath = Paths.get("C:\\Users\\moon\\AppData\\Local\\Temp\\tomcat.8805.10212324049996384096\\work\\Tomcat\\localhost\\ROOT\\path\\to\\upload");
+//
+//	            // 디렉토리가 존재하지 않으면 생성
+//	            if (!Files.exists(uploadPath)) {
+//	                Files.createDirectories(uploadPath);
+//	            }
+//
+//	            // 이미지 파일명 생성 (예: profileImage_1234567890.jpg)
+//	            String fileName = "profileImage_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.")[1];
+//	            Path filePath = uploadPath.resolve(fileName);
+//
+//	            // 이미지 파일 저장
+//	            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+//
+//	            // 회원 정보에 이미지 파일명 설정
+//	            memberVO.setMemberImg(fileName);
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	            redirectAttributes.addFlashAttribute("message", "이미지 업로드에 실패했습니다.");
+//	            return "redirect:/member/updateMemberInfoForm";
+//	        }
+//	    }
+		
+		
+		//이미지처리
+		log.info(realPath);
 
-			// 파일 저장 로직...
-			String filename = file.getOriginalFilename();
-			Path filePath = uploadPath.resolve(filename);
-			try {
-				file.transferTo(filePath);
-				memberVO.setMemberImg(filename);
-			} catch (IOException e) {
-				e.printStackTrace();
-				redirectAttributes.addFlashAttribute("message", "파일 업로드에 실패했습니다.");
-				return "redirect:/member/updateMemberInfoForm";
-			}
+		String originName = memberVO.getFile().getOriginalFilename();
+
+		log.info("getOriginalFilename:{}", originName);
+
+		if (originName.length() == 0) {
+			memberVO.setMemberImg("default.png"); // 이미지 선택없이 처리할때
+
+		} else {
+			String memberImg = "img_" + System.currentTimeMillis()
+					+ originName.substring(originName.lastIndexOf("."));
+
+			memberVO.setMemberImg(memberImg);
+			File uploadFile = new File(realPath, memberImg);
+//			vo.getFile().transferTo(uploadFile);
+			file.transferTo(uploadFile);
+
+			//// create thumbnail image/////////
+			BufferedImage original_buffer_img = ImageIO.read(uploadFile);
+			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphic = thumb_buffer_img.createGraphics();
+			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+
+			File thumb_file = new File(realPath, "thumb_" + memberImg);
+
+			ImageIO.write(thumb_buffer_img, memberImg.substring(memberImg.lastIndexOf(".") + 1), thumb_file);
 		}
+//		이미지처리
 
-		// 회원 정보 업데이트 로직...
-		memberService.updateMember(memberVO);
-		redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-		return "redirect:/mypage";
+	    // 회원 정보 업데이트 로직
+	    memberService.updateMember(memberVO);
+	    redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+
+	    return "redirect:/mypage";
 	}
 
 //	admin페이지 멤버 삭제 

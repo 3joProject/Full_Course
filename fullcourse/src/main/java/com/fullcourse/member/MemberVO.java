@@ -2,6 +2,8 @@ package com.fullcourse.member;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,6 @@ public class MemberVO {
 	    private Date memberDate;
 	    private String memberImg;
 	    private String memberSns;
-	   
+	    private MultipartFile file;
 	   
 	}
