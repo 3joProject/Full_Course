@@ -11,6 +11,32 @@
 							font-family: 'Nanum Pen Script', cursive;
 							/* Nanum Pen Script 폰트를 사용합니다. */
 						}
+
+						.image-container {
+							width: 100%;
+							/* 이미지 컨테이너의 너비를 부모 요소에 맞춤 */
+							height: 200px;
+							/* 원하는 높이 설정 */
+							overflow: hidden;
+							/* 이미지가 넘칠 경우를 대비하여 오버플로우 제어 */
+							position: relative;
+							/* 포지션 상대 지정 */
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.image-container img {
+							width: 100%;
+							/* 이미지의 너비를 자동으로 설정 */
+							height: 100%;
+							/* 이미지를 부모 요소의 높이에 맞추어 줌 */
+							max-width: none;
+							/* 이미지의 최대 너비를 제한하지 않음 */
+							object-fit: cover;
+							/* 이미지 비율 유지하며 부모 요소에 맞춤 */
+							position: relative;
+						}
 					</style>
 
 					<!-- Header Start -->
@@ -66,48 +92,52 @@
 								<!-- 각 상품 정보를 동적으로 생성 -->
 								<th:block th:each="product : ${productList}">
 									<div class="col-lg-4 col-md-6 mb-4">
-											<a th:href="@{'selectOne?productNum=' + ${product.productNum}}">
-										<div class="package-item bg-white mb-2">
-												<img class="img-fluid" th:src="@{'/uploadimgPath/' + ${product.productImage}}" alt="">
-											
-											<div class="p-4">
-												<div class="d-flex justify-content-between mb-3">
-													<small class="m-0"><i
-															class="fa fa-map-marker-alt text-primary mr-2"><span
-																class="custom-font">판매자</span></i>
-														<p></p>
-														<span th:text="${product.productMid}"></span>
-													</small>
-													<small class="m-0"><i
-															class="fa fa-calendar-alt text-primary mr-2"><span
-																class="custom-font">상품명</span></i>
-														<p></p>
-														<span th:text="${product.productTitle}"></span>
-													</small>
-													<small class="m-0"><i class="fa fa-user text-primary mr-2"><span
-																class="custom-font">모집인원</span></i>
-														<p></p>
-														<span th:text="${product.productInventory}"></span> 명
-													</small>
+										<a th:href="@{'selectOne?productNum=' + ${product.productNum}}">
+											<div class="package-item bg-white mb-2">
+												<div class="image-container">
+													<img class="img-fluid"
+														th:src="@{'/uploadimgPath/' + ${product.productImage}}" alt="">
 												</div>
-												<p></p>
-												<a class="h5 text-decoration-none"
-													th:href="@{'selectOne?productNum=' + ${product.productNum}}"
-													th:text="${product.productContent}">Discover amazing places of the
-													world
-													with us</a>
-												<div class="border-top mt-4 pt-4">
-													<div class="d-flex justify-content-between">
-														<!--													<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i><span-->
-														<!--															th:text="${product.productInventory}"></span> <small>-->
-														<!--														</small></h6>-->
-														<h5 class="m-0">￦<span th:text="${product.productPrice}"></span>
-														</h5>
+												<div class="p-4">
+													<div class="d-flex justify-content-between mb-3">
+														<small class="m-0"><i
+																class="fa fa-map-marker-alt text-primary mr-2"><span
+																	class="custom-font">판매자</span></i>
+															<p></p>
+															<span th:text="${product.productMid}"></span>
+														</small>
+														<small class="m-0"><i
+																class="fa fa-calendar-alt text-primary mr-2"><span
+																	class="custom-font">상품명</span></i>
+															<p></p>
+															<span th:text="${product.productTitle}"></span>
+														</small>
+														<small class="m-0"><i class="fa fa-user text-primary mr-2"><span
+																	class="custom-font">모집인원</span></i>
+															<p></p>
+															<span th:text="${product.productInventory}"></span> 명
+														</small>
+													</div>
+													<p></p>
+													<a class="h5 text-decoration-none"
+														th:href="@{'selectOne?productNum=' + ${product.productNum}}"
+														th:text="${product.productContent}">Discover amazing places of
+														the
+														world
+														with us</a>
+													<div class="border-top mt-4 pt-4">
+														<div class="d-flex justify-content-between">
+															<!--													<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i><span-->
+															<!--															th:text="${product.productInventory}"></span> <small>-->
+															<!--														</small></h6>-->
+															<h5 class="m-0">￦<span
+																	th:text="${product.productPrice}"></span>
+															</h5>
 
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
 										</a>
 									</div>
 								</th:block>
