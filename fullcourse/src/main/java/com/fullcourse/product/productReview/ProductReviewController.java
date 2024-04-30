@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fullcourse.member.MemberService;
 import com.fullcourse.member.MemberVO;
 import com.fullcourse.product.ProductVO;
+import com.fullcourse.seller.sellerReview.SellerReviewVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -41,40 +43,46 @@ public class ProductReviewController {
         }
     }
 
-    @PostMapping("/product/prorevInsert")
-    public String insertProductReview(HttpSession session, ProductReviewVO productReview, Model model, ProductVO product) {
-        MemberVO member = checkLoggedInUser(session, model);
-        if (member == null) {
-            return "login";
-        }
-
-        productReview.setProrevWriter(member.getMemberId());
-        log.info("Inserting product review...");
-        log.info("ProductReview: {}", productReview);
-
-        return prorevInsertOK(productReview, product);
-    }
-
     @PostMapping("/product/prorevInsertOK")
-    public String prorevInsertOK(ProductReviewVO productReview, ProductVO product) {
-        log.info("Inserting product review in database...");
-        try {
-            int result = service.prorevInsertOK(productReview);
-            log.info("Insert result: {}", result);
-            return "redirect:/product/th_selectOne?productNum=" + product.getProductNum();
-        } catch (Exception e) {
-            log.error("Error inserting review: {}", e.getMessage());
-            return "error";  // Assuming there is an 'error' view to handle this
-        }
-    }
+	public RedirectView prorevInsertOK(ProductReviewVO vo, RedirectAttributes attributes) {
+		log.info("prorevInsertOK");
+		log.info("vo={}",vo);
+		
+		int result = service.prorevInsertOK(vo);
+		log.info("result={}",result);
+		
+		RedirectView redirectView = new RedirectView();
+	    if (result > 0) {
+	        // 리뷰 삽입 성공 시, 해당 상품의 상세 페이지로 리다이렉트
+	        redirectView.setUrl("/product/selectOne");
+	        attributes.addAttribute("productNum", vo.getProrevPnum());
+	        log.info("Redirecting to product details page for productNum={}", vo.getProrevPnum());
+	    } else {
+	        // 리뷰 삽입 실패 시, 오류 페이지 또는 적절한 대체 페이지로 리다이렉트
+	        redirectView.setUrl("/error");
+	        log.error("Failed to insert product review, redirecting to error page");
+	    }
+	    return redirectView;
+	}
 
-    @PostMapping("/product/prorevDeleteOK")
-    public String prorevDeleteOK(ProductReviewVO productReview) {
-
-    	int result = service.prorevDeleteOK(productReview);
+    @GetMapping("/product/prorevDeleteOK")
+    public RedirectView prorevDeleteOK(ProductReviewVO vo, RedirectAttributes attributes) {
+    	
+    	int result = service.prorevDeleteOK(vo);
         log.info("Delete result: {}", result);
         
-        return "redirect:/product/reviews";
+        RedirectView redirectView = new RedirectView();
+        if (result > 0) {
+            // 삭제 성공 시, 리뷰 목록 페이지로 리다이렉트
+            redirectView.setUrl("/product/selectOne");
+            attributes.addAttribute("productNum", vo.getProrevPnum());
+            log.info("Successfully deleted product review, redirecting to reviews page");
+        } else {
+            // 삭제 실패 시, 오류 페이지 또는 적절한 대체 페이지로 리다이렉트
+            redirectView.setUrl("/error");
+            log.error("Failed to delete product review, redirecting to error page");
+        }
+        return redirectView;
     }
     
 
@@ -87,13 +95,6 @@ public class ProductReviewController {
         return "redirect:/product/th_selectOne?productNum=" + productReview.getProrevPnum();
     }
 
-    @GetMapping("/product/{productNum}/reviews")
-    public String getProductReviews(@PathVariable int productNum, Model model) {
-        List<ProductReviewVO> reviews = service.prorevSelectAll(productNum);
-        model.addAttribute("reviews", reviews);
-        return "productDetail";
-    }
-
     private MemberVO checkLoggedInUser(HttpSession session, Model model) {
         MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
         if (member == null) {
@@ -102,6 +103,8 @@ public class ProductReviewController {
         }
         return member;
     }
-	}
+
+    
+}
 	 
 	
