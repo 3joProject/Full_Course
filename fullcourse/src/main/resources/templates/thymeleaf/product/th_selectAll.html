@@ -66,10 +66,10 @@
 								<!-- 각 상품 정보를 동적으로 생성 -->
 								<th:block th:each="product : ${productList}">
 									<div class="col-lg-4 col-md-6 mb-4">
-										<div class="package-item bg-white mb-2">
 											<a th:href="@{'selectOne?productNum=' + ${product.productNum}}">
+										<div class="package-item bg-white mb-2">
 												<img class="img-fluid" th:src="@{'/uploadimgPath/' + ${product.productImage}}" alt="">
-											</a>
+											
 											<div class="p-4">
 												<div class="d-flex justify-content-between mb-3">
 													<small class="m-0"><i
@@ -108,6 +108,7 @@
 												</div>
 											</div>
 										</div>
+										</a>
 									</div>
 								</th:block>
 								<!-- 각 상품 정보 생성 끝 -->
