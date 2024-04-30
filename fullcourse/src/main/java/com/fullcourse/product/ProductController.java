@@ -1,8 +1,15 @@
 package com.fullcourse.product;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fullcourse.member.MemberVO;
 import com.fullcourse.route.RouteVO;
+import com.fullcourse.WebConfig;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +33,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Value("${file.dir}")
+	String realPath;
 	
 	// 로그인 상태 확인 메소드
     private boolean isLoggedIn(HttpSession session) {
@@ -49,7 +60,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/insertOK")
-	public String insertOK(ProductVO productVO, HttpSession session) {
+	public String insertOK(ProductVO productVO, HttpSession session) throws IllegalStateException, IOException {
 		
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("member");
 	    if (loggedInMember == null) {
@@ -58,6 +69,33 @@ public class ProductController {
 	    
 		productVO.setProductMid(loggedInMember.getMemberId());
 		
+		log.info(realPath);
+
+		String originName = productVO.getFile().getOriginalFilename();
+
+		log.info("getOriginalFilename:{}", originName);
+
+		if (originName.length() == 0) {
+			productVO.setProductImage("default.png");// 이미지선택없이 처리할때
+		} else {
+			String save_name = "img_" + System.currentTimeMillis() + originName.substring(originName.lastIndexOf("."));
+
+			productVO.setProductImage(save_name);
+
+			File uploadFile = new File(realPath, save_name);
+			productVO.getFile().transferTo(uploadFile);// 원본 이미지저장
+
+			//// create thumbnail image/////////
+			BufferedImage original_buffer_img = ImageIO.read(uploadFile);
+			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphic = thumb_buffer_img.createGraphics();
+			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+
+			File thumb_file = new File(realPath, "thumb_" + save_name);
+
+			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
+
+		}
 		int result = productService.insertOK(productVO);
 		log.info("result:{}", result);
 
