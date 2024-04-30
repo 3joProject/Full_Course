@@ -42,7 +42,9 @@
 	</select>
 	
 	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
-        SELECT DISTINCT routeName FROM route
+        SELECT MIN(routeNum) as routeNum, routeName
+		FROM route
+		GROUP BY routeName;
     </select>
 
 	<select id="sellListSelectAll" resultType="com.fullcourse.product.ProductVO">
