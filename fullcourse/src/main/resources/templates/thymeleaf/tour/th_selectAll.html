@@ -77,7 +77,7 @@
 												th:src="@{|${vo.tourImg}|}" alt="이미지대체텍스트" />
 											<img class="img-fluid" style="max-width: 100%; height: auto;"
 												th:if="${vo.tourImg != null and !vo.tourImg.startsWith('http')}"
-												th:src="@{'/img/' + ${vo.tourImg}}" alt="이미지대체텍스트" />
+												th:src="@{'/uploadimgPath/' + ${vo.tourImg}}" alt="이미지대체텍스트" />
 
 
 											<!--<img class="img-fluid" th:src="${vo.tourImg}" alt="">-->
