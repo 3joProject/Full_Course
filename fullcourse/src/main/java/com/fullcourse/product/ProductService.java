@@ -38,9 +38,6 @@ public class ProductService {
 		
 	}
 	
-	public List<RouteVO> findAllRoutes() {
-        return productMapper.findAllRoutes();  // 데이터베이스에서 모든 경로를 조회
-    }
 	
 	public ProductVO selectProductById(int productNum) {
 		return productMapper.selectProductById(productNum);
@@ -48,5 +45,10 @@ public class ProductService {
 
 	public List<ProductVO> sellListSelectAll(String productMid) {
 		return productMapper.sellListSelectAll(productMid);
+	}
+
+	public List<RouteVO> findAllRoutes(String memberId) {
+		// TODO Auto-generated method stub
+		return productMapper.findAllRoutes(memberId);
 	}
 }
