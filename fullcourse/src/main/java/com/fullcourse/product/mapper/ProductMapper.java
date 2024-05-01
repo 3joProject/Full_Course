@@ -16,10 +16,11 @@ public interface ProductMapper {
 	
 	public int deleteOK(ProductVO productVO);
 
-	public List<RouteVO> findAllRoutes();
 	
 	public ProductVO selectProductById(int productNum);
 
 	public List<ProductVO> sellListSelectAll(String productMid);
+
+	public List<RouteVO> findAllRoutes(String memberId);
 
 }

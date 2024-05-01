@@ -46,14 +46,19 @@ public class ProductController {
     
     @GetMapping("/insert")
     public String insert(Model model, HttpSession session) {
+    	
+    	
     	if (!isLoggedIn(session)) {
             return "redirect:/login";  // 로그인 페이지 경로를 확인하고 적절히 수정하세요.
         }
+    	
+    	MemberVO member = (MemberVO) session.getAttribute("member");
 		
+    	String memberId = member.getMemberId();
     	
 		model.addAttribute("content", "thymeleaf/product/insert");
 		model.addAttribute("title", "상품등록");
-		List<RouteVO> routes = productService.findAllRoutes();  // 경로 데이터를 불러오는 서비스 메소드 호출
+		List<RouteVO> routes = productService.findAllRoutes(memberId);  // 경로 데이터를 불러오는 서비스 메소드 호출
 	    model.addAttribute("routes", routes);
 		
 		return "thymeleaf/product/layout_main";
@@ -168,6 +173,7 @@ public class ProductController {
 	    }else {
 		
 	    String productMid = member.getMemberId();
+	    String memberId = member.getMemberId();
 	    	
         List<ProductVO> vos = productService.sellListSelectAll(productMid);
         log.info("vos:{}",vos);
@@ -175,7 +181,7 @@ public class ProductController {
 		model.addAttribute("title", "판매내역");
 		model.addAttribute("vos", vos);
 		
-		List<RouteVO> routes = productService.findAllRoutes();  // 경로 데이터를 불러오는 서비스 메소드 호출
+		List<RouteVO> routes = productService.findAllRoutes(memberId);  // 경로 데이터를 불러오는 서비스 메소드 호출
 	    model.addAttribute("routes", routes);
 		
 		return "thymeleaf/product/th_layout_main";

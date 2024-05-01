@@ -46,7 +46,7 @@
 	<select id="findAllRoutes" resultType="com.fullcourse.route.RouteVO">
 
 		SELECT MIN(routeNum) as routeNum, routeName
-		FROM route
+		FROM route WHERE routeUserId=#{memberId}
 		GROUP BY routeName;
 
 	</select>
