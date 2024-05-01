@@ -609,11 +609,9 @@
 
 						// 자동차 또는 도보 버튼 옆에 결과 값을 추가합니다.
 						containerDiv.insertBefore(resultContainer, this.nextSibling);
+						//this.insertAdjacentElement('afterend', resultContainer);
 
-						// 클릭된 버튼의 배경색 변경
-						//this.style.backgroundColor = 'lightblue';
 
-						//this.classList.add('blue-button');
 						addItineraryInfo(transportInfo, index);
 						updateItinerary(transportInfo);
 					};
