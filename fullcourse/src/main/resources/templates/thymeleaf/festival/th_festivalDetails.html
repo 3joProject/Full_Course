@@ -33,8 +33,18 @@
 								<div class="pb-3">
 									<div class="blog-item">
 										<div class="position-relative">
+<!--											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"-->
+<!--												th:src="${vo2.festivalImg}" alt="">-->
+	<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
+												th:if="${vo2.festivalImg == null or vo2.festivalImg == ''}"
+												src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
+<!--													 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
 											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
-												th:src="${vo2.festivalImg}" alt="">
+												th:if="${vo2.festivalImg != null and vo2.festivalImg.startsWith('http')}"
+												th:src="@{|${vo2.festivalImg}|}" alt="" />
+											<img class="img-fluid w-100" style="max-width: 100%; height: auto;"
+												th:if="${vo2.festivalImg != null and !vo2.festivalImg.startsWith('http')}"
+												th:src="@{'/uploadimgPath/' + ${vo2.festivalImg}}" alt="" />
 
 										</div>
 									</div>
