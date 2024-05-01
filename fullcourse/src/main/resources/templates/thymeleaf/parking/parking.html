@@ -285,8 +285,8 @@
 			<div class="row">
 				<div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
 					<div class="d-inline-flex align-items-center">
-						<p>3조</p>
-						<p class="text-body px-3">|</p>
+						<!--						<p>3조</p>-->
+						<p class="text-body px-3"></p>
 						<p>3줄 코딩</p>
 					</div>
 				</div>
@@ -342,7 +342,18 @@
 					<div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
 						<div class="navbar-nav ml-auto py-0">
 							<!--                        <a href="/index" class="nav-item nav-link">Home</a>-->
-							<a href="/route" class="nav-item nav-link">가이드북제작</a>
+
+
+							<div class="nav-item dropdown" style="position: relative; z-index: 5010;">
+								<a href="/route" class="nav-link dropdown-toggle" data-toggle="dropdown">가이드북제작</a>
+
+								<div class="dropdown-menu border-0 rounded-0 m-0" style="z-index: 5011">
+									<a href="/route" class="dropdown-item">가이드북제작</a>
+									<a href="/route/list" class="dropdown-item">가이드북</a>
+								</div>
+							</div>
+
+
 							<a href="/product/selectAll" class="nav-item nav-link">여행상품쇼핑</a>
 							<div class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">여행&축제 정보</a>
@@ -388,7 +399,7 @@
 			</div>
 		</div>
 		<!--		<p id="result" />-->
-<!--				<button onClick="insertParkingDB()">DB추가</button>-->
+		<!--				<button onClick="insertParkingDB()">DB추가</button>-->
 	</div>
 	<footer class="my-3 text-center text-small">
 		<p class="mb-1">&copy; 3줄코딩</p>
