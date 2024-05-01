@@ -5,29 +5,29 @@
 
 	<select id="selectAllTour"
 		resultType="com.fullcourse.wishlist.WishlistViewVO">
-		select wishlist.wishListNum, wishlist.wishListId, tour.tourNum, tour.tourname,
+		select wishList.wishListNum, wishList.wishListId, tour.tourNum, tour.tourname,
 		tour.tourAddress, tour.tourContent, tour.tourTel, tour.tourImg
-		from tour, wishlist where tour.tourNum = wishlist.wishListTourId and
+		from tour, wishList where tour.tourNum = wishList.wishListTourId and
 		wishListId=#{wishListId} order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>
 
 	<select id="selectAllFestival"
 		resultType="com.fullcourse.wishlist.WishlistViewVO">
-		select wishlist.wishListNum, wishlist.wishListId,
+		select wishList.wishListNum, wishList.wishListId,
 		festival.festivalNum, festival.festivalName, festival.festivalAddress,
 		festival.festivalContent,
 		festival.festivalStart, festival.festivalFinal, festival.festivalTel, festival.festivalImg
-		from wishlist, festival where festival.festivalNum =
-		wishlist.wishListFestivalId and wishListId=#{wishListId} order by wishListNum desc limit #{startRow}, #{pageBlock}
+		from wishList, festival where festival.festivalNum =
+		wishList.wishListFestivalId and wishListId=#{wishListId} order by wishListNum desc limit #{startRow}, #{pageBlock}
 	</select>
 
 	<select id="getTotalRowsTour" resultType="int">
-		select count(*) totalRowsTour from wishList, tour where tour.tourNum = wishlist.wishListTourId and wishListId=#{wishListId}
+		select count(*) totalRowsTour from wishList, tour where tour.tourNum = wishList.wishListTourId and wishListId=#{wishListId}
 	</select>
 	
 	<select id="getTotalRowsFestival" resultType="int">
 		select count(*) totalRowsFestival from wishList, festival 
-		where festival.festivalNum = wishlist.wishListFestivalId and wishListId=#{wishListId}
+		where festival.festivalNum = wishList.wishListFestivalId and wishListId=#{wishListId}
 	</select>
 
 	<insert id="insertOKtour" parameterType="com.fullcourse.wishlist.WishlistVO">
@@ -37,7 +37,7 @@
 	</insert>
 
 	<select id="chkWDuplTour" resultType="int">
-		select count(*) from wishlist where wishListId=#{wishListId} and wishListTourId=#{wishListTourId};
+		select count(*) from wishList where wishListId=#{wishListId} and wishListTourId=#{wishListTourId};
 	</select>
 
 	<insert id="insertOKfestival" parameterType="com.fullcourse.wishlist.WishlistVO">
@@ -47,7 +47,7 @@
 	</insert>
 
 	<select id="chkWDuplFestival" resultType="int">
-		select count(*) from wishlist where wishListId=#{wishListId} and wishListFestivalId=#{wishListFestivalId};
+		select count(*) from wishList where wishListId=#{wishListId} and wishListFestivalId=#{wishListFestivalId};
 	</select>
 
 	<delete id="deleteOK" parameterType="com.fullcourse.wishlist.WishlistVO">
