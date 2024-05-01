@@ -19,11 +19,20 @@
 								<div class="col-lg-4 col-md-6 mb-4">
 									<a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a>
 									<div class="destination-item position-relative overflow-hidden mb-2">
-										<img class="img-fluid" th:src="${vo.tourImg}" alt="">
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.tourImg == null or vo.tourImg == ''}"
+											src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
+										<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.tourImg != null and vo.tourImg.startsWith('http')}"
+											th:src="@{|${vo.tourImg}|}" alt="이미지대체텍스트" />
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.tourImg != null and !vo.tourImg.startsWith('http')}"
+											th:src="@{'/uploadimgPath/' + ${vo.tourImg}}" alt="이미지대체텍스트" />
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|/tour/tourDetails?tourNum=${vo.tourNum}|}">
-											<h5 class="text-white" th:text="${vo.tourAddress}">United States</h5>
-											<span th:text="${vo.tourName}">100 Cities</span>
+											<h5 class="text-white" th:text="${vo.tourAddress}"></h5>
+											<span th:text="${vo.tourName}"></span>
 										</a>
 									</div>
 								</div>
@@ -52,11 +61,18 @@
 								<div class="col-lg-4 col-md-6 mb-4">
 									<a th:href="|wishList/deleteOK?wishListNum=${vo.wishListNum}|">삭제</a>
 									<div class="destination-item position-relative overflow-hidden mb-2">
-										<img class="img-fluid" th:src="${vo.festivalImg}" alt="">
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.festivalImg == null or vo.festivalImg == ''}"
+											src="/img/destination-1.jpg" alt="기본이미지대체텍스트" />
+										<!-- 이미지가 비어 있지 않은 경우에는 해당 이미지를 사용 -->
+										<img class="img-fluid" style="max-width: 100%; height: auto;"
+											th:if="${vo.festivalImg != null and vo.festivalImg != ''}"
+											th:src="${vo.festivalImg}" alt="이미지대체텍스트" />
+										<!--<img class="img-fluid" th:src="${vo.festivalImg}" alt="">-->
 										<a class="destination-overlay text-white text-decoration-none"
 											th:href="@{|/festival/festivalDetails?festivalNum=${vo.festivalNum}|}">
-											<h5 class="text-white" th:text="${vo.festivalAddress}">United States</h5>
-											<span th:text="${vo.festivalName}">100 Cities</span>
+											<h5 class="text-white" th:text="${vo.festivalAddress}"></h5>
+											<span th:text="${vo.festivalName}"></span>
 										</a>
 									</div>
 								</div>
@@ -73,7 +89,7 @@
 				</div>
 				<!-- 즐겨찾기 관광지 Start -->
 
-			
+
 
 				<!-- 경고 메시지가 있는 경우 JavaScript로 alert 창을 표시 -->
 				<script th:if="${warningMessageTour != null}">
