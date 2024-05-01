@@ -30,7 +30,7 @@
 						<tr>
 							<th scope="col">번호</th>
 							<th scope="col">가이드북 이름</th>
-							<th scope="col"></th>
+							<th scope="col">제작자</th>
 							<th scope="col"></th>
 							<th scope="col"></th>
 							<th scope="col"></th>
@@ -46,6 +46,7 @@
 										<span th:text="${iterStat.index + 1}"></span></a></th>
 								<td><a th:href="@{|/route/${vo.routeName}?routeName=${vo.routeName}|}">
 										<span th:text="${vo.routeName}"></span></a></td>
+								<th><span th:text="${vo.routeUserId}"></span></th>
 							</tr>
 						</th:block>
 
