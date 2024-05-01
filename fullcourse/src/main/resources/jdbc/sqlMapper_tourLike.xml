@@ -5,7 +5,7 @@
 
 	<insert id="tourLikeInsertOK"
 		parameterType="com.fullcourse.tour.like.TourLikeVO">
-		INSERT INTO tourLike (tourLikeCategory, tourLikeMemberNum,
+		INSERT INTO tourlike (tourLikeCategory, tourLikeMemberNum,
 		tourLikeTourNum)
 		VALUES (#{tourLikeCategory}, #{tourLikeMemberNum}, #{tourLikeTourNum})
 	</insert>
@@ -13,7 +13,7 @@
 
 	<delete id="tourLikeDeleteOK"
 		parameterType="com.fullcourse.tour.like.TourLikeVO">
-		DELETE FROM tourLike
+		DELETE FROM tourlike
 		WHERE tourLikeTourNum = #{tourLikeTourNum} AND tourLikeMemberNum =
 		#{tourLikeMemberNum}
 	</delete>
