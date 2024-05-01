@@ -55,6 +55,12 @@ public class ProductController {
 		model.addAttribute("title", "상품등록");
 		List<RouteVO> routes = productService.findAllRoutes();  // 경로 데이터를 불러오는 서비스 메소드 호출
 	    model.addAttribute("routes", routes);
+	    
+	    MemberVO member = (MemberVO) session.getAttribute("member");
+	    boolean loggedIn = true;
+        log.info("로그인한사람 아이디:" + member.getMemberId());
+        model.addAttribute("loginId", member.getMemberId());
+        model.addAttribute("loggedIn", loggedIn);
 		
 		return "thymeleaf/product/layout_main";
 	}
@@ -177,6 +183,11 @@ public class ProductController {
 		
 		List<RouteVO> routes = productService.findAllRoutes();  // 경로 데이터를 불러오는 서비스 메소드 호출
 	    model.addAttribute("routes", routes);
+	    
+	    boolean loggedIn = true;
+        log.info("로그인한사람 아이디:" + member.getMemberId());
+        model.addAttribute("loginId", member.getMemberId());
+        model.addAttribute("loggedIn", loggedIn);
 		
 		return "thymeleaf/product/th_layout_main";
         }
