@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fullcourse.member.MemberVO;
 import com.fullcourse.route.RouteVO;
-import com.fullcourse.WebConfig;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -42,8 +40,6 @@ public class ProductController {
         return session.getAttribute("member") != null;
     }
     
-    
-    
     @GetMapping("/insert")
     public String insert(Model model, HttpSession session) {
     	
@@ -53,7 +49,6 @@ public class ProductController {
         }
     	
     	MemberVO member = (MemberVO) session.getAttribute("member");
-		
     	String memberId = member.getMemberId();
     	
 		model.addAttribute("content", "thymeleaf/product/insert");
@@ -61,7 +56,6 @@ public class ProductController {
 		List<RouteVO> routes = productService.findAllRoutes(memberId);  // 경로 데이터를 불러오는 서비스 메소드 호출
 	    model.addAttribute("routes", routes);
 	    
-	    MemberVO member = (MemberVO) session.getAttribute("member");
 	    boolean loggedIn = true;
         log.info("로그인한사람 아이디:" + member.getMemberId());
         model.addAttribute("loginId", member.getMemberId());
@@ -105,7 +99,6 @@ public class ProductController {
 			File thumb_file = new File(realPath, "thumb_" + save_name);
 
 			ImageIO.write(thumb_buffer_img, save_name.substring(save_name.lastIndexOf(".") + 1), thumb_file);
-
 		}
 		
 		int result = productService.insertOK(productVO);
@@ -117,7 +110,6 @@ public class ProductController {
 			return "redirect:insert";
 		}
 	}
-	
 	
 	private boolean isOwner(int productNum, HttpSession session) {
 		ProductVO product = productService.selectProductById(productNum);
@@ -137,9 +129,6 @@ public class ProductController {
 		
 		return "redirect:sellList";
 	}
-	
-	
-	
 	
 	
 	@PostMapping("/deleteOK")
@@ -198,6 +187,4 @@ public class ProductController {
 		return "thymeleaf/product/th_layout_main";
         }
 	}
-
-	
 }
