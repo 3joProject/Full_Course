@@ -6,6 +6,37 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>simpleMap</title>
+		
+		<style>
+			.image-container {
+							width: 100%;
+							/* 이미지 컨테이너의 너비를 부모 요소에 맞춤 */
+							height: 200px;
+							/* 원하는 높이 설정 */
+							overflow: hidden;
+							/* 이미지가 넘칠 경우를 대비하여 오버플로우 제어 */
+							position: relative;
+							/* 포지션 상대 지정 */
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.image-container img {
+							width: 100%;
+							/* 이미지의 너비를 자동으로 설정 */
+							height: 100%;
+							/* 이미지를 부모 요소의 높이에 맞추어 줌 */
+							max-width: none;
+							/* 이미지의 최대 너비를 제한하지 않음 */
+							object-fit: cover;
+							/* 이미지 비율 유지하며 부모 요소에 맞춤 */
+							position: relative;
+						}
+			
+		</style>
+		
+		
 		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script
 			src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=6VYbMDkEY24DlbC0m8ymh1ESimWVROyI3sP7PqT1"></script>
@@ -31,6 +62,7 @@
 
 
 			function loadGetAddressFromLonLat() {
+				removeMarkers();
 				var address = document.getElementById("addressInput").value; // 사용자가 입력한 주소 가져오기
 
 				// 주소를 공백을 기준으로 쪼개기
@@ -350,7 +382,7 @@
 										<th:block th:each="vo, rowStat : ${vos}">
 											<div class="col-lg-3 col-md-4 col-sm-6 pb-2">
 												<div class="team-item bg-white mb-4">
-													<div class="team-img position-relative overflow-hidden">
+													<div class="image-container">
 														<img class="img-fluid w-100" th:src="@{'/uploadimgPath/' + ${vo.triprecImage}}" alt="">
 														<!--														<img class="img-fluid w-100" th:src="${vo.triprecImage}" alt="">-->
 													</div>
@@ -367,9 +399,6 @@
 														</p>
 														<p class="m-0 ">기록날짜: <span class="listDate"
 																th:text="${vo.triprecDate}" id="listDate"></span>
-														</p>
-														<p class="m-0">이미지: <span th:text="${vo.triprecImage}"
-																id="listImage"></span>
 														</p>
 														<button class="modify">수정</button>
 														<a
