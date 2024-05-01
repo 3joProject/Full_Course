@@ -27,5 +27,8 @@ public class ChatAdminService {
 		    return adminMapper.getChatRoomById(chatRoomId);  // 해당 채팅방 정보를 가져옴
 		}
 	    
+	    public void deleteChatRoom(int chatRoomId) {
+	        adminMapper.deleteChatRoom(chatRoomId);
+	    }
 	    
 }

@@ -2,6 +2,7 @@ package com.fullcourse.chat.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,7 @@ public interface ChatAdminMapper {
     List<ChatRoomVO> getAllChatRooms();
     
     ChatRoomVO getChatRoomById(int chatRoomId);
+
+    @Delete("DELETE FROM chatRoom WHERE chatRoomId = #{chatRoomId}")
+    void deleteChatRoom(int chatRoomId);  
 }

@@ -14,6 +14,10 @@
                 <span th:text="'채팅방 번호 #' + ${chatRoom.chatRoomId} + ' - 채팅 시작 일시: ' + ${chatRoom.chatCreatedAt}">Chat Room Info</span>
                 <!-- 각 채팅방에 들어가는 링크 -->
                 <a th:href="@{'/chat/chatRoom/' + ${chatRoom.chatRoomId}}">채팅 입장</a>
+                <!-- 채팅방 삭제 버튼 -->
+                <form th:action="@{'/chat/deleteChatRoom/' + ${chatRoom.chatRoomId}}" method="post">
+                    <button type="submit">삭제</button>
+                </form>
             </li>
         </ul>
     </div>
