@@ -2,6 +2,7 @@ package com.fullcourse.chat;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -13,6 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.fullcourse.board.BoardController;
+import com.fullcourse.member.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class ChatController {
 	
@@ -23,7 +31,21 @@ public class ChatController {
 	private SimpMessagingTemplate messagingTemplate;
 
 	@GetMapping("/chat/chatStart")
-	public String getChatStartPage(Model model) {
+	public String getChatStartPage(Model model, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("member");
+        if (member != null) {
+
+            boolean loggedIn = true;
+            log.info("로그인한사람 아이디:" + member.getMemberId());
+            model.addAttribute("loginId", member.getMemberId());
+            model.addAttribute("loggedIn", loggedIn);
+
+        } else {
+
+            log.info("로그인한사람이 없습니다");
+
+        }
+        
 		return "thymeleaf/chat/chatStart"; //채팅 시작 페이지 반환
 	}
 	
