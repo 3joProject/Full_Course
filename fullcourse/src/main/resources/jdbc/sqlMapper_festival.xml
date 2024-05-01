@@ -96,7 +96,7 @@
 	<select id="searchListAddressPageBlock"
 		resultType="com.fullcourse.festival.FestivalVO">
 
-		select * from Festival
+		select * from festival
 		where FestivalAddress like #{searchWord}
 		order by festivalNum desc limit #{startRow},#{pageBlock}
 	</select>
