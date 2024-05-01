@@ -40,7 +40,7 @@
 
 	<select id="festivalSelectOne"
 		resultType="com.fullcourse.festival.FestivalVO">
-		select * from Festival where
+		select * from festival where
 		festivalNum=#{festivalNum}
 	</select>
 
@@ -75,7 +75,7 @@
 	<!--	방법1-->
 	<update id="updateLikeCount"
 		parameterType="com.fullcourse.festival.FestivalVO">
-		update Festival set festivalThumbUp=#{festivalThumbUp} where
+		update festival set festivalThumbUp=#{festivalThumbUp} where
 		festivalNum=#{festivalNum}
 	</update>
 
@@ -89,7 +89,7 @@
 
 	<update id="updateViewCount"
 		parameterType="com.fullcourse.festival.FestivalVO">
-		update Festival set festivalViews= festivalViews+1 where
+		update festival set festivalViews= festivalViews+1 where
 		festivalNum=#{festivalNum}
 	</update>
 
