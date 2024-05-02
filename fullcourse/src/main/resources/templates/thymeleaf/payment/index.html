@@ -66,7 +66,7 @@
 
     let orderId = new Date().getTime().toString();
     let amount = getQueryVariable("amount");
-    
+    let orderName = decodeURIComponent(getQueryVariable("orderId"));
     console.log('[[${param.cartNum}]]');
     let path = "/";
     let successUrl = window.location.origin + path + "success1?cartNum="+'[[${param.cartNum}]]';
@@ -77,7 +77,7 @@
       card: {
         amount: amount,
         orderId: orderId,
-        orderName: "카드 상품", // 상품명 예시
+        orderName: orderName, // 상품명 예시
         successUrl: successUrl,
         failUrl: failUrl,
         customerName: "고객명", // 고객명 예시
